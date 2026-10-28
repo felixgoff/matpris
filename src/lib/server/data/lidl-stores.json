@@ -1,0 +1,1919 @@
+[
+	{
+		"id": "aelmhult/handelsvaegen-22",
+		"chain": "lidl",
+		"name": "Lidl Älmhult, Handelsvägen 22",
+		"lat": 56.54985,
+		"lng": 14.15961,
+		"address": "Handelsvägen 22, 343 33 Älmhult",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/aelmhult/handelsvaegen-22/"
+	},
+	{
+		"id": "aengelholm/midgardsgatan-15",
+		"chain": "lidl",
+		"name": "Lidl Ängelholm, Midgårdsgatan 15",
+		"lat": 56.25235,
+		"lng": 12.89349,
+		"address": "Midgårdsgatan 15, 262 71 Ängelholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/aengelholm/midgardsgatan-15/"
+	},
+	{
+		"id": "akersberga/rallarvaegen-3",
+		"chain": "lidl",
+		"name": "Lidl Åkersberga, Rallarvägen 3",
+		"lat": 59.48024,
+		"lng": 18.28799,
+		"address": "Rallarvägen 3, 184 40 Åkersberga",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/akersberga/rallarvaegen-3/"
+	},
+	{
+		"id": "alingsas/vaenersborgsvaegen-21",
+		"chain": "lidl",
+		"name": "Lidl Alingsås, Vänersborgsvägen 21",
+		"lat": 57.93452,
+		"lng": 12.54588,
+		"address": "Vänersborgsvägen 21, 441 37 Alingsås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/alingsas/vaenersborgsvaegen-21/"
+	},
+	{
+		"id": "angered/traktorgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Angered, Traktorgatan 3",
+		"lat": 57.79533,
+		"lng": 12.0466,
+		"address": "Traktorgatan 3, 424 65 Angered",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/angered/traktorgatan-3/"
+	},
+	{
+		"id": "arboga/hildelundsvaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Arboga, Hildelundsvägen 1",
+		"lat": 59.40258,
+		"lng": 15.83093,
+		"address": "Hildelundsvägen 1, 732 33 Arboga",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/arboga/hildelundsvaegen-1/"
+	},
+	{
+		"id": "arloev/lundavaegen-90",
+		"chain": "lidl",
+		"name": "Lidl Arlöv, Lundavägen 90",
+		"lat": 55.64146,
+		"lng": 13.09096,
+		"address": "Lundavägen 90, 232 39 Arlöv",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/arloev/lundavaegen-90/"
+	},
+	{
+		"id": "arvika/fallaengsvaegen-89",
+		"chain": "lidl",
+		"name": "Lidl Arvika, Fallängsvägen 89",
+		"lat": 59.66975,
+		"lng": 12.59419,
+		"address": "Fallängsvägen 89, 671 41 Arvika",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/arvika/fallaengsvaegen-89/"
+	},
+	{
+		"id": "astorp/grytevadsvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Åstorp, Grytevadsvägen 2",
+		"lat": 56.13928,
+		"lng": 12.94194,
+		"address": "Grytevadsvägen 2, 265 33 Åstorp",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/astorp/grytevadsvaegen-2/"
+	},
+	{
+		"id": "avesta/axel-johnsons-vaeg-99",
+		"chain": "lidl",
+		"name": "Lidl Avesta, Axel Johnsons väg 99",
+		"lat": 60.14138,
+		"lng": 16.16107,
+		"address": "Axel Johnsons väg 99, 774 34 Avesta",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/avesta/axel-johnsons-vaeg-99/"
+	},
+	{
+		"id": "balsta/stockholmsvaegen-79",
+		"chain": "lidl",
+		"name": "Lidl Bålsta, Stockholmsvägen 79",
+		"lat": 59.56982,
+		"lng": 17.5284,
+		"address": "Stockholmsvägen 79, 746 33 Bålsta",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/balsta/stockholmsvaegen-79/"
+	},
+	{
+		"id": "bandhagen/ragsvedsvaegen-106",
+		"chain": "lidl",
+		"name": "Lidl Bandhagen, Rågsvedsvägen 106",
+		"lat": 59.25716,
+		"lng": 18.01501,
+		"address": "Rågsvedsvägen 106, 124 65 Bandhagen",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/bandhagen/ragsvedsvaegen-106/"
+	},
+	{
+		"id": "boden/kaptensgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Boden, Kaptensgatan 1",
+		"lat": 65.82432,
+		"lng": 21.66774,
+		"address": "Kaptensgatan 1, 961 36 Boden",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/boden/kaptensgatan-1/"
+	},
+	{
+		"id": "bollnaes/snoddasgatan-6",
+		"chain": "lidl",
+		"name": "Lidl Bollnäs, Snoddasgatan 6",
+		"lat": 61.35418,
+		"lng": 16.39904,
+		"address": "Snoddasgatan 6, 821 43 Bollnäs",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/bollnaes/snoddasgatan-6/"
+	},
+	{
+		"id": "boras/kyrkaengsgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Borås, Kyrkängsgatan 2",
+		"lat": 57.71783,
+		"lng": 12.93306,
+		"address": "Kyrkängsgatan 2, 503 38 Borås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/boras/kyrkaengsgatan-2/"
+	},
+	{
+		"id": "boras/sjumilagatan-1",
+		"chain": "lidl",
+		"name": "Lidl Borås, Sjumilagatan 1",
+		"lat": 57.72585,
+		"lng": 12.9882,
+		"address": "Sjumilagatan 1, 507 42 Borås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/boras/sjumilagatan-1/"
+	},
+	{
+		"id": "borlaenge/georg-karlssons-gata-1",
+		"chain": "lidl",
+		"name": "Lidl Borlänge, Georg Karlssons gata 1",
+		"lat": 60.48237,
+		"lng": 15.41432,
+		"address": "Georg Karlssons gata 1, 781 70 Borlänge",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/borlaenge/georg-karlssons-gata-1/"
+	},
+	{
+		"id": "bro/kloevtorpsvaegen-29",
+		"chain": "lidl",
+		"name": "Lidl Bro, Klövtorpsvägen 29",
+		"lat": 59.52511,
+		"lng": 17.62613,
+		"address": "Klövtorpsvägen 29, 197 40 Bro",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/bro/kloevtorpsvaegen-29/"
+	},
+	{
+		"id": "bromoella/tians-vaeg-1",
+		"chain": "lidl",
+		"name": "Lidl Bromölla, Tians väg 1",
+		"lat": 56.06622,
+		"lng": 14.47676,
+		"address": "Tians väg 1, 295 38 Bromölla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/bromoella/tians-vaeg-1/"
+	},
+	{
+		"id": "charlottenberg/kaellgatan-10",
+		"chain": "lidl",
+		"name": "Lidl Charlottenberg, Källgatan 10",
+		"lat": 59.87311,
+		"lng": 12.28554,
+		"address": "Källgatan 10, 673 92 Charlottenberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/charlottenberg/kaellgatan-10/"
+	},
+	{
+		"id": "ekeroe/aelvnaesvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Ekerö, Älvnäsvägen 2",
+		"lat": 59.2801,
+		"lng": 17.78904,
+		"address": "Älvnäsvägen 2, 178 39 Ekerö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ekeroe/aelvnaesvaegen-2/"
+	},
+	{
+		"id": "eksjoe/lokgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Eksjö, Lokgatan 2",
+		"lat": 57.66472,
+		"lng": 14.97912,
+		"address": "Lokgatan 2, 575 31 Eksjö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/eksjoe/lokgatan-2/"
+	},
+	{
+		"id": "enkoeping/maestergatan-2",
+		"chain": "lidl",
+		"name": "Lidl Enköping, Mästergatan 2",
+		"lat": 59.6477,
+		"lng": 17.08584,
+		"address": "Mästergatan 2, 745 37 Enköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/enkoeping/maestergatan-2/"
+	},
+	{
+		"id": "enskede/bussens-vaeg-5",
+		"chain": "lidl",
+		"name": "Lidl Enskede, Bussens väg 5",
+		"lat": 59.28534,
+		"lng": 18.04893,
+		"address": "Bussens väg 5, 122 43 Enskede",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/enskede/bussens-vaeg-5/"
+	},
+	{
+		"id": "eskilstuna/domaregatan-5",
+		"chain": "lidl",
+		"name": "Lidl Eskilstuna, Domaregatan 5",
+		"lat": 59.35686,
+		"lng": 16.4872,
+		"address": "Domaregatan 5, 632 32 Eskilstuna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/eskilstuna/domaregatan-5/"
+	},
+	{
+		"id": "eskilstuna/sundbyvaegen-4",
+		"chain": "lidl",
+		"name": "Lidl Eskilstuna, Sundbyvägen 4",
+		"lat": 59.37647,
+		"lng": 16.52489,
+		"address": "Sundbyvägen 4, 633 44 Eskilstuna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/eskilstuna/sundbyvaegen-4/"
+	},
+	{
+		"id": "esloev/ringsjoevaegen-21",
+		"chain": "lidl",
+		"name": "Lidl Eslöv, Ringsjövägen 21",
+		"lat": 55.84177,
+		"lng": 13.32571,
+		"address": "Ringsjövägen 21, 241 39 Eslöv",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/esloev/ringsjoevaegen-21/"
+	},
+	{
+		"id": "fagersta/stationsvaegen-3",
+		"chain": "lidl",
+		"name": "Lidl Fagersta, Stationsvägen 3",
+		"lat": 60.00354,
+		"lng": 15.79117,
+		"address": "Stationsvägen 3, 737 40 Fagersta",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/fagersta/stationsvaegen-3/"
+	},
+	{
+		"id": "falkenberg/soemmerskevaegen-1a",
+		"chain": "lidl",
+		"name": "Lidl Falkenberg, Sömmerskevägen 1A",
+		"lat": 56.91572,
+		"lng": 12.5031,
+		"address": "Sömmerskevägen 1A, 311 36 Falkenberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/falkenberg/soemmerskevaegen-1a/"
+	},
+	{
+		"id": "falkoeping/midfalegatan-2",
+		"chain": "lidl",
+		"name": "Lidl Falköping, Midfalegatan 2",
+		"lat": 58.16225,
+		"lng": 13.57079,
+		"address": "Midfalegatan 2, 521 41 Falköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/falkoeping/midfalegatan-2/"
+	},
+	{
+		"id": "falun/norra-jaernvaegsgatan-31c",
+		"chain": "lidl",
+		"name": "Lidl Falun, Norra Järnvägsgatan 31C",
+		"lat": 60.62248,
+		"lng": 15.62035,
+		"address": "Norra Järnvägsgatan 31C, 791 35 Falun",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/falun/norra-jaernvaegsgatan-31c/"
+	},
+	{
+		"id": "farsta/havsoernsvaegen-3",
+		"chain": "lidl",
+		"name": "Lidl Farsta, Havsörnsvägen 3",
+		"lat": 59.24749,
+		"lng": 18.06427,
+		"address": "Havsörnsvägen 3, 123 49 Farsta",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/farsta/havsoernsvaegen-3/"
+	},
+	{
+		"id": "farsta/storforsplan-36",
+		"chain": "lidl",
+		"name": "Lidl Farsta, Storforsplan 36",
+		"lat": 59.2412,
+		"lng": 18.09271,
+		"address": "Storforsplan 36, 123 52 Farsta",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/farsta/storforsplan-36/"
+	},
+	{
+		"id": "filipstad/hertig-karlsgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Filipstad, Hertig Karlsgatan 1",
+		"lat": 59.71395,
+		"lng": 14.15485,
+		"address": "Hertig Karlsgatan 1, 682 33 Filipstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/filipstad/hertig-karlsgatan-1/"
+	},
+	{
+		"id": "finspang/bergslagsvaegen-10",
+		"chain": "lidl",
+		"name": "Lidl Finspång, Bergslagsvägen 10",
+		"lat": 58.70637,
+		"lng": 15.76945,
+		"address": "Bergslagsvägen 10, 612 30 Finspång",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/finspang/bergslagsvaegen-10/"
+	},
+	{
+		"id": "gaevle/kryddstigen-6",
+		"chain": "lidl",
+		"name": "Lidl Gävle, Kryddstigen 6",
+		"lat": 60.65632,
+		"lng": 17.16937,
+		"address": "Kryddstigen 6, 802 92 Gävle",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/gaevle/kryddstigen-6/"
+	},
+	{
+		"id": "gaevle/norra-kungsvaegen-47",
+		"chain": "lidl",
+		"name": "Lidl Gävle, Norra Kungsvägen 47",
+		"lat": 60.69348,
+		"lng": 17.14901,
+		"address": "Norra Kungsvägen 47, 806 41 Gävle",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/gaevle/norra-kungsvaegen-47/"
+	},
+	{
+		"id": "gislaved/enestroemsgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Gislaved, Eneströmsgatan 3",
+		"lat": 57.29887,
+		"lng": 13.55178,
+		"address": "Eneströmsgatan 3, 332 36 Gislaved",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/gislaved/enestroemsgatan-3/"
+	},
+	{
+		"id": "goeteborg/angpannegatan-18",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Ångpannegatan 18",
+		"lat": 57.7283,
+		"lng": 11.94672,
+		"address": "Ångpannegatan 18, 417 05 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/angpannegatan-18/"
+	},
+	{
+		"id": "goeteborg/anna-branzells-gata-11",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Anna Branzells Gata 11",
+		"lat": 57.73282,
+		"lng": 12.03056,
+		"address": "Anna Branzells Gata 11, 415 26 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/anna-branzells-gata-11/"
+	},
+	{
+		"id": "goeteborg/gaerdsas-torg-2",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Gärdsås torg 2",
+		"lat": 57.76159,
+		"lng": 12.0504,
+		"address": "Gärdsås torg 2, 415 54 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/gaerdsas-torg-2/"
+	},
+	{
+		"id": "goeteborg/kungsgatan-16",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Kungsgatan 16",
+		"lat": 57.70339,
+		"lng": 11.96043,
+		"address": "Kungsgatan 16, 411 19 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/kungsgatan-16/"
+	},
+	{
+		"id": "goeteborg/postgatan-26",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Postgatan 26",
+		"lat": 57.70874,
+		"lng": 11.97095,
+		"address": "Postgatan 26, 411 06 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/postgatan-26/"
+	},
+	{
+		"id": "goeteborg/redbergsvaegen-42",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Redbergsvägen 42",
+		"lat": 57.71548,
+		"lng": 12.00344,
+		"address": "Redbergsvägen 42, 416 65 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/redbergsvaegen-42/"
+	},
+	{
+		"id": "goeteborg/sommarvaedersgatan-5",
+		"chain": "lidl",
+		"name": "Lidl Göteborg, Sommarvädersgatan 5",
+		"lat": 57.71462,
+		"lng": 11.89688,
+		"address": "Sommarvädersgatan 5, 418 33 Göteborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/goeteborg/sommarvaedersgatan-5/"
+	},
+	{
+		"id": "gustavsberg/medeas-vaeg-2",
+		"chain": "lidl",
+		"name": "Lidl Gustavsberg, Medeas väg 2",
+		"lat": 59.31201,
+		"lng": 18.42328,
+		"address": "Medeas väg 2, 134 44 Gustavsberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/gustavsberg/medeas-vaeg-2/"
+	},
+	{
+		"id": "haegersten/elisabeth-tamms-gata-2",
+		"chain": "lidl",
+		"name": "Lidl Hägersten, Elisabeth Tamms gata 2",
+		"lat": 59.28526,
+		"lng": 17.95424,
+		"address": "Elisabeth Tamms gata 2, 129 55 Hägersten",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/haegersten/elisabeth-tamms-gata-2/"
+	},
+	{
+		"id": "haernoesand/strandgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Härnösand, Strandgatan 2",
+		"lat": 62.63463,
+		"lng": 17.93376,
+		"address": "Strandgatan 2, 871 45 Härnösand",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/haernoesand/strandgatan-2/"
+	},
+	{
+		"id": "haesselby/loevkojsgraend-12",
+		"chain": "lidl",
+		"name": "Lidl Hässelby, Lövkojsgränd 12",
+		"lat": 59.38017,
+		"lng": 17.81494,
+		"address": "Lövkojsgränd 12, 165 75 Hässelby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/haesselby/loevkojsgraend-12/"
+	},
+	{
+		"id": "haessleholm/norra-kringelvaegen-19",
+		"chain": "lidl",
+		"name": "Lidl Hässleholm, Norra Kringelvägen 19",
+		"lat": 56.16522,
+		"lng": 13.7843,
+		"address": "Norra Kringelvägen 19, 281 41 Hässleholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/haessleholm/norra-kringelvaegen-19/"
+	},
+	{
+		"id": "hagfors/parkvaegen-21",
+		"chain": "lidl",
+		"name": "Lidl Hagfors, Parkvägen 21",
+		"lat": 60.04243,
+		"lng": 13.69964,
+		"address": "Parkvägen 21, 683 31 Hagfors",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hagfors/parkvaegen-21/"
+	},
+	{
+		"id": "hallsberg/hardemovaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Hallsberg, Hardemovägen 1",
+		"lat": 59.07457,
+		"lng": 15.09615,
+		"address": "Hardemovägen 1, 694 34 Hallsberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hallsberg/hardemovaegen-1/"
+	},
+	{
+		"id": "hallstahammar/norra-hantverkaregatan-13",
+		"chain": "lidl",
+		"name": "Lidl Hallstahammar, Norra Hantverkaregatan 13",
+		"lat": 59.61236,
+		"lng": 16.22992,
+		"address": "Norra Hantverkaregatan 13, 734 30 Hallstahammar",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hallstahammar/norra-hantverkaregatan-13/"
+	},
+	{
+		"id": "halmstad/gesaellgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Halmstad, Gesällgatan 3",
+		"lat": 56.66019,
+		"lng": 12.8946,
+		"address": "Gesällgatan 3, 302 55 Halmstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/halmstad/gesaellgatan-3/"
+	},
+	{
+		"id": "halmstad/tegelbruket-1",
+		"chain": "lidl",
+		"name": "Lidl Halmstad, Tegelbruket 1",
+		"lat": 56.69342,
+		"lng": 12.86947,
+		"address": "Tegelbruket 1, 302 31 Halmstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/halmstad/tegelbruket-1/"
+	},
+	{
+		"id": "halmstad/torpaledsvaegen-4",
+		"chain": "lidl",
+		"name": "Lidl Halmstad, Torpaledsvägen 4",
+		"lat": 56.6676,
+		"lng": 12.82065,
+		"address": "Torpaledsvägen 4, 302 93 Halmstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/halmstad/torpaledsvaegen-4/"
+	},
+	{
+		"id": "handen/drakslingan-4",
+		"chain": "lidl",
+		"name": "Lidl Handen, Drakslingan 4",
+		"lat": 59.17081,
+		"lng": 18.14024,
+		"address": "Drakslingan 4, 136 38 Handen",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/handen/drakslingan-4/"
+	},
+	{
+		"id": "hedemora/callerholmsgatan-10",
+		"chain": "lidl",
+		"name": "Lidl Hedemora, Callerholmsgatan 10",
+		"lat": 60.28423,
+		"lng": 15.98972,
+		"address": "Callerholmsgatan 10, 776 33 Hedemora",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hedemora/callerholmsgatan-10/"
+	},
+	{
+		"id": "helsingborg/brunnbaecksgatan-33",
+		"chain": "lidl",
+		"name": "Lidl Helsingborg, Brunnbäcksgatan 33",
+		"lat": 56.0159,
+		"lng": 12.72891,
+		"address": "Brunnbäcksgatan 33, 252 31 Helsingborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/helsingborg/brunnbaecksgatan-33/"
+	},
+	{
+		"id": "helsingborg/drottninghoegsvaegen-6",
+		"chain": "lidl",
+		"name": "Lidl Helsingborg, Drottninghögsvägen 6",
+		"lat": 56.06652,
+		"lng": 12.72305,
+		"address": "Drottninghögsvägen 6, 254 58 Helsingborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/helsingborg/drottninghoegsvaegen-6/"
+	},
+	{
+		"id": "helsingborg/landskronavaegen-33",
+		"chain": "lidl",
+		"name": "Lidl Helsingborg, Landskronavägen 33",
+		"lat": 56.0014,
+		"lng": 12.74615,
+		"address": "Landskronavägen 33, 252 32 Helsingborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/helsingborg/landskronavaegen-33/"
+	},
+	{
+		"id": "helsingborg/soedergatan-19",
+		"chain": "lidl",
+		"name": "Lidl Helsingborg, Södergatan 19",
+		"lat": 56.04038,
+		"lng": 12.70227,
+		"address": "Södergatan 19, 252 18 Helsingborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/helsingborg/soedergatan-19/"
+	},
+	{
+		"id": "hoeganaes/centralgatan-30",
+		"chain": "lidl",
+		"name": "Lidl Höganäs, Centralgatan 30",
+		"lat": 56.20066,
+		"lng": 12.5599,
+		"address": "Centralgatan 30, 263 38 Höganäs",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hoeganaes/centralgatan-30/"
+	},
+	{
+		"id": "hoeoer/transportvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Höör, Transportvägen 2",
+		"lat": 55.92528,
+		"lng": 13.5461,
+		"address": "Transportvägen 2, 243 35 Höör",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hoeoer/transportvaegen-2/"
+	},
+	{
+		"id": "hofors/faluvaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Hofors, Faluvägen 1",
+		"lat": 60.54111,
+		"lng": 16.28972,
+		"address": "Faluvägen 1, 813 34 Hofors",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hofors/faluvaegen-1/"
+	},
+	{
+		"id": "huddinge/ebba-baats-torg-29",
+		"chain": "lidl",
+		"name": "Lidl Huddinge, Ebba Bååts Torg 29",
+		"lat": 59.21762,
+		"lng": 17.94814,
+		"address": "Ebba Bååts Torg 29, 141 51 Huddinge",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/huddinge/ebba-baats-torg-29/"
+	},
+	{
+		"id": "hudiksvall/hede-finnflovaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Hudiksvall, Hede-Finnflovägen 1",
+		"lat": 61.73747,
+		"lng": 17.0862,
+		"address": "Hede-Finnflovägen 1, 824 31 Hudiksvall",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/hudiksvall/hede-finnflovaegen-1/"
+	},
+	{
+		"id": "huskvarna/viktoriagatan-1",
+		"chain": "lidl",
+		"name": "Lidl Huskvarna, Viktoriagatan 1",
+		"lat": 57.78838,
+		"lng": 14.2776,
+		"address": "Viktoriagatan 1, 561 31 Huskvarna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/huskvarna/viktoriagatan-1/"
+	},
+	{
+		"id": "jaerfaella/enkoepingsvaegen-26b",
+		"chain": "lidl",
+		"name": "Lidl Järfälla, Enköpingsvägen 26B",
+		"lat": 59.40992,
+		"lng": 17.86268,
+		"address": "Enköpingsvägen 26B, 177 45 Järfälla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/jaerfaella/enkoepingsvaegen-26b/"
+	},
+	{
+		"id": "jaerfaella/vaermevaegen-1a",
+		"chain": "lidl",
+		"name": "Lidl Järfälla, Värmevägen 1A",
+		"lat": 59.42881,
+		"lng": 17.84694,
+		"address": "Värmevägen 1A, 177 57 Järfälla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/jaerfaella/vaermevaegen-1a/"
+	},
+	{
+		"id": "joenkoeping/ekhagsringen-2",
+		"chain": "lidl",
+		"name": "Lidl Jönköping, Ekhagsringen 2",
+		"lat": 57.77819,
+		"lng": 14.22378,
+		"address": "Ekhagsringen 2, 554 56 Jönköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/joenkoeping/ekhagsringen-2/"
+	},
+	{
+		"id": "joenkoeping/jordbrovaegen-13",
+		"chain": "lidl",
+		"name": "Lidl Jönköping, Jordbrovägen 13",
+		"lat": 57.76421,
+		"lng": 14.15341,
+		"address": "Jordbrovägen 13, 553 39 Jönköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/joenkoeping/jordbrovaegen-13/"
+	},
+	{
+		"id": "kallered/ekenleden-2",
+		"chain": "lidl",
+		"name": "Lidl Kållered, Ekenleden 2",
+		"lat": 57.60223,
+		"lng": 12.05042,
+		"address": "Ekenleden 2, 428 36 Kållered",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kallered/ekenleden-2/"
+	},
+	{
+		"id": "kalmar/polhemsgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Kalmar, Polhemsgatan 3",
+		"lat": 56.66917,
+		"lng": 16.34063,
+		"address": "Polhemsgatan 3, 392 39 Kalmar",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kalmar/polhemsgatan-3/"
+	},
+	{
+		"id": "karlshamn/nyemoellevaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Karlshamn, Nyemöllevägen 1",
+		"lat": 56.18675,
+		"lng": 14.84738,
+		"address": "Nyemöllevägen 1, 374 32 Karlshamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/karlshamn/nyemoellevaegen-1/"
+	},
+	{
+		"id": "karlskoga/baggaengsvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Karlskoga, Baggängsvägen 2",
+		"lat": 59.31622,
+		"lng": 14.50129,
+		"address": "Baggängsvägen 2, 691 45 Karlskoga",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/karlskoga/baggaengsvaegen-2/"
+	},
+	{
+		"id": "karlskoga/saxlyckevaegen-11-a-b",
+		"chain": "lidl",
+		"name": "Lidl Karlskoga, Saxlyckevägen 11 A-B",
+		"lat": 59.328,
+		"lng": 14.56595,
+		"address": "Saxlyckevägen 11 A-B, 691 51 Karlskoga",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/karlskoga/saxlyckevaegen-11-a-b/"
+	},
+	{
+		"id": "karlskrona/blekingegatan-14",
+		"chain": "lidl",
+		"name": "Lidl Karlskrona, Blekingegatan 14",
+		"lat": 56.16927,
+		"lng": 15.58494,
+		"address": "Blekingegatan 14, 371 57 Karlskrona",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/karlskrona/blekingegatan-14/"
+	},
+	{
+		"id": "karlstad/oestra-infarten-19",
+		"chain": "lidl",
+		"name": "Lidl Karlstad, Östra infarten 19",
+		"lat": 59.39824,
+		"lng": 13.53626,
+		"address": "Östra infarten 19, 654 61 Karlstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/karlstad/oestra-infarten-19/"
+	},
+	{
+		"id": "karlstad/rattgatan-10",
+		"chain": "lidl",
+		"name": "Lidl Karlstad, Rattgatan 10",
+		"lat": 59.38656,
+		"lng": 13.47456,
+		"address": "Rattgatan 10, 653 41 Karlstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/karlstad/rattgatan-10/"
+	},
+	{
+		"id": "katrineholm/vingakersvaegen-12",
+		"chain": "lidl",
+		"name": "Lidl Katrineholm, Vingåkersvägen 12",
+		"lat": 58.99197,
+		"lng": 16.18869,
+		"address": "Vingåkersvägen 12, 641 51 Katrineholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/katrineholm/vingakersvaegen-12/"
+	},
+	{
+		"id": "kista/kista-galleria",
+		"chain": "lidl",
+		"name": "Lidl Kista, Kista Galleria",
+		"lat": 59.40228,
+		"lng": 17.9476,
+		"address": "Kista Galleria, 164 91 Kista",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kista/kista-galleria/"
+	},
+	{
+		"id": "kista/villmanstrandsgatan-6",
+		"chain": "lidl",
+		"name": "Lidl Kista, Villmanstrandsgatan 6",
+		"lat": 59.41295,
+		"lng": 17.91818,
+		"address": "Villmanstrandsgatan 6, 164 73 Kista",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kista/villmanstrandsgatan-6/"
+	},
+	{
+		"id": "koeping/nibblesbackevaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Köping, Nibblesbackevägen 2",
+		"lat": 59.5126,
+		"lng": 15.98002,
+		"address": "Nibblesbackevägen 2, 731 50 Köping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/koeping/nibblesbackevaegen-2/"
+	},
+	{
+		"id": "kristianstad/faeladsgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Kristianstad, Fäladsgatan 1",
+		"lat": 56.02383,
+		"lng": 14.14372,
+		"address": "Fäladsgatan 1, 291 59 Kristianstad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kristianstad/faeladsgatan-1/"
+	},
+	{
+		"id": "kristinehamn/hamnvaegen-4",
+		"chain": "lidl",
+		"name": "Lidl Kristinehamn, Hamnvägen 4",
+		"lat": 59.3112,
+		"lng": 14.09727,
+		"address": "Hamnvägen 4, 681 30 Kristinehamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kristinehamn/hamnvaegen-4/"
+	},
+	{
+		"id": "kumla/mastgatan-10",
+		"chain": "lidl",
+		"name": "Lidl Kumla, Mastgatan 10",
+		"lat": 59.14344,
+		"lng": 15.13594,
+		"address": "Mastgatan 10, 692 71 Kumla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kumla/mastgatan-10/"
+	},
+	{
+		"id": "kungsaengen/pettersbergsvaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Kungsängen, Pettersbergsvägen 1",
+		"lat": 59.49255,
+		"lng": 17.7372,
+		"address": "Pettersbergsvägen 1, 196 36 Kungsängen",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kungsaengen/pettersbergsvaegen-1/"
+	},
+	{
+		"id": "kungsbacka/hedebrovaegen-32",
+		"chain": "lidl",
+		"name": "Lidl Kungsbacka, Hedebrovägen 32",
+		"lat": 57.51499,
+		"lng": 12.07528,
+		"address": "Hedebrovägen 32, 434 39 Kungsbacka",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/kungsbacka/hedebrovaegen-32/"
+	},
+	{
+		"id": "landskrona/oestervangsplan-5",
+		"chain": "lidl",
+		"name": "Lidl Landskrona, Östervångsplan 5",
+		"lat": 55.8808,
+		"lng": 12.85431,
+		"address": "Östervångsplan 5, 261 44 Landskrona",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/landskrona/oestervangsplan-5/"
+	},
+	{
+		"id": "lerum/soedra-langvaegen-7",
+		"chain": "lidl",
+		"name": "Lidl Lerum, Södra Långvägen 7",
+		"lat": 57.76378,
+		"lng": 12.26257,
+		"address": "Södra Långvägen 7, 443 39 Lerum",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lerum/soedra-langvaegen-7/"
+	},
+	{
+		"id": "lidingoe/stockholmsvaegen-20",
+		"chain": "lidl",
+		"name": "Lidl Lidingö, Stockholmsvägen 20",
+		"lat": 59.3635,
+		"lng": 18.12333,
+		"address": "Stockholmsvägen 20, 181 50 Lidingö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lidingoe/stockholmsvaegen-20/"
+	},
+	{
+		"id": "lidkoeping/roerstrandsgatan-4",
+		"chain": "lidl",
+		"name": "Lidl Lidköping, Rörstrandsgatan 4",
+		"lat": 58.49847,
+		"lng": 13.18082,
+		"address": "Rörstrandsgatan 4, 531 40 Lidköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lidkoeping/roerstrandsgatan-4/"
+	},
+	{
+		"id": "limhamn/hyllie-kyrkovaeg-45a",
+		"chain": "lidl",
+		"name": "Lidl Limhamn, Hyllie Kyrkoväg 45A",
+		"lat": 55.5789,
+		"lng": 12.92997,
+		"address": "Hyllie Kyrkoväg 45A, 216 16 Limhamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/limhamn/hyllie-kyrkovaeg-45a/"
+	},
+	{
+		"id": "lindesberg/bergsmansgatan-4",
+		"chain": "lidl",
+		"name": "Lidl Lindesberg, Bergsmansgatan 4",
+		"lat": 59.59738,
+		"lng": 15.22563,
+		"address": "Bergsmansgatan 4, 711 30 Lindesberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lindesberg/bergsmansgatan-4/"
+	},
+	{
+		"id": "linkoeping/jaerdalavaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Linköping, Järdalavägen 1",
+		"lat": 58.38588,
+		"lng": 15.67851,
+		"address": "Järdalavägen 1, 589 21 Linköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/linkoeping/jaerdalavaegen-1/"
+	},
+	{
+		"id": "ljungby/skanegatan-1",
+		"chain": "lidl",
+		"name": "Lidl Ljungby, Skånegatan 1",
+		"lat": 56.83138,
+		"lng": 13.93377,
+		"address": "Skånegatan 1, 341 31 Ljungby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ljungby/skanegatan-1/"
+	},
+	{
+		"id": "ljusdal/soedra-jaernvaegsgatan-19",
+		"chain": "lidl",
+		"name": "Lidl Ljusdal, Södra Järnvägsgatan 19",
+		"lat": 61.8278,
+		"lng": 16.09095,
+		"address": "Södra Järnvägsgatan 19, 827 32 Ljusdal",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ljusdal/soedra-jaernvaegsgatan-19/"
+	},
+	{
+		"id": "loeddekoepinge/marknadsvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Löddeköpinge, Marknadsvägen 2",
+		"lat": 55.76737,
+		"lng": 12.99339,
+		"address": "Marknadsvägen 2, 246 42 Löddeköpinge",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/loeddekoepinge/marknadsvaegen-2/"
+	},
+	{
+		"id": "lomma/tenngatan-1",
+		"chain": "lidl",
+		"name": "Lidl Lomma, Tenngatan 1",
+		"lat": 55.68238,
+		"lng": 13.08561,
+		"address": "Tenngatan 1, 234 35 Lomma",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lomma/tenngatan-1/"
+	},
+	{
+		"id": "ludvika/bergslagsgatan-4",
+		"chain": "lidl",
+		"name": "Lidl Ludvika, Bergslagsgatan 4",
+		"lat": 60.15264,
+		"lng": 15.18583,
+		"address": "Bergslagsgatan 4, 771 31 Ludvika",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ludvika/bergslagsgatan-4/"
+	},
+	{
+		"id": "lulea/hertsoevaegen-20",
+		"chain": "lidl",
+		"name": "Lidl Luleå, Hertsövägen 20",
+		"lat": 65.58014,
+		"lng": 22.17485,
+		"address": "Hertsövägen 20, 972 45 Luleå",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lulea/hertsoevaegen-20/"
+	},
+	{
+		"id": "lund/akerlund-och-rausings-vaeg-1",
+		"chain": "lidl",
+		"name": "Lidl Lund, Åkerlund och Rausings väg 1",
+		"lat": 55.69938,
+		"lng": 13.17783,
+		"address": "Åkerlund och Rausings väg 1, 227 30 Lund",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lund/akerlund-och-rausings-vaeg-1/"
+	},
+	{
+		"id": "lund/magistratsvaegen-6",
+		"chain": "lidl",
+		"name": "Lidl Lund, Magistratsvägen 6",
+		"lat": 55.7205,
+		"lng": 13.20542,
+		"address": "Magistratsvägen 6, 226 43 Lund",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lund/magistratsvaegen-6/"
+	},
+	{
+		"id": "lyckeby/stationsvaegen-12",
+		"chain": "lidl",
+		"name": "Lidl Lyckeby, Stationsvägen 12",
+		"lat": 56.19778,
+		"lng": 15.64377,
+		"address": "Stationsvägen 12, 371 62 Lyckeby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/lyckeby/stationsvaegen-12/"
+	},
+	{
+		"id": "maersta/vaestra-bangatan-6",
+		"chain": "lidl",
+		"name": "Lidl Märsta, Västra Bangatan 6",
+		"lat": 59.6176,
+		"lng": 17.85652,
+		"address": "Västra Bangatan 6, 195 40 Märsta",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/maersta/vaestra-bangatan-6/"
+	},
+	{
+		"id": "malmoe/delsjoegatan-3",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Delsjögatan 3",
+		"lat": 55.57914,
+		"lng": 12.9787,
+		"address": "Delsjögatan 3, 217 65 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/delsjoegatan-3/"
+	},
+	{
+		"id": "malmoe/knivgatan-1b",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Knivgatan 1B",
+		"lat": 55.6004,
+		"lng": 13.03812,
+		"address": "Knivgatan 1B, 212 28 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/knivgatan-1b/"
+	},
+	{
+		"id": "malmoe/oestergatan-12",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Östergatan 12",
+		"lat": 55.6071,
+		"lng": 13.00632,
+		"address": "Östergatan 12, 211 25 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/oestergatan-12/"
+	},
+	{
+		"id": "malmoe/soedra-foerstadsgatan-124",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Södra Förstadsgatan 124",
+		"lat": 55.5865,
+		"lng": 13.00627,
+		"address": "Södra Förstadsgatan 124, 214 28 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/soedra-foerstadsgatan-124/"
+	},
+	{
+		"id": "malmoe/spangatan-11",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Spångatan 11",
+		"lat": 55.59632,
+		"lng": 13.00554,
+		"address": "Spångatan 11, 211 44 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/spangatan-11/"
+	},
+	{
+		"id": "malmoe/torupsgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Torupsgatan 2",
+		"lat": 55.59319,
+		"lng": 12.96624,
+		"address": "Torupsgatan 2, 217 73 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/torupsgatan-2/"
+	},
+	{
+		"id": "malmoe/vaestra-varvsgatan-42",
+		"chain": "lidl",
+		"name": "Lidl Malmö, Västra Varvsgatan 42",
+		"lat": 55.61366,
+		"lng": 12.97675,
+		"address": "Västra Varvsgatan 42, 211 15 Malmö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malmoe/vaestra-varvsgatan-42/"
+	},
+	{
+		"id": "malung/lisagatan-45",
+		"chain": "lidl",
+		"name": "Lidl Malung, Lisagatan 45",
+		"lat": 60.68377,
+		"lng": 13.71559,
+		"address": "Lisagatan 45, 782 31 Malung",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/malung/lisagatan-45/"
+	},
+	{
+		"id": "mariestad/industrigatan-11",
+		"chain": "lidl",
+		"name": "Lidl Mariestad, Industrigatan 11",
+		"lat": 58.69384,
+		"lng": 13.81675,
+		"address": "Industrigatan 11, 542 35 Mariestad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/mariestad/industrigatan-11/"
+	},
+	{
+		"id": "mjoelby/ramstadgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Mjölby, Ramstadgatan 1",
+		"lat": 58.33064,
+		"lng": 15.11723,
+		"address": "Ramstadgatan 1, 595 40 Mjölby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/mjoelby/ramstadgatan-1/"
+	},
+	{
+		"id": "moelndal/brogatan-22",
+		"chain": "lidl",
+		"name": "Lidl Mölndal, Brogatan 22",
+		"lat": 57.6552,
+		"lng": 12.01273,
+		"address": "Brogatan 22, 431 30 Mölndal",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/moelndal/brogatan-22/"
+	},
+	{
+		"id": "moelnlycke/idrottsgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Mölnlycke, Idrottsgatan 1",
+		"lat": 57.65977,
+		"lng": 12.11892,
+		"address": "Idrottsgatan 1, 435 35 Mölnlycke",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/moelnlycke/idrottsgatan-1/"
+	},
+	{
+		"id": "mora/skalmyrsvaegen-37d",
+		"chain": "lidl",
+		"name": "Lidl Mora, Skålmyrsvägen 37d",
+		"lat": 61.00796,
+		"lng": 14.59166,
+		"address": "Skålmyrsvägen 37d, 792 50 Mora",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/mora/skalmyrsvaegen-37d/"
+	},
+	{
+		"id": "motala/agneshoegsgatan-30",
+		"chain": "lidl",
+		"name": "Lidl Motala, Agneshögsgatan 30",
+		"lat": 58.53876,
+		"lng": 15.00688,
+		"address": "Agneshögsgatan 30, 591 71 Motala",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/motala/agneshoegsgatan-30/"
+	},
+	{
+		"id": "naessjoe/bandygatan-6",
+		"chain": "lidl",
+		"name": "Lidl Nässjö, Bandygatan 6",
+		"lat": 57.65039,
+		"lng": 14.70246,
+		"address": "Bandygatan 6, 571 31 Nässjö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/naessjoe/bandygatan-6/"
+	},
+	{
+		"id": "noedinge/roedkloevergatan-4",
+		"chain": "lidl",
+		"name": "Lidl Nödinge, Rödklövergatan 4",
+		"lat": 57.89598,
+		"lng": 12.04789,
+		"address": "Rödklövergatan 4, 449 32 Nödinge",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/noedinge/roedkloevergatan-4/"
+	},
+	{
+		"id": "norrby/torfastleden-1",
+		"chain": "lidl",
+		"name": "Lidl Norrby, Torfastleden 1",
+		"lat": 59.19129,
+		"lng": 18.17511,
+		"address": "Torfastleden 1, 136 74 Norrby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/norrby/torfastleden-1/"
+	},
+	{
+		"id": "norrkoeping/bangardsgatan-6",
+		"chain": "lidl",
+		"name": "Lidl Norrköping, Bangårdsgatan 6",
+		"lat": 58.59092,
+		"lng": 16.20646,
+		"address": "Bangårdsgatan 6, 602 28 Norrköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/norrkoeping/bangardsgatan-6/"
+	},
+	{
+		"id": "norrkoeping/ektorpsgatan-48",
+		"chain": "lidl",
+		"name": "Lidl Norrköping, Ektorpsgatan 48",
+		"lat": 58.5807,
+		"lng": 16.17062,
+		"address": "Ektorpsgatan 48, 603 74 Norrköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/norrkoeping/ektorpsgatan-48/"
+	},
+	{
+		"id": "norrkoeping/folkborgsvaegen-5",
+		"chain": "lidl",
+		"name": "Lidl Norrköping, Folkborgsvägen 5",
+		"lat": 58.58159,
+		"lng": 16.1442,
+		"address": "Folkborgsvägen 5, 603 82 Norrköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/norrkoeping/folkborgsvaegen-5/"
+	},
+	{
+		"id": "norrtaelje/baldersgatan-27a",
+		"chain": "lidl",
+		"name": "Lidl Norrtälje, Baldersgatan 27A",
+		"lat": 59.76652,
+		"lng": 18.69658,
+		"address": "Baldersgatan 27A, 761 50 Norrtälje",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/norrtaelje/baldersgatan-27a/"
+	},
+	{
+		"id": "norsborg/hallundaplan-3",
+		"chain": "lidl",
+		"name": "Lidl Norsborg, Hallundaplan 3",
+		"lat": 59.2446,
+		"lng": 17.82866,
+		"address": "Hallundaplan 3, 145 68 Norsborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/norsborg/hallundaplan-3/"
+	},
+	{
+		"id": "nybro/bangatan-5",
+		"chain": "lidl",
+		"name": "Lidl Nybro, Bangatan 5",
+		"lat": 56.74358,
+		"lng": 15.9005,
+		"address": "Bangatan 5, 382 40 Nybro",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/nybro/bangatan-5/"
+	},
+	{
+		"id": "nykoeping/spelhagsvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Nyköping, Spelhagsvägen 2",
+		"lat": 58.74402,
+		"lng": 17.00777,
+		"address": "Spelhagsvägen 2, 611 31 Nyköping",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/nykoeping/spelhagsvaegen-2/"
+	},
+	{
+		"id": "nynaeshamn/nynaesvaegen-10",
+		"chain": "lidl",
+		"name": "Lidl Nynäshamn, Nynäsvägen 10",
+		"lat": 58.90949,
+		"lng": 17.95448,
+		"address": "Nynäsvägen 10, 149 30 Nynäshamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/nynaeshamn/nynaesvaegen-10/"
+	},
+	{
+		"id": "oerebro/bjoerkbacken-4",
+		"chain": "lidl",
+		"name": "Lidl Örebro, Björkbacken 4",
+		"lat": 59.28619,
+		"lng": 15.23784,
+		"address": "Björkbacken 4, 703 81 Örebro",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/oerebro/bjoerkbacken-4/"
+	},
+	{
+		"id": "oerebro/karlslundsgatan-61",
+		"chain": "lidl",
+		"name": "Lidl Örebro, Karlslundsgatan 61",
+		"lat": 59.27451,
+		"lng": 15.19238,
+		"address": "Karlslundsgatan 61, 703 41 Örebro",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/oerebro/karlslundsgatan-61/"
+	},
+	{
+		"id": "oernskoeldsvik/angermanlandsgatan-17",
+		"chain": "lidl",
+		"name": "Lidl Örnsköldsvik, Ångermanlandsgatan 17",
+		"lat": 63.30287,
+		"lng": 18.7179,
+		"address": "Ångermanlandsgatan 17, 891 50 Örnsköldsvik",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/oernskoeldsvik/angermanlandsgatan-17/"
+	},
+	{
+		"id": "oestersund/radhusgatan-118",
+		"chain": "lidl",
+		"name": "Lidl Östersund, Rådhusgatan 118",
+		"lat": 63.16222,
+		"lng": 14.65942,
+		"address": "Rådhusgatan 118, 831 45 Östersund",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/oestersund/radhusgatan-118/"
+	},
+	{
+		"id": "olofstroem/idrottsvaegen-4",
+		"chain": "lidl",
+		"name": "Lidl Olofström, Idrottsvägen 4",
+		"lat": 56.27585,
+		"lng": 14.53367,
+		"address": "Idrottsvägen 4, 293 33 Olofström",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/olofstroem/idrottsvaegen-4/"
+	},
+	{
+		"id": "oskarshamn/hantverksgatan-45",
+		"chain": "lidl",
+		"name": "Lidl Oskarshamn, Hantverksgatan 45",
+		"lat": 57.25968,
+		"lng": 16.45746,
+		"address": "Hantverksgatan 45, 572 57 Oskarshamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/oskarshamn/hantverksgatan-45/"
+	},
+	{
+		"id": "partille/portgangen-8",
+		"chain": "lidl",
+		"name": "Lidl Partille, Portgången 8",
+		"lat": 57.74026,
+		"lng": 12.12187,
+		"address": "Portgången 8, 433 38 Partille",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/partille/portgangen-8/"
+	},
+	{
+		"id": "ronneby/karlshamnsvaegen-10",
+		"chain": "lidl",
+		"name": "Lidl Ronneby, Karlshamnsvägen 10",
+		"lat": 56.21599,
+		"lng": 15.27113,
+		"address": "Karlshamnsvägen 10, 372 31 Ronneby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ronneby/karlshamnsvaegen-10/"
+	},
+	{
+		"id": "saeffle/vintergatan-2",
+		"chain": "lidl",
+		"name": "Lidl Säffle, Vintergatan 2",
+		"lat": 59.13496,
+		"lng": 12.91398,
+		"address": "Vintergatan 2, 661 32 Säffle",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/saeffle/vintergatan-2/"
+	},
+	{
+		"id": "sala/gustafsborgsgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Sala, Gustafsborgsgatan 1",
+		"lat": 59.91555,
+		"lng": 16.61548,
+		"address": "Gustafsborgsgatan 1, 733 32 Sala",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sala/gustafsborgsgatan-1/"
+	},
+	{
+		"id": "saltsjoe-boo/vaermdoevaegen-691",
+		"chain": "lidl",
+		"name": "Lidl Saltsjö-Boo, Värmdövägen 691",
+		"lat": 59.32295,
+		"lng": 18.2562,
+		"address": "Värmdövägen 691, 132 35 Saltsjö-Boo",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/saltsjoe-boo/vaermdoevaegen-691/"
+	},
+	{
+		"id": "sandviken/gaevlevaegen-101",
+		"chain": "lidl",
+		"name": "Lidl Sandviken, Gävlevägen 101",
+		"lat": 60.62226,
+		"lng": 16.75653,
+		"address": "Gävlevägen 101, 811 36 Sandviken",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sandviken/gaevlevaegen-101/"
+	},
+	{
+		"id": "sigtuna/skattsoekargraend-12",
+		"chain": "lidl",
+		"name": "Lidl Sigtuna, Skattsökargränd 12",
+		"lat": 59.63005,
+		"lng": 17.71835,
+		"address": "Skattsökargränd 12, 193 37 Sigtuna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sigtuna/skattsoekargraend-12/"
+	},
+	{
+		"id": "skaerholmen/skaerholmsgangen-8",
+		"chain": "lidl",
+		"name": "Lidl Skärholmen, Skärholmsgången 8",
+		"lat": 59.27682,
+		"lng": 17.90898,
+		"address": "Skärholmsgången 8, 143 47 Skärholmen",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/skaerholmen/skaerholmsgangen-8/"
+	},
+	{
+		"id": "skara/smedstorpsgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Skara, Smedstorpsgatan 3",
+		"lat": 58.38048,
+		"lng": 13.41506,
+		"address": "Smedstorpsgatan 3, 532 40 Skara",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/skara/smedstorpsgatan-3/"
+	},
+	{
+		"id": "skelleftea/skeppargatan-20",
+		"chain": "lidl",
+		"name": "Lidl Skellefteå, Skeppargatan 20",
+		"lat": 64.75264,
+		"lng": 20.95884,
+		"address": "Skeppargatan 20, 931 29 Skellefteå",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/skelleftea/skeppargatan-20/"
+	},
+	{
+		"id": "skene/klevagardsgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Skene, Klevagårdsgatan 2",
+		"lat": 57.49624,
+		"lng": 12.66703,
+		"address": "Klevagårdsgatan 2, 511 62 Skene",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/skene/klevagardsgatan-2/"
+	},
+	{
+		"id": "skoevde/gesaellgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Skövde, Gesällgatan 3",
+		"lat": 58.384,
+		"lng": 13.83713,
+		"address": "Gesällgatan 3, 541 50 Skövde",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/skoevde/gesaellgatan-3/"
+	},
+	{
+		"id": "soederhamn/braedgardsgatan-1",
+		"chain": "lidl",
+		"name": "Lidl Söderhamn, Brädgårdsgatan 1",
+		"lat": 61.3015,
+		"lng": 17.03883,
+		"address": "Brädgårdsgatan 1, 826 32 Söderhamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/soederhamn/braedgardsgatan-1/"
+	},
+	{
+		"id": "soedertaelje/bergaholmsvaegen-7",
+		"chain": "lidl",
+		"name": "Lidl Södertälje, Bergaholmsvägen 7",
+		"lat": 59.20536,
+		"lng": 17.64582,
+		"address": "Bergaholmsvägen 7, 152 42 Södertälje",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/soedertaelje/bergaholmsvaegen-7/"
+	},
+	{
+		"id": "soedertaelje/brolundavaegen-21",
+		"chain": "lidl",
+		"name": "Lidl Södertälje, Brolundavägen 21",
+		"lat": 59.19496,
+		"lng": 17.60065,
+		"address": "Brolundavägen 21, 151 60 Södertälje",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/soedertaelje/brolundavaegen-21/"
+	},
+	{
+		"id": "solleftea/hagesta-252",
+		"chain": "lidl",
+		"name": "Lidl Sollefteå, Hågesta 252",
+		"lat": 63.16078,
+		"lng": 17.29106,
+		"address": "Hågesta 252, 881 41 Sollefteå",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/solleftea/hagesta-252/"
+	},
+	{
+		"id": "sollentuna/djupdalsvaegen-29",
+		"chain": "lidl",
+		"name": "Lidl Sollentuna, Djupdalsvägen 29",
+		"lat": 59.44511,
+		"lng": 17.95396,
+		"address": "Djupdalsvägen 29, 192 73 Sollentuna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sollentuna/djupdalsvaegen-29/"
+	},
+	{
+		"id": "sollentuna/tistelvaegen-21",
+		"chain": "lidl",
+		"name": "Lidl Sollentuna, Tistelvägen 21",
+		"lat": 59.43002,
+		"lng": 17.93619,
+		"address": "Tistelvägen 21, 191 62 Sollentuna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sollentuna/tistelvaegen-21/"
+	},
+	{
+		"id": "solna/bibliotekstorget-2a",
+		"chain": "lidl",
+		"name": "Lidl Solna, Bibliotekstorget 2A",
+		"lat": 59.35877,
+		"lng": 18.00349,
+		"address": "Bibliotekstorget 2A, 171 45 Solna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/solna/bibliotekstorget-2a/"
+	},
+	{
+		"id": "spanga/bromstensvaegen-158",
+		"chain": "lidl",
+		"name": "Lidl Spånga, Bromstensvägen 158",
+		"lat": 59.37761,
+		"lng": 17.90804,
+		"address": "Bromstensvägen 158, 163 55 Spånga",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/spanga/bromstensvaegen-158/"
+	},
+	{
+		"id": "spanga/rinkebytorget-1",
+		"chain": "lidl",
+		"name": "Lidl Spånga, Rinkebytorget 1",
+		"lat": 59.38869,
+		"lng": 17.92663,
+		"address": "Rinkebytorget 1, 163 73 Spånga",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/spanga/rinkebytorget-1/"
+	},
+	{
+		"id": "staffanstorp/dalbyvaegen-53",
+		"chain": "lidl",
+		"name": "Lidl Staffanstorp, Dalbyvägen 53",
+		"lat": 55.64158,
+		"lng": 13.22573,
+		"address": "Dalbyvägen 53, 245 30 Staffanstorp",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/staffanstorp/dalbyvaegen-53/"
+	},
+	{
+		"id": "stockholm/folkungagatan-51",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Folkungagatan 51",
+		"lat": 59.31441,
+		"lng": 18.07493,
+		"address": "Folkungagatan 51, 116 22 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/folkungagatan-51/"
+	},
+	{
+		"id": "stockholm/hammarby-alle-118",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Hammarby allé 118",
+		"lat": 59.30212,
+		"lng": 18.10245,
+		"address": "Hammarby allé 118, 120 65 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/hammarby-alle-118/"
+	},
+	{
+		"id": "stockholm/liljeholmstorget-44",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Liljeholmstorget 44",
+		"lat": 59.31005,
+		"lng": 18.02317,
+		"address": "Liljeholmstorget 44, 117 61 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/liljeholmstorget-44/"
+	},
+	{
+		"id": "stockholm/magnus-ladulasgatan-3",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Magnus Ladulåsgatan 3",
+		"lat": 59.31162,
+		"lng": 18.05911,
+		"address": "Magnus Ladulåsgatan 3, 118 65 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/magnus-ladulasgatan-3/"
+	},
+	{
+		"id": "stockholm/sankt-eriksgatan-113",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Sankt Eriksgatan 113",
+		"lat": 59.34604,
+		"lng": 18.03986,
+		"address": "Sankt Eriksgatan 113, 113 43 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/sankt-eriksgatan-113/"
+	},
+	{
+		"id": "stockholm/sankt-goeransgatan-70",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Sankt Göransgatan 70",
+		"lat": 59.33342,
+		"lng": 18.03088,
+		"address": "Sankt Göransgatan 70, 112 38 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/sankt-goeransgatan-70/"
+	},
+	{
+		"id": "stockholm/sibyllegatan-8",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Sibyllegatan 8",
+		"lat": 59.33632,
+		"lng": 18.08015,
+		"address": "Sibyllegatan 8, 114 42 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/sibyllegatan-8/"
+	},
+	{
+		"id": "stockholm/sveavaegen-59",
+		"chain": "lidl",
+		"name": "Lidl Stockholm, Sveavägen 59",
+		"lat": 59.3409,
+		"lng": 18.05846,
+		"address": "Sveavägen 59, 113 59 Stockholm",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stockholm/sveavaegen-59/"
+	},
+	{
+		"id": "stocksund/stockholmsvaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Stocksund, Stockholmsvägen 1",
+		"lat": 59.38554,
+		"lng": 18.04472,
+		"address": "Stockholmsvägen 1, 182 78 Stocksund",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/stocksund/stockholmsvaegen-1/"
+	},
+	{
+		"id": "straengnaes/solberga-handelsvaeg-27",
+		"chain": "lidl",
+		"name": "Lidl Strängnäs, Solberga Handelsväg 27",
+		"lat": 59.33519,
+		"lng": 17.02136,
+		"address": "Solberga Handelsväg 27, 645 47 Strängnäs",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/straengnaes/solberga-handelsvaeg-27/"
+	},
+	{
+		"id": "sundbyberg/hallonbergsplan-16",
+		"chain": "lidl",
+		"name": "Lidl Sundbyberg, Hallonbergsplan 16",
+		"lat": 59.37595,
+		"lng": 17.96895,
+		"address": "Hallonbergsplan 16, 174 52 Sundbyberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sundbyberg/hallonbergsplan-16/"
+	},
+	{
+		"id": "sundbyberg/landsvaegen-47",
+		"chain": "lidl",
+		"name": "Lidl Sundbyberg, Landsvägen 47",
+		"lat": 59.36111,
+		"lng": 17.96955,
+		"address": "Landsvägen 47, 172 65 Sundbyberg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sundbyberg/landsvaegen-47/"
+	},
+	{
+		"id": "sundsvall/kolvaegen-14a",
+		"chain": "lidl",
+		"name": "Lidl Sundsvall, Kolvägen 14A",
+		"lat": 62.38724,
+		"lng": 17.32197,
+		"address": "Kolvägen 14A, 852 29 Sundsvall",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sundsvall/kolvaegen-14a/"
+	},
+	{
+		"id": "sundsvall/norra-vaegen-8",
+		"chain": "lidl",
+		"name": "Lidl Sundsvall, Norra Vägen 8",
+		"lat": 62.41173,
+		"lng": 17.33483,
+		"address": "Norra Vägen 8, 856 50 Sundsvall",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/sundsvall/norra-vaegen-8/"
+	},
+	{
+		"id": "taeby/enhagsvaegen-24",
+		"chain": "lidl",
+		"name": "Lidl Täby, Enhagsvägen 24",
+		"lat": 59.4401,
+		"lng": 18.03778,
+		"address": "Enhagsvägen 24, 183 34 Täby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/taeby/enhagsvaegen-24/"
+	},
+	{
+		"id": "taeby/grindstuguvaegen-42",
+		"chain": "lidl",
+		"name": "Lidl Täby, Grindstuguvägen 42",
+		"lat": 59.44333,
+		"lng": 18.09893,
+		"address": "Grindstuguvägen 42, 183 34 Täby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/taeby/grindstuguvaegen-42/"
+	},
+	{
+		"id": "taeby/saluvaegen-10",
+		"chain": "lidl",
+		"name": "Lidl Täby, Saluvägen 10",
+		"lat": 59.45976,
+		"lng": 18.13642,
+		"address": "Saluvägen 10, 187 66 Täby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/taeby/saluvaegen-10/"
+	},
+	{
+		"id": "tierp/badhusgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Tierp, Badhusgatan 2",
+		"lat": 60.34272,
+		"lng": 17.50943,
+		"address": "Badhusgatan 2, 815 36 Tierp",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/tierp/badhusgatan-2/"
+	},
+	{
+		"id": "timra/froelandsvaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Timrå, Frölandsvägen 2",
+		"lat": 62.48075,
+		"lng": 17.31162,
+		"address": "Frölandsvägen 2, 861 34 Timrå",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/timra/froelandsvaegen-2/"
+	},
+	{
+		"id": "tomelilla/malmoevaegen-4",
+		"chain": "lidl",
+		"name": "Lidl Tomelilla, Malmövägen 4",
+		"lat": 55.54654,
+		"lng": 13.94691,
+		"address": "Malmövägen 4, 273 34 Tomelilla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/tomelilla/malmoevaegen-4/"
+	},
+	{
+		"id": "tranas/dalagatan-13",
+		"chain": "lidl",
+		"name": "Lidl Tranås, Dalagatan 13",
+		"lat": 58.04434,
+		"lng": 14.9726,
+		"address": "Dalagatan 13, 573 42 Tranås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/tranas/dalagatan-13/"
+	},
+	{
+		"id": "trelleborg/hedvaegen-87",
+		"chain": "lidl",
+		"name": "Lidl Trelleborg, Hedvägen 87",
+		"lat": 55.38156,
+		"lng": 13.14943,
+		"address": "Hedvägen 87, 231 66 Trelleborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/trelleborg/hedvaegen-87/"
+	},
+	{
+		"id": "trollhaettan/gaerdhemsvaegen-50",
+		"chain": "lidl",
+		"name": "Lidl Trollhättan, Gärdhemsvägen 50",
+		"lat": 58.27534,
+		"lng": 12.31233,
+		"address": "Gärdhemsvägen 50, 461 37 Trollhättan",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/trollhaettan/gaerdhemsvaegen-50/"
+	},
+	{
+		"id": "trollhaettan/oeverbyvaegen-21a",
+		"chain": "lidl",
+		"name": "Lidl Trollhättan, Överbyvägen 21A",
+		"lat": 58.31792,
+		"lng": 12.30182,
+		"address": "Överbyvägen 21A, 461 70 Trollhättan",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/trollhaettan/oeverbyvaegen-21a/"
+	},
+	{
+		"id": "tumba/tumba-torg-1",
+		"chain": "lidl",
+		"name": "Lidl Tumba, Tumba torg 1",
+		"lat": 59.19919,
+		"lng": 17.83535,
+		"address": "Tumba torg 1, 147 30 Tumba",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/tumba/tumba-torg-1/"
+	},
+	{
+		"id": "tyresoe/bollmoravaegen-186",
+		"chain": "lidl",
+		"name": "Lidl Tyresö, Bollmoravägen 186",
+		"lat": 59.24297,
+		"lng": 18.19845,
+		"address": "Bollmoravägen 186, 135 47 Tyresö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/tyresoe/bollmoravaegen-186/"
+	},
+	{
+		"id": "uddevalla/bastiongatan-12",
+		"chain": "lidl",
+		"name": "Lidl Uddevalla, Bastiongatan 12",
+		"lat": 58.35067,
+		"lng": 11.92715,
+		"address": "Bastiongatan 12, 451 50 Uddevalla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/uddevalla/bastiongatan-12/"
+	},
+	{
+		"id": "uddevalla/grytingen-236",
+		"chain": "lidl",
+		"name": "Lidl Uddevalla, Grytingen 236",
+		"lat": 58.35789,
+		"lng": 11.81456,
+		"address": "Grytingen 236, 451 94 Uddevalla",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/uddevalla/grytingen-236/"
+	},
+	{
+		"id": "ulricehamn/falkoepingsvaegen-4",
+		"chain": "lidl",
+		"name": "Lidl Ulricehamn, Falköpingsvägen 4",
+		"lat": 57.7978,
+		"lng": 13.41655,
+		"address": "Falköpingsvägen 4, 523 48 Ulricehamn",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ulricehamn/falkoepingsvaegen-4/"
+	},
+	{
+		"id": "umea/examensvaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Umeå, Examensvägen 1",
+		"lat": 63.81377,
+		"lng": 20.31467,
+		"address": "Examensvägen 1, 907 30 Umeå",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/umea/examensvaegen-1/"
+	},
+	{
+		"id": "upplands-vaesby/stockholmsvaegen-30",
+		"chain": "lidl",
+		"name": "Lidl Upplands Väsby, Stockholmsvägen 30",
+		"lat": 59.50489,
+		"lng": 17.92298,
+		"address": "Stockholmsvägen 30, 194 61 Upplands Väsby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/upplands-vaesby/stockholmsvaegen-30/"
+	},
+	{
+		"id": "uppsala/liljefors-torg-2",
+		"chain": "lidl",
+		"name": "Lidl Uppsala, Liljefors Torg 2",
+		"lat": 59.87048,
+		"lng": 17.65597,
+		"address": "Liljefors Torg 2, 754 29 Uppsala",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/uppsala/liljefors-torg-2/"
+	},
+	{
+		"id": "uppsala/rapsgatan-1j",
+		"chain": "lidl",
+		"name": "Lidl Uppsala, Rapsgatan 1J",
+		"lat": 59.84476,
+		"lng": 17.69386,
+		"address": "Rapsgatan 1J, 753 23 Uppsala",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/uppsala/rapsgatan-1j/"
+	},
+	{
+		"id": "uppsala/valthornsvaegen-1a",
+		"chain": "lidl",
+		"name": "Lidl Uppsala, Valthornsvägen 1A",
+		"lat": 59.81085,
+		"lng": 17.62697,
+		"address": "Valthornsvägen 1A, 756 50 Uppsala",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/uppsala/valthornsvaegen-1a/"
+	},
+	{
+		"id": "vaellingby/arevaegen-32",
+		"chain": "lidl",
+		"name": "Lidl Vällingby, Årevägen 32",
+		"lat": 59.36071,
+		"lng": 17.87582,
+		"address": "Årevägen 32, 162 61 Vällingby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaellingby/arevaegen-32/"
+	},
+	{
+		"id": "vaellingby/siktgatan-11",
+		"chain": "lidl",
+		"name": "Lidl Vällingby, Siktgatan 11",
+		"lat": 59.36917,
+		"lng": 17.85845,
+		"address": "Siktgatan 11, 162 50 Vällingby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaellingby/siktgatan-11/"
+	},
+	{
+		"id": "vaenersborg/regementsgatan-23",
+		"chain": "lidl",
+		"name": "Lidl Vänersborg, Regementsgatan 23",
+		"lat": 58.37758,
+		"lng": 12.33326,
+		"address": "Regementsgatan 23, 462 32 Vänersborg",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaenersborg/regementsgatan-23/"
+	},
+	{
+		"id": "vaernamo/lagastigen-25",
+		"chain": "lidl",
+		"name": "Lidl Värnamo, Lagastigen 25",
+		"lat": 57.18485,
+		"lng": 14.0563,
+		"address": "Lagastigen 25, 331 31 Värnamo",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaernamo/lagastigen-25/"
+	},
+	{
+		"id": "vaesteras/gjutformsgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Västerås, Gjutformsgatan 2",
+		"lat": 59.59527,
+		"lng": 16.49371,
+		"address": "Gjutformsgatan 2, 721 33 Västerås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaesteras/gjutformsgatan-2/"
+	},
+	{
+		"id": "vaesteras/grytavaegen-2",
+		"chain": "lidl",
+		"name": "Lidl Västerås, Grytavägen 2",
+		"lat": 59.6375,
+		"lng": 16.54696,
+		"address": "Grytavägen 2, 722 42 Västerås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaesteras/grytavaegen-2/"
+	},
+	{
+		"id": "vaesteras/loepkranegatan-3",
+		"chain": "lidl",
+		"name": "Lidl Västerås, Löpkranegatan 3",
+		"lat": 59.61863,
+		"lng": 16.46153,
+		"address": "Löpkranegatan 3, 721 38 Västerås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaesteras/loepkranegatan-3/"
+	},
+	{
+		"id": "vaesteras/regattagatan-32",
+		"chain": "lidl",
+		"name": "Lidl Västerås, Regattagatan 32",
+		"lat": 59.60108,
+		"lng": 16.58967,
+		"address": "Regattagatan 32, 723 48 Västerås",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaesteras/regattagatan-32/"
+	},
+	{
+		"id": "vaestervik/kolonivaegen-16",
+		"chain": "lidl",
+		"name": "Lidl Västervik, Kolonivägen 16",
+		"lat": 57.76069,
+		"lng": 16.61093,
+		"address": "Kolonivägen 16, 593 61 Västervik",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaestervik/kolonivaegen-16/"
+	},
+	{
+		"id": "vaestra-froelunda/distansgatan-40",
+		"chain": "lidl",
+		"name": "Lidl Västra Frölunda, Distansgatan 40",
+		"lat": 57.66023,
+		"lng": 11.93297,
+		"address": "Distansgatan 40, 421 72 Västra Frölunda",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaestra-froelunda/distansgatan-40/"
+	},
+	{
+		"id": "vaestra-froelunda/froelunda-torg-1",
+		"chain": "lidl",
+		"name": "Lidl Västra Frölunda, Frölunda Torg 1",
+		"lat": 57.65304,
+		"lng": 11.91502,
+		"address": "Frölunda Torg 1, 421 42 Västra Frölunda",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaestra-froelunda/froelunda-torg-1/"
+	},
+	{
+		"id": "vaestra-froelunda/lergoeksgatan-2aa",
+		"chain": "lidl",
+		"name": "Lidl Västra Frölunda, Lergöksgatan 2AA",
+		"lat": 57.65373,
+		"lng": 11.90443,
+		"address": "Lergöksgatan 2AA, 421 50 Västra Frölunda",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaestra-froelunda/lergoeksgatan-2aa/"
+	},
+	{
+		"id": "vaexjoe/erik-norbergs-vaeg-3",
+		"chain": "lidl",
+		"name": "Lidl Växjö, Erik Norbergs väg 3",
+		"lat": 56.89956,
+		"lng": 14.82554,
+		"address": "Erik Norbergs väg 3, 352 45 Växjö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaexjoe/erik-norbergs-vaeg-3/"
+	},
+	{
+		"id": "vaexjoe/smedsvaengen-12a",
+		"chain": "lidl",
+		"name": "Lidl Växjö, Smedsvängen 12A",
+		"lat": 56.8535,
+		"lng": 14.82102,
+		"address": "Smedsvängen 12A, 352 54 Växjö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaexjoe/smedsvaengen-12a/"
+	},
+	{
+		"id": "vaexjoe/storgatan-70",
+		"chain": "lidl",
+		"name": "Lidl Växjö, Storgatan 70",
+		"lat": 56.87912,
+		"lng": 14.78281,
+		"address": "Storgatan 70, 352 46 Växjö",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vaexjoe/storgatan-70/"
+	},
+	{
+		"id": "vallentuna/tellusvaegen-1",
+		"chain": "lidl",
+		"name": "Lidl Vallentuna, Tellusvägen 1",
+		"lat": 59.5326,
+		"lng": 18.08293,
+		"address": "Tellusvägen 1, 186 36 Vallentuna",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vallentuna/tellusvaegen-1/"
+	},
+	{
+		"id": "varby/varby-alle-53",
+		"chain": "lidl",
+		"name": "Lidl Vårby, Vårby Allé 53",
+		"lat": 59.25292,
+		"lng": 17.87594,
+		"address": "Vårby Allé 53, 143 30 Vårby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/varby/varby-alle-53/"
+	},
+	{
+		"id": "vetlanda/fabriksgatan-2",
+		"chain": "lidl",
+		"name": "Lidl Vetlanda, Fabriksgatan 2",
+		"lat": 57.42276,
+		"lng": 15.08525,
+		"address": "Fabriksgatan 2, 574 38 Vetlanda",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/vetlanda/fabriksgatan-2/"
+	},
+	{
+		"id": "visby/skarphaellsgatan-5",
+		"chain": "lidl",
+		"name": "Lidl Visby, Skarphällsgatan 5",
+		"lat": 57.63402,
+		"lng": 18.32591,
+		"address": "Skarphällsgatan 5, 621 41 Visby",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/visby/skarphaellsgatan-5/"
+	},
+	{
+		"id": "ystad/spaljegatan-2a",
+		"chain": "lidl",
+		"name": "Lidl Ystad, Spaljégatan 2a",
+		"lat": 55.4328,
+		"lng": 13.79873,
+		"address": "Spaljégatan 2a, 271 52 Ystad",
+		"url": "https://www.lidl.se/s/sv-SE/butiker/ystad/spaljegatan-2a/"
+	}
+]
