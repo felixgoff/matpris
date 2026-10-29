@@ -1,99 +1,145 @@
 // Builds src/lib/server/data/ica-catalogue.json: the full priced assortment of one
 // ICA store (default: Maxi ICA Stormarknad Gunnesbo, Lund), crawled like a shopper:
-// category pages are opened in Chromium (Playwright), products are harvested from
-// the JSON the site's own web app fetches (webproductpagews batch endpoints).
+// category pages are opened in a real, visible Chrome window (Playwright) and products
+// are harvested from the JSON the site's own web app fetches (webproductpagews batch
+// endpoints).
 //
-// Why not plain HTTP: handlaprivatkund.ica.se sits behind AWS WAF. A Playwright-
-// minted token does not carry over to server-side HTTP (curl gets a CAPTCHA), and
-// the search journey triggers a visual CAPTCHA outright. In-browser category browsing
-// works reliably, so the crawl uses exactly that; a visual CAPTCHA aborts the crawl
-// instead of being solved.
+// Why not plain HTTP: handlaprivatkund.ica.se sits behind AWS WAF. A Playwright-minted
+// token does not carry over to server-side HTTP, and the search journey shows a visual
+// CAPTCHA. In-browser category browsing from a residential IP at shopper pacing passes
+// without any challenge (matval crawled 33k pages this way, zero blocks).
+//
+// About the CAPTCHA: this crawler never defeats it. It runs a real browser window that
+// keeps a persistent profile (so session and WAF tokens accumulate), starts with a
+// warm-up so the passive JS challenge can solve itself, and if a visual CAPTCHA does
+// appear it stops and waits — you solve the puzzle by hand in the window, like ICA
+// intends a human to, and the crawl resumes where it stopped. Solving services or OCR
+// are out of scope on purpose; getting flagged for them means harder challenges and no
+// data at all.
 //
 // Resumable: categories and products already in the output file are skipped, so
-// re-running fills gaps without re-crawling everything. Runtime ~30-45 min.
+// re-running fills gaps without re-crawling everything. Full crawl ~30-45 min.
 // Run: bun run catalogue:ica [accountId]
+// Env: HEADLESS=1 run without a window (challenge then aborts instead of waiting);
+//      MAX_PAGES=10 for a short test run.
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 const accountId = process.argv[2] ?? '1088004'; // Maxi ICA Stormarknad Gunnesbo, Lund
 const BASE = 'https://handlaprivatkund.ica.se';
 const OUT = new URL('../src/lib/server/data/ica-catalogue.json', import.meta.url);
-const TMP = new URL('../src/lib/server/data/.ica-catalogue.tmp.json', import.meta.url);
+const TMP = new URL('./.ica-profile/catalogue.tmp.json', import.meta.url);
+const HEADLESS = process.env.HEADLESS === '1';
+const MAX_PAGES = Number(process.env.MAX_PAGES ?? 0); // 0 = unlimited
 
-// Categories without food prices (pharmacy & durable goods) — crawled last, if at all.
+// Categories without food prices — crawled last.
 const LOW_PRIORITY = ['apotek', 'traning', 'kok', 'hem', 'fritid', 'blommor', 'tobak', 'djur', 'stad'];
 
+// The WAF's challenge texts (the escalation switched ours from Swedish to English once).
+const CHALLENGE_MARKERS = [
+	'Bekräfta att du är en människa', // sv: "confirm you are human"
+	'Bekräfta att du är en människa',
+	"Let's confirm you are human",
+	'aws-waf-token' // challenge page scripts always reference it
+];
+const CHALLENGE_TIMEOUT_MIN = 10; // minutes to wait for a human solve before giving up
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const log = (...args) => console.log(new Date().toLocaleTimeString('sv-SE'), ...args);
 
 let db;
 try {
 	db = JSON.parse(await readFile(OUT, 'utf8'));
 } catch {
-	db = { stores: {}, categories: {}, products: [] };
+	db = { stores: {}, products: [] };
 }
 const storeState = (db.stores[accountId] ??= { categories: {}, visited: {} });
 
+// ---------- launch and session ----------
 let browser, ctx, page;
-let cookieConsentDone = false;
 
-async function wafTokenReady() {
-	for (let i = 0; i < 40; i++) {
-		for (const c of await ctx.cookies()) if (c.name === 'aws-waf-token') return true;
-		await sleep(500);
+/** Real Chrome if installed (best fingerprint), else the bundled Chromium. */
+async function launch() {
+	const profile = new URL('./.ica-profile', import.meta.url);
+	await mkdir(profile, { recursive: true });
+	for (const opts of [{ channel: 'chrome' }, {}]) {
+		try {
+			browser = await chromium.launch({
+				headless: HEADLESS,
+				...(opts.channel ? opts : {}),
+				args: ['--disable-blink-features=AutomationControlled']
+			});
+			log(`browser: ${opts.channel ?? 'bundled chromium'}${HEADLESS ? ' (headless)' : ' (headed)'}`);
+			return;
+		} catch (e) {
+			log(`no ${opts.channel ?? 'chromium'}: ${String(e.message).split('\n')[0]}`);
+		}
 	}
-	return false;
+	throw new Error('no browser could be launched');
 }
 
-const seenCaptcha = async () =>
-	(await page.content()).includes('Bekräfta att du är en människa') || (await page.$('iframe[title*="challenge" i], iframe[src*="awswaf"]')) !== null;
+let consentDone = false;
 
-// Product JSON, as harvested from the site's own API responses.
-const handlers = {
-	// PUT batch: { products: [{ productId, name, price: {amount}, unitPrice: {amount,label}, offers… }] }
-	async 'webproductpagews/v6/products' (payload) {
-		for (const p of payload?.products ?? []) {
-			const id = String(p.productId ?? '');
-			if (!id || !p.name) continue;
-			db.products = db.products.filter((x) => x.id !== id);
-			db.products.push({
-				id,
-				name: p.name,
-				brand: p.manufacturer ?? undefined,
-				price: p.price?.amount != null ? Number(p.price.amount) : undefined,
-				unitPrice: p.unitPrice?.amount != null ? Number(p.unitPrice.amount) : undefined,
-				unit: p.unitPrice?.label ?? undefined,
-				size: p.packSizeDescription ?? p.size?.value ?? undefined,
-				available: !!p.available,
-				ean: p.ean ?? undefined,
-				categories: (p.categoryPath ?? []).slice(0, 2),
-				url: `${BASE}/stores/${accountId}/products/${slug(p.name)}/${p.retailerProductId ?? ''}`
-			});
-		}
-	},
-	// GET product pages (v5): paginated catalogue listings
-	async 'webproductpagews/v5/product-pages' (payload) {
-		for (const p of payload?.productPages ?? payload?.products ?? []) {
-			const price = p.price?.current ?? p.price ?? {};
-			const id = String(p.productId ?? p.id ?? '');
-			if (!id || !p.name || price.amount == null) continue;
-			db.products = db.products.filter((x) => x.id !== id);
-			db.products.push({
-				id,
-				name: p.name,
-				brand: p.manufacturer ?? undefined,
-				price: Number(price.amount),
-				unitPrice: p.unitPrice?.current?.amount != null ? Number(p.unitPrice.current.amount) : p.unitPrice?.amount,
-				unit: p.unitPrice?.current?.label ?? p.unitPrice?.label ?? undefined,
-				size: p.packSizeDescription ?? p.size?.value ?? undefined,
-				available: !!p.available,
-				ean: p.ean ?? undefined,
-				categories: (p.categoryPath ?? []).slice(0, 2),
-				url: `${BASE}/stores/${accountId}/products/${slug(p.name)}/${p.retailerProductId ?? ''}`
-			});
+async function closeConsent() {
+	if (!consentDone) {
+		await page.evaluate(() => {
+			const el = document.getElementById('onetrust-consent-sdk');
+			if (el) el.style.display = 'none';
+		});
+		consentDone = true;
+	}
+}
+
+/** The site's challenge is a page/iframe asking a human to prove themselves. */
+async function isChallenge() {
+	const content = await page.content();
+	if (CHALLENGE_MARKERS.some((m) => content.includes(m))) return true;
+	// The visual puzzle lives in a hosted iframe.
+	return page.frames().some((f) => /awswaf|captcha/i.test(f.url()) && f !== page.mainFrame());
+}
+
+const hasWafToken = async () => (await ctx.cookies()).some((c) => c.name === 'aws-waf-token');
+
+/**
+ * A challenge appeared. Do NOT solve it programmatically: show it to the human and
+ * wait for them to complete it in the window. Returns once a fresh token exists.
+ */
+async function waitOutChallenge(url) {
+	if (HEADLESS) throw new Error('CAPTCHA in headless mode — re-run headed (default) and click it');
+	log('=== CAPTCHA — solve it in the browser window, I will resume this page when you do ===');
+	for (let i = 0; i < (CHALLENGE_TIMEOUT_MIN * 60) / 5; i++) {
+		process.stdout.write('\x07'); // bell
+		await sleep(5_000);
+		if (await hasWafToken()) {
+			log('WAF token minted — reloading the page');
+			await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+			await page.waitForTimeout(4_000);
+			if (await isChallenge()) continue; // the solve didn't take; wait again
+			return true;
 		}
 	}
-};
+	throw new Error('no human solve within the timeout');
+}
 
+/** Navigate and clear any challenge (human-solved). Retries a few times per URL. */
+async function safeGoto(url) {
+	let strikes = 0;
+	for (;;) {
+		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+		await page.waitForTimeout(2_000);
+		await closeConsent();
+		if (await isChallenge()) {
+			if (++strikes >= 3) throw new Error('the WAF keeps challenging even after solving');
+			await waitOutChallenge(url);
+			continue;
+		}
+		// Give the passive JS challenge a moment to mint a token even if the page loads.
+		if (!(await hasWafToken())) await sleep(3_000);
+		return;
+	}
+}
+
+// ---------- data harvesting ----------
 const slug = (s = '') =>
 	s
 		.normalize('NFKD')
@@ -102,83 +148,116 @@ const slug = (s = '') =>
 		.replace(/[\s_]+/g, '-')
 		.toLowerCase();
 
-let saves = 0;
+function keepPrice(id, name, values) {
+	const { price, unitPrice, unit, size, available, ean, cats, retailerId } = values;
+	if (!price) return;
+	db.products = db.products.filter((x) => x.id !== id);
+	db.products.push({
+		id,
+		name,
+		brand: values.brand,
+		price,
+		unitPrice,
+		unit,
+		size,
+		available: !!available,
+		ean,
+		categories: cats?.slice(0, 2),
+		url: `${BASE}/stores/${accountId}/products/${slug(name)}/${retailerId ?? ''}`
+	});
+}
 
-const tmpPathname = TMP.pathname;
-const outPathname = OUT.pathname;
+/** Harvest response bodies of the SPA's own API calls (verified 2026-10-29 with matval). */
+const handlers = [
+	{
+		marker: 'webproductpagews/v6/products',
+		apply(p) {
+			for (const x of p?.products ?? [])
+				keepPrice(String(x.productId ?? ''), x.name, {
+					price: x.price?.amount != null ? Number(x.price.amount) : undefined,
+					unitPrice: x.unitPrice?.amount != null ? Number(x.unitPrice.amount) : undefined,
+					unit: x.unitPrice?.label,
+					size: x.packSizeDescription ?? x.size?.value,
+					available: x.available,
+					ean: x.ean,
+					cats: x.categoryPath,
+					retailerId: x.retailerProductId,
+					brand: x.manufacturer
+				});
+		}
+	},
+	{
+		marker: 'webproductpagews/v5/product-pages',
+		apply(p) {
+			for (const x of p?.productPages ?? p?.products ?? []) {
+				const price = x.price?.current ?? x.price ?? {};
+				keepPrice(String(x.productId ?? x.id ?? ''), x.name, {
+					price: price.amount != null ? Number(price.amount) : undefined,
+					unitPrice: x.unitPrice?.current?.amount ?? x.unitPrice?.amount,
+					unit: x.unitPrice?.current?.label ?? x.unitPrice?.label,
+					size: x.packSizeDescription ?? x.size?.value,
+					available: x.available,
+					ean: x.ean,
+					cats: x.categoryPath,
+					retailerId: x.retailerProductId,
+					brand: x.manufacturer
+				});
+			}
+		}
+	}
+];
+
+let saves = 0;
 
 /** Write the .tmp file and atomically replace the output. */
 async function flush() {
 	await writeFile(TMP, JSON.stringify(db));
-	await rename(tmpPathname, outPathname);
+	await rename(TMP.pathname, OUT.pathname);
 }
 
 async function flushSoon() {
-	saves++;
-	if (saves % 5 === 0) await flush();
+	if (++saves % 5 === 0) await flush();
 }
-// Harvest API responses on every page.
+
 function attachHarvester() {
 	page.on('response', async (r) => {
 		const u = new URL(r.url());
-		for (const [marker, extract] of Object.entries(handlers)) {
-			if (u.pathname.includes(marker) && (r.request().method() === 'PUT' || r.status() === 200)) {
-				try {
-					const ct = r.headers()['content-type'] || '';
-					if (!ct.includes('json')) return;
-					await extract(await r.json());
-				} catch {
-					/* ignore */
-				}
-			}
+		const h = handlers.find((x) => u.pathname.includes(x.marker));
+		if (!h) return;
+		try {
+			const ct = r.headers()['content-type'] ?? '';
+			if (!ct.includes('json')) return;
+			await h.apply(await r.json());
+		} catch {
+			/* ignore */
 		}
 	});
 }
 
-/** Discover subcategory links on a category page. */
 async function discoverSubcategories() {
 	return page.$$eval('a[href*="/categories/"]', (as) =>
 		as.map((a) => a.getAttribute('href')).filter((u) => u && /\/stores\/\w+\/categories\/.+/.test(u))
 	);
 }
 
-async function visitCategory(href, index, total) {
+async function visitCategory(href) {
 	const url = href.startsWith('http') ? href : `${BASE}${href}`;
 	const slugKey = decodeURIComponent(href.split('/categories/')[1] ?? href).split('?')[0];
-	if (storeState.visited[slugKey]) return false;
 
-	console.log(`[${index}/${total}] ${slugKey}`);
-	await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
-	await page.waitForTimeout(1_500);
-
-	if (!(await wafTokenReady())) console.warn('  no WAF token yet — continuing anyway');
-
-	if (await seenCaptcha()) {
-		console.error(`CAPTCHA at ${url}, aborting crawl (state saved)`);
-		await flush();
-		process.exit(2);
-	}
-
-	if (!cookieConsentDone) {
-		await page.evaluate(() => {
-			const el = document.getElementById('onetrust-consent-sdk');
-			if (el) el.style.display = 'none';
-		});
-		cookieConsentDone = true;
-	}
+	await safeGoto(url);
 
 	// Scroll to the bottom in steps so the app fetches every product batch.
 	let lastHeight = -1;
 	for (let i = 0; i < 25; i++) {
 		await page.mouse.wheel(0, 4_000);
-		await sleep(1_200);
+		await sleep(1_500);
 		const h = await page.evaluate(() => document.body.scrollHeight);
 		if (h === lastHeight) {
 			// two extra attempts in case a render lagged
 			await page.mouse.wheel(0, 8_000);
-			await sleep(1_800);
-			const h2 = await page.evaluate(() => document.body.scrollHeight);
-			if (h2 === lastHeight) break;
+			await sleep(2_000);
+			if ((await page.evaluate(() => document.body.scrollHeight)) === lastHeight) break;
+			log('  growth…');
 		}
 		lastHeight = h;
 	}
@@ -189,20 +268,10 @@ async function visitCategory(href, index, total) {
 		if (!storeState.categories[key]) storeState.categories[key] = { href: sub, depth: slugKey.split('/').length };
 	}
 	await flushSoon();
-	return true;
 }
 
-// ---- main ----
-browser = await chromium.launch({ headless: true });
-ctx = await browser.newContext({
-	userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-	locale: 'sv-SE'
-});
-page = await ctx.newPage();
-attachHarvester();
-
-// Seed: the site's root categories (from matval's mapping, they are the national tree).
-const ROOTS = [
+// ---------- category queue ----------
+const seededRoots = (slugify = false) => [
 	['Frukt & Grönt', 'Frukt-Grönt', '03968fc5-dadb-4e2b-8983-6abbf641df3c'],
 	['Kött, Chark & Fågel', 'Kott-Chark-Fagel', '4d07744d-fd8d-47ea-89e6-38c49ca44652'],
 	['Fisk & Skaldjur', 'Fisk-Skaldjur', '3bfbe616-f05c-4fdf-823a-f55ed6eed6c2'],
@@ -225,13 +294,17 @@ const ROOTS = [
 	['Blommor & Trädgård', 'Blommor-Tradgard', 'cae1e58c-a558-4eff-a899-7ece0ce575f9'],
 	['Tobak', 'Tobak', '331db70a-9d3f-4574-96fc-3543d7149a57']
 ];
-for (const [name, path, id] of ROOTS) {
-	const key = `${path}/${id}`;
-	if (!storeState.categories[key]) storeState.categories[key] = { href: `/stores/${accountId}/categories/${path}/${id}`, depth: 1 };
+
+function seedRoots() {
+	if (Object.keys(storeState.categories).length) return; // resuming: keep discovered list
+	for (const [, path, id] of seededRoots())
+		storeState.categories[`${path}/${id}`] = {
+			href: `/stores/${accountId}/categories/${path}/${id}`,
+			depth: 1
+		};
 }
 
-// Breadth-first-ish: process the queue; deeper and low-priority categories go last.
-const selectNext = () => {
+function selectNext() {
 	const entries = Object.entries(storeState.categories).filter(([k]) => !storeState.visited[k]);
 	entries.sort((a, b) => {
 		const pa = LOW_PRIORITY.some((p) => a[0].toLowerCase().startsWith(p)) || (a[1].depth ?? 1) > 2 ? 1 : 0;
@@ -240,21 +313,50 @@ const selectNext = () => {
 		return (a[1].depth ?? 1) - (b[1].depth ?? 1);
 	});
 	return entries[0];
-};
+}
+
+// ---------- main ----------
+await launch();
+ctx = await browser.newContext({
+	userAgent:
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+	locale: 'sv-SE',
+	viewport: { width: 1440, height: 900 }
+});
+page = await ctx.newPage();
+attachHarvester();
+seedRoots();
+
+if (MAX_PAGES === 0) log(`${Object.keys(storeState.visited).length} visited, ${db.products.length} priced products in existing index`);
+
+// Warm-up: the store's own landing page mints the passive WAF token before we crawl.
+await safeGoto(`${BASE}/stores/${accountId}`);
+if (!(await hasWafToken())) {
+	for (let i = 0; i < 20 && !(await hasWafToken()); i++) await sleep(1_000);
+}
 
 let done = 0;
-for (;;) {
-	const [key, cat] = selectNext() ?? [];
-	if (!key) break;
-	try {
-		if (await visitCategory(cat.href, ++done, done + Object.values(storeState.visited).length)) {
-			await sleep(1_500 + Math.random() * 1_500);
+try {
+	for (;;) {
+		const [key, cat] = selectNext() ?? [];
+		if (!key) break;
+		try {
+			await visitCategory(cat.href);
+			log(`[${++done}${MAX_PAGES ? `/${MAX_PAGES}` : ''}] ${key}`);
+			if (MAX_PAGES && done >= MAX_PAGES) break;
+			await sleep(2_500 + Math.random() * 2_500); // shopper pacing
+		} catch (e) {
+			console.error(`  failed: ${e.message.split('\n')[0]}`);
+			if (/CAPTCHA|no human solve|keeps challenging/.test(e.message)) break; // reputation came back; retry later
 		}
-	} catch (e) {
-		console.warn(`  failed: ${e.message.split('\n')[0]}`);
 	}
+} finally {
+	await flush();
 }
-await flush();
-const ymd = new Date().toISOString().slice(0, 10);
+
 db = JSON.parse(await readFile(OUT, 'utf8'));
-console.log(`done: ${done} categories this run, ${db.products.length} priced products, ${Object.keys(storeState.visited).length} categories visited`);
+log(
+	`done: ${done + Object.keys(storeState.visited).length} categories visited total, ` +
+		`${db.products.reduce((n, p) => n + !!p.price, 0)} priced products`
+);
+await browser.close();

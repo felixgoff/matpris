@@ -12,6 +12,9 @@ node_modules
 .DS_Store
 Thumbs.db
 
+# Crawler browser profiles (cookies/WAF tokens — never commit)
+scripts/.ica-profile/
+
 # Env
 .env
 .env.*
