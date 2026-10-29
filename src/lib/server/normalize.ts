@@ -44,13 +44,33 @@ export function unitPriceFromSize(price: number, size: string | undefined) {
 
 const tokens = (s: string) => s.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
 
+// Swedish plural/definite endings, so "banan" matches "bananer" and "mjölk" "mjölken".
+const ENDINGS = ['', 'r', 'n', 's', 't', 'er', 'ar', 'or', 'en', 'et', 'na', 'erna', 'arna', 'orna'];
+
+export type MatchQuality = 0 | 1 | 2;
+
+function wordQuality(q: string, word: string): MatchQuality {
+	for (const end of ENDINGS) {
+		const form = q + end;
+		// Whole word, or the head of a compound ("mellanmjölk", "brieost").
+		if (word === form || (q.length >= 3 && word.endsWith(form))) return 2;
+	}
+	// Merely starts with it ("fanta" → "fantasty", "kaffe" → "kaffefilter"): weak.
+	return word.startsWith(q) ? 1 : 0;
+}
+
 /**
- * Does a product plausibly match the query? Every query word must appear in the
- * product text. Words of 3+ letters may appear inside compounds ("mjölk" matches
- * "Mellanmjölk"); shorter words must start a word.
+ * How well a product matches the query: 2 = every query word matches strongly,
+ * 1 = some only weakly (prefix of a longer word), 0 = no match.
  */
-export function matchesQuery(query: string, ...fields: (string | undefined)[]): boolean {
-	const text = fields.filter(Boolean).join(' ').toLowerCase();
-	const words = tokens(text);
-	return tokens(query).every((q) => (q.length >= 3 ? text.includes(q) : words.some((w) => w.startsWith(q))));
+export function matchQuality(query: string, ...fields: (string | undefined)[]): MatchQuality {
+	const words = tokens(fields.filter(Boolean).join(' '));
+	let worst: MatchQuality = 2;
+	for (const q of tokens(query)) {
+		let best: MatchQuality = 0;
+		for (const w of words) if ((best = Math.max(best, wordQuality(q, w)) as MatchQuality) === 2) break;
+		if (best < worst) worst = best;
+		if (worst === 0) break;
+	}
+	return worst;
 }

@@ -17,7 +17,7 @@ export function loadMapKit(): Promise<typeof mapkit> {
 		const script = document.createElement('script');
 		script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
 		script.crossOrigin = 'anonymous';
-		script.dataset.libraries = 'map,annotations,overlays';
+		script.dataset.libraries = 'map,annotations,overlays,user-location';
 		script.dataset.callback = callback;
 		script.onerror = () => reject(new Error('Kunde inte ladda Apple Maps'));
 		document.head.append(script);

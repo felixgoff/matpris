@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { matchesQuery, parseSek, parseSize, parseUnitPrice, unitPriceFromSize } from './normalize';
+import { matchQuality, parseSek, parseSize, parseUnitPrice, unitPriceFromSize } from './normalize';
 
 describe('parseSek', () => {
 	it('handles Swedish formatting', () => {
@@ -30,17 +30,22 @@ describe('parseSize', () => {
 	});
 });
 
-describe('matchesQuery', () => {
-	it('matches inside Swedish compounds', () => {
-		expect(matchesQuery('mjölk', 'Mellanmjölk 1,5%')).toBe(true);
-		expect(matchesQuery('kaffe bryggkaffe', 'Bryggkaffe Mellanrost')).toBe(true);
+describe('matchQuality', () => {
+	it('matches whole words and compound heads strongly', () => {
+		expect(matchQuality('mjölk', 'Mellanmjölk 1,5%')).toBe(2);
+		expect(matchQuality('ost', 'Brieost')).toBe(2);
+		expect(matchQuality('banan', 'Bananer Eko')).toBe(2);
+		expect(matchQuality('fanta', 'Orange Zero Läsk Pet', 'Fanta')).toBe(2);
+		expect(matchQuality('kaffe bryggkaffe', 'Bryggkaffe Mellanrost')).toBe(2);
+	});
+	it('rates longer words that only start with the query as weak', () => {
+		expect(matchQuality('fanta', 'Köttbuljong Pulver', 'Fantasty')).toBe(1);
+		expect(matchQuality('kaff', 'Bryggkaffe', 'Zoégas')).toBe(0);
+		expect(matchQuality('kaffe', 'Kaffefilter')).toBe(1);
 	});
 	it('rejects unrelated products', () => {
-		expect(matchesQuery('banan', 'Päron')).toBe(false);
-		expect(matchesQuery('mjölk', 'Mjölkskummare', 'SILVERCREST')).toBe(true); // filtered by category instead
-	});
-	it('requires short words to start a word', () => {
-		expect(matchesQuery('ost', 'Brieost')).toBe(true);
-		expect(matchesQuery('ä', 'Päron')).toBe(false);
+		expect(matchQuality('banan', 'Päron')).toBe(0);
+		expect(matchQuality('ost', 'Postej')).toBe(0);
+		expect(matchQuality('ä', 'Päron')).toBe(0);
 	});
 });

@@ -20,7 +20,7 @@ Tokens made in the Apple Developer dashboard expire. When the map shows "Kartan 
 
 ## How it works
 
-1. **Location.** Browser geolocation, or an address geocoded through Nominatim. The default is central Stockholm.
+1. **Location.** On load the map turns on MapKit's user location (`showsUserLocation`), and the first location fix moves the search there. Until then, or if location access is denied, it shows central Stockholm. Entering an address (geocoded through Nominatim) stops following the device; "Använd min position" resumes it.
 2. **Automatic search radius** (`src/lib/server/stores/radius.ts`). Starts at 1.5 km and grows ×1.6 until the circle holds at least 12 stores from at least 3 chains, up to a 30 km cap. In a city centre the circle stays small; in the countryside it widens. At most 5 stores per chain and 25 in total are queried.
 3. **Live search** (`src/lib/server/search.ts`). All chains are queried in parallel. Results stream to the browser as NDJSON (`/api/search`), so fast chains appear first. Prices are cached for 15 minutes and store lists for 24 hours.
 4. **Normalising** (`src/lib/server/normalize.ts`). Prices and comparison prices (kr/kg, kr/l, kr/st) are parsed from each chain's format. Irrelevant hits are dropped: every query word must appear in the product name, and Swedish compounds count, so "mjölk" matches "Mellanmjölk".
@@ -58,6 +58,10 @@ To add either chain properly, ask for API or data access, or use a licensed pric
 
 1. Create `src/lib/server/chains/<chain>.ts` implementing `ChainAdapter` (`listStores`, `search`, `pricing`).
 2. Register it in `src/lib/server/chains/index.ts`, and add its name and colour to `CHAINS` in `src/lib/types.ts`.
+
+## Logos
+
+The chain logos in `static/logos/` are the chains' own SVGs from their websites. They're used only to identify each chain's prices and stores. They are trademarks of their owners; check that this use is OK before launching publicly.
 
 ## Being a good citizen (read before deploying)
 

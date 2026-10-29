@@ -1,5 +1,5 @@
 import type { NearbyStore, Store } from '../../types';
-import { distanceKm } from '../geo';
+import { distanceKm } from '../../geo';
 
 export interface AreaOptions {
 	startKm: number;

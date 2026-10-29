@@ -2,10 +2,11 @@
 
 export type ChainId = 'willys' | 'hemkop' | 'lidl';
 
-export const CHAINS: Record<ChainId, { name: string; color: string }> = {
-	willys: { name: 'Willys', color: '#e30613' },
-	hemkop: { name: 'Hemköp', color: '#f07800' },
-	lidl: { name: 'Lidl', color: '#0050aa' }
+// Logos are the chains' own SVGs from their websites, served from static/logos.
+export const CHAINS: Record<ChainId, { name: string; color: string; logo: string }> = {
+	willys: { name: 'Willys', color: '#e30613', logo: '/logos/willys.svg' },
+	hemkop: { name: 'Hemköp', color: '#f07800', logo: '/logos/hemkop.svg' },
+	lidl: { name: 'Lidl', color: '#0050aa', logo: '/logos/lidl.svg' }
 };
 
 export interface Store {
@@ -48,6 +49,8 @@ export interface ProductHit {
 export interface ResultRow extends ProductHit {
 	/** Nearest store in the search circle where this price applies. */
 	store: NearbyStore;
+	/** 'weak' = the query only starts a longer word ("fanta" in "Fantasty"); hidden when strong matches exist. */
+	match: 'strong' | 'weak';
 }
 
 export type ChainStatus = 'ok' | 'error' | 'throttled' | 'no-stores';

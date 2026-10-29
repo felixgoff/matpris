@@ -3,7 +3,7 @@ import { TtlCache } from './cache';
 import { adapters } from './chains';
 import type { ChainAdapter } from './chains/types';
 import { ThrottledError } from './http';
-import { matchesQuery } from './normalize';
+import { matchQuality } from './normalize';
 import { pickArea } from './stores/radius';
 import { allStores } from './stores/registry';
 
@@ -15,12 +15,16 @@ export function normalizeQuery(q: string) {
 
 async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyStore[]): Promise<ResultRow[]> {
 	const chain = adapter.chain;
-	const relevant = (h: ProductHit) => matchesQuery(query, h.name, h.brand);
+	const rate = (hits: ProductHit[], store: NearbyStore): ResultRow[] =>
+		hits.flatMap((h) => {
+			const q = matchQuality(query, h.name, h.brand);
+			return q ? [{ ...h, store, match: q === 2 ? 'strong' : 'weak' }] : [];
+		});
 
 	if (adapter.pricing === 'chain') {
 		// One national price list: price it once, point at the nearest store.
 		const hits = await priceCache.get(`${chain}:${query}`, () => adapter.search(query));
-		return hits.filter(relevant).map((h) => ({ ...h, store: stores[0] }));
+		return rate(hits, stores[0]);
 	}
 
 	// Per-store prices: query every store in the circle, keep each product's best offer.
@@ -30,9 +34,9 @@ async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyS
 	const best = new Map<string, ResultRow>();
 	perStore.forEach((r, i) => {
 		if (r.status !== 'fulfilled') return;
-		for (const h of r.value.filter(relevant)) {
-			const prev = best.get(h.id);
-			if (!prev || h.price < prev.price) best.set(h.id, { ...h, store: stores[i] });
+		for (const row of rate(r.value, stores[i])) {
+			const prev = best.get(row.id);
+			if (!prev || row.price < prev.price) best.set(row.id, row);
 		}
 	});
 	if (!best.size && perStore.every((r) => r.status === 'rejected')) throw (perStore[0] as PromiseRejectedResult).reason;
