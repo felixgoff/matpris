@@ -1,0 +1,1650 @@
+[
+	{
+		"id": "4798",
+		"chain": "hemkop",
+		"name": "Hemköp Alfta Västanågatan",
+		"lat": 61.3461,
+		"lng": 16.0543,
+		"address": "Västanågatan 3, 822 31 Alfta"
+	},
+	{
+		"id": "4660",
+		"chain": "hemkop",
+		"name": "Hemköp Alingsås",
+		"lat": 57.9262,
+		"lng": 12.5256,
+		"address": "Sveagatan 8, 441 32 Alingsås"
+	},
+	{
+		"id": "4775",
+		"chain": "hemkop",
+		"name": "Hemköp Almö Livs",
+		"lat": 58.0622,
+		"lng": 11.7523,
+		"address": "Myggenäsvägen 2a Och 2b, 471 60 Myggenäs"
+	},
+	{
+		"id": "4797",
+		"chain": "hemkop",
+		"name": "Hemköp Avesta",
+		"lat": 60.1426,
+		"lng": 16.1602,
+		"address": "Prästgatan 26, 774 33 Avesta"
+	},
+	{
+		"id": "4714",
+		"chain": "hemkop",
+		"name": "Hemköp Avesta Skogsbo",
+		"lat": 60.1567,
+		"lng": 16.1762,
+		"address": "Rutboleden 1, 774 60 Avesta"
+	},
+	{
+		"id": "4514",
+		"chain": "hemkop",
+		"name": "Hemköp Björklinge",
+		"lat": 60.0294,
+		"lng": 17.552,
+		"address": "Södra Långåsvägen 4, 743 10 Björklinge"
+	},
+	{
+		"id": "4770",
+		"chain": "hemkop",
+		"name": "Hemköp Blentarp",
+		"lat": 55.5834,
+		"lng": 13.6022,
+		"address": "Skurupsvägen 1, 275 62 Blentarp"
+	},
+	{
+		"id": "4515",
+		"chain": "hemkop",
+		"name": "Hemköp Bollebygd",
+		"lat": 57.6679,
+		"lng": 12.5702,
+		"address": "Stationsvägen 7, 517 34 Bollebygd"
+	},
+	{
+		"id": "4734",
+		"chain": "hemkop",
+		"name": "Hemköp Borensberg Östenssons",
+		"lat": 58.5624,
+		"lng": 15.2768,
+		"address": "Hamnvägen 1, 590 31 Borensberg"
+	},
+	{
+		"id": "4638",
+		"chain": "hemkop",
+		"name": "Hemköp Borlänge Södra Backa",
+		"lat": 60.4711,
+		"lng": 15.4412,
+		"address": "Hammargatan 8, 781 71 Borlänge"
+	},
+	{
+		"id": "4624",
+		"chain": "hemkop",
+		"name": "Hemköp Botkyrka Tullinge C",
+		"lat": 59.207,
+		"lng": 17.9057,
+		"address": "Nyängsvägen 3, 146 30 Tullinge"
+	},
+	{
+		"id": "4629",
+		"chain": "hemkop",
+		"name": "Hemköp Bredäng",
+		"lat": 59.2955,
+		"lng": 17.935,
+		"address": "Bredängstorg 1-3, 127 32 Skärholmen"
+	},
+	{
+		"id": "4669",
+		"chain": "hemkop",
+		"name": "Hemköp Bromma Blackeberg C",
+		"lat": 59.3478,
+		"lng": 17.8849,
+		"address": "Wergelandsgatan 3, 161 58 Bromma"
+	},
+	{
+		"id": "4774",
+		"chain": "hemkop",
+		"name": "Hemköp Bromma Stora Mossen",
+		"lat": 59.3289,
+		"lng": 17.9563,
+		"address": "Sobelgränd 4, 167 58 Bromma"
+	},
+	{
+		"id": "4623",
+		"chain": "hemkop",
+		"name": "Hemköp Bromma Ängby Torg",
+		"lat": 59.3471,
+		"lng": 17.9085,
+		"address": "Vultejusvägen 29, 161 53 Bromma"
+	},
+	{
+		"id": "4609",
+		"chain": "hemkop",
+		"name": "Hemköp Bålsta",
+		"lat": 59.5769,
+		"lng": 17.5121,
+		"address": "Stockholmsvägen 14, 746 33 Bålsta"
+	},
+	{
+		"id": "4773",
+		"chain": "hemkop",
+		"name": "Hemköp Dala-järna Myrbacka",
+		"lat": 60.5475,
+		"lng": 14.3663,
+		"address": "Myrbacka 80, 786 72 Dala-järna"
+	},
+	{
+		"id": "4517",
+		"chain": "hemkop",
+		"name": "Hemköp Dalby",
+		"lat": 55.6644,
+		"lng": 13.3491,
+		"address": "Kristers Väg 23, 247 50 Dalby"
+	},
+	{
+		"id": "4239",
+		"chain": "hemkop",
+		"name": "Hemköp Danderyd C",
+		"lat": 59.3984,
+		"lng": 18.0365,
+		"address": "Mörby Centrum, 182 32 Danderyd"
+	},
+	{
+		"id": "4667",
+		"chain": "hemkop",
+		"name": "Hemköp Delsbo Edevägen",
+		"lat": 61.8007,
+		"lng": 16.5538,
+		"address": "Edevägen 9, 820 60 Delsbo"
+	},
+	{
+		"id": "4254",
+		"chain": "hemkop",
+		"name": "Hemköp Domsjö",
+		"lat": 63.2672,
+		"lng": 18.691,
+		"address": "Domsjövägen 2, 892 00 Domsjö"
+	},
+	{
+		"id": "4519",
+		"chain": "hemkop",
+		"name": "Hemköp Ellös",
+		"lat": 58.1782,
+		"lng": 11.4759,
+		"address": "Rosenlundsvägen 51, 474 31 Ellös"
+	},
+	{
+		"id": "4221",
+		"chain": "hemkop",
+		"name": "Hemköp Eskilstuna City",
+		"lat": 59.3706,
+		"lng": 16.5168,
+		"address": "Rademachergatan 5-7, 632 20 Eskilstuna"
+	},
+	{
+		"id": "4203",
+		"chain": "hemkop",
+		"name": "Hemköp Falun C",
+		"lat": 60.6052,
+		"lng": 15.6335,
+		"address": "Holmgatan 18, 791 71 Falun"
+	},
+	{
+		"id": "4687",
+		"chain": "hemkop",
+		"name": "Hemköp Falun Hosjö",
+		"lat": 60.5901,
+		"lng": 15.7328,
+		"address": "Centralvägen 7, 791 46 Falun"
+	},
+	{
+		"id": "4799",
+		"chain": "hemkop",
+		"name": "Hemköp Farsta",
+		"lat": 59.242,
+		"lng": 18.0934,
+		"address": "Farsta Torg 26-28, 123 47 Farsta"
+	},
+	{
+		"id": "4520",
+		"chain": "hemkop",
+		"name": "Hemköp Fellingsbro",
+		"lat": 59.4343,
+		"lng": 15.5931,
+		"address": "Hemvägen, 710 41 Fellingsbro"
+	},
+	{
+		"id": "4521",
+		"chain": "hemkop",
+		"name": "Hemköp Gnesta Dansutvägen",
+		"lat": 59.0399,
+		"lng": 17.3265,
+		"address": "Dansutvägen 2, 646 30 Gnesta"
+	},
+	{
+		"id": "4767",
+		"chain": "hemkop",
+		"name": "Hemköp Granängsringen",
+		"lat": 59.2379,
+		"lng": 18.2293,
+		"address": "Granängsringen 2, 135 44 Tyresö"
+	},
+	{
+		"id": "4930",
+		"chain": "hemkop",
+		"name": "Hemköp Grums Orrby",
+		"lat": 59.3469,
+		"lng": 13.0982,
+		"address": "Orrkullegatan 2, 664 31 Grums"
+	},
+	{
+		"id": "4936",
+		"chain": "hemkop",
+		"name": "Hemköp Gråbo Bonum",
+		"lat": 57.8365,
+		"lng": 12.2987,
+		"address": "Mjörnbotorget 2, 443 42 Gråbo"
+	},
+	{
+		"id": "4524",
+		"chain": "hemkop",
+		"name": "Hemköp Grästorp Södergatan",
+		"lat": 58.3335,
+		"lng": 12.6764,
+		"address": "Södergatan 27, 467 30 Grästorp"
+	},
+	{
+		"id": "4670",
+		"chain": "hemkop",
+		"name": "Hemköp Gustavsberg Hamnen",
+		"lat": 59.3237,
+		"lng": 18.384,
+		"address": "Odelbergs Väg 1, 134 40 Gustavsberg"
+	},
+	{
+		"id": "4512",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Annedal",
+		"lat": 57.6933,
+		"lng": 11.9591,
+		"address": "Brunnsgatan 5, 413 12 Göteborg"
+	},
+	{
+		"id": "4264",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Guldheden",
+		"lat": 57.6838,
+		"lng": 11.9718,
+		"address": "Dr Fries Torg 4, 413 23 Göteborg"
+	},
+	{
+		"id": "4530",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Högsbo",
+		"lat": 57.6732,
+		"lng": 11.9127,
+		"address": "Växelmyntsgatan 6, 414 83 Göteborg"
+	},
+	{
+		"id": "4146",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Kortedala Torg",
+		"lat": 57.7521,
+		"lng": 12.0314,
+		"address": "Kortedala Torg 9, 415 10 Göteborg"
+	},
+	{
+		"id": "4547",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Linnégatan",
+		"lat": 57.6955,
+		"lng": 11.9521,
+		"address": "Linnégatan 36a, 413 04 Göteborg"
+	},
+	{
+		"id": "4222",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Lundby Park",
+		"lat": 57.719,
+		"lng": 11.9259,
+		"address": "Hjalmar Brantingsgatan 108, 417 11 Göteborg"
+	},
+	{
+		"id": "4557",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Majorna",
+		"lat": 57.693,
+		"lng": 11.9184,
+		"address": "Kustgatan 14, 414 55 Göteborg"
+	},
+	{
+		"id": "4559",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Masthuggstorget",
+		"lat": 57.6985,
+		"lng": 11.9431,
+		"address": "Masthuggstorget 3a, 413 27 Göteborg"
+	},
+	{
+		"id": "4359",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Mölnlycke",
+		"lat": 57.6581,
+		"lng": 12.1141,
+		"address": "Ekdalavägen 3, 435 30 Mölnlycke"
+	},
+	{
+		"id": "4561",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Nordenskiöldsgatan",
+		"lat": 57.6928,
+		"lng": 11.9509,
+		"address": "Nordensköldsgatan 13-17, 413 09 Göteborg"
+	},
+	{
+		"id": "4269",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Nordstan",
+		"lat": 57.7089,
+		"lng": 11.9679,
+		"address": "Östra Hamngatan 18, 411 09 Göteborg"
+	},
+	{
+		"id": "4219",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Opaltorget",
+		"lat": 57.6413,
+		"lng": 11.9014,
+		"address": "Opalgatan 79 A, 421 62 Västra Frölunda"
+	},
+	{
+		"id": "4360",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Selma Lagerlöfs Torg",
+		"lat": 57.7496,
+		"lng": 11.9816,
+		"address": "Selma Lagerlöfs Torg, 422 48 Hisings Backa"
+	},
+	{
+		"id": "4349",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Stigbergstorget",
+		"lat": 57.6988,
+		"lng": 11.9349,
+		"address": "Stigbergstorget 6, 414 63 Göteborg"
+	},
+	{
+		"id": "4792",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Torslanda C",
+		"lat": 57.724,
+		"lng": 11.7676,
+		"address": "Torslanda Torg, 423 21 Torslanda"
+	},
+	{
+		"id": "4504",
+		"chain": "hemkop",
+		"name": "Hemköp Göteborg Vasagatan",
+		"lat": 57.6986,
+		"lng": 11.9681,
+		"address": "Vasagatan 30, 411 24 Göteborg"
+	},
+	{
+		"id": "4245",
+		"chain": "hemkop",
+		"name": "Hemköp Halmstad C",
+		"lat": 56.6745,
+		"lng": 12.8566,
+		"address": "Brogatan 14-16, 302 43 Halmstad"
+	},
+	{
+		"id": "4189",
+		"chain": "hemkop",
+		"name": "Hemköp Haninge C",
+		"lat": 59.1687,
+		"lng": 18.1397,
+		"address": "Store Gränd 26, 136 46 Haninge"
+	},
+	{
+		"id": "4751",
+		"chain": "hemkop",
+		"name": "Hemköp Haninge Vega",
+		"lat": 59.1864,
+		"lng": 18.1446,
+		"address": "Vega Allé 2, 136 47 Haninge"
+	},
+	{
+		"id": "4511",
+		"chain": "hemkop",
+		"name": "Hemköp Haverdal Klövervägen",
+		"lat": 56.7303,
+		"lng": 12.6702,
+		"address": "Klövervägen, 310 42 Haverdal"
+	},
+	{
+		"id": "4263",
+		"chain": "hemkop",
+		"name": "Hemköp Hedemora",
+		"lat": 60.2832,
+		"lng": 15.9901,
+		"address": "Gussarvsgatan 23, 776 33 Hedemora"
+	},
+	{
+		"id": "4542",
+		"chain": "hemkop",
+		"name": "Hemköp Helsingborg Laröd",
+		"lat": 56.0911,
+		"lng": 12.6548,
+		"address": "Serpentinvägen 3, 254 84 Helsingborg"
+	},
+	{
+		"id": "4569",
+		"chain": "hemkop",
+		"name": "Hemköp Helsingborg Rydebäck",
+		"lat": 55.9663,
+		"lng": 12.775,
+		"address": "Frösögatan 7, 253 72 Helsingborg"
+	},
+	{
+		"id": "4293",
+		"chain": "hemkop",
+		"name": "Hemköp Helsingborg Stattena",
+		"lat": 56.0572,
+		"lng": 12.7012,
+		"address": "Stattena Centrum 6, 254 44 Helsingborg"
+	},
+	{
+		"id": "4214",
+		"chain": "hemkop",
+		"name": "Hemköp Helsingborg Söder",
+		"lat": 56.0399,
+		"lng": 12.7018,
+		"address": "Södergatan 32, 252 25 Helsingborg"
+	},
+	{
+		"id": "4526",
+		"chain": "hemkop",
+		"name": "Hemköp Herrljunga",
+		"lat": 58.0759,
+		"lng": 13.0209,
+		"address": "Östra Parkgatan 1, 524 30 Herrljunga"
+	},
+	{
+		"id": "4937",
+		"chain": "hemkop",
+		"name": "Hemköp Hestra Mogatan",
+		"lat": 57.4413,
+		"lng": 13.5974,
+		"address": "Mogatan 26, 335 71 Hestra"
+	},
+	{
+		"id": "4605",
+		"chain": "hemkop",
+		"name": "Hemköp Huddinge Centrum",
+		"lat": 59.2363,
+		"lng": 17.981,
+		"address": "Forellvägen 14, 141 47 Huddinge"
+	},
+	{
+		"id": "4610",
+		"chain": "hemkop",
+		"name": "Hemköp Huddinge Matbörsen",
+		"lat": 59.2537,
+		"lng": 17.9709,
+		"address": "Kallkärrsvägen 66, 141 41 Huddinge"
+	},
+	{
+		"id": "4131",
+		"chain": "hemkop",
+		"name": "Hemköp Hudiksvall C",
+		"lat": 61.7292,
+		"lng": 17.1033,
+		"address": "Västra Tullgatan 13, 824 30 Hudiksvall"
+	},
+	{
+		"id": "4684",
+		"chain": "hemkop",
+		"name": "Hemköp Hägersten Västertorp",
+		"lat": 59.2931,
+		"lng": 17.9677,
+		"address": "Störtloppsvägen 22, 129 47 Hägersten"
+	},
+	{
+		"id": "4252",
+		"chain": "hemkop",
+		"name": "Hemköp Härnösand",
+		"lat": 62.6316,
+		"lng": 17.9394,
+		"address": "Storgatan 26, 871 31 Härnösand"
+	},
+	{
+		"id": "4702",
+		"chain": "hemkop",
+		"name": "Hemköp Hässelby Strand",
+		"lat": 59.3604,
+		"lng": 17.8326,
+		"address": "Maltesholmstorget 6, 165 62 Hässelby"
+	},
+	{
+		"id": "4657",
+		"chain": "hemkop",
+		"name": "Hemköp Insjön Hjultorget",
+		"lat": 60.6754,
+		"lng": 15.0898,
+		"address": "Hjultorget 30, 793 41 Insjön"
+	},
+	{
+		"id": "4230",
+		"chain": "hemkop",
+		"name": "Hemköp Järfälla Barkarbystaden",
+		"lat": 59.4137,
+		"lng": 17.8733,
+		"address": "Barkarbyvägen 120, 177 45 Järfälla"
+	},
+	{
+		"id": "4119",
+		"chain": "hemkop",
+		"name": "Hemköp Järfälla Jakobsbergs Centrum",
+		"lat": 59.4239,
+		"lng": 17.8379,
+		"address": "Riddarplatsen 14, 175 30 Järfälla"
+	},
+	{
+		"id": "4111",
+		"chain": "hemkop",
+		"name": "Hemköp Järfälla Stäket",
+		"lat": 59.4693,
+		"lng": 17.8119,
+		"address": "Skarprättarvägen 36-38, 175 77 Järfälla"
+	},
+	{
+		"id": "4674",
+		"chain": "hemkop",
+		"name": "Hemköp Jönköping C",
+		"lat": 57.7828,
+		"lng": 14.1632,
+		"address": "Barnarpsgatan 10, 553 16 Jönköping"
+	},
+	{
+		"id": "4208",
+		"chain": "hemkop",
+		"name": "Hemköp Jönköping Munksjöstaden",
+		"lat": 57.771,
+		"lng": 14.1566,
+		"address": "Barnarpsgatan 59, 553 33 Jönköping"
+	},
+	{
+		"id": "4266",
+		"chain": "hemkop",
+		"name": "Hemköp Jönköping Strandängen",
+		"lat": 57.8113,
+		"lng": 14.1513,
+		"address": "Ebba Ramsays Väg 17, 553 10 Jönköping"
+	},
+	{
+		"id": "4207",
+		"chain": "hemkop",
+		"name": "Hemköp Kalmar",
+		"lat": 56.665,
+		"lng": 16.3638,
+		"address": "Fiskaregatan 43, 392 48 Kalmar"
+	},
+	{
+		"id": "4534",
+		"chain": "hemkop",
+		"name": "Hemköp Karlskrona",
+		"lat": 56.1624,
+		"lng": 15.5882,
+		"address": "Ronnebygatan 34-36, 371 33 Karlskrona"
+	},
+	{
+		"id": "4755",
+		"chain": "hemkop",
+		"name": "Hemköp Karlstad C",
+		"lat": 59.3793,
+		"lng": 13.4974,
+		"address": "Drottninggatan 33, 652 25 Karlstad"
+	},
+	{
+		"id": "4535",
+		"chain": "hemkop",
+		"name": "Hemköp Kinna C",
+		"lat": 57.5081,
+		"lng": 12.6992,
+		"address": "Stationsgatan 1, 511 54 Kinna"
+	},
+	{
+		"id": "4604",
+		"chain": "hemkop",
+		"name": "Hemköp Kisa",
+		"lat": 57.9886,
+		"lng": 15.633,
+		"address": "Torggatan 6, 590 40 Kisa"
+	},
+	{
+		"id": "4537",
+		"chain": "hemkop",
+		"name": "Hemköp Kolbäck",
+		"lat": 59.5654,
+		"lng": 16.233,
+		"address": "Linnéatorget 4, 734 50 Kolbäck"
+	},
+	{
+		"id": "4727",
+		"chain": "hemkop",
+		"name": "Hemköp Kullavik C",
+		"lat": 57.5461,
+		"lng": 11.9461,
+		"address": "Kullaviks Centrum, 430 41 Kullavik"
+	},
+	{
+		"id": "4681",
+		"chain": "hemkop",
+		"name": "Hemköp Kungsbacka Billdal",
+		"lat": 57.561,
+		"lng": 11.961,
+		"address": "Kungsporten 6, 427 50 Billdal"
+	},
+	{
+		"id": "4676",
+		"chain": "hemkop",
+		"name": "Hemköp Kungsbacka Hålabäck",
+		"lat": 57.4847,
+		"lng": 12.0876,
+		"address": "Blomstergatan 4, 434 53 Kungsbacka"
+	},
+	{
+		"id": "4716",
+		"chain": "hemkop",
+		"name": "Hemköp Kungsbacka Torget",
+		"lat": 57.4866,
+		"lng": 12.0767,
+		"address": "Södra Torggatan 16, 434 30 Kungsbacka"
+	},
+	{
+		"id": "4683",
+		"chain": "hemkop",
+		"name": "Hemköp Kälvesta",
+		"lat": 59.3847,
+		"lng": 17.8646,
+		"address": "Basgränd 1, 162 47 Vällingby"
+	},
+	{
+		"id": "4673",
+		"chain": "hemkop",
+		"name": "Hemköp Köping C",
+		"lat": 59.5136,
+		"lng": 15.9981,
+		"address": "Stora Gatan 16, 731 30 Köping"
+	},
+	{
+		"id": "4142",
+		"chain": "hemkop",
+		"name": "Hemköp Leksand",
+		"lat": 60.7333,
+		"lng": 14.9976,
+		"address": "Leksandsvägen 24, 793 31 Leksand"
+	},
+	{
+		"id": "4939",
+		"chain": "hemkop",
+		"name": "Hemköp Lerum Solkatten",
+		"lat": 57.7696,
+		"lng": 12.2698,
+		"address": "Bagges Torg, 443 30 Lerum"
+	},
+	{
+		"id": "4697",
+		"chain": "hemkop",
+		"name": "Hemköp Lidingö Brevik",
+		"lat": 59.3483,
+		"lng": 18.2052,
+		"address": "Södra Kungsvägen 240, 181 65 Lidingö"
+	},
+	{
+		"id": "4228",
+		"chain": "hemkop",
+		"name": "Hemköp Lidköping C",
+		"lat": 58.5034,
+		"lng": 13.1538,
+		"address": "Sveagatan 23, 531 31 Lidköping"
+	},
+	{
+		"id": "4545",
+		"chain": "hemkop",
+		"name": "Hemköp Lindesberg Bergslagsvägen",
+		"lat": 59.5988,
+		"lng": 15.2217,
+		"address": "Bergslagsvägen 3, 711 21 Lindesberg"
+	},
+	{
+		"id": "4552",
+		"chain": "hemkop",
+		"name": "Hemköp Linköping Lucullus",
+		"lat": 58.4108,
+		"lng": 15.6204,
+		"address": "Stora Torget 5, 582 19 Linköping"
+	},
+	{
+		"id": "4701",
+		"chain": "hemkop",
+		"name": "Hemköp Linköping Priso",
+		"lat": 58.4189,
+		"lng": 15.6116,
+		"address": "Timmermansgatan 1, 582 77 Linköping"
+	},
+	{
+		"id": "4193",
+		"chain": "hemkop",
+		"name": "Hemköp Linköping Ryd",
+		"lat": 58.4091,
+		"lng": 15.5627,
+		"address": "Mårdtorpsgatan 27, 582 48 Linköping"
+	},
+	{
+		"id": "4277",
+		"chain": "hemkop",
+		"name": "Hemköp Linköping Storgatan",
+		"lat": 58.4114,
+		"lng": 15.6283,
+		"address": "Storgatan 11, 582 23 Linköping"
+	},
+	{
+		"id": "4225",
+		"chain": "hemkop",
+		"name": "Hemköp Linköping Tallboda",
+		"lat": 58.4265,
+		"lng": 15.6784,
+		"address": "Gränsliden 6, 582 74 Linköping"
+	},
+	{
+		"id": "4738",
+		"chain": "hemkop",
+		"name": "Hemköp Linköping Ullstämma Östenssons",
+		"lat": 58.367,
+		"lng": 15.6932,
+		"address": "Värmevägen 2, 589 37 Linköping"
+	},
+	{
+		"id": "4549",
+		"chain": "hemkop",
+		"name": "Hemköp Ljungbyhed C",
+		"lat": 56.0735,
+		"lng": 13.2346,
+		"address": "Storgatan 8, 264 52 Ljungbyhed"
+	},
+	{
+		"id": "4550",
+		"chain": "hemkop",
+		"name": "Hemköp Ljungsbro C",
+		"lat": 58.5097,
+		"lng": 15.4998,
+		"address": "Löjtnantsgatan 2, 590 60 Ljungsbro"
+	},
+	{
+		"id": "4757",
+		"chain": "hemkop",
+		"name": "Hemköp Lkpg Folkungavallen Östenssons",
+		"lat": 58.4049,
+		"lng": 15.632,
+		"address": "Badmästargatan 1, 582 43 Linköping"
+	},
+	{
+		"id": "4224",
+		"chain": "hemkop",
+		"name": "Hemköp Lund Brunnshög",
+		"lat": 55.7187,
+		"lng": 13.2322,
+		"address": "Solbjersvägen 32, 224 81 Lund"
+	},
+	{
+		"id": "4123",
+		"chain": "hemkop",
+		"name": "Hemköp Lund Karhögstorg",
+		"lat": 55.6945,
+		"lng": 13.1915,
+		"address": "Karhögstorg 2a, 223 58 Lund"
+	},
+	{
+		"id": "4721",
+		"chain": "hemkop",
+		"name": "Hemköp Malmköping Torget",
+		"lat": 59.1334,
+		"lng": 16.7291,
+		"address": "Stora Torget, 642 60 Malmköping"
+	},
+	{
+		"id": "4212",
+		"chain": "hemkop",
+		"name": "Hemköp Malmö Elinegård",
+		"lat": 55.5693,
+		"lng": 12.9484,
+		"address": "Tröskgatan 8, 216 33 Limhamn"
+	},
+	{
+		"id": "4114",
+		"chain": "hemkop",
+		"name": "Hemköp Malmö Kronprinsen",
+		"lat": 55.5976,
+		"lng": 12.9851,
+		"address": "Regementsgatan 52, 217 48 Malmö"
+	},
+	{
+		"id": "4247",
+		"chain": "hemkop",
+		"name": "Hemköp Malmö Triangeln",
+		"lat": 55.5954,
+		"lng": 13.0034,
+		"address": "Södra Förstadgatan 58, 211 43 Malmö"
+	},
+	{
+		"id": "4199",
+		"chain": "hemkop",
+		"name": "Hemköp Malmö Värnhem",
+		"lat": 55.6073,
+		"lng": 13.0253,
+		"address": "Fredsgatan 12b, 212 12 Malmö"
+	},
+	{
+		"id": "4682",
+		"chain": "hemkop",
+		"name": "Hemköp Malung",
+		"lat": 60.6849,
+		"lng": 13.7113,
+		"address": "Grönlandsvägen 23, 782 31 Malung"
+	},
+	{
+		"id": "4541",
+		"chain": "hemkop",
+		"name": "Hemköp Mellerud Kvarnkullen",
+		"lat": 58.6977,
+		"lng": 12.4642,
+		"address": "Storgatan 54, 464 33 Mellerud"
+	},
+	{
+		"id": "4698",
+		"chain": "hemkop",
+		"name": "Hemköp Mellerud Torget",
+		"lat": 58.6992,
+		"lng": 12.4556,
+		"address": "Köpmanstorget 3, 464 31 Mellerud"
+	},
+	{
+		"id": "4554",
+		"chain": "hemkop",
+		"name": "Hemköp Mjölby Lundby",
+		"lat": 58.3193,
+		"lng": 15.1195,
+		"address": "Smålandsvägen 44, 595 31 Mjölby"
+	},
+	{
+		"id": "4748",
+		"chain": "hemkop",
+		"name": "Hemköp Motala Luxor Center",
+		"lat": 58.5457,
+		"lng": 15.0174,
+		"address": "Luxorgatan 1, 591 39 Motala"
+	},
+	{
+		"id": "4730",
+		"chain": "hemkop",
+		"name": "Hemköp Motala Verkstan Östenssons",
+		"lat": 58.5483,
+		"lng": 15.0596,
+		"address": "Verkstadstorget, 591 60 Motala"
+	},
+	{
+		"id": "4732",
+		"chain": "hemkop",
+		"name": "Hemköp Motala Väster Östenssons",
+		"lat": 58.5358,
+		"lng": 15.0029,
+		"address": "Råssnäsvägen 14, 591 73 Motala"
+	},
+	{
+		"id": "4560",
+		"chain": "hemkop",
+		"name": "Hemköp Munkedal",
+		"lat": 58.4792,
+		"lng": 11.6573,
+		"address": "Industrivägen 4, 455 35 Munkedal"
+	},
+	{
+		"id": "4513",
+		"chain": "hemkop",
+		"name": "Hemköp Mölndal Bifrost",
+		"lat": 57.6618,
+		"lng": 11.9915,
+		"address": "Pinnharvsgatan 11, 431 47 Mölndal"
+	},
+	{
+		"id": "4231",
+		"chain": "hemkop",
+		"name": "Hemköp Mölndal C",
+		"lat": 57.6556,
+		"lng": 12.0158,
+		"address": "Brogatan 5-15, 431 30 Mölndal"
+	},
+	{
+		"id": "4201",
+		"chain": "hemkop",
+		"name": "Hemköp Nacka Forum",
+		"lat": 59.311,
+		"lng": 18.165,
+		"address": "Nacka Forum, 131 53 Nacka"
+	},
+	{
+		"id": "4756",
+		"chain": "hemkop",
+		"name": "Hemköp Norrk Björkalund Östenssons",
+		"lat": 58.5591,
+		"lng": 16.1724,
+		"address": "Holmtorpsvägen 10, 603 79 Norrköping"
+	},
+	{
+		"id": "4539",
+		"chain": "hemkop",
+		"name": "Hemköp Norrköping Kungsgatan",
+		"lat": 58.5915,
+		"lng": 16.1783,
+		"address": "Kungsgatan 33, 602 20 Norrköping"
+	},
+	{
+		"id": "4200",
+		"chain": "hemkop",
+		"name": "Hemköp Norrköping Lasarettsgatan",
+		"lat": 58.5839,
+		"lng": 16.1793,
+		"address": "Gamla Lasarettsgatan 39, 602 14 Norrköping"
+	},
+	{
+		"id": "4546",
+		"chain": "hemkop",
+		"name": "Hemköp Norrköping Lindö",
+		"lat": 58.6017,
+		"lng": 16.2452,
+		"address": "Lindövägen, 602 28 Norrköping"
+	},
+	{
+		"id": "4232",
+		"chain": "hemkop",
+		"name": "Hemköp Norrköping Ljura",
+		"lat": 58.5809,
+		"lng": 16.197,
+		"address": "Ljuragatan 1, 603 49 Norrköping"
+	},
+	{
+		"id": "4685",
+		"chain": "hemkop",
+		"name": "Hemköp Nyköping C",
+		"lat": 58.7518,
+		"lng": 17.0036,
+		"address": "Västra Storgatan 13, 611 32 Nyköping"
+	},
+	{
+		"id": "4671",
+		"chain": "hemkop",
+		"name": "Hemköp Nyköping Spelhagen",
+		"lat": 58.7453,
+		"lng": 17.0068,
+		"address": "Arnöleden 5, 611 31 Nyköping"
+	},
+	{
+		"id": "4563",
+		"chain": "hemkop",
+		"name": "Hemköp Onsala",
+		"lat": 57.4134,
+		"lng": 12.0192,
+		"address": "Onsala Kyrkby 2, 439 23 Onsala"
+	},
+	{
+		"id": "4202",
+		"chain": "hemkop",
+		"name": "Hemköp Oskarström Blåklintsvägen",
+		"lat": 56.8057,
+		"lng": 12.96,
+		"address": "Blåklintsvägen 36, 313 32 Oskarström"
+	},
+	{
+		"id": "4216",
+		"chain": "hemkop",
+		"name": "Hemköp Råcksta",
+		"lat": 59.3553,
+		"lng": 17.884,
+		"address": "Jämtlandsgatan 105, 162 60 Vällingby"
+	},
+	{
+		"id": "4156",
+		"chain": "hemkop",
+		"name": "Hemköp Rättvik C",
+		"lat": 60.8829,
+		"lng": 15.1209,
+		"address": "Storgatan 8, 795 30 Rättvik"
+	},
+	{
+		"id": "4183",
+		"chain": "hemkop",
+		"name": "Hemköp Saltsjö-boo Lännersta",
+		"lat": 59.3145,
+		"lng": 18.2595,
+		"address": "Prästkragens Väg 3, 132 45 Saltsjö-boo"
+	},
+	{
+		"id": "4753",
+		"chain": "hemkop",
+		"name": "Hemköp Sickla Köpkvarter",
+		"lat": 59.3062,
+		"lng": 18.1237,
+		"address": "Järnvägsgatan 11, 131 54 Nacka"
+	},
+	{
+		"id": "4307",
+		"chain": "hemkop",
+		"name": "Hemköp Skillingaryd Artillerigatan",
+		"lat": 57.4282,
+		"lng": 14.0954,
+		"address": "Artillerigatan 28, 568 00 Skillingaryd"
+	},
+	{
+		"id": "4737",
+		"chain": "hemkop",
+		"name": "Hemköp Skänninge Östenssons",
+		"lat": 58.3875,
+		"lng": 15.0881,
+		"address": "Mjölbygatan 32, 596 33 Skänninge"
+	},
+	{
+		"id": "4608",
+		"chain": "hemkop",
+		"name": "Hemköp Sköndal C",
+		"lat": 59.2555,
+		"lng": 18.1142,
+		"address": "Sköndalsvägen 91, 128 66 Sköndal"
+	},
+	{
+		"id": "4195",
+		"chain": "hemkop",
+		"name": "Hemköp Skövde C",
+		"lat": 58.3885,
+		"lng": 13.8443,
+		"address": "Petter Helens Gata 6, 541 30 Skövde"
+	},
+	{
+		"id": "4606",
+		"chain": "hemkop",
+		"name": "Hemköp Skövde Hentorpshallen",
+		"lat": 58.3687,
+		"lng": 13.8247,
+		"address": "Gröna Vägen 48, 541 51 Skövde"
+	},
+	{
+		"id": "4639",
+		"chain": "hemkop",
+		"name": "Hemköp Skövde Rydshallen",
+		"lat": 58.426,
+		"lng": 13.8714,
+		"address": "Timmervägen 1, 541 64 Skövde"
+	},
+	{
+		"id": "4690",
+		"chain": "hemkop",
+		"name": "Hemköp Sollentuna Rotehallen",
+		"lat": 59.4768,
+		"lng": 17.9118,
+		"address": "Rotebro Centrum, 192 07 Sollentuna"
+	},
+	{
+		"id": "4725",
+		"chain": "hemkop",
+		"name": "Hemköp Sollentuna Sjöbergshallen",
+		"lat": 59.4305,
+		"lng": 17.9992,
+		"address": "Lomvägen 25, 192 56 Sollentuna"
+	},
+	{
+		"id": "4138",
+		"chain": "hemkop",
+		"name": "Hemköp Solna Centrum",
+		"lat": 59.3608,
+		"lng": 17.9989,
+		"address": "Postgången 40, 171 45 Solna"
+	},
+	{
+		"id": "4655",
+		"chain": "hemkop",
+		"name": "Hemköp Solna Frösunda Boulevard",
+		"lat": 59.3718,
+		"lng": 18.0161,
+		"address": "Gustav Iii:s Boulevard 47, 169 73 Solna"
+	},
+	{
+		"id": "4607",
+		"chain": "hemkop",
+		"name": "Hemköp Solna Huvudsta C",
+		"lat": 59.3497,
+		"lng": 17.987,
+		"address": "Storgatan 62-64, 171 54 Solna"
+	},
+	{
+		"id": "4754",
+		"chain": "hemkop",
+		"name": "Hemköp Solna Mall Of Scandinavia",
+		"lat": 59.3678,
+		"lng": 18.0076,
+		"address": "Råsta Strandväg 13c, 169 79 Solna"
+	},
+	{
+		"id": "4647",
+		"chain": "hemkop",
+		"name": "Hemköp Solna Ulriksdal",
+		"lat": 59.3808,
+		"lng": 17.9992,
+		"address": "Bagartorpsringen 53-55, 170 65 Solna"
+	},
+	{
+		"id": "4706",
+		"chain": "hemkop",
+		"name": "Hemköp Stenungsund Stora Höga",
+		"lat": 58.015,
+		"lng": 11.8329,
+		"address": "Selins Väg 6, 444 60 Stora Höga"
+	},
+	{
+		"id": "4150",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Birger Jarl",
+		"lat": 59.342,
+		"lng": 18.064,
+		"address": "Birger Jarlsgatan 61, 114 29 Stockholm"
+	},
+	{
+		"id": "4297",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm City",
+		"lat": 59.3324,
+		"lng": 18.0617,
+		"address": "Klarabergsgatan 50, 111 21 Stockholm"
+	},
+	{
+		"id": "4196",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Djurgårdsstaden",
+		"lat": 59.3529,
+		"lng": 18.0896,
+		"address": "Storängskroken 14-16, 115 42 Stockholm"
+	},
+	{
+		"id": "4726",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Fatburen",
+		"lat": 59.3146,
+		"lng": 18.0655,
+		"address": "Fatbursgatan 6, 118 54 Stockholm"
+	},
+	{
+		"id": "4633",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Fruängen C",
+		"lat": 59.2857,
+		"lng": 17.9642,
+		"address": "Fruängsgången 10, 129 52 Hägersten"
+	},
+	{
+		"id": "4626",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Fältöversten",
+		"lat": 59.3398,
+		"lng": 18.0933,
+		"address": "Karlaplan 13, 115 20 Stockholm"
+	},
+	{
+		"id": "4628",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Gullmarsplan",
+		"lat": 59.2985,
+		"lng": 18.0791,
+		"address": "Gullmarsplan 4-6, 121 40 Johanneshov"
+	},
+	{
+		"id": "4234",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Gärdet",
+		"lat": 59.3463,
+		"lng": 18.1031,
+		"address": "Kampementsgatan 12, 115 38 Stockholm"
+	},
+	{
+		"id": "4785",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Jungfrugatan",
+		"lat": 59.343,
+		"lng": 18.0863,
+		"address": "Jungfrugatan 53, 115 31 Stockholm"
+	},
+	{
+		"id": "4641",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Matpressen",
+		"lat": 59.3281,
+		"lng": 18.0178,
+		"address": "Rålambsvägen 7-9, 112 59 Stockholm"
+	},
+	{
+		"id": "4129",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Odenplan",
+		"lat": 59.3431,
+		"lng": 18.046,
+		"address": "Karlbergsvägen 24, 113 27 Stockholm"
+	},
+	{
+		"id": "4127",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Skanstull",
+		"lat": 59.3072,
+		"lng": 18.0755,
+		"address": "Ringvägen 100 B, 118 60 Stockholm"
+	},
+	{
+		"id": "4162",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Skarpnäck",
+		"lat": 59.2633,
+		"lng": 18.1221,
+		"address": "Gråhundsvägen 82-84, 128 62 Sköndal"
+	},
+	{
+		"id": "4229",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Stadshagen",
+		"lat": 59.3387,
+		"lng": 18.0147,
+		"address": "Mariedalsvägen 9, 112 17 Stockholm"
+	},
+	{
+		"id": "4190",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Torsplan",
+		"lat": 59.3463,
+		"lng": 18.0334,
+		"address": "Norra Stationsgatan 80c, 113 65 Stockholm"
+	},
+	{
+		"id": "4273",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Vällingby C",
+		"lat": 59.3637,
+		"lng": 17.8735,
+		"address": "Vällingbyplan, 162 13 Vällingby"
+	},
+	{
+		"id": "4658",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Wasahallen",
+		"lat": 59.34,
+		"lng": 18.0516,
+		"address": "Upplandsgatan 28-32, 113 28 Stockholm"
+	},
+	{
+		"id": "4268",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Årstaberg",
+		"lat": 59.3004,
+		"lng": 18.0293,
+		"address": "Årstaskogs Väg 28, 117 55 Stockholm"
+	},
+	{
+		"id": "4938",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Älvsjö",
+		"lat": 59.2786,
+		"lng": 18.0023,
+		"address": "Sjättenovembervägen 208, 125 34 Älvsjö"
+	},
+	{
+		"id": "4781",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Örby",
+		"lat": 59.2744,
+		"lng": 18.0262,
+		"address": "Gamla Huddingevägen 431, 125 42 Älvsjö"
+	},
+	{
+		"id": "4147",
+		"chain": "hemkop",
+		"name": "Hemköp Stockholm Östermalmstorg",
+		"lat": 59.3363,
+		"lng": 18.0785,
+		"address": "Nybrogatan 37, 114 40 Stockholm"
+	},
+	{
+		"id": "4772",
+		"chain": "hemkop",
+		"name": "Hemköp Strängnäs Matarket",
+		"lat": 59.3756,
+		"lng": 17.0278,
+		"address": "Trägårdsgatan 14a, 645 31 Strängnäs"
+	},
+	{
+		"id": "4566",
+		"chain": "hemkop",
+		"name": "Hemköp Sundbyberg Rissne",
+		"lat": 59.376,
+		"lng": 17.9405,
+		"address": "Rissne Torg 7, 174 57 Sundbyberg"
+	},
+	{
+		"id": "4168",
+		"chain": "hemkop",
+		"name": "Hemköp Sundbyberg Sturegatan",
+		"lat": 59.3613,
+		"lng": 17.9735,
+		"address": "Sturegatan 5, 172 31 Sundbyberg"
+	},
+	{
+		"id": "4573",
+		"chain": "hemkop",
+		"name": "Hemköp Svanesund C",
+		"lat": 58.1425,
+		"lng": 11.8215,
+		"address": "Skansvägen 2, 472 32 Svanesund"
+	},
+	{
+		"id": "4689",
+		"chain": "hemkop",
+		"name": "Hemköp Svedala",
+		"lat": 55.5093,
+		"lng": 13.2365,
+		"address": "Storgatan 17, 233 31 Svedala"
+	},
+	{
+		"id": "4507",
+		"chain": "hemkop",
+		"name": "Hemköp Särö C",
+		"lat": 57.5204,
+		"lng": 11.9663,
+		"address": "Furubergsvägen 4, 429 41 Särö"
+	},
+	{
+		"id": "4672",
+		"chain": "hemkop",
+		"name": "Hemköp Söderköping",
+		"lat": 58.483,
+		"lng": 16.3138,
+		"address": "Ågatan 2, 614 34 Söderköping"
+	},
+	{
+		"id": "4640",
+		"chain": "hemkop",
+		"name": "Hemköp Södertälje Ellbe Livs",
+		"lat": 59.2108,
+		"lng": 17.6313,
+		"address": "Bragevägen 14, 152 49 Södertälje"
+	},
+	{
+		"id": "4695",
+		"chain": "hemkop",
+		"name": "Hemköp Tierp",
+		"lat": 60.3436,
+		"lng": 17.5136,
+		"address": "Centralgatan 19, 815 38 Tierp"
+	},
+	{
+		"id": "4771",
+		"chain": "hemkop",
+		"name": "Hemköp Torshälla",
+		"lat": 59.4184,
+		"lng": 16.4849,
+		"address": "Solrosgatan 1, 644 30 Torshälla"
+	},
+	{
+		"id": "4705",
+		"chain": "hemkop",
+		"name": "Hemköp Tranås C",
+		"lat": 58.0377,
+		"lng": 14.9757,
+		"address": "Östra Järnvägsgatan 10, 573 41 Tranås"
+	},
+	{
+		"id": "4527",
+		"chain": "hemkop",
+		"name": "Hemköp Trollhättan Hjortmossen",
+		"lat": 58.2758,
+		"lng": 12.2946,
+		"address": "Hjortmossegatan 121, 461 51 Trollhättan"
+	},
+	{
+		"id": "4789",
+		"chain": "hemkop",
+		"name": "Hemköp Trollhättan Kungsgatan",
+		"lat": 58.2871,
+		"lng": 12.2939,
+		"address": "Kungsgatan 12, 461 31 Trollhättan"
+	},
+	{
+		"id": "4766",
+		"chain": "hemkop",
+		"name": "Hemköp Tyresö Krusboda",
+		"lat": 59.2297,
+		"lng": 18.2541,
+		"address": "Krusboda Torg 1, 135 35 Tyresö"
+	},
+	{
+		"id": "4175",
+		"chain": "hemkop",
+		"name": "Hemköp Tyresö Trollbäcken C",
+		"lat": 59.2233,
+		"lng": 18.2004,
+		"address": "Trollbäcken Centrum, 135 53 Tyresö"
+	},
+	{
+		"id": "4656",
+		"chain": "hemkop",
+		"name": "Hemköp Tyringe",
+		"lat": 56.161,
+		"lng": 13.6049,
+		"address": "Stenbockgatan 10, 282 35 Tyringe"
+	},
+	{
+		"id": "4642",
+		"chain": "hemkop",
+		"name": "Hemköp Täby Näsbypark C",
+		"lat": 59.4302,
+		"lng": 18.0949,
+		"address": "Eskadervägen 6, 183 54 Täby"
+	},
+	{
+		"id": "4585",
+		"chain": "hemkop",
+		"name": "Hemköp Upplands Väsby",
+		"lat": 59.5164,
+		"lng": 17.8894,
+		"address": "Finvidsvägen 2, 194 47 Upplands Väsby"
+	},
+	{
+		"id": "4103",
+		"chain": "hemkop",
+		"name": "Hemköp Uppsala Rosendal",
+		"lat": 59.839,
+		"lng": 17.6393,
+		"address": "Kansliskrivargatan 1, 752 57 Uppsala"
+	},
+	{
+		"id": "4256",
+		"chain": "hemkop",
+		"name": "Hemköp Uppsala Svava C",
+		"lat": 59.858,
+		"lng": 17.6426,
+		"address": "Dragarbrunnsgatan 50, 753 20 Uppsala"
+	},
+	{
+		"id": "4592",
+		"chain": "hemkop",
+		"name": "Hemköp Uppsala Västertorg",
+		"lat": 59.8408,
+		"lng": 17.6025,
+		"address": "Västertorg 3, 752 43 Uppsala"
+	},
+	{
+		"id": "4736",
+		"chain": "hemkop",
+		"name": "Hemköp Vadstena Mima Östenssons",
+		"lat": 58.4501,
+		"lng": 14.9012,
+		"address": "Nådendalsvägen 11, 592 32 Vadstena"
+	},
+	{
+		"id": "4735",
+		"chain": "hemkop",
+		"name": "Hemköp Vadstena Starby Östenssons",
+		"lat": 58.4408,
+		"lng": 14.8809,
+		"address": "Kungs Starbyvägen 1, 592 40 Vadstena"
+	},
+	{
+		"id": "4587",
+		"chain": "hemkop",
+		"name": "Hemköp Valdemarsvik",
+		"lat": 58.2161,
+		"lng": 16.578,
+		"address": "Vammar Köpcenter, 615 32 Valdemarsvik"
+	},
+	{
+		"id": "4508",
+		"chain": "hemkop",
+		"name": "Hemköp Veddige C",
+		"lat": 57.2667,
+		"lng": 12.3338,
+		"address": "Viskastigen 25, 430 20 Veddige"
+	},
+	{
+		"id": "4616",
+		"chain": "hemkop",
+		"name": "Hemköp Vendelsö",
+		"lat": 59.1998,
+		"lng": 18.1915,
+		"address": "Sågenvägen 8, 136 71 Vendelsö"
+	},
+	{
+		"id": "4590",
+		"chain": "hemkop",
+		"name": "Hemköp Vrigstad",
+		"lat": 57.3551,
+		"lng": 14.4765,
+		"address": "Torget 5, 570 03 Vrigstad"
+	},
+	{
+		"id": "4688",
+		"chain": "hemkop",
+		"name": "Hemköp Vänersborg Sundsgatan",
+		"lat": 58.3792,
+		"lng": 12.3233,
+		"address": "Sundsgatan 19b, 462 33 Vänersborg"
+	},
+	{
+		"id": "4580",
+		"chain": "hemkop",
+		"name": "Hemköp Vänersborg Torpa",
+		"lat": 58.3637,
+		"lng": 12.3354,
+		"address": "Tegelbruksvägen 2, 462 55 Vänersborg"
+	},
+	{
+		"id": "4794",
+		"chain": "hemkop",
+		"name": "Hemköp Värnamo",
+		"lat": 57.1846,
+		"lng": 14.0458,
+		"address": "Enehagsvägen 2, 331 31 Värnamo"
+	},
+	{
+		"id": "4627",
+		"chain": "hemkop",
+		"name": "Hemköp Västerhaninge C",
+		"lat": 59.123,
+		"lng": 18.107,
+		"address": "Kyrkvägen 4, 137 38 Västerhaninge"
+	},
+	{
+		"id": "4191",
+		"chain": "hemkop",
+		"name": "Hemköp Västervik",
+		"lat": 57.7578,
+		"lng": 16.6348,
+		"address": "Västra Kyrkogatan 34, 593 33 Västervik"
+	},
+	{
+		"id": "4265",
+		"chain": "hemkop",
+		"name": "Hemköp Västerås C",
+		"lat": 59.6086,
+		"lng": 16.54,
+		"address": "Stora Gatan 58, 722 12 Västerås"
+	},
+	{
+		"id": "4558",
+		"chain": "hemkop",
+		"name": "Hemköp Västerås Malmaberg",
+		"lat": 59.6266,
+		"lng": 16.582,
+		"address": "Gunnilbogatan 1, 723 40 Västerås"
+	},
+	{
+		"id": "4220",
+		"chain": "hemkop",
+		"name": "Hemköp Västerås Öster Mälarstrand",
+		"lat": 59.6072,
+		"lng": 16.5708,
+		"address": "Bäckahästgatan 1, 723 58 Västerås"
+	},
+	{
+		"id": "4555",
+		"chain": "hemkop",
+		"name": "Hemköp Västra Frölunda Långedrag",
+		"lat": 57.6714,
+		"lng": 11.8799,
+		"address": "Redegatan 9, 426 77 Västra Frölunda"
+	},
+	{
+		"id": "4353",
+		"chain": "hemkop",
+		"name": "Hemköp Västra Frölunda Torg",
+		"lat": 57.6526,
+		"lng": 11.9141,
+		"address": "Frölunda Torg, 421 42 Västra Frölunda"
+	},
+	{
+		"id": "4102",
+		"chain": "hemkop",
+		"name": "Hemköp Växjö Högstorp",
+		"lat": 56.8793,
+		"lng": 14.8348,
+		"address": "Högstorpsvägen 98, 352 42 Växjö"
+	},
+	{
+		"id": "4644",
+		"chain": "hemkop",
+		"name": "Hemköp Örebro Lucullus",
+		"lat": 59.2764,
+		"lng": 15.2152,
+		"address": "Storgatan 13, 703 61 Örebro"
+	},
+	{
+		"id": "4204",
+		"chain": "hemkop",
+		"name": "Hemköp Örebro Svampen",
+		"lat": 59.2893,
+		"lng": 15.225,
+		"address": "Mejerivägen 16c, 703 80 Örebro"
+	},
+	{
+		"id": "4720",
+		"chain": "hemkop",
+		"name": "Hemköp Östervåla Torget",
+		"lat": 60.1814,
+		"lng": 17.1802,
+		"address": "Torgvägen 2, 740 46 Östervåla"
+	}
+]

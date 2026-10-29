@@ -4,8 +4,12 @@
 //   GET https://www.<site>/axfood/rest/store?online=false all stores incl. coordinates
 // Search returns the price list of the site's default store; there is no
 // unauthenticated way to pick another store, so prices are treated as chain-wide.
-// robots.txt asks for Crawl-delay: 10, which `fetchJson` enforces per host.
+// robots.txt asks for Crawl-delay: 10, which `fetchJson` enforces per host. That one
+// turn per 10 s goes to searches only: the store lists are prebuilt into data/ by
+// scripts/build-axfood-stores.mjs (bun run stores:axfood).
 import type { ChainId, ProductHit, Store } from '../../types';
+import hemkopStores from '../data/hemkop-stores.json';
+import willysStores from '../data/willys-stores.json';
 import { fetchJson } from '../http';
 import { parseSek, toUnit } from '../normalize';
 import type { ChainAdapter } from './types';
@@ -36,13 +40,6 @@ export interface AxfoodProduct {
 	outOfStock: boolean;
 	image: { url: string } | null;
 	potentialPromotions: AxfoodPromotion[];
-}
-
-interface AxfoodStore {
-	storeId: string;
-	name: string;
-	geoPoint: { latitude: number; longitude: number };
-	address: { formattedAddress: string | null };
 }
 
 const CRAWL_DELAY_MS = 10_000;
@@ -93,40 +90,24 @@ export function toHit(chain: ChainId, base: string, p: AxfoodProduct): ProductHi
 	return hit;
 }
 
-function axfoodAdapter(chain: ChainId, base: string): ChainAdapter {
+function axfoodAdapter(chain: ChainId, base: string, stores: Store[]): ChainAdapter {
 	return {
 		chain,
 		pricing: 'chain',
 		async listStores() {
-			const stores = await fetchJson<AxfoodStore[]>(`${base}/axfood/rest/store?online=false`, {
-				intervalMs: CRAWL_DELAY_MS,
-				maxWaitMs: 30_000,
-				timeoutMs: 20_000
-			});
-			return stores
-				.filter((s) => s.geoPoint?.latitude && s.name)
-				.map(
-					(s): Store => ({
-						id: s.storeId,
-						chain,
-						name: s.name,
-						lat: s.geoPoint.latitude,
-						lng: s.geoPoint.longitude,
-						address: s.address?.formattedAddress ?? ''
-					})
-				);
+			return stores;
 		},
 		async search(query) {
 			const data = await fetchJson<{ results: AxfoodProduct[] }>(
 				`${base}/search?q=${encodeURIComponent(query)}&size=40`,
-				// Wait for the slot rather than fail: on a cold cache the store list has just
-				// taken it, so the first search is always ~10 s behind.
-				{ intervalMs: CRAWL_DELAY_MS, maxWaitMs: 30_000 }
+				// Wait for the next turn rather than fail; a newer search takes over a queued
+				// turn, so the wait is never more than one Crawl-delay.
+				{ intervalMs: CRAWL_DELAY_MS, maxWaitMs: 30_000, latestOnly: true }
 			);
 			return data.results.filter((p) => !p.outOfStock && p.priceValue > 0).map((p) => toHit(chain, base, p));
 		}
 	};
 }
 
-export const willys = axfoodAdapter('willys', 'https://www.willys.se');
-export const hemkop = axfoodAdapter('hemkop', 'https://www.hemkop.se');
+export const willys = axfoodAdapter('willys', 'https://www.willys.se', willysStores as Store[]);
+export const hemkop = axfoodAdapter('hemkop', 'https://www.hemkop.se', hemkopStores as Store[]);

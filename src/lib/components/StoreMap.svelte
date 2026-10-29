@@ -234,9 +234,31 @@
 		border-top-color: var(--chain);
 		border-bottom: 0;
 	}
+	/* Each logo's own proportions (its SVG viewBox), so the image has its full width at
+	   the first layout. A pin laid out before its image loads otherwise keeps a 16px box
+	   with the logo spilling out of it. */
 	:global(.store-pin img) {
 		display: block;
+		flex-shrink: 0;
 		height: 11px;
+	}
+	:global(.store-pin img.willys) {
+		aspect-ratio: 306.3 / 63.7;
+	}
+	:global(.store-pin img.hemkop) {
+		aspect-ratio: 98 / 20;
+	}
+	:global(.store-pin img.lidl) {
+		aspect-ratio: 1;
+	}
+	:global(.store-pin img.citygross) {
+		aspect-ratio: 160 / 52;
+	}
+	:global(.store-pin img.ica) {
+		aspect-ratio: 54 / 27;
+	}
+	:global(.store-pin img.coop) {
+		aspect-ratio: 2560 / 760;
 	}
 	:global(.store-pin img.lidl) {
 		height: 18px;

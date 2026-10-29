@@ -17,6 +17,8 @@
 	const chainIds = Object.keys(CHAINS) as ChainId[];
 	const pricedChains = chainIds.filter((c) => CHAINS[c].online);
 	const mapOnlyChains = chainIds.filter((c) => !CHAINS[c].online);
+	// en-GB: "A, B and C", without the serial comma, like the rest of the copy.
+	const listNames = (names: string[]) => new Intl.ListFormat('en-GB').format(names);
 	const unitLabel: Record<Unit, string> = { kg: 'kg', l: 'l', st: 'pc' };
 	const perUnit = (n: number, unit?: Unit) => (unit ? `${kr(n)}/${unitLabel[unit]}` : kr(n));
 
@@ -398,26 +400,32 @@
 								style:flex-grow={s === 'ok' ? Math.max(n, 1) : 1}
 								style:--chain={CHAINS[c].color}
 								aria-pressed={!hidden.has(c)}
-								title="{hidden.has(c) ? 'Show' : 'Hide'} {CHAINS[c].name}{status[c]?.message ? ` (${status[c]?.message})` : ''}"
+								title="{hidden.has(c) ? 'Show' : 'Hide'} {CHAINS[c].name}{status[c]?.message
+									? ` (${status[c]?.message})`
+									: s === 'ok' && !n
+										? ' (nothing on its website matches with a published price)'
+										: ''}"
 								onclick={() => toggle(c)}
 							>
 								{@render logo(c)}
-								{#if s === 'ok'}
-									<b class="num" class:zero={!n}>{n}</b>
+								{#if s === 'ok' && n}
+									<b class="num">{n}</b>
 								{:else}
-									<span>{statusText[s]}</span>
+									<span>{s === 'ok' ? 'none online' : statusText[s]}</span>
 								{/if}
 							</button>
 						{/each}
-						<span
-							class="seg none"
-							title="{new Intl.ListFormat('en').format(
-								mapOnlyChains.map((c) => `${CHAINS[c].name} (${storeCount(c)} stores)`)
-							)} don't publish prices openly, so only their stores are shown on the map"
-						>
-							{#each mapOnlyChains as c (c)}{@render logo(c)}{/each}
-							<span>no online prices</span>
-						</span>
+						{#if mapOnlyChains.length}
+							<span
+								class="seg none"
+								title="{listNames(
+									mapOnlyChains.map((c) => `${CHAINS[c].name} (${storeCount(c)} stores)`)
+								)} don't publish prices openly, so only their stores are shown on the map"
+							>
+								{#each mapOnlyChains as c (c)}{@render logo(c)}{/each}
+								<span>no online prices</span>
+							</span>
+						{/if}
 					</div>
 					<p class="count" aria-live="polite">
 						{searching && !rows.length
@@ -489,8 +497,8 @@
 					<div class="intro">
 						<h2>What's cheapest near you?</h2>
 						<p>
-							Search for a grocery product and compare live prices at the Willys, Hemköp, Lidl and City Gross stores around you,
-							ranked by price per kilo or litre.
+							Search for a grocery product and compare live prices at the {listNames(pricedChains.map((c) => CHAINS[c].name))}
+							stores around you, ranked by price per kilo or litre.
 						</p>
 						<div class="try">
 							<span>Try</span>
@@ -498,7 +506,9 @@
 						</div>
 						<p class="fine">
 							We search the stores inside the circle on the map. It grows automatically until it contains enough
-							stores. ICA and Coop don't publish their prices openly, so only their stores are shown.
+							stores.{#if mapOnlyChains.length}
+								{listNames(mapOnlyChains.map((c) => CHAINS[c].name))} don't publish their prices openly, so only their stores
+								are shown.{/if}
 						</p>
 					</div>
 				{/if}
@@ -540,9 +550,9 @@
 			{/if}
 
 			<footer>
-				Prices come straight from the chains' websites and may differ from the price in store. Willys, Hemköp, Lidl and
-				City Gross use one online price nationwide; the store shown is the nearest one. ICA and Coop don't publish
-				prices openly.
+				Prices come straight from the chains' websites and may differ from the price in store. Where a chain has one online
+				price nationwide, the store shown is the nearest one.{#if mapOnlyChains.length}
+					{listNames(mapOnlyChains.map((c) => CHAINS[c].name))} don't publish prices openly.{/if}
 			</footer>
 		</div>
 
@@ -833,9 +843,6 @@
 	}
 	.seg .num {
 		font-size: 1.625rem;
-	}
-	.seg .num.zero {
-		color: var(--ink-2);
 	}
 	/* A status in place of the count; it may wrap to a second line rather than be cut. */
 	.seg span {
@@ -1398,19 +1405,11 @@
 			border-left: 0;
 			border-block: 4px solid var(--steel-edge);
 		}
-		/* Five chains share one row on a phone; the logos shrink to fit their segment. */
+		/* Three segments per row on a phone (six chains make two even rows); one row of six
+		   would shrink the logos past reading. The pixel of slack keeps rounding from
+		   wrapping the third segment. */
 		.seg {
-			min-width: 62px;
-			padding: 7px 8px 8px;
-		}
-		.seg :global(.logo) {
-			height: 12px;
-		}
-		.seg :global(.logo.lidl) {
-			height: 20px;
-		}
-		.seg :global(.logo.citygross) {
-			height: 16px;
+			min-width: calc((100% - 7px) / 3);
 		}
 
 		.label {

@@ -1,0 +1,2074 @@
+[
+	{
+		"id": "2149",
+		"chain": "willys",
+		"name": "Willys Alingsås Hagaplan",
+		"lat": 57.9374,
+		"lng": 12.5333,
+		"address": "Hagaplan, 441 34 Alingsås"
+	},
+	{
+		"id": "2355",
+		"chain": "willys",
+		"name": "Willys Alvesta Stationen",
+		"lat": 56.9014,
+		"lng": 14.5606,
+		"address": "Sjögatan 2, 342 34 Alvesta"
+	},
+	{
+		"id": "2268",
+		"chain": "willys",
+		"name": "Willys Avesta",
+		"lat": 60.1528,
+		"lng": 16.1969,
+		"address": "Dalahästen, Get Johannas Väg, 774 61 Avesta"
+	},
+	{
+		"id": "2259",
+		"chain": "willys",
+		"name": "Willys Boden",
+		"lat": 65.8158,
+		"lng": 21.7079,
+		"address": "Lulevägen 30, 961 74 Boden"
+	},
+	{
+		"id": "2232",
+		"chain": "willys",
+		"name": "Willys Bollnäs Asea",
+		"lat": 61.343,
+		"lng": 16.3831,
+		"address": "Aseavägen 1, 821 30 Bollnäs"
+	},
+	{
+		"id": "2206",
+		"chain": "willys",
+		"name": "Willys Borlänge Kupolen",
+		"lat": 60.4859,
+		"lng": 15.4156,
+		"address": "Maskinistgatan 4, 781 70 Borlänge"
+	},
+	{
+		"id": "2353",
+		"chain": "willys",
+		"name": "Willys Borlänge Stora Tuna",
+		"lat": 60.4633,
+		"lng": 15.4758,
+		"address": "Tyllsnäsvägen 4, 784 61 Borlänge"
+	},
+	{
+		"id": "2103",
+		"chain": "willys",
+		"name": "Willys Borås Knalleland",
+		"lat": 57.7339,
+		"lng": 12.9331,
+		"address": "Ålgårdsgatan 5-9, 506 30 Borås"
+	},
+	{
+		"id": "2329",
+		"chain": "willys",
+		"name": "Willys Botkyrka Handel",
+		"lat": 59.2518,
+		"lng": 17.8668,
+		"address": "Fittjavägen 20-22, 145 53 Norsborg"
+	},
+	{
+		"id": "2348",
+		"chain": "willys",
+		"name": "Willys Bro Handel",
+		"lat": 59.5253,
+		"lng": 17.6266,
+		"address": "Klövtorpsvägen 11, 197 40 Bro"
+	},
+	{
+		"id": "2328",
+		"chain": "willys",
+		"name": "Willys Burlöv Center",
+		"lat": 55.6404,
+		"lng": 13.0844,
+		"address": "Kronetorpsvägen 2, 232 37 Arlöv"
+	},
+	{
+		"id": "2249",
+		"chain": "willys",
+		"name": "Willys Båstad",
+		"lat": 56.4262,
+		"lng": 12.8866,
+		"address": "Stenhusvägen 7e, 269 36 Båstad"
+	},
+	{
+		"id": "2225",
+		"chain": "willys",
+		"name": "Willys Eksjö C",
+		"lat": 57.6707,
+		"lng": 14.9704,
+		"address": "Österlånggatan 28, 575 31 Eksjö"
+	},
+	{
+		"id": "2152",
+		"chain": "willys",
+		"name": "Willys Enköping Romberga",
+		"lat": 59.6503,
+		"lng": 17.086,
+		"address": "Åkerbygatan 9, 745 37 Enköping"
+	},
+	{
+		"id": "2224",
+		"chain": "willys",
+		"name": "Willys Eskilstuna City",
+		"lat": 59.3759,
+		"lng": 16.5001,
+		"address": "Kungsgatan 66, 632 21 Eskilstuna"
+	},
+	{
+		"id": "2118",
+		"chain": "willys",
+		"name": "Willys Eskilstuna Folkesta",
+		"lat": 59.4019,
+		"lng": 16.426,
+		"address": "Folkestaleden 40, 635 10 Eskilstuna"
+	},
+	{
+		"id": "2282",
+		"chain": "willys",
+		"name": "Willys Eskilstuna Smeden",
+		"lat": 59.375,
+		"lng": 16.5298,
+		"address": "Tivoliallén 2, 633 52 Eskilstuna"
+	},
+	{
+		"id": "2240",
+		"chain": "willys",
+		"name": "Willys Eslöv",
+		"lat": 55.8418,
+		"lng": 13.3238,
+		"address": "Ringsjövägen 13, 241 39 Eslöv"
+	},
+	{
+		"id": "2325",
+		"chain": "willys",
+		"name": "Willys Fagersta Norrbyplan",
+		"lat": 59.9952,
+		"lng": 15.8106,
+		"address": "Floravägen 4, 737 42 Fagersta"
+	},
+	{
+		"id": "2267",
+		"chain": "willys",
+		"name": "Willys Falkenberg Tånga",
+		"lat": 56.9162,
+		"lng": 12.505,
+		"address": "Varbergsvägen 63, 311 36 Falkenberg"
+	},
+	{
+		"id": "2322",
+		"chain": "willys",
+		"name": "Willys Falköping Ålleberg Center",
+		"lat": 58.1486,
+		"lng": 13.56,
+		"address": "Gunnestorpsgatan 11, 521 40 Falköping"
+	},
+	{
+		"id": "2230",
+		"chain": "willys",
+		"name": "Willys Falun Svalan",
+		"lat": 60.6196,
+		"lng": 15.6211,
+		"address": "Norra Järnvägsgatan 25, 791 35 Falun"
+	},
+	{
+		"id": "2248",
+		"chain": "willys",
+		"name": "Willys Finspång",
+		"lat": 58.7019,
+		"lng": 15.823,
+		"address": "Gronvägen 2, 612 44 Finspång"
+	},
+	{
+		"id": "2292",
+		"chain": "willys",
+		"name": "Willys Flen Tisteln",
+		"lat": 59.0632,
+		"lng": 16.5918,
+		"address": "Tegelvägen 2, 642 32 Flen"
+	},
+	{
+		"id": "2241",
+		"chain": "willys",
+		"name": "Willys Gislaved Smålandia",
+		"lat": 57.3183,
+		"lng": 13.5433,
+		"address": "Smålandiagatan 9, 332 30 Gislaved"
+	},
+	{
+		"id": "2132",
+		"chain": "willys",
+		"name": "Willys Gävle Gestrike",
+		"lat": 60.6824,
+		"lng": 17.1357,
+		"address": "Lokförargatan 5, 803 22 Gävle"
+	},
+	{
+		"id": "2223",
+		"chain": "willys",
+		"name": "Willys Gävle Hemsta",
+		"lat": 60.6601,
+		"lng": 17.1617,
+		"address": "Södra Kungsvägen 14, 802 57 Gävle"
+	},
+	{
+		"id": "2288",
+		"chain": "willys",
+		"name": "Willys Göteborg Elisedal",
+		"lat": 57.6822,
+		"lng": 12.0002,
+		"address": "Scoutgatan 11, 412 65 Göteborg"
+	},
+	{
+		"id": "2111",
+		"chain": "willys",
+		"name": "Willys Göteborg Gamlestaden",
+		"lat": 57.7319,
+		"lng": 12.0064,
+		"address": "Alekärrsgatan 6, 415 25 Göteborg"
+	},
+	{
+		"id": "2247",
+		"chain": "willys",
+		"name": "Willys Göteborg Hvitfeldtsplatsen",
+		"lat": 57.7016,
+		"lng": 11.9613,
+		"address": "Hvitfeldtsplatsen 1, 411 20 Göteborg"
+	},
+	{
+		"id": "2226",
+		"chain": "willys",
+		"name": "Willys Göteborg Sisjön",
+		"lat": 57.6392,
+		"lng": 11.9522,
+		"address": "Datavägen 1-17, 436 32 Askim"
+	},
+	{
+		"id": "2102",
+		"chain": "willys",
+		"name": "Willys Göteborg Wieselgrensplatsen",
+		"lat": 57.7216,
+		"lng": 11.9373,
+		"address": "Wieselgrensplatsen 1, 417 17 Göteborg"
+	},
+	{
+		"id": "2321",
+		"chain": "willys",
+		"name": "Willys Habo Kärnekulla",
+		"lat": 57.8982,
+		"lng": 14.1021,
+		"address": "Harvargatan 75, 566 37 Habo"
+	},
+	{
+		"id": "2137",
+		"chain": "willys",
+		"name": "Willys Halmstad Flygstaden",
+		"lat": 56.6765,
+		"lng": 12.805,
+		"address": "Kundvägen 4, 302 41 Halmstad"
+	},
+	{
+		"id": "2236",
+		"chain": "willys",
+		"name": "Willys Halmstad Öster",
+		"lat": 56.6698,
+		"lng": 12.8713,
+		"address": "Laholmsvägen 37, 302 49 Halmstad"
+	},
+	{
+		"id": "2369",
+		"chain": "willys",
+		"name": "Willys Helsingborg Berga",
+		"lat": 56.0647,
+		"lng": 12.7416,
+		"address": "Regementsvägen 3, 254 57 Helsingborg"
+	},
+	{
+		"id": "2335",
+		"chain": "willys",
+		"name": "Willys Helsingborg Råå",
+		"lat": 56.0111,
+		"lng": 12.7328,
+		"address": "Landskronavägen 16, 252 32 Helsingborg"
+	},
+	{
+		"id": "2271",
+		"chain": "willys",
+		"name": "Willys Helsingborg Väla",
+		"lat": 56.0913,
+		"lng": 12.7501,
+		"address": "Ekslingan 3b, 254 67 Helsingborg"
+	},
+	{
+		"id": "2860",
+		"chain": "willys",
+		"name": "Willys Hemma Arboga Centrum",
+		"lat": 59.3954,
+		"lng": 15.8411,
+		"address": "Ahllöfsgatan 18-20, 732 30 Arboga"
+	},
+	{
+		"id": "2823",
+		"chain": "willys",
+		"name": "Willys Hemma Ed",
+		"lat": 58.9122,
+		"lng": 11.9318,
+		"address": "Storgatan 26, 668 30 Ed"
+	},
+	{
+		"id": "2878",
+		"chain": "willys",
+		"name": "Willys Hemma Enköping Centrum",
+		"lat": 59.6365,
+		"lng": 17.0765,
+		"address": "Torggatan 31, 745 31 Enköping"
+	},
+	{
+		"id": "2810",
+		"chain": "willys",
+		"name": "Willys Hemma Gnosjö",
+		"lat": 57.3538,
+		"lng": 13.7422,
+		"address": "Järnvägsgatan 60, 335 32 Gnosjö"
+	},
+	{
+		"id": "2874",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Altplatsen",
+		"lat": 57.6603,
+		"lng": 11.9155,
+		"address": "Gitarrgatan 10, 421 41 Göteborg"
+	},
+	{
+		"id": "2858",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Björkekärr",
+		"lat": 57.7149,
+		"lng": 12.038,
+		"address": "Studiegången 5a, 416 81 Göteborg"
+	},
+	{
+		"id": "2857",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Friskväderstorget",
+		"lat": 57.7239,
+		"lng": 11.892,
+		"address": "Friskväderstorget 1, 418 38 Göteborg"
+	},
+	{
+		"id": "2871",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Första Långg",
+		"lat": 57.6996,
+		"lng": 11.9486,
+		"address": "Första Långgatan 16, 413 28 Göteborg"
+	},
+	{
+		"id": "2875",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Heden",
+		"lat": 57.701,
+		"lng": 11.9759,
+		"address": "Vasagatan 45, 411 37 Göteborg"
+	},
+	{
+		"id": "2850",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Johanneberg",
+		"lat": 57.6874,
+		"lng": 11.9858,
+		"address": "Viktor Rydbergsgatan 60, 412 81 Göteborg"
+	},
+	{
+		"id": "2859",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Kaverös",
+		"lat": 57.6651,
+		"lng": 11.9206,
+		"address": "Soprangatan 2, 421 38 Västra Frölunda"
+	},
+	{
+		"id": "2820",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Kvilletorget",
+		"lat": 57.7194,
+		"lng": 11.9471,
+		"address": "Kvilletorget 3, 417 04 Göteborg"
+	},
+	{
+		"id": "2864",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Lövgärdet",
+		"lat": 57.8166,
+		"lng": 12.0406,
+		"address": "Vaniljgatan 3, 424 45 Angered"
+	},
+	{
+		"id": "2842",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Majorna",
+		"lat": 57.6962,
+		"lng": 11.9341,
+		"address": "Amiralitetsgatan 6, 414 62 Göteborg"
+	},
+	{
+		"id": "2846",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Påvelund",
+		"lat": 57.6647,
+		"lng": 11.8745,
+		"address": "Traneredsvägen 39, 426 77 Västra Frölunda"
+	},
+	{
+		"id": "2861",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Sten Sturegatan",
+		"lat": 57.701,
+		"lng": 11.9842,
+		"address": "Sten Sturegatan 34, 412 52 Göteborg"
+	},
+	{
+		"id": "2837",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Sävedalen",
+		"lat": 57.7332,
+		"lng": 12.0765,
+		"address": "Göteborgsvägen 88, 433 63 Sävedalen"
+	},
+	{
+		"id": "2855",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Torslanda",
+		"lat": 57.7308,
+		"lng": 11.7701,
+		"address": "Runskriftsgatan 1, 423 47 Torslanda"
+	},
+	{
+		"id": "2811",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Tuve",
+		"lat": 57.7546,
+		"lng": 11.9273,
+		"address": "Tuve Torg 12, 417 45 Göteborg"
+	},
+	{
+		"id": "2841",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Vegastaden",
+		"lat": 57.6934,
+		"lng": 11.9473,
+		"address": "Nordostpassagen 47, 413 11 Göteborg"
+	},
+	{
+		"id": "2816",
+		"chain": "willys",
+		"name": "Willys Hemma Göteborg Vårväderstorget",
+		"lat": 57.7124,
+		"lng": 11.8923,
+		"address": "Vårväderstorget 2, 418 31 Göteborg"
+	},
+	{
+		"id": "2829",
+		"chain": "willys",
+		"name": "Willys Hemma Helsingborg",
+		"lat": 56.0504,
+		"lng": 12.7269,
+		"address": "Skaragatan 90, 252 63 Helsingborg"
+	},
+	{
+		"id": "2877",
+		"chain": "willys",
+		"name": "Willys Hemma Helsingborg Gustavslund",
+		"lat": 56.0309,
+		"lng": 12.7391,
+		"address": "Gustavslundsvägen 2, 256 55 Helsingborg"
+	},
+	{
+		"id": "2840",
+		"chain": "willys",
+		"name": "Willys Hemma Henån",
+		"lat": 58.2357,
+		"lng": 11.6808,
+		"address": "Södra Strandvägen 5, 473 34 Henån"
+	},
+	{
+		"id": "2873",
+		"chain": "willys",
+		"name": "Willys Hemma Hönö Entré",
+		"lat": 57.6982,
+		"lng": 11.6593,
+		"address": "Tärnvägen 17, 475 40 Hönö"
+	},
+	{
+		"id": "2827",
+		"chain": "willys",
+		"name": "Willys Hemma Jönköping Torpa",
+		"lat": 57.7717,
+		"lng": 14.1524,
+		"address": "Klostergatan 70, 553 35 Jönköping"
+	},
+	{
+		"id": "2818",
+		"chain": "willys",
+		"name": "Willys Hemma Kalix",
+		"lat": 65.8551,
+		"lng": 23.1395,
+		"address": "Strandgatan 10-12, 952 33 Kalix"
+	},
+	{
+		"id": "2854",
+		"chain": "willys",
+		"name": "Willys Hemma Kil",
+		"lat": 59.4998,
+		"lng": 13.3169,
+		"address": "Skogsvägen 41, 665 31 Kil"
+	},
+	{
+		"id": "2819",
+		"chain": "willys",
+		"name": "Willys Hemma Kristianstad",
+		"lat": 56.0355,
+		"lng": 14.1595,
+		"address": "Kanalgatan 50, 291 34 Kristianstad"
+	},
+	{
+		"id": "2828",
+		"chain": "willys",
+		"name": "Willys Hemma Laholm",
+		"lat": 56.5009,
+		"lng": 13.0168,
+		"address": "Industrigatan 20, 312 34 Laholm"
+	},
+	{
+		"id": "2838",
+		"chain": "willys",
+		"name": "Willys Hemma Lindesberg",
+		"lat": 59.5945,
+		"lng": 15.2242,
+		"address": "Kungsgatan 52, 711 30 Lindesberg"
+	},
+	{
+		"id": "2866",
+		"chain": "willys",
+		"name": "Willys Hemma Lomma Centrum",
+		"lat": 55.6735,
+		"lng": 13.0705,
+		"address": "Strandvägen 80, 234 31 Lomma"
+	},
+	{
+		"id": "2882",
+		"chain": "willys",
+		"name": "Willys Hemma Ludvika Marnäs",
+		"lat": 60.1521,
+		"lng": 15.1992,
+		"address": "Gamla Bangatan 31, 771 53 Ludvika"
+	},
+	{
+		"id": "2863",
+		"chain": "willys",
+		"name": "Willys Hemma Lund Stortorget",
+		"lat": 55.7025,
+		"lng": 13.1924,
+		"address": "Stortorget 6, 222 23 Lund"
+	},
+	{
+		"id": "2843",
+		"chain": "willys",
+		"name": "Willys Hemma Malmö Lindängen",
+		"lat": 55.559,
+		"lng": 13.0144,
+		"address": "Munkhättegatan 176, 215 74 Malmö"
+	},
+	{
+		"id": "2851",
+		"chain": "willys",
+		"name": "Willys Hemma Malmö Lugnet",
+		"lat": 55.5988,
+		"lng": 13.0012,
+		"address": "Södra Förstadsgatan 24, 211 43 Malmö"
+	},
+	{
+		"id": "2870",
+		"chain": "willys",
+		"name": "Willys Hemma Malmö Möllevången",
+		"lat": 55.5902,
+		"lng": 13.0083,
+		"address": "Claesgatan 14, 214 26 Malmö"
+	},
+	{
+		"id": "2865",
+		"chain": "willys",
+		"name": "Willys Hemma Malmö Söderkulla",
+		"lat": 55.5704,
+		"lng": 13.0089,
+		"address": "Söderkullatorget 2, 215 58 Malmö"
+	},
+	{
+		"id": "2833",
+		"chain": "willys",
+		"name": "Willys Hemma Nora",
+		"lat": 59.5201,
+		"lng": 15.039,
+		"address": "Prästgatan 12, 713 31 Nora"
+	},
+	{
+		"id": "2836",
+		"chain": "willys",
+		"name": "Willys Hemma Orsa",
+		"lat": 61.1161,
+		"lng": 14.6253,
+		"address": "Moravägen 14, 794 34 Orsa"
+	},
+	{
+		"id": "2879",
+		"chain": "willys",
+		"name": "Willys Hemma Oxie Centrum",
+		"lat": 55.5404,
+		"lng": 13.0966,
+		"address": "Oxie Stationstorg 1, 238 30 Oxie"
+	},
+	{
+		"id": "2862",
+		"chain": "willys",
+		"name": "Willys Hemma Skara Hötorget",
+		"lat": 58.3849,
+		"lng": 13.4353,
+		"address": "Marumsgatan 12, 532 32 Skara"
+	},
+	{
+		"id": "2881",
+		"chain": "willys",
+		"name": "Willys Hemma Sollentuna Tureberg",
+		"lat": 59.425,
+		"lng": 17.9482,
+		"address": "Malmvägen 2a, 191 61 Sollentuna"
+	},
+	{
+		"id": "2849",
+		"chain": "willys",
+		"name": "Willys Hemma Solna Hagahallen",
+		"lat": 59.3629,
+		"lng": 18.011,
+		"address": "Hagalundsgatan 19, 169 66 Solna"
+	},
+	{
+		"id": "2853",
+		"chain": "willys",
+		"name": "Willys Hemma Stockholm Götgatan",
+		"lat": 59.3108,
+		"lng": 18.0752,
+		"address": "Götgatan 79, 116 62 Stockholm"
+	},
+	{
+		"id": "2812",
+		"chain": "willys",
+		"name": "Willys Hemma Stockholm Liljeholmen",
+		"lat": 59.3097,
+		"lng": 18.0238,
+		"address": "Liljeholmstorget 3, Plan 1, 117 63 Stockholm"
+	},
+	{
+		"id": "2822",
+		"chain": "willys",
+		"name": "Willys Hemma Stockholm Nacka",
+		"lat": 59.3089,
+		"lng": 18.1653,
+		"address": "Forumvägen 12, 131 53 Nacka"
+	},
+	{
+		"id": "2830",
+		"chain": "willys",
+		"name": "Willys Hemma Stockholm Saltsjöbaden",
+		"lat": 59.2856,
+		"lng": 18.2744,
+		"address": "Saltsjöbaden Centrum, 133 31 Saltsjöbaden"
+	},
+	{
+		"id": "2848",
+		"chain": "willys",
+		"name": "Willys Hemma Stockholm Torsplan",
+		"lat": 59.3456,
+		"lng": 18.032,
+		"address": "Norra Stationsgatan 90, 113 64 Stockholm"
+	},
+	{
+		"id": "2826",
+		"chain": "willys",
+		"name": "Willys Hemma Stockholm Täby",
+		"lat": 59.4528,
+		"lng": 18.05,
+		"address": "Stråkvägen 21, 187 34 Täby"
+	},
+	{
+		"id": "2867",
+		"chain": "willys",
+		"name": "Willys Hemma Säffle Station",
+		"lat": 59.1309,
+		"lng": 12.9163,
+		"address": "Järnvägsgatan 14, 661 30 Säffle"
+	},
+	{
+		"id": "2847",
+		"chain": "willys",
+		"name": "Willys Hemma Säter",
+		"lat": 60.3494,
+		"lng": 15.7469,
+		"address": "Torggatan 2, 783 30 Säter"
+	},
+	{
+		"id": "2844",
+		"chain": "willys",
+		"name": "Willys Hemma Timrå",
+		"lat": 62.4875,
+		"lng": 17.3255,
+		"address": "Köpmangatan 37, 861 31 Timrå"
+	},
+	{
+		"id": "2814",
+		"chain": "willys",
+		"name": "Willys Hemma Ulricehamn",
+		"lat": 57.7895,
+		"lng": 13.4095,
+		"address": "Strandgatan 32, 523 31 Ulricehamn"
+	},
+	{
+		"id": "2872",
+		"chain": "willys",
+		"name": "Willys Hemma Umeå Rådhusesplanaden",
+		"lat": 63.8269,
+		"lng": 20.2637,
+		"address": "Rådhusesplanaden 5a, 903 28 Umeå"
+	},
+	{
+		"id": "2852",
+		"chain": "willys",
+		"name": "Willys Hemma Utlandagatan",
+		"lat": 57.6897,
+		"lng": 11.9899,
+		"address": "Utlandagatan 6, 412 61 Göteborg"
+	},
+	{
+		"id": "2839",
+		"chain": "willys",
+		"name": "Willys Hemma Valbo",
+		"lat": 60.6437,
+		"lng": 17.0078,
+		"address": "Bäckvägen 3, 818 31 Valbo"
+	},
+	{
+		"id": "2876",
+		"chain": "willys",
+		"name": "Willys Hemma Örebro City",
+		"lat": 59.2717,
+		"lng": 15.217,
+		"address": "Stortorget 15, 702 11 Örebro"
+	},
+	{
+		"id": "2880",
+		"chain": "willys",
+		"name": "Willys Hemma Örebro Varberga",
+		"lat": 59.2868,
+		"lng": 15.1795,
+		"address": "Varberga Torg 11, 703 51 Örebro"
+	},
+	{
+		"id": "2332",
+		"chain": "willys",
+		"name": "Willys Huddinge Flemingsberg",
+		"lat": 59.2232,
+		"lng": 17.9389,
+		"address": "Röntgenvägen 7, 141 52 Huddinge"
+	},
+	{
+		"id": "2196",
+		"chain": "willys",
+		"name": "Willys Huddinge Heron City",
+		"lat": 59.2676,
+		"lng": 17.91,
+		"address": "Dialoggatan 2, 141 75 Kungens Kurva"
+	},
+	{
+		"id": "2324",
+		"chain": "willys",
+		"name": "Willys Hultsfred Knekten",
+		"lat": 57.4995,
+		"lng": 15.8306,
+		"address": "Handelsvägen 5, 577 39 Hultsfred"
+	},
+	{
+		"id": "2173",
+		"chain": "willys",
+		"name": "Willys Huskvarna",
+		"lat": 57.7909,
+		"lng": 14.2759,
+		"address": "Kungsgatan 23, 561 31 Huskvarna"
+	},
+	{
+		"id": "2338",
+		"chain": "willys",
+		"name": "Willys Hyllinge Handelsplats",
+		"lat": 56.1001,
+		"lng": 12.8609,
+		"address": "Brännaregatan 3b, 265 75 Hyllinge"
+	},
+	{
+		"id": "2250",
+		"chain": "willys",
+		"name": "Willys Härnösand Härnön",
+		"lat": 62.6279,
+		"lng": 17.9585,
+		"address": "Gånsviksvägen 8, 871 60 Härnösand"
+	},
+	{
+		"id": "2296",
+		"chain": "willys",
+		"name": "Willys Hässleholm Läreda",
+		"lat": 56.1658,
+		"lng": 13.7885,
+		"address": "Norra Kringelvägen 42 C, 281 41 Hässleholm"
+	},
+	{
+		"id": "2349",
+		"chain": "willys",
+		"name": "Willys Hörby Rondellen",
+		"lat": 55.8494,
+		"lng": 13.6401,
+		"address": "Medicingatan 1 D, 242 31 Hörby"
+	},
+	{
+		"id": "2234",
+		"chain": "willys",
+		"name": "Willys Jönköping A6",
+		"lat": 57.7694,
+		"lng": 14.2025,
+		"address": "Pjäsgatan 5, 553 05 Jönköping"
+	},
+	{
+		"id": "2164",
+		"chain": "willys",
+		"name": "Willys Jönköping Råslätt",
+		"lat": 57.7395,
+		"lng": 14.1519,
+		"address": "Råslätts Centrum, 556 14 Jönköping"
+	},
+	{
+		"id": "2135",
+		"chain": "willys",
+		"name": "Willys Jönköping Österängen",
+		"lat": 57.7869,
+		"lng": 14.2432,
+		"address": "Birkagatan 8, 554 65 Jönköping"
+	},
+	{
+		"id": "2285",
+		"chain": "willys",
+		"name": "Willys Kalmar Hansa City",
+		"lat": 56.6868,
+		"lng": 16.3156,
+		"address": "Bilbyggarvägen 14, 393 56 Kalmar"
+	},
+	{
+		"id": "2238",
+		"chain": "willys",
+		"name": "Willys Karlshamn",
+		"lat": 56.1705,
+		"lng": 14.8644,
+		"address": "Kungsgatan 34-38, 374 36 Karlshamn"
+	},
+	{
+		"id": "2145",
+		"chain": "willys",
+		"name": "Willys Karlskoga C",
+		"lat": 59.3256,
+		"lng": 14.5248,
+		"address": "Centrumleden 25, 691 31 Karlskoga"
+	},
+	{
+		"id": "2180",
+		"chain": "willys",
+		"name": "Willys Karlskrona Pantarholmen",
+		"lat": 56.1737,
+		"lng": 15.5878,
+		"address": "Tullgatan 1, 371 39 Karlskrona"
+	},
+	{
+		"id": "2153",
+		"chain": "willys",
+		"name": "Willys Karlskrona Slottsbacken",
+		"lat": 56.1963,
+		"lng": 15.6496,
+		"address": "Stationsvägen 21, 371 62 Lyckeby"
+	},
+	{
+		"id": "2117",
+		"chain": "willys",
+		"name": "Willys Karlstad",
+		"lat": 59.3877,
+		"lng": 13.4818,
+		"address": "Ramgatan 4, 653 41 Karlstad"
+	},
+	{
+		"id": "2290",
+		"chain": "willys",
+		"name": "Willys Karlstad Bryggudden",
+		"lat": 59.3772,
+		"lng": 13.5082,
+		"address": "Bergendorffsgatan 5, 652 16 Karlstad"
+	},
+	{
+		"id": "2364",
+		"chain": "willys",
+		"name": "Willys Karlstad Rud",
+		"lat": 59.3985,
+		"lng": 13.5268,
+		"address": "Mossgatan 1, 654 66 Karlstad"
+	},
+	{
+		"id": "2358",
+		"chain": "willys",
+		"name": "Willys Karlstad Skåre",
+		"lat": 59.4309,
+		"lng": 13.4152,
+		"address": "Fjärrviksvägen 1, 653 50 Karlstad"
+	},
+	{
+		"id": "2210",
+		"chain": "willys",
+		"name": "Willys Katrineholm Lövåsen",
+		"lat": 59.0036,
+		"lng": 16.2263,
+		"address": "Starrvägen 19b, 641 49 Katrineholm"
+	},
+	{
+		"id": "2356",
+		"chain": "willys",
+		"name": "Willys Kiruna Centrum",
+		"lat": 67.8485,
+		"lng": 20.3126,
+		"address": "Storhandelsgatan 2, 981 30 Kiruna"
+	},
+	{
+		"id": "2334",
+		"chain": "willys",
+		"name": "Willys Klippan Fabriksallén",
+		"lat": 56.1295,
+		"lng": 13.1394,
+		"address": "Fabriksallén 3, 264 39 Klippan"
+	},
+	{
+		"id": "2266",
+		"chain": "willys",
+		"name": "Willys Knivsta C",
+		"lat": 59.7286,
+		"lng": 17.7876,
+		"address": "Mejerskans Gata 9-11, 741 39 Knivsta"
+	},
+	{
+		"id": "2251",
+		"chain": "willys",
+		"name": "Willys Kramfors",
+		"lat": 62.9311,
+		"lng": 17.7791,
+		"address": "Limstagatan 10, 872 24 Kramfors"
+	},
+	{
+		"id": "2108",
+		"chain": "willys",
+		"name": "Willys Kristianstad Långebro",
+		"lat": 56.0238,
+		"lng": 14.1409,
+		"address": "Rörvägen 2, 291 59 Kristianstad"
+	},
+	{
+		"id": "2337",
+		"chain": "willys",
+		"name": "Willys Kumla Skogstorp",
+		"lat": 59.1437,
+		"lng": 15.1367,
+		"address": "Täbyvägen 4, 692 71 Kumla"
+	},
+	{
+		"id": "2110",
+		"chain": "willys",
+		"name": "Willys Kungsbacka Hede",
+		"lat": 57.5117,
+		"lng": 12.082,
+		"address": "Tölöleden 3, 434 95 Kungsbacka"
+	},
+	{
+		"id": "2275",
+		"chain": "willys",
+		"name": "Willys Kungsbacka Södercity",
+		"lat": 57.4781,
+		"lng": 12.0814,
+		"address": "Hantverksgatan 31, 434 42 Kungsbacka"
+	},
+	{
+		"id": "2104",
+		"chain": "willys",
+		"name": "Willys Kungälv Komarken",
+		"lat": 57.87,
+		"lng": 11.967,
+		"address": "Vikingagatan 1, 442 36 Kungälv"
+	},
+	{
+		"id": "2201",
+		"chain": "willys",
+		"name": "Willys Kållered Eken",
+		"lat": 57.6009,
+		"lng": 12.0484,
+		"address": "Ekenleden, 428 36 Kållered"
+	},
+	{
+		"id": "2198",
+		"chain": "willys",
+		"name": "Willys Köping Big Inn",
+		"lat": 59.5228,
+		"lng": 15.9743,
+		"address": "Ringvägen 76, 731 33 Köping"
+	},
+	{
+		"id": "2269",
+		"chain": "willys",
+		"name": "Willys Landskrona Infarten",
+		"lat": 55.8706,
+		"lng": 12.8488,
+		"address": "Ringvägen 170, 261 35 Landskrona"
+	},
+	{
+		"id": "2245",
+		"chain": "willys",
+		"name": "Willys Landvetter",
+		"lat": 57.6898,
+		"lng": 12.2097,
+		"address": "Östra Tvärgatan 5, 438 32 Landvetter"
+	},
+	{
+		"id": "2105",
+		"chain": "willys",
+		"name": "Willys Lidköping Framnäs",
+		"lat": 58.5088,
+		"lng": 13.146,
+		"address": "Läckögatan 13, 531 60 Lidköping"
+	},
+	{
+		"id": "2160",
+		"chain": "willys",
+		"name": "Willys Linköping Ekholmen",
+		"lat": 58.3806,
+		"lng": 15.6844,
+		"address": "Ekholmens Centrum, 589 25 Linköping"
+	},
+	{
+		"id": "2178",
+		"chain": "willys",
+		"name": "Willys Linköping Skäggetorp",
+		"lat": 58.4263,
+		"lng": 15.5832,
+		"address": "Skäggetorps Centrum, 586 44 Linköping"
+	},
+	{
+		"id": "2298",
+		"chain": "willys",
+		"name": "Willys Linköping Tornby",
+		"lat": 58.4341,
+		"lng": 15.5893,
+		"address": "Norra Svedengatan 20, 582 73 Linköping"
+	},
+	{
+		"id": "2256",
+		"chain": "willys",
+		"name": "Willys Ljungby",
+		"lat": 56.8319,
+		"lng": 13.9325,
+		"address": "Stationsgatan 2, Garvaren, 341 60 Ljungby"
+	},
+	{
+		"id": "2347",
+		"chain": "willys",
+		"name": "Willys Ludvika Lyviksberget",
+		"lat": 60.1344,
+		"lng": 15.1551,
+		"address": "Glimmervägen 1e, 771 41 Ludvika"
+	},
+	{
+		"id": "2127",
+		"chain": "willys",
+		"name": "Willys Luleå Hamn",
+		"lat": 65.5822,
+		"lng": 22.1167,
+		"address": "Småbåtsgatan 3, 972 35 Luleå"
+	},
+	{
+		"id": "2179",
+		"chain": "willys",
+		"name": "Willys Luleå Storheden",
+		"lat": 65.6205,
+		"lng": 22.0533,
+		"address": "Storhedsvägen 5, 973 45 Luleå"
+	},
+	{
+		"id": "2176",
+		"chain": "willys",
+		"name": "Willys Lund",
+		"lat": 55.72,
+		"lng": 13.2214,
+		"address": "Magistratsvägen 22, 226 43 Lund"
+	},
+	{
+		"id": "2354",
+		"chain": "willys",
+		"name": "Willys Lund Nova",
+		"lat": 55.7138,
+		"lng": 13.1602,
+		"address": "Företagsvägen 10, 227 61 Lund"
+	},
+	{
+		"id": "2360",
+		"chain": "willys",
+		"name": "Willys Lycksele Furuvik",
+		"lat": 64.585,
+		"lng": 18.699,
+		"address": "Sågvägen 6, 921 45 Lycksele"
+	},
+	{
+		"id": "2125",
+		"chain": "willys",
+		"name": "Willys Löddeköpinge",
+		"lat": 55.7691,
+		"lng": 12.9936,
+		"address": "Varuvägen 1, 246 42 Löddeköpinge"
+	},
+	{
+		"id": "2244",
+		"chain": "willys",
+		"name": "Willys Malmö Emporia",
+		"lat": 55.5643,
+		"lng": 12.9735,
+		"address": "Emporia Shoppingcenter, 215 32 Malmö"
+	},
+	{
+		"id": "2114",
+		"chain": "willys",
+		"name": "Willys Malmö Katrinelund",
+		"lat": 55.5995,
+		"lng": 13.0335,
+		"address": "Celsiusgatan 38, 212 14 Malmö"
+	},
+	{
+		"id": "2144",
+		"chain": "willys",
+		"name": "Willys Malmö Limhamn",
+		"lat": 55.5819,
+		"lng": 12.9361,
+		"address": "Linnégatan 42, 216 14 Limhamn"
+	},
+	{
+		"id": "2253",
+		"chain": "willys",
+		"name": "Willys Malmö Mobilia",
+		"lat": 55.5811,
+		"lng": 13.0041,
+		"address": "Trelleborgsvägen 7, 214 32 Malmö"
+	},
+	{
+		"id": "2352",
+		"chain": "willys",
+		"name": "Willys Malmö Rosengård",
+		"lat": 55.5863,
+		"lng": 13.0476,
+		"address": "Frölichs Väg 1, 213 68 Malmö"
+	},
+	{
+		"id": "2150",
+		"chain": "willys",
+		"name": "Willys Mariestad Haggården",
+		"lat": 58.682,
+		"lng": 13.8163,
+		"address": "Storegårdsvägen 44, 542 35 Mariestad"
+	},
+	{
+		"id": "2279",
+		"chain": "willys",
+		"name": "Willys Mjölby Centrum",
+		"lat": 58.3263,
+		"lng": 15.1245,
+		"address": "Kungsvägen 66, 595 33 Mjölby"
+	},
+	{
+		"id": "2189",
+		"chain": "willys",
+		"name": "Willys Mora",
+		"lat": 61.0085,
+		"lng": 14.5878,
+		"address": "Skålmyrsvägen 33, 792 50 Mora"
+	},
+	{
+		"id": "2202",
+		"chain": "willys",
+		"name": "Willys Motala",
+		"lat": 58.5568,
+		"lng": 15.0331,
+		"address": "Hökartorget 1, 591 53 Motala"
+	},
+	{
+		"id": "2141",
+		"chain": "willys",
+		"name": "Willys Märsta C",
+		"lat": 59.6208,
+		"lng": 17.8548,
+		"address": "Nymärsta Torg 3, 195 30 Märsta"
+	},
+	{
+		"id": "2359",
+		"chain": "willys",
+		"name": "Willys Mönsterås Spolen",
+		"lat": 57.0318,
+		"lng": 16.4397,
+		"address": "Södra Vägen 5a, 383 34 Mönsterås"
+	},
+	{
+		"id": "2215",
+		"chain": "willys",
+		"name": "Willys Nacka Sickla",
+		"lat": 59.3044,
+		"lng": 18.1306,
+		"address": "Siroccogatan 11, 131 34 Nacka"
+	},
+	{
+		"id": "2170",
+		"chain": "willys",
+		"name": "Willys Norrköping Hageby",
+		"lat": 58.5733,
+		"lng": 16.2099,
+		"address": "Lidaleden 12, 603 59 Norrköping"
+	},
+	{
+		"id": "2212",
+		"chain": "willys",
+		"name": "Willys Norrköping Ingelsta",
+		"lat": 58.6126,
+		"lng": 16.166,
+		"address": "Kromgatan 3a, 602 23 Norrköping"
+	},
+	{
+		"id": "2192",
+		"chain": "willys",
+		"name": "Willys Norrtälje",
+		"lat": 59.7675,
+		"lng": 18.6964,
+		"address": "Baldersgatan 27, 761 50 Norrtälje"
+	},
+	{
+		"id": "2264",
+		"chain": "willys",
+		"name": "Willys Nybro",
+		"lat": 56.743,
+		"lng": 15.907,
+		"address": "Stora Nygatan 6, 382 30 Nybro"
+	},
+	{
+		"id": "2159",
+		"chain": "willys",
+		"name": "Willys Nyköping",
+		"lat": 58.7473,
+		"lng": 16.9728,
+		"address": "Gumsbackevägen 15, 611 38 Nyköping"
+	},
+	{
+		"id": "2336",
+		"chain": "willys",
+		"name": "Willys Nynäshamn Sandtorp",
+		"lat": 58.9163,
+		"lng": 17.9412,
+		"address": "Nynäsvägen 44-46, 149 40 Nynäshamn"
+	},
+	{
+		"id": "2246",
+		"chain": "willys",
+		"name": "Willys Nässjö Almenäs",
+		"lat": 57.6465,
+		"lng": 14.695,
+		"address": "Brogatan 23a, 571 41 Nässjö"
+	},
+	{
+		"id": "2281",
+		"chain": "willys",
+		"name": "Willys Olofström",
+		"lat": 56.2779,
+		"lng": 14.5368,
+		"address": "Södra Kyrkhultsvägen 3, 293 32 Olofström"
+	},
+	{
+		"id": "2278",
+		"chain": "willys",
+		"name": "Willys Oskarshamn Snickeriet",
+		"lat": 57.2627,
+		"lng": 16.4282,
+		"address": "Hyvelgatan 10, 572 36 Oskarshamn"
+	},
+	{
+		"id": "2188",
+		"chain": "willys",
+		"name": "Willys Partille C",
+		"lat": 57.7399,
+		"lng": 12.1064,
+		"address": "Kyrktorget 14, 433 33 Partille"
+	},
+	{
+		"id": "2227",
+		"chain": "willys",
+		"name": "Willys Piteå",
+		"lat": 65.3242,
+		"lng": 21.4393,
+		"address": "Fläktgatan 20, 941 47 Piteå"
+	},
+	{
+		"id": "2323",
+		"chain": "willys",
+		"name": "Willys Ronneby Centrum",
+		"lat": 56.2107,
+		"lng": 15.2801,
+		"address": "Kungsgatan 33, 372 30 Ronneby"
+	},
+	{
+		"id": "2257",
+		"chain": "willys",
+		"name": "Willys Sala Ängshagen",
+		"lat": 59.9123,
+		"lng": 16.6183,
+		"address": "Gymnasiegatan 5, 733 32 Sala"
+	},
+	{
+		"id": "2211",
+		"chain": "willys",
+		"name": "Willys Sandviken Linggatan",
+		"lat": 60.6247,
+		"lng": 16.7713,
+		"address": "Linggatan 26, 811 32 Sandviken"
+	},
+	{
+		"id": "2291",
+		"chain": "willys",
+		"name": "Willys Simrishamn Skanshill",
+		"lat": 55.5518,
+		"lng": 14.3473,
+		"address": "Skanshillsgatan 2, 272 36 Simrishamn"
+	},
+	{
+		"id": "2327",
+		"chain": "willys",
+		"name": "Willys Skellefteå Anderstorp",
+		"lat": 64.7426,
+		"lng": 20.9633,
+		"address": "Gymnasievägen 2e, 931 59 Skellefteå"
+	},
+	{
+		"id": "2208",
+		"chain": "willys",
+		"name": "Willys Skellefteå Solbacken",
+		"lat": 64.7666,
+		"lng": 21.0225,
+		"address": "Varugatan 5, 931 76 Skellefteå"
+	},
+	{
+		"id": "2199",
+		"chain": "willys",
+		"name": "Willys Skene C",
+		"lat": 57.4858,
+		"lng": 12.6482,
+		"address": "Örbyvägen 27, 511 61 Skene"
+	},
+	{
+		"id": "2299",
+		"chain": "willys",
+		"name": "Willys Skurup Handelsplats",
+		"lat": 55.4915,
+		"lng": 13.4876,
+		"address": "Korrehusgatan 12, 274 30 Skurup"
+	},
+	{
+		"id": "2277",
+		"chain": "willys",
+		"name": "Willys Skutskär Östra",
+		"lat": 60.6303,
+		"lng": 17.4138,
+		"address": "Östra Vägen 49, 814 31 Skutskär"
+	},
+	{
+		"id": "2270",
+		"chain": "willys",
+		"name": "Willys Skövde Stallsiken",
+		"lat": 58.4113,
+		"lng": 13.8815,
+		"address": "Jonstorpsgatan 25, 541 66 Skövde"
+	},
+	{
+		"id": "2294",
+		"chain": "willys",
+		"name": "Willys Sollentuna Häggvik",
+		"lat": 59.4377,
+		"lng": 17.9286,
+		"address": "Bagarbyvägen 61, 191 62 Sollentuna"
+	},
+	{
+		"id": "2228",
+		"chain": "willys",
+		"name": "Willys Sollentuna Rotebro",
+		"lat": 59.4713,
+		"lng": 17.9158,
+		"address": "Konsumentvägen 1, 192 68 Sollentuna"
+	},
+	{
+		"id": "2220",
+		"chain": "willys",
+		"name": "Willys Staffanstorp Rondellen",
+		"lat": 55.6448,
+		"lng": 13.2325,
+		"address": "Barkvägen 32, 245 34 Staffanstorp"
+	},
+	{
+		"id": "2200",
+		"chain": "willys",
+		"name": "Willys Stenungsund Strandvägen",
+		"lat": 58.0746,
+		"lng": 11.8212,
+		"address": "Strandvägen 35, 444 31 Stenungsund"
+	},
+	{
+		"id": "2351",
+		"chain": "willys",
+		"name": "Willys Stockholm Bromma",
+		"lat": 59.357,
+		"lng": 17.9498,
+		"address": "Ulvsundavägen 189e, 168 67 Bromma"
+	},
+	{
+		"id": "2258",
+		"chain": "willys",
+		"name": "Willys Stockholm Fridhemsplan",
+		"lat": 59.3345,
+		"lng": 18.0329,
+		"address": "Fleminggatan 40 - T-fridhemsplan, 112 33 Stockholm"
+	},
+	{
+		"id": "2205",
+		"chain": "willys",
+		"name": "Willys Stockholm Lidingö",
+		"lat": 59.3494,
+		"lng": 18.1496,
+		"address": "Lerbovägen 2, 181 61 Lidingö"
+	},
+	{
+		"id": "2121",
+		"chain": "willys",
+		"name": "Willys Stockholm Länna",
+		"lat": 59.2016,
+		"lng": 18.1291,
+		"address": "Nyckelvägen 4, 142 50 Skogås"
+	},
+	{
+		"id": "2283",
+		"chain": "willys",
+		"name": "Willys Stockholm Mariahallen",
+		"lat": 59.3182,
+		"lng": 18.0573,
+		"address": "Hornsgatan 74, 118 21 Stockholm"
+	},
+	{
+		"id": "2252",
+		"chain": "willys",
+		"name": "Willys Stockholm Port 73",
+		"lat": 59.1823,
+		"lng": 18.1481,
+		"address": "Nynäsvägen 21, 136 47 Haninge"
+	},
+	{
+		"id": "2187",
+		"chain": "willys",
+		"name": "Willys Stockholm Rissne",
+		"lat": 59.3798,
+		"lng": 17.9468,
+		"address": "Madenvägen 7, 174 55 Sundbyberg"
+	},
+	{
+		"id": "2350",
+		"chain": "willys",
+		"name": "Willys Stockholm Skärholmen",
+		"lat": 59.2749,
+		"lng": 17.9074,
+		"address": "Skärholmsplan 1, 127 48 Skärholmen"
+	},
+	{
+		"id": "2295",
+		"chain": "willys",
+		"name": "Willys Stockholm Sköndal",
+		"lat": 59.2599,
+		"lng": 18.1057,
+		"address": "Sköndalsvägen 7, 128 66 Sköndal"
+	},
+	{
+		"id": "2129",
+		"chain": "willys",
+		"name": "Willys Stockholm Tumba",
+		"lat": 59.1988,
+		"lng": 17.8425,
+		"address": "Bryggarvägen 5 -7, 147 30 Tumba"
+	},
+	{
+		"id": "2207",
+		"chain": "willys",
+		"name": "Willys Stockholm Täby Arninge",
+		"lat": 59.4643,
+		"lng": 18.1329,
+		"address": "Hantverkarvägen 2, 187 66 Täby"
+	},
+	{
+		"id": "2260",
+		"chain": "willys",
+		"name": "Willys Stockholm Veddesta Handel",
+		"lat": 59.4085,
+		"lng": 17.8413,
+		"address": "Nettovägen 2, 175 41 Järfälla"
+	},
+	{
+		"id": "2273",
+		"chain": "willys",
+		"name": "Willys Stockholm Vinsta",
+		"lat": 59.3705,
+		"lng": 17.8558,
+		"address": "Sorterargatan 23, 162 50 Vällingby"
+	},
+	{
+		"id": "2345",
+		"chain": "willys",
+		"name": "Willys Stockholm Vällingby",
+		"lat": 59.3604,
+		"lng": 17.8754,
+		"address": "Årevägen 24, 162 61 Vällingby"
+	},
+	{
+		"id": "2163",
+		"chain": "willys",
+		"name": "Willys Stockholm Värmdö Mölnvik",
+		"lat": 59.3135,
+		"lng": 18.4309,
+		"address": "Fenix Väg 4-14, 134 44 Gustavsberg"
+	},
+	{
+		"id": "2219",
+		"chain": "willys",
+		"name": "Willys Stockholm Älvsjö",
+		"lat": 59.2753,
+		"lng": 18.0132,
+		"address": "Älvsjö Ängsväg 2-6, 125 30 Älvsjö"
+	},
+	{
+		"id": "2134",
+		"chain": "willys",
+		"name": "Willys Strängnäs",
+		"lat": 59.3342,
+		"lng": 17.0197,
+		"address": "Solberga Handelsväg 25, 645 47 Strängnäs"
+	},
+	{
+		"id": "2660",
+		"chain": "willys",
+		"name": "Willys Strömstad Shoppingcenter",
+		"lat": 58.9466,
+		"lng": 11.1895,
+		"address": "Oslovägen 50, 452 35 Strömstad"
+	},
+	{
+		"id": "2242",
+		"chain": "willys",
+		"name": "Willys Sundbyberg Esplanaden",
+		"lat": 59.3614,
+		"lng": 17.9636,
+		"address": "Esplanaden 1, 172 67 Sundbyberg"
+	},
+	{
+		"id": "2214",
+		"chain": "willys",
+		"name": "Willys Sundsvall Birsta",
+		"lat": 62.4476,
+		"lng": 17.3283,
+		"address": "Norra Förmansvägen 17, 863 41 Sundsvall"
+	},
+	{
+		"id": "2167",
+		"chain": "willys",
+		"name": "Willys Sundsvall Ortviken",
+		"lat": 62.3962,
+		"lng": 17.3402,
+		"address": "Ortviksvägen 8, 856 33 Sundsvall"
+	},
+	{
+		"id": "2344",
+		"chain": "willys",
+		"name": "Willys Surahammar Stavtorpet",
+		"lat": 59.6978,
+		"lng": 16.2435,
+		"address": "Energivägen 2, 735 38 Surahammar"
+	},
+	{
+		"id": "2340",
+		"chain": "willys",
+		"name": "Willys Söderhamn Porten",
+		"lat": 61.2979,
+		"lng": 17.03,
+		"address": "Flöjtvägen 1, 826 40 Söderhamn"
+	},
+	{
+		"id": "2239",
+		"chain": "willys",
+		"name": "Willys Söderköping",
+		"lat": 58.4751,
+		"lng": 16.3315,
+		"address": "Telegatan 8, 614 31 Söderköping"
+	},
+	{
+		"id": "2138",
+		"chain": "willys",
+		"name": "Willys Södertälje Hamn",
+		"lat": 59.1744,
+		"lng": 17.6528,
+		"address": "Balticvägen 2-4, 151 38 Södertälje"
+	},
+	{
+		"id": "2284",
+		"chain": "willys",
+		"name": "Willys Södertälje Vasa",
+		"lat": 59.1835,
+		"lng": 17.5946,
+		"address": "Genetaleden, 151 59 Södertälje"
+	},
+	{
+		"id": "2229",
+		"chain": "willys",
+		"name": "Willys Södertälje Weda",
+		"lat": 59.2051,
+		"lng": 17.6439,
+		"address": "Wedavägen 2 C, 152 42 Södertälje"
+	},
+	{
+		"id": "2330",
+		"chain": "willys",
+		"name": "Willys Sölvesborg Kämpaslätten",
+		"lat": 56.0602,
+		"lng": 14.5645,
+		"address": "Gesällvägen 20, 294 77 Sölvesborg"
+	},
+	{
+		"id": "2361",
+		"chain": "willys",
+		"name": "Willys Tanum Shoppingcenter",
+		"lat": 58.7221,
+		"lng": 11.3462,
+		"address": "Brehogsvägen 5, 457 32 Tanumshede"
+	},
+	{
+		"id": "2274",
+		"chain": "willys",
+		"name": "Willys Torslanda",
+		"lat": 57.7089,
+		"lng": 11.7785,
+		"address": "Postflyget 6, 423 37 Torslanda"
+	},
+	{
+		"id": "2143",
+		"chain": "willys",
+		"name": "Willys Tranemo Västra",
+		"lat": 57.4884,
+		"lng": 13.3402,
+		"address": "Limmaredsvägen 3, 514 32 Tranemo"
+	},
+	{
+		"id": "2151",
+		"chain": "willys",
+		"name": "Willys Tranås",
+		"lat": 58.0364,
+		"lng": 14.9767,
+		"address": "Västra Järnvägsgatan 1, 573 41 Tranås"
+	},
+	{
+		"id": "2213",
+		"chain": "willys",
+		"name": "Willys Trelleborg Väst",
+		"lat": 55.3839,
+		"lng": 13.135,
+		"address": "Maskingatan 19, 231 66 Trelleborg"
+	},
+	{
+		"id": "2106",
+		"chain": "willys",
+		"name": "Willys Trollhättan Hojum",
+		"lat": 58.2782,
+		"lng": 12.3167,
+		"address": "Bilprovarevägen 6, 461 37 Trollhättan"
+	},
+	{
+		"id": "2262",
+		"chain": "willys",
+		"name": "Willys Tyresö Bollmora",
+		"lat": 59.2484,
+		"lng": 18.2156,
+		"address": "Bollmora Gårdsväg 1, 135 39 Tyresö"
+	},
+	{
+		"id": "2293",
+		"chain": "willys",
+		"name": "Willys Täby Centrum",
+		"lat": 59.4455,
+		"lng": 18.0737,
+		"address": "Täby C, 183 34 Täby"
+	},
+	{
+		"id": "2184",
+		"chain": "willys",
+		"name": "Willys Uddevalla C",
+		"lat": 58.3506,
+		"lng": 11.9331,
+		"address": "Västerlånggatan 8, 451 31 Uddevalla"
+	},
+	{
+		"id": "2203",
+		"chain": "willys",
+		"name": "Willys Umeå Ersboda",
+		"lat": 63.8546,
+		"lng": 20.3019,
+		"address": "Gräddvägen 1, 906 20 Umeå"
+	},
+	{
+		"id": "2333",
+		"chain": "willys",
+		"name": "Willys Umeå Klockarbäcken",
+		"lat": 63.8466,
+		"lng": 20.1542,
+		"address": "Handelsvägen 14, 901 37 Umeå"
+	},
+	{
+		"id": "2276",
+		"chain": "willys",
+		"name": "Willys Umeå Syd",
+		"lat": 63.8064,
+		"lng": 20.2533,
+		"address": "Marknadsgatan 5, 904 22 Umeå"
+	},
+	{
+		"id": "2194",
+		"chain": "willys",
+		"name": "Willys Uppsala Björkgatan",
+		"lat": 59.8669,
+		"lng": 17.6642,
+		"address": "Björkgatan 4, 753 28 Uppsala"
+	},
+	{
+		"id": "2362",
+		"chain": "willys",
+		"name": "Willys Uppsala Boländerna",
+		"lat": 59.8514,
+		"lng": 17.6894,
+		"address": "Bolandsgatan 20, 753 23 Uppsala"
+	},
+	{
+		"id": "2195",
+		"chain": "willys",
+		"name": "Willys Uppsala Gottsunda",
+		"lat": 59.8111,
+		"lng": 17.6286,
+		"address": "Valthornsvägen 3, 756 50 Uppsala"
+	},
+	{
+		"id": "2218",
+		"chain": "willys",
+		"name": "Willys Uppsala Gränby",
+		"lat": 59.8862,
+		"lng": 17.6609,
+		"address": "Råbyvägen 97, 754 60 Uppsala"
+	},
+	{
+		"id": "2193",
+		"chain": "willys",
+		"name": "Willys Uppsala Kungsgatan",
+		"lat": 59.8498,
+		"lng": 17.6582,
+		"address": "Kungsgatan 95, 753 18 Uppsala"
+	},
+	{
+		"id": "2272",
+		"chain": "willys",
+		"name": "Willys Uppsala Stenhagen",
+		"lat": 59.8491,
+		"lng": 17.563,
+		"address": "Herrhagsvägen 17, 752 67 Uppsala"
+	},
+	{
+		"id": "2341",
+		"chain": "willys",
+		"name": "Willys Vagnhärad Lånesta",
+		"lat": 58.9542,
+		"lng": 17.4946,
+		"address": "Kalkbruksvägen 1, 610 71 Vagnhärad"
+	},
+	{
+		"id": "2363",
+		"chain": "willys",
+		"name": "Willys Vallentuna Centrum",
+		"lat": 59.5347,
+		"lng": 18.0789,
+		"address": "Tuna Torg 14, 186 31 Vallentuna"
+	},
+	{
+		"id": "2235",
+		"chain": "willys",
+		"name": "Willys Vara Axet",
+		"lat": 58.2573,
+		"lng": 12.9584,
+		"address": "Södra Ringleden 4b, 534 50 Vara"
+	},
+	{
+		"id": "2161",
+		"chain": "willys",
+		"name": "Willys Varberg",
+		"lat": 57.1023,
+		"lng": 12.2687,
+		"address": "Träslövsvägen 60, 432 43 Varberg"
+	},
+	{
+		"id": "2182",
+		"chain": "willys",
+		"name": "Willys Vellinge Kompanigatan",
+		"lat": 55.4751,
+		"lng": 13.0193,
+		"address": "Kompanigatan 16, 235 32 Vellinge"
+	},
+	{
+		"id": "2342",
+		"chain": "willys",
+		"name": "Willys Vetlanda Nydala",
+		"lat": 57.4406,
+		"lng": 15.0601,
+		"address": "Dikesvägen 5a, 574 35 Vetlanda"
+	},
+	{
+		"id": "2346",
+		"chain": "willys",
+		"name": "Willys Vimmerby Allen",
+		"lat": 57.6693,
+		"lng": 15.8471,
+		"address": "Vimmerbyallén 11, 598 40 Vimmerby"
+	},
+	{
+		"id": "2162",
+		"chain": "willys",
+		"name": "Willys Visby",
+		"lat": 57.6361,
+		"lng": 18.3277,
+		"address": "Skarphällsgatan 8, 621 41 Visby"
+	},
+	{
+		"id": "2320",
+		"chain": "willys",
+		"name": "Willys Vårgårda Torggatan",
+		"lat": 58.0322,
+		"lng": 12.8049,
+		"address": "Torggatan 6, 447 30 Vårgårda"
+	},
+	{
+		"id": "2263",
+		"chain": "willys",
+		"name": "Willys Vänersborg Trenova Center",
+		"lat": 58.3789,
+		"lng": 12.331,
+		"address": "Regementsgatan, Trenova Center, 462 32 Vänersborg"
+	},
+	{
+		"id": "2204",
+		"chain": "willys",
+		"name": "Willys Värnamo Gröndal",
+		"lat": 57.184,
+		"lng": 14.027,
+		"address": "Träffgatan, Gröndal Centrum, 331 53 Värnamo"
+	},
+	{
+		"id": "2297",
+		"chain": "willys",
+		"name": "Willys Väsby Centrum",
+		"lat": 59.5186,
+		"lng": 17.9099,
+		"address": "Drabantgatan 4, 194 70 Upplands Väsby"
+	},
+	{
+		"id": "2171",
+		"chain": "willys",
+		"name": "Willys Västervik Södra Järnvägsg",
+		"lat": 57.7524,
+		"lng": 16.6329,
+		"address": "Södra Järnvägsgatan 35, 593 33 Västervik"
+	},
+	{
+		"id": "2339",
+		"chain": "willys",
+		"name": "Willys Västerås Erikslund",
+		"lat": 59.6098,
+		"lng": 16.4641,
+		"address": "Hallsta Gårdsgata 7, 721 38 Västerås"
+	},
+	{
+		"id": "2261",
+		"chain": "willys",
+		"name": "Willys Västerås Hälla",
+		"lat": 59.6083,
+		"lng": 16.6191,
+		"address": "Stockholmsvägen 136, 721 34 Västerås"
+	},
+	{
+		"id": "2343",
+		"chain": "willys",
+		"name": "Willys Västerås Stenby",
+		"lat": 59.6365,
+		"lng": 16.5667,
+		"address": "Stenbygatan 3d, 721 36 Västerås"
+	},
+	{
+		"id": "2265",
+		"chain": "willys",
+		"name": "Willys Växjö I11",
+		"lat": 56.8774,
+		"lng": 14.7679,
+		"address": "Marketenterivägen 27, 352 36 Växjö"
+	},
+	{
+		"id": "2131",
+		"chain": "willys",
+		"name": "Willys Växjö Teleborg",
+		"lat": 56.86,
+		"lng": 14.8193,
+		"address": "Skogsuddevägen 1, 352 51 Växjö"
+	},
+	{
+		"id": "2231",
+		"chain": "willys",
+		"name": "Willys Ystad",
+		"lat": 55.4389,
+		"lng": 13.8338,
+		"address": "Aulingatan 24b, 271 39 Ystad"
+	},
+	{
+		"id": "2286",
+		"chain": "willys",
+		"name": "Willys Åhus Rondellen",
+		"lat": 55.9306,
+		"lng": 14.2877,
+		"address": "Sandvaktargatan 22 A, 296 35 Åhus"
+	},
+	{
+		"id": "2280",
+		"chain": "willys",
+		"name": "Willys Åkersberga Runö",
+		"lat": 59.4886,
+		"lng": 18.277,
+		"address": "Korsgärdesvägen 3, 184 41 Åkersberga"
+	},
+	{
+		"id": "2662",
+		"chain": "willys",
+		"name": "Willys Åmål Rondellen",
+		"lat": 59.0551,
+		"lng": 12.6758,
+		"address": "Östra Åsenvägen 3, 662 35 Åmål"
+	},
+	{
+		"id": "2174",
+		"chain": "willys",
+		"name": "Willys Åtvidaberg C",
+		"lat": 58.2019,
+		"lng": 15.9998,
+		"address": "Oxtorgsgatan 1, 597 30 Åtvidaberg"
+	},
+	{
+		"id": "2254",
+		"chain": "willys",
+		"name": "Willys Älmhult",
+		"lat": 56.5516,
+		"lng": 14.1608,
+		"address": "Handelsvägen 18 B, 343 33 Älmhult"
+	},
+	{
+		"id": "2326",
+		"chain": "willys",
+		"name": "Willys Älvängen Handelsplats",
+		"lat": 57.9625,
+		"lng": 12.1292,
+		"address": "Svenstorpsvägen 12-14, 446 38 Älvängen"
+	},
+	{
+		"id": "2233",
+		"chain": "willys",
+		"name": "Willys Ängelholm Brännborn Center",
+		"lat": 56.2548,
+		"lng": 12.8903,
+		"address": "Kristianstadsgatan 19-21, 262 71 Ängelholm"
+	},
+	{
+		"id": "2222",
+		"chain": "willys",
+		"name": "Willys Örebro Almby",
+		"lat": 59.2631,
+		"lng": 15.2382,
+		"address": "Tingslagsgatan 7, 702 17 Örebro"
+	},
+	{
+		"id": "2289",
+		"chain": "willys",
+		"name": "Willys Örebro Baronbackarna",
+		"lat": 59.2904,
+		"lng": 15.2057,
+		"address": "Smidesgatan 2, 703 83 Örebro"
+	},
+	{
+		"id": "2123",
+		"chain": "willys",
+		"name": "Willys Örebro Marieberg",
+		"lat": 59.209,
+		"lng": 15.136,
+		"address": "Kundvägen 4, 702 31 Örebro"
+	},
+	{
+		"id": "2139",
+		"chain": "willys",
+		"name": "Willys Örebro Västhaga",
+		"lat": 59.2728,
+		"lng": 15.1747,
+		"address": "Tunnlandsgatan 2-4, 703 46 Örebro"
+	},
+	{
+		"id": "2197",
+		"chain": "willys",
+		"name": "Willys Örnsköldsvik",
+		"lat": 63.3051,
+		"lng": 18.744,
+		"address": "Terminalvägen 3a, 891 51 Örnsköldsvik"
+	},
+	{
+		"id": "2120",
+		"chain": "willys",
+		"name": "Willys Östersund Storsjö",
+		"lat": 63.163,
+		"lng": 14.6547,
+		"address": "Minnesgärdsgränd 3, 831 45 Östersund"
+	},
+	{
+		"id": "2357",
+		"chain": "willys",
+		"name": "Willys Östhammar Börstil",
+		"lat": 60.2479,
+		"lng": 18.3487,
+		"address": "Energivägen 4c, 742 34 Östhammar"
+	}
+]
