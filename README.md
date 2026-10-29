@@ -5,11 +5,11 @@ Search for a grocery product and see one merged, price-sorted list from Swedish 
 Built with SvelteKit + TypeScript. Apple MapKit JS for the map, OpenStreetMap Nominatim for address lookup.
 
 ```bash
-npm install
+bun install
 cp .env.example .env   # then paste your MapKit JS token into PUBLIC_MAPKIT_TOKEN
-npm run dev        # http://localhost:5173
-npm test           # unit tests (price parsing, search radius)
-npm run check      # type check
+bun run dev        # http://localhost:5173
+bun run test       # unit tests (price parsing, search radius)
+bun run check      # type check
 ```
 
 ## Map token
@@ -44,7 +44,7 @@ Tokens made in the Apple Developer dashboard expire. When the map shows "Kartan 
 Rebuild the Lidl store list now and then (it takes about 4 minutes and makes about 1 request per second):
 
 ```bash
-node scripts/build-lidl-stores.mjs
+bun run stores:lidl
 ```
 
 ### Not included: ICA and Coop
