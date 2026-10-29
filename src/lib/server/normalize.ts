@@ -126,6 +126,8 @@ const PRODUCT_TYPES = [
 const isProductType = (word: string) =>
 	// Short words only as whole words, so "te" doesn't match every word ending in "te".
 	PRODUCT_TYPES.some((t) => word === t || (t.length >= 4 && word.endsWith(t)));
+// Sweets named after what they look or taste like: "Skumbanan", "Chokladbanan".
+const SWEET_PREFIXES = ['skum', 'choklad', 'gelé', 'lakrits', 'marsipan', 'godis'];
 const BABY_FOOD = /\bfrån \d+ (?:månader|mån|år)\b|\b\d+\s*-\s*\d+\s*år\b/i;
 
 /**
@@ -135,11 +137,25 @@ const BABY_FOOD = /\bfrån \d+ (?:månader|mån|år)\b|\b\d+\s*-\s*\d+\s*år\b/i
  */
 export type Relevance = 'best' | 'mention' | 'weak';
 
-export function relevance(query: string, name: string, brand?: string): Relevance | undefined {
-	const quality = matchQuality(query, name, brand);
+/**
+ * `categories` (broad to specific, e.g. ["Skafferiet", "Kaffe, te & choklad", "Bryggkaffe"])
+ * come from chains that publish them (City Gross). The most specific one counts as part of
+ * the name, since names there often leave out the product type ("Originalet Mellanrost").
+ */
+export function relevance(query: string, name: string, brand?: string, categories: string[] = []): Relevance | undefined {
+	const specific = categories.at(-1);
+	const quality = matchQuality(query, name, brand, specific);
 	if (!quality) return undefined;
 	if (quality === 1) return 'weak';
 	const asked = tokens(query);
-	const other = tokens(name).filter((w) => !asked.some((q) => wordQuality(q, w) === 2));
-	return other.some(isProductType) || BABY_FOOD.test(name) ? 'mention' : 'best';
+	const isAsked = (w: string) => asked.some((q) => wordQuality(q, w) === 2);
+	if (specific && tokens(specific).some(isAsked)) return 'best';
+	// The broader levels name the shelf ("Godis", "Barnmat"); the specific one can be a
+	// buying code ("DJ FRUKT/BÄR/JUICE") that would misfire here.
+	const shelf = tokens(categories.slice(0, -1).join(' ')).filter((w) => !isAsked(w));
+	if (shelf.some((w) => isProductType(w) || w.startsWith('barn'))) return 'mention';
+	const words = tokens(name);
+	const other = words.filter((w) => !isAsked(w));
+	const sweet = words.some((w) => isAsked(w) && SWEET_PREFIXES.some((p) => w.startsWith(p) && !asked.includes(w)));
+	return sweet || other.some(isProductType) || BABY_FOOD.test(name) ? 'mention' : 'best';
 }

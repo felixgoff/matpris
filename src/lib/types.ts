@@ -1,6 +1,6 @@
 // Types shared between server and browser.
 
-export type ChainId = 'willys' | 'hemkop' | 'lidl' | 'ica' | 'coop';
+export type ChainId = 'willys' | 'hemkop' | 'lidl' | 'citygross' | 'ica' | 'coop' | 'costco';
 
 // Logos are served from static/logos (see README for sources).
 // `online: false` chains have no public price data: their stores are shown, their prices aren't.
@@ -8,8 +8,11 @@ export const CHAINS: Record<ChainId, { name: string; color: string; logo: string
 	willys: { name: 'Willys', color: '#e30613', logo: '/logos/willys.svg', online: true },
 	hemkop: { name: 'Hemköp', color: '#f07800', logo: '/logos/hemkop.svg', online: true },
 	lidl: { name: 'Lidl', color: '#0050aa', logo: '/logos/lidl.svg', online: true },
+	citygross: { name: 'City Gross', color: '#0171b9', logo: '/logos/citygross.svg', online: true },
 	ica: { name: 'ICA', color: '#e3000b', logo: '/logos/ica.svg', online: false },
-	coop: { name: 'Coop', color: '#00aa46', logo: '/logos/coop.svg', online: false }
+	coop: { name: 'Coop', color: '#00aa46', logo: '/logos/coop.svg', online: false },
+	// Costco's product search needs an OAuth client token, and its online range is mostly non-food.
+	costco: { name: 'Costco', color: '#e31837', logo: '/logos/costco-wholesale.png', online: false }
 };
 
 export interface Store {
@@ -56,6 +59,8 @@ export interface ProductHit {
 	/** Comparison price ("jämförpris") in kr per unit. */
 	unitPrice?: number;
 	unit?: Unit;
+	/** The chain's own category path, broad to specific, where it publishes one (City Gross). */
+	categories?: string[];
 	/** `price` is per kilo: the product is sold by weight (loose bananas, tomatoes). */
 	perKg?: boolean;
 	/** Estimated price of one piece of a product sold by weight, from its average weight. */

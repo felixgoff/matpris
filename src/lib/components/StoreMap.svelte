@@ -238,6 +238,12 @@
 	:global(.store-pin img.ica) {
 		height: 13px;
 	}
+	:global(.store-pin img.citygross) {
+		height: 16px;
+	}
+	:global(.store-pin.hot img.citygross) {
+		height: 22px;
+	}
 	/* Chains without online prices: shown for orientation, visually secondary. */
 	:global(.store-pin.offline) {
 		opacity: 0.75;

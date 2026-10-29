@@ -407,9 +407,9 @@
 						{/each}
 						<span
 							class="seg none"
-							title="{mapOnlyChains
-								.map((c) => `${CHAINS[c].name} (${storeCount(c)} stores)`)
-								.join(' and ')} don't publish prices openly, so only their stores are shown on the map"
+							title="{new Intl.ListFormat('en').format(
+								mapOnlyChains.map((c) => `${CHAINS[c].name} (${storeCount(c)} stores)`)
+							)} don't publish prices openly, so only their stores are shown on the map"
 						>
 							{#each mapOnlyChains as c (c)}{@render logo(c)}{/each}
 							<span>no online prices</span>
@@ -485,7 +485,7 @@
 					<div class="intro">
 						<h2>What's cheapest near you?</h2>
 						<p>
-							Search for a grocery product and compare live prices at the Willys, Hemköp and Lidl stores around you,
+							Search for a grocery product and compare live prices at the Willys, Hemköp, Lidl and City Gross stores around you,
 							ranked by price per kilo or litre.
 						</p>
 						<div class="try">
@@ -494,7 +494,7 @@
 						</div>
 						<p class="fine">
 							We search the stores inside the circle on the map. It grows automatically until it contains enough
-							stores. ICA and Coop don't publish their prices openly, so only their stores are shown.
+							stores. ICA, Coop and Costco don't publish their prices openly, so only their stores are shown.
 						</p>
 					</div>
 				{/if}
@@ -536,8 +536,9 @@
 			{/if}
 
 			<footer>
-				Prices come straight from the chains' websites and may differ from the price in store. Willys, Hemköp and Lidl
-				use one online price nationwide; the store shown is the nearest one. ICA and Coop don't publish prices openly.
+				Prices come straight from the chains' websites and may differ from the price in store. Willys, Hemköp, Lidl and
+				City Gross use one online price nationwide; the store shown is the nearest one. ICA, Coop and Costco don't
+				publish prices openly.
 			</footer>
 		</div>
 
@@ -797,6 +798,7 @@
 	/* Chain filter: one segment per chain, as wide as its share of the results. */
 	.share {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 3px;
 	}
 	.seg {
@@ -838,8 +840,10 @@
 		color: var(--offer-ink);
 		font-weight: 600;
 	}
+	/* The chains without prices get their own row under the priced ones. */
 	.seg.none {
-		flex: 0 0 auto;
+		flex: 1 0 100%;
+		height: 36px;
 		background: repeating-linear-gradient(135deg, #d6d9d5 0 6px, #ccd0cb 6px 12px);
 		color: #3e4244;
 		cursor: help;
@@ -849,6 +853,10 @@
 	}
 	.seg :global(.logo.lidl) {
 		height: 26px;
+	}
+	/* City Gross's logo is a small boxed wordmark; it needs more height to be read. */
+	.seg :global(.logo.citygross) {
+		height: 22px;
 	}
 	.count {
 		margin-top: 10px;
@@ -933,6 +941,9 @@
 	}
 	.logo.lidl {
 		height: 20px;
+	}
+	.logo.citygross {
+		height: 18px;
 	}
 	.price {
 		text-align: right;
@@ -1356,9 +1367,6 @@
 			border-left: 0;
 			border-block: 4px solid var(--steel-edge);
 		}
-		.share {
-			flex-wrap: wrap;
-		}
 		.seg {
 			min-width: fit-content;
 			padding: 0 10px;
@@ -1370,10 +1378,7 @@
 		.seg :global(.logo.lidl) {
 			height: 24px;
 		}
-		.seg.none {
-			flex-basis: 100%;
-			height: 36px;
-		}
+
 		.label {
 			grid-template-columns: 40px minmax(0, 1fr) auto;
 			gap: 4px 12px;

@@ -1,4 +1,4 @@
-// Store locations for chains without public price data (ICA, Coop), from
+// Store locations for chains without public price data (ICA, Coop, Costco), from
 // OpenStreetMap via Nominatim. Usage policy: max 1 request/s, identify yourself,
 // no heavy use — so lookups are per search circle and cached for a day.
 import type { ChainId, Store } from '../../types';
@@ -16,7 +16,8 @@ interface NominatimPlace {
 	display_name: string;
 }
 
-const STORE_TYPES = new Set(['supermarket', 'convenience']);
+// Costco warehouses are mapped as shop=wholesale.
+const STORE_TYPES = new Set(['supermarket', 'convenience', 'wholesale']);
 
 /** "ICA Malmborgs, 5, Clemenstorget, Stadskärnan, …" → "Clemenstorget 5, Stadskärnan" */
 function address(displayName: string) {
@@ -26,7 +27,7 @@ function address(displayName: string) {
 }
 const cache = new TtlCache<Store[]>(24 * 60 * 60 * 1000);
 
-/** ICA or Coop grocery stores inside the box around `center` (≈ `radiusKm` each way). */
+/** ICA, Coop or Costco stores inside the box around `center` (≈ `radiusKm` each way). */
 export function osmStores(chain: ChainId, center: { lat: number; lng: number }, radiusKm: number): Promise<Store[]> {
 	// Round so nearby searches share a cache entry.
 	const key = `${chain}:${center.lat.toFixed(2)}:${center.lng.toFixed(2)}:${Math.ceil(radiusKm)}`;

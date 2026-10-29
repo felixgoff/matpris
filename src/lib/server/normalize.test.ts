@@ -79,11 +79,34 @@ describe('relevance', () => {
 		expect(relevance('banan', 'Mango Banan Apelsin Drickyoghurt')).toBe('mention');
 		expect(relevance('banan', 'Fruktsmoothie Äpple & Banan Från 6 Månader')).toBe('mention');
 		expect(relevance('banan', 'Bananchips')).toBe('weak');
+		expect(relevance('bananer', 'Jordgubb Skumbananer Sura')).toBe('mention');
+		expect(relevance('skumbanan', 'Skumbanan')).toBe('best');
 		expect(relevance('banan', 'Päron')).toBeUndefined();
 	});
 	it('treats a product type the query asked for as the product', () => {
 		expect(relevance('banan yoghurt', 'Banan & Vanilj Yo-ghurt 0,1%')).toBe('best');
 		expect(relevance('mjölk', 'Mellanmjölk Längre Hållbarhet 1,5%')).toBe('best');
 		expect(relevance('kaffe', 'Originalet Mellanrost Bryggkaffe')).toBe('best');
+	});
+});
+
+describe('relevance with chain categories', () => {
+	const coffee = ['Skafferiet', 'Kaffe, te & choklad', 'Bryggkaffe'];
+	it('uses the most specific category as part of the name', () => {
+		expect(relevance('kaffe', 'Originalet Mellanrost', 'Gevalia', coffee)).toBe('best');
+		expect(relevance('banan', 'Banan Eko', undefined, ['Frukt & grönt', 'Frukt', 'Bananer'])).toBe('best');
+		expect(relevance('kaffe', 'Earl Grey', 'Twinings', ['Skafferiet', 'Kaffe, te & choklad', 'Te'])).toBeUndefined();
+	});
+	it('folds sweets, yoghurt and baby food away by their shelf', () => {
+		expect(relevance('banan', 'Chokladbanan', 'Aroma', ['Godis', 'Choklad', 'Chokladpåsar'])).toBe('mention');
+		expect(relevance('banan', 'Jordgubb Banan', 'Danonino', ['Mejeri, ost & ägg', 'Yoghurt', 'Smaksatt yoghurt'])).toBe(
+			'mention'
+		);
+		expect(relevance('banan', 'Mango & Banan Puré', 'Semper', ['Barn', 'Barnmat', 'BARNMAT, MAT FÖR BARN'])).toBe(
+			'mention'
+		);
+		expect(relevance('banan', 'Banan Skivad', 'Eldorado', ['Fryst', 'Frysta bär & frukt', 'DJ FRUKT/BÄR/JUICE'])).toBe(
+			'best'
+		);
 	});
 });

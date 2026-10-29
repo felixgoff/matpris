@@ -40,6 +40,7 @@ Tokens made in the Apple Developer dashboard expire. When the map shows "Kartan 
 | Willys | Public site search JSON (`willys.se/search`) | `willys.se/axfood/rest/store` | National online price |
 | Hemköp | Same Axfood platform (`hemkop.se/search`) | `hemkop.se/axfood/rest/store` | Online price of the site's default store |
 | Lidl | Public site search (`lidl.se/q/api/search`): current assortment and weekly deals only | `src/lib/server/data/lidl-stores.json`, built from Lidl's public store sitemap | National |
+| City Gross | Site search JSON (`citygross.se/api/v1/Loop54/search`), with each product's category | `citygross.se/api/v1/PageData/stores` | Online price of the site's default store |
 
 Rebuild the Lidl store list now and then (it takes about 4 minutes and makes about 1 request per second):
 
@@ -47,18 +48,22 @@ Rebuild the Lidl store list now and then (it takes about 4 minutes and makes abo
 bun run stores:lidl
 ```
 
-### ICA and Coop: stores only, no prices
+City Gross's robots.txt disallows the `/loop54/` page route; the `/api/v1/` JSON the shop itself calls is not covered by it. Requests are spaced 2 s apart. Members-only offers ("Klubbpris") are left out because they need a City Gross account.
 
-ICA and Coop stores appear on the map and in the chain list, marked **"no online prices"**. Their locations come from OpenStreetMap via Nominatim (`src/lib/server/stores/osm.ts`): two lookups per new search circle, cached for 24 hours, spaced at least 1.1 s apart as Nominatim's usage policy requires. For a busy public site, switch to a self-hosted Nominatim or an Overpass extract.
+### ICA, Coop and Costco: stores only, no prices
+
+ICA, Coop and Costco stores appear on the map and in the chain list, marked **"no online prices"**. Their locations come from OpenStreetMap via Nominatim (`src/lib/server/stores/osm.ts`): one lookup per chain per new search circle, cached for 24 hours, spaced at least 1.1 s apart as Nominatim's usage policy requires. For a busy public site, switch to a self-hosted Nominatim or an Overpass extract.
 
 Why there are no prices:
 
 - **ICA** prices are per store. Product pages on `handla.ica.se` show no price until you choose a store, and the store-specific shop (`handlaprivatkund.ica.se`) and `www.ica.se` block automated requests (HTTP 403). The site doesn't try to get around that.
 - **Coop**'s store list and prices come from an API that needs a subscription key, and Coop's robots.txt disallows its search pages. Coop runs an official API catalog at https://portal.api.coop.se. If you get a key there, add `COOP_API_KEY` to `.env`, and a Coop adapter (`pricing: 'store'`) can be written against the documented endpoints. The search already queries every store of a per-store chain inside the circle and keeps each product's cheapest offer.
+- **Costco**'s web shop (`costco.se`) only answers product searches with an OAuth client token, and its online range is mostly non-food; warehouse grocery prices aren't published. Its warehouses (OSM `shop=wholesale`) are shown on the map.
+- Open-source scrapers that do fetch ICA and Coop prices (for example matval) solve ICA's AWS WAF challenge with a headless browser and lift Coop's API key out of coop.se. That is getting around the chains' blocking, so this project doesn't do it.
 
 ### Multi-buy deals
 
-Willys and Hemköp deals such as "5 för 55 kr" are parsed into a structured `deal`: quantity, price each, total, the deal's unit price, mix & match, deposit on top, and the per-customer limit. The list shows the deal under the regular price. With **Count multi-buy deals** on (the default), sorting and the "Cheapest near you" card use the deal price and say how many you need to buy.
+Willys, Hemköp and City Gross deals such as "5 för 55 kr" are parsed into a structured `deal`: quantity, price each, total, the deal's unit price, mix & match, deposit on top, and the per-customer limit. The list shows the deal under the regular price. With **Count multi-buy deals** on (the default), sorting and the "Cheapest near you" card use the deal price and say how many you need to buy.
 
 ### Adding a chain
 

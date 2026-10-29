@@ -16,7 +16,7 @@ async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyS
 	const chain = adapter.chain;
 	const rate = (hits: ProductHit[], store: NearbyStore): ResultRow[] =>
 		hits.flatMap((h) => {
-			const match = relevance(query, h.name, h.brand);
+			const match = relevance(query, h.name, h.brand, h.categories);
 			return match ? [{ ...h, store, match }] : [];
 		});
 
