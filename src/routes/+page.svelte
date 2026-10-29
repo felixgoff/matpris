@@ -494,7 +494,7 @@
 						</div>
 						<p class="fine">
 							We search the stores inside the circle on the map. It grows automatically until it contains enough
-							stores. ICA, Coop and Costco don't publish their prices openly, so only their stores are shown.
+							stores. ICA and Coop don't publish their prices openly, so only their stores are shown.
 						</p>
 					</div>
 				{/if}
@@ -537,8 +537,8 @@
 
 			<footer>
 				Prices come straight from the chains' websites and may differ from the price in store. Willys, Hemköp, Lidl and
-				City Gross use one online price nationwide; the store shown is the nearest one. ICA, Coop and Costco don't
-				publish prices openly.
+				City Gross use one online price nationwide; the store shown is the nearest one. ICA and Coop don't publish
+				prices openly.
 			</footer>
 		</div>
 

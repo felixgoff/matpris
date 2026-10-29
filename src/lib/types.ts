@@ -1,6 +1,6 @@
 // Types shared between server and browser.
 
-export type ChainId = 'willys' | 'hemkop' | 'lidl' | 'citygross' | 'ica' | 'coop' | 'costco';
+export type ChainId = 'willys' | 'hemkop' | 'lidl' | 'citygross' | 'ica' | 'coop';
 
 // Logos are served from static/logos (see README for sources).
 // `online: false` chains have no public price data: their stores are shown, their prices aren't.
@@ -10,9 +10,7 @@ export const CHAINS: Record<ChainId, { name: string; color: string; logo: string
 	lidl: { name: 'Lidl', color: '#0050aa', logo: '/logos/lidl.svg', online: true },
 	citygross: { name: 'City Gross', color: '#0171b9', logo: '/logos/citygross.svg', online: true },
 	ica: { name: 'ICA', color: '#e3000b', logo: '/logos/ica.svg', online: false },
-	coop: { name: 'Coop', color: '#00aa46', logo: '/logos/coop.svg', online: false },
-	// Costco's product search needs an OAuth client token, and its online range is mostly non-food.
-	costco: { name: 'Costco', color: '#e31837', logo: '/logos/costco-wholesale.png', online: false }
+	coop: { name: 'Coop', color: '#00aa46', logo: '/logos/coop.svg', online: false }
 };
 
 export interface Store {
