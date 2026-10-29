@@ -1,7 +1,6 @@
 <script lang="ts">
-	import 'leaflet/dist/leaflet.css';
-	import type { Circle, LayerGroup, Map as LeafletMap } from 'leaflet';
 	import { onMount } from 'svelte';
+	import { loadMapKit } from '../mapkit';
 	import { CHAINS, type NearbyStore } from '../types';
 
 	interface Props {
@@ -14,64 +13,88 @@
 	let { center, radiusKm, stores, highlight }: Props = $props();
 
 	let el: HTMLDivElement;
-	let L: typeof import('leaflet') | undefined = $state();
-	let map: LeafletMap;
-	let layer: LayerGroup;
-	let circle: Circle | undefined;
+	let map = $state<mapkit.Map>();
+	let failed = $state('');
 
 	onMount(() => {
 		let cancelled = false;
-		// Leaflet touches `window`, so load it in the browser only.
-		import('leaflet').then((mod) => {
-			if (cancelled) return;
-			L = mod.default ?? mod;
-			map = L.map(el, { scrollWheelZoom: false }).setView([center.lat, center.lng], 12);
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				maxZoom: 19,
-				attribution: '&copy; OpenStreetMap'
-			}).addTo(map);
-			layer = L.layerGroup().addTo(map);
-		});
+		let created: mapkit.Map | undefined;
+		loadMapKit().then(
+			(mk) => {
+				if (cancelled) return;
+				created = new mk.Map(el, {
+					showsPointsOfInterest: false,
+					showsMapTypeControl: false,
+					isRotationEnabled: false
+				});
+				map = created;
+			},
+			(e: Error) => (failed = e.message)
+		);
 		return () => {
 			cancelled = true;
-			map?.remove();
+			created?.destroy();
 		};
 	});
 
 	$effect(() => {
-		if (!L) return;
-		layer.clearLayers();
-		circle = undefined;
-		L.circleMarker([center.lat, center.lng], { radius: 6, color: '#111', fillOpacity: 1 })
-			.bindTooltip('Du är här')
-			.addTo(layer);
+		if (!map) return;
+		const at = (lat: number, lng: number) => new mapkit.Coordinate(lat, lng);
+		map.removeOverlays(map.overlays);
+		map.removeAnnotations(map.annotations);
+
+		const items: (mapkit.Annotation | mapkit.Overlay)[] = [];
 		if (radiusKm) {
-			circle = L.circle([center.lat, center.lng], {
-				radius: radiusKm * 1000,
-				color: '#1a7f4b',
-				weight: 1.5,
-				fillOpacity: 0.05,
-				dashArray: '6 4'
-			}).addTo(layer);
+			const circle = new mapkit.CircleOverlay(at(center.lat, center.lng), radiusKm * 1000, {
+				style: new mapkit.Style({
+					strokeColor: '#1a7f4b',
+					lineWidth: 2,
+					lineDash: [6, 4],
+					fillColor: '#1a7f4b',
+					fillOpacity: 0.06
+				})
+			});
+			map.addOverlay(circle);
+			items.push(circle);
 		}
-		for (const s of stores) {
+
+		// MapKit hides colliding annotations below "required" priority, and nearby
+		// stores always collide, so every marker is required and names only show
+		// in the callout when a marker is tapped.
+		const pin = {
+			displayPriority: mapkit.Annotation.DisplayPriority.Required,
+			titleVisibility: mapkit.FeatureVisibility.Hidden,
+			subtitleVisibility: mapkit.FeatureVisibility.Hidden
+		};
+		const annotations = stores.map((s) => {
 			const hot = s.id === highlight;
-			L.circleMarker([s.lat, s.lng], {
-				radius: hot ? 11 : 7,
-				color: hot ? '#1a7f4b' : '#fff',
-				weight: hot ? 4 : 2,
-				fillColor: CHAINS[s.chain].color,
-				fillOpacity: 1
+			return new mapkit.MarkerAnnotation(at(s.lat, s.lng), {
+				...pin,
+				color: CHAINS[s.chain].color,
+				title: s.name,
+				subtitle: `${s.address} · ${s.distanceKm.toLocaleString('sv-SE', { maximumFractionDigits: 1 })} km bort`,
+				glyphText: hot ? '★' : CHAINS[s.chain].name[0],
+				selected: hot
+			});
+		});
+		annotations.push(
+			new mapkit.MarkerAnnotation(at(center.lat, center.lng), {
+				...pin,
+				color: '#1b1f1d',
+				title: 'Du är här',
+				glyphText: '•'
 			})
-				.bindPopup(`<b>${s.name}</b><br>${s.address}<br>${s.distanceKm.toLocaleString('sv-SE', { maximumFractionDigits: 1 })} km bort`)
-				.addTo(layer);
-		}
-		if (circle) map.fitBounds(circle.getBounds(), { padding: [10, 10] });
-		else map.setView([center.lat, center.lng], 12);
+		);
+		map.addAnnotations(annotations);
+		items.push(...annotations);
+
+		map.showItems(items, { animate: true, padding: new mapkit.Padding(40, 30, 30, 30) });
 	});
 </script>
 
-<div class="map" bind:this={el}></div>
+<div class="map" bind:this={el}>
+	{#if failed}<p class="failed">Kartan kunde inte laddas: {failed}</p>{/if}
+</div>
 
 <style>
 	.map {
@@ -79,6 +102,16 @@
 		min-height: 320px;
 		border-radius: 12px;
 		overflow: hidden;
-		z-index: 0;
+		position: relative;
+		background: #e8ebe9;
+	}
+	.failed {
+		position: absolute;
+		inset: 0;
+		margin: auto;
+		height: fit-content;
+		text-align: center;
+		color: #555;
+		padding: 16px;
 	}
 </style>

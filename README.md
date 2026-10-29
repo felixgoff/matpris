@@ -2,14 +2,21 @@
 
 Search for a grocery product and see one merged, price-sorted list from Swedish chains near you, with a map of the stores and a "cheapest near you" pick.
 
-Built with SvelteKit + TypeScript. Leaflet/OpenStreetMap for the map, Nominatim for address lookup.
+Built with SvelteKit + TypeScript. Apple MapKit JS for the map, OpenStreetMap Nominatim for address lookup.
 
 ```bash
 npm install
+cp .env.example .env   # then paste your MapKit JS token into PUBLIC_MAPKIT_TOKEN
 npm run dev        # http://localhost:5173
 npm test           # unit tests (price parsing, search radius)
 npm run check      # type check
 ```
+
+## Map token
+
+The map uses [MapKit JS](https://developer.apple.com/maps/web/) and needs a JWT in `PUBLIC_MAPKIT_TOKEN` (`.env`, which is gitignored). The token is sent to the browser by design, but keep it out of git so it can be rotated.
+
+Tokens made in the Apple Developer dashboard expire. When the map shows "Kartan kunde inte laddas", generate a new one and update `.env`; no rebuild is needed in dev, just a restart. For production, sign short-lived tokens on the server from your MapKit `.p8` key (ES256, with your Team ID as `iss` and the Key ID as `kid`), and set an `origin` claim to your domain.
 
 ## How it works
 
