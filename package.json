@@ -13,7 +13,8 @@
 		"test": "vitest run",
 		"stores:lidl": "node scripts/build-lidl-stores.mjs",
 		"stores:ica": "node scripts/ica-stores.mjs",
-		"catalogue:ica": "node scripts/ica-catalogue.mjs"
+		"catalogue:ica": "node scripts/ica-catalogue.mjs",
+		"record:ica": "node scripts/ica-record.mjs"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^8.0.0",

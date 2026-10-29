@@ -56,19 +56,28 @@ try {
 const storeState = (db.stores[accountId] ??= { categories: {}, visited: {} });
 
 // ---------- launch and session ----------
-let browser, ctx, page;
+let ctx, page, ctxClosed = false;
 
-/** Real Chrome if installed (best fingerprint), else the bundled Chromium. */
+/** Real Chrome (persistent profile: cookies and WAF tokens accumulate) if installed,
+ *  else the bundled Chromium. */
 async function launch() {
 	const profile = new URL('./.ica-profile', import.meta.url);
 	await mkdir(profile, { recursive: true });
 	for (const opts of [{ channel: 'chrome' }, {}]) {
 		try {
-			browser = await chromium.launch({
+			ctx = await chromium.launchPersistentContext(profile.pathname, {
 				headless: HEADLESS,
 				...(opts.channel ? opts : {}),
-				args: ['--disable-blink-features=AutomationControlled']
+				args: ['--disable-blink-features=AutomationControlled'],
+				userAgent:
+					'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+				locale: 'sv-SE',
+				viewport: { width: 1440, height: 900 }
 			});
+			ctx.on('close', () => (ctxClosed = true, console.log(new Date().toLocaleTimeString('sv-SE'), 'browser context closed (window lost or crashed)')));
+			page = ctx.pages()[0] ?? (await ctx.newPage());
+			page.on('crash', () => log('page crashed!'));
+			page = ctx.pages()[0] ?? (await ctx.newPage());
 			log(`browser: ${opts.channel ?? 'bundled chromium'}${HEADLESS ? ' (headless)' : ' (headed)'}`);
 			return;
 		} catch (e) {
@@ -312,23 +321,22 @@ function seedRoots() {
 function selectNext() {
 	const entries = Object.entries(storeState.categories).filter(([k]) => !storeState.visited[k]);
 	entries.sort((a, b) => {
-		const pa = LOW_PRIORITY.some((p) => a[0].toLowerCase().startsWith(p)) || (a[1].depth ?? 1) > 2 ? 1 : 0;
-		const pb = LOW_PRIORITY.some((p) => b[0].toLowerCase().startsWith(p)) || (b[1].depth ?? 1) > 2 ? 1 : 0;
-		if (pa !== pb) return pa - pb;
-		return (a[1].depth ?? 1) - (b[1].depth ?? 1);
+		// Leaf-first: depth-1 pages are tile grids without product lists (verified
+		// 2026-10-29) — crawl them last, after everything that can list products.
+		const deep = (depth) => ((depth ?? 1) >= 2 ? 0 : 1);
+		const pa = [deep(a[1].depth), LOW_PRIORITY.some((p) => a[0].toLowerCase().startsWith(p)) ? 1 : 0];
+		const pb = [deep(b[1].depth), LOW_PRIORITY.some((p) => b[0].toLowerCase().startsWith(p)) ? 1 : 0];
+		return (
+			pa[0] - pb[0] ||
+			pa[1] - pb[1] ||
+			a[0].localeCompare(b[0])
+		);
 	});
 	return entries[0];
 }
 
 // ---------- main ----------
 await launch();
-ctx = await browser.newContext({
-	userAgent:
-		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-	locale: 'sv-SE',
-	viewport: { width: 1440, height: 900 }
-});
-page = await ctx.newPage();
 attachHarvester();
 seedRoots();
 
@@ -344,7 +352,7 @@ let done = 0;
 let strikes = 0;
 try {
 	for (;;) {
-		if (browser.isClosed()) {
+		if (ctxClosed) {
 			log('browser window is gone — stopping (run again to resume)');
 			break;
 		}
@@ -380,4 +388,4 @@ log(
 	`done: ${done + Object.keys(storeState.visited).length} categories visited total, ` +
 		`${db.products.reduce((n, p) => n + !!p.price, 0)} priced products`
 );
-await browser.close();
+await ctx.close();
