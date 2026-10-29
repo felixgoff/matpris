@@ -130,33 +130,42 @@
 			items.push(circle);
 		}
 
-		// MapKit hides colliding annotations below "required" priority, and nearby
-		// stores always collide, so every pin is required.
-		const required = mapkit.Annotation.DisplayPriority.Required;
-		// The cheapest store goes last so it is drawn on top.
+		// Let MapKit thin the pile-up instead of forcing every pin to stay: the cheapest
+		// wins collisions, other priced stores yield to it, and the price-less (map-only)
+		// pins drop out first. Hidden pins reappear as you zoom in. The cheapest is also
+		// placed last so it draws on top of any peer it doesn't already outrank.
+		const { Required, High, Low } = mapkit.Annotation.DisplayPriority;
+		// Custom annotations only drop out of a collision when a collisionMode is set;
+		// Rectangle matches the label shape, so the wide cheapest label clears a wide berth.
+		const Rectangle = mapkit.Annotation.CollisionMode.Rectangle;
+		const priority = (s: NearbyStore) => (s.id === highlight ? Required : CHAINS[s.chain].online ? High : Low);
 		const ordered = stores.toSorted((a, b) => Number(a.id === highlight) - Number(b.id === highlight));
-		const annotations: mapkit.Annotation[] = ordered.map(
-			(s) =>
-				new mapkit.Annotation(at(s.lat, s.lng), () => pinElement(s, s.id === highlight), {
-					title: s.name,
-					subtitle: [s.address, `${km(s.distanceKm)} away`, !CHAINS[s.chain].online && 'No online prices']
-						.filter(Boolean)
-						.join(' · '),
-					displayPriority: required,
-					// Pins are anchored at their bottom centre; lift them by the pointer's height.
-					anchorOffset: new DOMPoint(0, -7)
-				})
-		);
+		const annotations: mapkit.Annotation[] = ordered.map((s) => {
+			const a = new mapkit.Annotation(at(s.lat, s.lng), () => pinElement(s, s.id === highlight), {
+				title: s.name,
+				subtitle: [s.address, `${km(s.distanceKm)} away`, !CHAINS[s.chain].online && 'No online prices']
+					.filter(Boolean)
+					.join(' · '),
+				// Pins are anchored at their bottom centre; lift them by the pointer's height.
+				anchorOffset: new DOMPoint(0, -7)
+			});
+			// Set on the instance: the Annotation constructor ignores these as options.
+			a.displayPriority = priority(s);
+			a.collisionMode = Rectangle;
+			return a;
+		});
 		if (showCenterPin) {
-			annotations.unshift(
-				new mapkit.MarkerAnnotation(at(center.lat, center.lng), {
-					color: '#26292b',
-					title: 'Selected location',
-					glyphText: '•',
-					displayPriority: required,
-					titleVisibility: mapkit.FeatureVisibility.Hidden
-				})
-			);
+			const dot = new mapkit.MarkerAnnotation(at(center.lat, center.lng), {
+				color: '#26292b',
+				title: 'Selected location',
+				glyphText: '•',
+				titleVisibility: mapkit.FeatureVisibility.Hidden
+			});
+			// Above the stores but below the cheapest, so its wide label is never pierced
+			// by the location pin when both sit on the same spot.
+			dot.displayPriority = 900;
+			dot.collisionMode = Rectangle;
+			annotations.unshift(dot);
 		}
 		map.addAnnotations(annotations);
 		items.push(...annotations);
