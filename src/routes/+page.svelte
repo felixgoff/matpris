@@ -403,7 +403,7 @@
 								title="{hidden.has(c) ? 'Show' : 'Hide'} {CHAINS[c].name}{status[c]?.message
 									? ` (${status[c]?.message})`
 									: s === 'ok' && !n
-										? ' (nothing on its website matches with a published price)'
+										? ' (its website lists nothing matching with a price; the store may still sell it)'
 										: ''}"
 								onclick={() => toggle(c)}
 							>
@@ -411,7 +411,7 @@
 								{#if s === 'ok' && n}
 									<b class="num">{n}</b>
 								{:else}
-									<span>{s === 'ok' ? 'none online' : statusText[s]}</span>
+									<span>{s === 'ok' ? 'not listed' : statusText[s]}</span>
 								{/if}
 							</button>
 						{/each}
