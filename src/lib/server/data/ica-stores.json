@@ -1,0 +1,3206 @@
+[
+	{
+		"id": "1004098",
+		"chain": "ica",
+		"name": "ICA City Brämhult",
+		"lat": 57.72875,
+		"lng": 13.00469,
+		"address": "Brämhults Torg, 50731, Brämhult",
+		"url": "https://handlaprivatkund.ica.se/stores/1004098"
+	},
+	{
+		"id": "1004100",
+		"chain": "ica",
+		"name": "ICA City Fristad",
+		"lat": 57.82557,
+		"lng": 13.01059,
+		"address": "Fristadstorget 10, 51333, Fristad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004100"
+	},
+	{
+		"id": "1004101",
+		"chain": "ica",
+		"name": "ICA City Knalleland",
+		"lat": 57.72954,
+		"lng": 12.93896,
+		"address": "Skaraborgsvägen 25, 50630, Borås",
+		"url": "https://handlaprivatkund.ica.se/stores/1004101"
+	},
+	{
+		"id": "1004247",
+		"chain": "ica",
+		"name": "ICA Focus",
+		"lat": 57.69819,
+		"lng": 11.99314,
+		"address": "Åvägen 42, 41251, Göteborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004247"
+	},
+	{
+		"id": "1004181",
+		"chain": "ica",
+		"name": "ICA Folkes Livs",
+		"lat": 59.85581,
+		"lng": 17.61859,
+		"address": "Rackarbergsgatan 8, 75232, Uppsala",
+		"url": "https://handlaprivatkund.ica.se/stores/1004181"
+	},
+	{
+		"id": "1003542",
+		"chain": "ica",
+		"name": "ICA Hajen Lågpris",
+		"lat": 57.11679,
+		"lng": 12.2574,
+		"address": "Monarkvägen 2, 43240, Varberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1003542"
+	},
+	{
+		"id": "1003714",
+		"chain": "ica",
+		"name": "ICA Karlaplan",
+		"lat": 59.33721,
+		"lng": 18.09114,
+		"address": "Karlaplan 10, 11520, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003714"
+	},
+	{
+		"id": "1003458",
+		"chain": "ica",
+		"name": "ICA Kvantum Ale",
+		"lat": 57.89372,
+		"lng": 12.04573,
+		"address": "Ale Torg 7, 44931, Nödinge",
+		"url": "https://handlaprivatkund.ica.se/stores/1003458"
+	},
+	{
+		"id": "1004517",
+		"chain": "ica",
+		"name": "ICA Kvantum Avesta",
+		"lat": 60.14536,
+		"lng": 16.17403,
+		"address": "Myntgatan 3-5, 77430, Avesta",
+		"url": "https://handlaprivatkund.ica.se/stores/1004517"
+	},
+	{
+		"id": "1003686",
+		"chain": "ica",
+		"name": "ICA Kvantum BEA Livsmedel",
+		"lat": 59.27892,
+		"lng": 18.06965,
+		"address": "Handelsvägen 188, 12238, Enskede",
+		"url": "https://handlaprivatkund.ica.se/stores/1003686"
+	},
+	{
+		"id": "1004142",
+		"chain": "ica",
+		"name": "ICA Kvantum Boden",
+		"lat": 65.81736,
+		"lng": 21.70786,
+		"address": "Lulevägen 27, 96173, Boden",
+		"url": "https://handlaprivatkund.ica.se/stores/1004142"
+	},
+	{
+		"id": "1004152",
+		"chain": "ica",
+		"name": "ICA Kvantum Ekängen",
+		"lat": 59.37279,
+		"lng": 16.55608,
+		"address": "Strängnäsvägen 11, 63349, Eskilstuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1004152"
+	},
+	{
+		"id": "1106008",
+		"chain": "ica",
+		"name": "ICA Kvantum Ersboda",
+		"lat": 63.85177,
+		"lng": 20.2989,
+		"address": "Formvägen 4, 90621, Umeå",
+		"url": "https://handlaprivatkund.ica.se/stores/1106008"
+	},
+	{
+		"id": "1004163",
+		"chain": "ica",
+		"name": "ICA Kvantum Eslöv",
+		"lat": 55.83719,
+		"lng": 13.30701,
+		"address": "Kvarngränd 1, 24138, Eslöv",
+		"url": "https://handlaprivatkund.ica.se/stores/1004163"
+	},
+	{
+		"id": "1004170",
+		"chain": "ica",
+		"name": "ICA Kvantum Falkenberg",
+		"lat": 56.90392,
+		"lng": 12.48271,
+		"address": "Sandgatan 34, 31175, Falkenberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004170"
+	},
+	{
+		"id": "1003412",
+		"chain": "ica",
+		"name": "ICA Kvantum Farsta",
+		"lat": 59.24232,
+		"lng": 18.0891,
+		"address": "Storöplan 2, 12347, Farsta",
+		"url": "https://handlaprivatkund.ica.se/stores/1003412"
+	},
+	{
+		"id": "1004175",
+		"chain": "ica",
+		"name": "ICA Kvantum Filipstad",
+		"lat": 59.71143,
+		"lng": 14.15407,
+		"address": "Konsul Lundströmsväg 1, 68233, Filipstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004175"
+	},
+	{
+		"id": "1003606",
+		"chain": "ica",
+		"name": "ICA Kvantum Flen",
+		"lat": 59.05934,
+		"lng": 16.59152,
+		"address": "Norra Kungsgatan 8, 64237, Flen",
+		"url": "https://handlaprivatkund.ica.se/stores/1003606"
+	},
+	{
+		"id": "1003532",
+		"chain": "ica",
+		"name": "ICA Kvantum Flygfyren",
+		"lat": 59.75243,
+		"lng": 18.69401,
+		"address": "Gustaf Adolfs väg 55, 76142, Norrtälje",
+		"url": "https://handlaprivatkund.ica.se/stores/1003532"
+	},
+	{
+		"id": "1003778",
+		"chain": "ica",
+		"name": "ICA Kvantum Frölunda",
+		"lat": 57.64861,
+		"lng": 11.91833,
+		"address": "Radiovägen 5, 42147, Västra frölunda",
+		"url": "https://handlaprivatkund.ica.se/stores/1003778"
+	},
+	{
+		"id": "1003656",
+		"chain": "ica",
+		"name": "ICA Kvantum Färjestaden",
+		"lat": 56.65185,
+		"lng": 16.46996,
+		"address": "Ölands Köpstad, 38631, Färjestaden",
+		"url": "https://handlaprivatkund.ica.se/stores/1003656"
+	},
+	{
+		"id": "1004214",
+		"chain": "ica",
+		"name": "ICA Kvantum Gislaved",
+		"lat": 57.30338,
+		"lng": 13.54365,
+		"address": "Stinsgatan 2, 33230, Gislaved",
+		"url": "https://handlaprivatkund.ica.se/stores/1004214"
+	},
+	{
+		"id": "1004551",
+		"chain": "ica",
+		"name": "ICA Kvantum Gällivare",
+		"lat": 67.15746,
+		"lng": 20.65368,
+		"address": "Sommarvägen 2, 98238, Gällivare",
+		"url": "https://handlaprivatkund.ica.se/stores/1004551"
+	},
+	{
+		"id": "1003884",
+		"chain": "ica",
+		"name": "ICA Kvantum Götene",
+		"lat": 58.52909,
+		"lng": 13.49381,
+		"address": "Lidköpingsvägen 9, 53332, Götene",
+		"url": "https://handlaprivatkund.ica.se/stores/1003884"
+	},
+	{
+		"id": "1004584",
+		"chain": "ica",
+		"name": "ICA Kvantum Hammarö",
+		"lat": 59.34242,
+		"lng": 13.50446,
+		"address": "Bivägen 11, 66341, Hammarö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004584"
+	},
+	{
+		"id": "1004186",
+		"chain": "ica",
+		"name": "ICA Kvantum Hjertberg",
+		"lat": 58.50819,
+		"lng": 13.14637,
+		"address": "Framnäsvägen 1, 53154, Lidköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004186"
+	},
+	{
+		"id": "1003932",
+		"chain": "ica",
+		"name": "ICA Kvantum Hovås",
+		"lat": 57.59838,
+		"lng": 11.95351,
+		"address": "Hovås Allé 10, 43653, Hovås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003932"
+	},
+	{
+		"id": "1003951",
+		"chain": "ica",
+		"name": "ICA Kvantum Höganäs",
+		"lat": 56.19146,
+		"lng": 12.56676,
+		"address": "Lexikonvägen 1, 26335, Höganäs",
+		"url": "https://handlaprivatkund.ica.se/stores/1003951"
+	},
+	{
+		"id": "1003793",
+		"chain": "ica",
+		"name": "ICA Kvantum Hörby",
+		"lat": 55.84922,
+		"lng": 13.64777,
+		"address": "Ringsjövägen 7, 24231, Hörby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003793"
+	},
+	{
+		"id": "1003390",
+		"chain": "ica",
+		"name": "ICA Kvantum Jätten",
+		"lat": 58.28384,
+		"lng": 12.31354,
+		"address": "Skogmansgatan 22, 46141, Trollhättan",
+		"url": "https://handlaprivatkund.ica.se/stores/1003390"
+	},
+	{
+		"id": "1003612",
+		"chain": "ica",
+		"name": "ICA Kvantum Karlssons",
+		"lat": 55.50931,
+		"lng": 13.23808,
+		"address": "Ågatan 16, 23331, Svedala",
+		"url": "https://handlaprivatkund.ica.se/stores/1003612"
+	},
+	{
+		"id": "1004227",
+		"chain": "ica",
+		"name": "ICA Kvantum Kiruna",
+		"lat": 67.84838,
+		"lng": 20.25393,
+		"address": "Österleden 2, 98138, Kiruna",
+		"url": "https://handlaprivatkund.ica.se/stores/1004227"
+	},
+	{
+		"id": "1004395",
+		"chain": "ica",
+		"name": "ICA Kvantum Klippan",
+		"lat": 56.13318,
+		"lng": 13.15715,
+		"address": "Ladugårdsvägen 5, 26436, Klippan",
+		"url": "https://handlaprivatkund.ica.se/stores/1004395"
+	},
+	{
+		"id": "1003416",
+		"chain": "ica",
+		"name": "ICA Kvantum Knivsta",
+		"lat": 59.73044,
+		"lng": 17.78762,
+		"address": "Centralvägen 56, 74139, Knivsta",
+		"url": "https://handlaprivatkund.ica.se/stores/1003416"
+	},
+	{
+		"id": "1004334",
+		"chain": "ica",
+		"name": "ICA Kvantum Kristianstad",
+		"lat": 56.0438,
+		"lng": 14.14862,
+		"address": "Stridsvagnsvägen 1, 29139, Kristianstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004334"
+	},
+	{
+		"id": "1004229",
+		"chain": "ica",
+		"name": "ICA Kvantum Kronoparken",
+		"lat": 63.84063,
+		"lng": 20.19225,
+		"address": "Kronoskogsvägen 18, 90361, Umeå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004229"
+	},
+	{
+		"id": "1003917",
+		"chain": "ica",
+		"name": "ICA Kvantum Kungsbacka",
+		"lat": 57.49342,
+		"lng": 12.074,
+		"address": "Varlagård 16, 43438, Kungsbacka",
+		"url": "https://handlaprivatkund.ica.se/stores/1003917"
+	},
+	{
+		"id": "1004599",
+		"chain": "ica",
+		"name": "ICA Kvantum Kungsholmen",
+		"lat": 59.33316,
+		"lng": 18.04494,
+		"address": "Fleminggatan 16, 11226, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004599"
+	},
+	{
+		"id": "1004588",
+		"chain": "ica",
+		"name": "ICA Kvantum Kvissleby",
+		"lat": 62.29846,
+		"lng": 17.37849,
+		"address": "Affärsgatan6, 86231, Kvissleby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004588"
+	},
+	{
+		"id": "1003383",
+		"chain": "ica",
+		"name": "ICA Kvantum Lerum",
+		"lat": 57.75077,
+		"lng": 12.24534,
+		"address": "Hulans Torg 1, 44351, Lerum",
+		"url": "https://handlaprivatkund.ica.se/stores/1003383"
+	},
+	{
+		"id": "1004437",
+		"chain": "ica",
+		"name": "ICA Kvantum Lidingö",
+		"lat": 59.34951,
+		"lng": 18.14601,
+		"address": "Agavägen 3, 18139, Lidingö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004437"
+	},
+	{
+		"id": "1003417",
+		"chain": "ica",
+		"name": "ICA Kvantum Liljeholmen",
+		"lat": 59.30987,
+		"lng": 18.02243,
+		"address": "Liljeholmstorget 3, plan 1, 11763, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003417"
+	},
+	{
+		"id": "1004224",
+		"chain": "ica",
+		"name": "ICA Kvantum Lillänge",
+		"lat": 63.17051,
+		"lng": 14.69123,
+		"address": "Hagvägen 13, 83148, Östersund",
+		"url": "https://handlaprivatkund.ica.se/stores/1004224"
+	},
+	{
+		"id": "1004594",
+		"chain": "ica",
+		"name": "ICA Kvantum Ludvika",
+		"lat": 60.152,
+		"lng": 15.19476,
+		"address": "Vallaskogsvägen 1, 77153, Ludvika",
+		"url": "https://handlaprivatkund.ica.se/stores/1004594"
+	},
+	{
+		"id": "1004581",
+		"chain": "ica",
+		"name": "ICA Kvantum Mall of Scandinavia",
+		"lat": 59.36975,
+		"lng": 18.00548,
+		"address": "Evenemangsgatan 6, 16979, Solna",
+		"url": "https://handlaprivatkund.ica.se/stores/1004581"
+	},
+	{
+		"id": "1004490",
+		"chain": "ica",
+		"name": "ICA Kvantum Malmborgs Caroli",
+		"lat": 55.60662,
+		"lng": 13.00726,
+		"address": "Stora Kvarngatan 59, 21127, Malmö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004490"
+	},
+	{
+		"id": "1004037",
+		"chain": "ica",
+		"name": "ICA Kvantum Malmborgs Mobilia",
+		"lat": 55.57999,
+		"lng": 13.00253,
+		"address": "Per Albin Hanssons väg 40, 21432, Malmö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004037"
+	},
+	{
+		"id": "1004044",
+		"chain": "ica",
+		"name": "ICA Kvantum Mariestad",
+		"lat": 58.70996,
+		"lng": 13.82784,
+		"address": "Viktoriagatan 20, 54233, Mariestad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004044"
+	},
+	{
+		"id": "1004499",
+		"chain": "ica",
+		"name": "ICA Kvantum Markaryd",
+		"lat": 56.44983,
+		"lng": 13.59796,
+		"address": "Skulptörvägen 2, 28533, Markaryd",
+		"url": "https://handlaprivatkund.ica.se/stores/1004499"
+	},
+	{
+		"id": "1003690",
+		"chain": "ica",
+		"name": "ICA Kvantum Mirum Galleria, Norrköping",
+		"lat": 58.57256,
+		"lng": 16.20851,
+		"address": "Timmermansgatan 44, 60359, Norrköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003690"
+	},
+	{
+		"id": "1004506",
+		"chain": "ica",
+		"name": "ICA Kvantum MM - Skene",
+		"lat": 57.49736,
+		"lng": 12.67096,
+		"address": "Klevagårdsgatan 3, 51162, Skene",
+		"url": "https://handlaprivatkund.ica.se/stores/1004506"
+	},
+	{
+		"id": "1004562",
+		"chain": "ica",
+		"name": "ICA Kvantum Märsta",
+		"lat": 59.62095,
+		"lng": 17.85647,
+		"address": "Nymärsta torg 4, 19530, Märsta",
+		"url": "https://handlaprivatkund.ica.se/stores/1004562"
+	},
+	{
+		"id": "1004589",
+		"chain": "ica",
+		"name": "ICA Kvantum Mölndal",
+		"lat": 57.6541,
+		"lng": 12.01552,
+		"address": "Barnhemsgatan 22, 43130, Mölndal",
+		"url": "https://handlaprivatkund.ica.se/stores/1004589"
+	},
+	{
+		"id": "1004396",
+		"chain": "ica",
+		"name": "ICA Kvantum Nacksta Sundsvall",
+		"lat": 62.39176,
+		"lng": 17.26303,
+		"address": "Axvägen 1, 85350, Sundsvall",
+		"url": "https://handlaprivatkund.ica.se/stores/1004396"
+	},
+	{
+		"id": "1003661",
+		"chain": "ica",
+		"name": "ICA Kvantum Nybro",
+		"lat": 56.7419,
+		"lng": 15.9019,
+		"address": "Bangatan 4, 38240, Nybro",
+		"url": "https://handlaprivatkund.ica.se/stores/1003661"
+	},
+	{
+		"id": "1004590",
+		"chain": "ica",
+		"name": "ICA Kvantum Nässjö",
+		"lat": 57.64941,
+		"lng": 14.70182,
+		"address": "Bandygatan 5, 57131, Nässjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004590"
+	},
+	{
+		"id": "1003531",
+		"chain": "ica",
+		"name": "ICA Kvantum Oxelösund",
+		"lat": 58.67037,
+		"lng": 17.10443,
+		"address": "Järntorget 7, 61330, Oxelösund",
+		"url": "https://handlaprivatkund.ica.se/stores/1003531"
+	},
+	{
+		"id": "1003896",
+		"chain": "ica",
+		"name": "ICA Kvantum Piteå",
+		"lat": 65.31447,
+		"lng": 21.48048,
+		"address": "Hamnplan 7, 94161, Piteå",
+		"url": "https://handlaprivatkund.ica.se/stores/1003896"
+	},
+	{
+		"id": "1003471",
+		"chain": "ica",
+		"name": "ICA Kvantum Rimbo",
+		"lat": 59.74457,
+		"lng": 18.37813,
+		"address": "Finstavägen 6, 76251, Rimbo",
+		"url": "https://handlaprivatkund.ica.se/stores/1003471"
+	},
+	{
+		"id": "1004021",
+		"chain": "ica",
+		"name": "ICA Kvantum Sickla",
+		"lat": 59.30558,
+		"lng": 18.12853,
+		"address": "Siroccogatan 4, 13134, Nacka",
+		"url": "https://handlaprivatkund.ica.se/stores/1004021"
+	},
+	{
+		"id": "1004360",
+		"chain": "ica",
+		"name": "ICA Kvantum Sjöbo",
+		"lat": 55.63071,
+		"lng": 13.70876,
+		"address": "Östergatan 3, 27532, Sjöbo",
+		"url": "https://handlaprivatkund.ica.se/stores/1004360"
+	},
+	{
+		"id": "1004002",
+		"chain": "ica",
+		"name": "ICA Kvantum Skellefteå",
+		"lat": 64.75563,
+		"lng": 20.91672,
+		"address": "Kronbodgatan 4, 93144, Skellefteå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004002"
+	},
+	{
+		"id": "1004238",
+		"chain": "ica",
+		"name": "ICA Kvantum Sollefteå",
+		"lat": 63.16155,
+		"lng": 17.29018,
+		"address": "Hågesta 227, 88141, Sollefteå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004238"
+	},
+	{
+		"id": "1003673",
+		"chain": "ica",
+		"name": "ICA Kvantum Sollentuna C",
+		"lat": 59.42728,
+		"lng": 17.95085,
+		"address": "Sköldvägen, 19147, Sollentuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1003673"
+	},
+	{
+		"id": "1003398",
+		"chain": "ica",
+		"name": "ICA Kvantum Stenungsund",
+		"lat": 58.07509,
+		"lng": 11.82584,
+		"address": "Vassgatan 1, 44431, Stenungsund",
+		"url": "https://handlaprivatkund.ica.se/stores/1003398"
+	},
+	{
+		"id": "1004453",
+		"chain": "ica",
+		"name": "ICA Kvantum Stormarknad, Luleå",
+		"lat": 65.59453,
+		"lng": 22.14948,
+		"address": "Delfingatan 4, 97334, Luleå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004453"
+	},
+	{
+		"id": "1003740",
+		"chain": "ica",
+		"name": "ICA Kvantum Strömstad",
+		"lat": 58.93619,
+		"lng": 11.1949,
+		"address": "Prästängsvägen 2, 45233, Strömstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003740"
+	},
+	{
+		"id": "1004563",
+		"chain": "ica",
+		"name": "ICA Kvantum Säffle",
+		"lat": 59.12791,
+		"lng": 12.88614,
+		"address": "Karlavagnsvägen 2, 66194, Säffle",
+		"url": "https://handlaprivatkund.ica.se/stores/1004563"
+	},
+	{
+		"id": "1004222",
+		"chain": "ica",
+		"name": "ICA Kvantum Södermalm",
+		"lat": 59.31199,
+		"lng": 18.06607,
+		"address": "Magnus Ladulåsgatan 40, 11827, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004222"
+	},
+	{
+		"id": "1003452",
+		"chain": "ica",
+		"name": "ICA Kvantum Södra Sandby",
+		"lat": 55.71702,
+		"lng": 13.34312,
+		"address": "Revingevägen 2, 24731, Södra sandby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003452"
+	},
+	{
+		"id": "1004593",
+		"chain": "ica",
+		"name": "ICA Kvantum Teleborg",
+		"lat": 56.8576,
+		"lng": 14.82303,
+		"address": "Framtidsvägen 5, 35222, Växjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004593"
+	},
+	{
+		"id": "1003801",
+		"chain": "ica",
+		"name": "ICA Kvantum Tidaholm",
+		"lat": 58.1795,
+		"lng": 13.95226,
+		"address": "Järnvägsgatan 5, 52230, Tidaholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003801"
+	},
+	{
+		"id": "1004070",
+		"chain": "ica",
+		"name": "ICA Kvantum Tomelilla",
+		"lat": 55.54585,
+		"lng": 13.94578,
+		"address": "Banmästaregatan 2, 27334, Tomelilla",
+		"url": "https://handlaprivatkund.ica.se/stores/1004070"
+	},
+	{
+		"id": "1003829",
+		"chain": "ica",
+		"name": "ICA Kvantum Tranås",
+		"lat": 58.03369,
+		"lng": 14.97629,
+		"address": "Ågatan 22, 57331, Tranås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003829"
+	},
+	{
+		"id": "16622",
+		"chain": "ica",
+		"name": "ICA Kvantum Trossen",
+		"lat": 58.90659,
+		"lng": 17.55111,
+		"address": "Verktygsgatan 1, 61933, Trosa",
+		"url": "https://handlaprivatkund.ica.se/stores/16622"
+	},
+	{
+		"id": "1003898",
+		"chain": "ica",
+		"name": "ICA Kvantum Tyresö",
+		"lat": 59.24492,
+		"lng": 18.22833,
+		"address": "Östangränd 2, 13540, Tyresö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003898"
+	},
+	{
+		"id": "1004250",
+		"chain": "ica",
+		"name": "ICA Kvantum Täby C",
+		"lat": 59.44506,
+		"lng": 18.07117,
+		"address": "Stora Marknadsvägen 15, 18334, Täby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004250"
+	},
+	{
+		"id": "1004694",
+		"chain": "ica",
+		"name": "ICA Kvantum Uddevalla",
+		"lat": 58.34368,
+		"lng": 11.92582,
+		"address": "Göteborgsvägen 18, 45143, Uddevalla",
+		"url": "https://handlaprivatkund.ica.se/stores/1004694"
+	},
+	{
+		"id": "1003871",
+		"chain": "ica",
+		"name": "ICA Kvantum Uppsala",
+		"lat": 59.87754,
+		"lng": 17.67403,
+		"address": "Marknadsgatan 1, 75460, Uppsala",
+		"url": "https://handlaprivatkund.ica.se/stores/1003871"
+	},
+	{
+		"id": "1004501",
+		"chain": "ica",
+		"name": "ICA Kvantum Vallentuna",
+		"lat": 59.5352,
+		"lng": 18.07839,
+		"address": "Torggatan 17, 18631, Vallentuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1004501"
+	},
+	{
+		"id": "1004573",
+		"chain": "ica",
+		"name": "ICA Kvantum Vara",
+		"lat": 58.25767,
+		"lng": 12.96039,
+		"address": "Torggatan 48, 53450, Vara",
+		"url": "https://handlaprivatkund.ica.se/stores/1004573"
+	},
+	{
+		"id": "1003443",
+		"chain": "ica",
+		"name": "ICA Kvantum Vellinge",
+		"lat": 55.47134,
+		"lng": 13.02045,
+		"address": "Järnvägsgatan 2, 23531, Vellinge",
+		"url": "https://handlaprivatkund.ica.se/stores/1003443"
+	},
+	{
+		"id": "1004428",
+		"chain": "ica",
+		"name": "ICA Kvantum Vimmerby",
+		"lat": 57.66867,
+		"lng": 15.85146,
+		"address": "Magasinsgatan 6, 59837, Vimmerby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004428"
+	},
+	{
+		"id": "1131001",
+		"chain": "ica",
+		"name": "ICA Kvantum Vårgårda",
+		"lat": 58.03903,
+		"lng": 12.80467,
+		"address": "Wallentinsvägen, 44737, Vårgårda",
+		"url": "https://handlaprivatkund.ica.se/stores/1131001"
+	},
+	{
+		"id": "1004306",
+		"chain": "ica",
+		"name": "ICA Kvantum Vänersborg",
+		"lat": 58.38121,
+		"lng": 12.3173,
+		"address": "Brogatan 4, 46238, Vänersborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004306"
+	},
+	{
+		"id": "1004225",
+		"chain": "ica",
+		"name": "ICA Kvantum Värnamo",
+		"lat": 57.175,
+		"lng": 14.06182,
+		"address": "Expovägen 2, 33142, Värnamo",
+		"url": "https://handlaprivatkund.ica.se/stores/1004225"
+	},
+	{
+		"id": "1003425",
+		"chain": "ica",
+		"name": "ICA Kvantum Värtan",
+		"lat": 59.34723,
+		"lng": 18.11333,
+		"address": "Malmvägen 13, 11541, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003425"
+	},
+	{
+		"id": "1003501",
+		"chain": "ica",
+		"name": "ICA Kvantum Väsby",
+		"lat": 59.51874,
+		"lng": 17.9139,
+		"address": "Dragonvägen 86, 19470, Upplands väsby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003501"
+	},
+	{
+		"id": "1003869",
+		"chain": "ica",
+		"name": "ICA Kvantum Västerås",
+		"lat": 59.63746,
+		"lng": 16.54519,
+		"address": "Grytavägen 1, 72246, Västerås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003869"
+	},
+	{
+		"id": "1003577",
+		"chain": "ica",
+		"name": "ICA Kvantum Ystad",
+		"lat": 55.44442,
+		"lng": 13.80887,
+		"address": "Almelundsvägen 4, 27199, Ystad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003577"
+	},
+	{
+		"id": "1003905",
+		"chain": "ica",
+		"name": "ICA Kvantum Åhus",
+		"lat": 55.92838,
+		"lng": 14.29434,
+		"address": "Vallgatan 30, 29631, Åhus",
+		"url": "https://handlaprivatkund.ica.se/stores/1003905"
+	},
+	{
+		"id": "1003585",
+		"chain": "ica",
+		"name": "ICA Kvantum Åkrahallen",
+		"lat": 59.92273,
+		"lng": 16.58823,
+		"address": "Berggatan 13, 73335, Sala",
+		"url": "https://handlaprivatkund.ica.se/stores/1003585"
+	},
+	{
+		"id": "1004364",
+		"chain": "ica",
+		"name": "ICA Kvantum Örebro",
+		"lat": 59.24738,
+		"lng": 15.16589,
+		"address": "Adolf Mörners plan 2, 70228, Örebro",
+		"url": "https://handlaprivatkund.ica.se/stores/1004364"
+	},
+	{
+		"id": "1004292",
+		"chain": "ica",
+		"name": "ICA Kvantum Örnsköldsvik",
+		"lat": 63.30252,
+		"lng": 18.72098,
+		"address": "Ångermanlandsgatan 24, 89138, Örnsköldsvik",
+		"url": "https://handlaprivatkund.ica.se/stores/1004292"
+	},
+	{
+		"id": "1003644",
+		"chain": "ica",
+		"name": "ICA Nära Alexius Livs",
+		"lat": 57.71407,
+		"lng": 11.65079,
+		"address": "Hårdebacksvägen 2, 47531, Öckerö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003644"
+	},
+	{
+		"id": "1003650",
+		"chain": "ica",
+		"name": "ICA Nära Almunge",
+		"lat": 59.86966,
+		"lng": 18.07121,
+		"address": "Lilla Väsby 110, 74197, Almunge",
+		"url": "https://handlaprivatkund.ica.se/stores/1003650"
+	},
+	{
+		"id": "1004309",
+		"chain": "ica",
+		"name": "ICA Nära Annedal",
+		"lat": 59.36106,
+		"lng": 17.94911,
+		"address": "Mariehällstorget 4, 16872, Bromma",
+		"url": "https://handlaprivatkund.ica.se/stores/1004309"
+	},
+	{
+		"id": "1004414",
+		"chain": "ica",
+		"name": "ICA Nära Banér",
+		"lat": 59.33232,
+		"lng": 18.09076,
+		"address": "Banérgatan 3, 11456, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004414"
+	},
+	{
+		"id": "1003746",
+		"chain": "ica",
+		"name": "ICA Nära Blomman",
+		"lat": 58.47533,
+		"lng": 13.86396,
+		"address": "Hästskovägen 6, 54170, Skövde",
+		"url": "https://handlaprivatkund.ica.se/stores/1003746"
+	},
+	{
+		"id": "1003587",
+		"chain": "ica",
+		"name": "ICA Nära Bomhus",
+		"lat": 60.66555,
+		"lng": 17.22808,
+		"address": "Hövdingavägen 2, 80432, Gävle",
+		"url": "https://handlaprivatkund.ica.se/stores/1003587"
+	},
+	{
+		"id": "1004043",
+		"chain": "ica",
+		"name": "ICA Nära Boxholm",
+		"lat": 58.19678,
+		"lng": 15.05476,
+		"address": "Centrumgatan 1, 59570, Boxholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004043"
+	},
+	{
+		"id": "1003705",
+		"chain": "ica",
+		"name": "ICA Nära Braås",
+		"lat": 57.06256,
+		"lng": 15.05156,
+		"address": "Göths väg 3., 36341, Braås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003705"
+	},
+	{
+		"id": "1004093",
+		"chain": "ica",
+		"name": "ICA Nära Bredaryd",
+		"lat": 57.17536,
+		"lng": 13.73708,
+		"address": "Storgatan 8, 33371, Bredaryd",
+		"url": "https://handlaprivatkund.ica.se/stores/1004093"
+	},
+	{
+		"id": "1003729",
+		"chain": "ica",
+		"name": "ICA Nära Brottbyhallen",
+		"lat": 59.56034,
+		"lng": 18.22681,
+		"address": "Karby Torg 7, 18670, Brottby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003729"
+	},
+	{
+		"id": "1004056",
+		"chain": "ica",
+		"name": "ICA Nära Bräkne-Hoby",
+		"lat": 56.22529,
+		"lng": 15.11593,
+		"address": "Bräknevägen 24, 37261, Bräkne-hoby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004056"
+	},
+	{
+		"id": "1004559",
+		"chain": "ica",
+		"name": "ICA Nära Börsen",
+		"lat": 64.00303,
+		"lng": 20.38668,
+		"address": "Bodbyn 23, 90595, Umeå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004559"
+	},
+	{
+		"id": "1003510",
+		"chain": "ica",
+		"name": "ICA Nära Enhörna, Södertälje",
+		"lat": 59.25152,
+		"lng": 17.52463,
+		"address": "Bäverstigen 1, 15150, Enhörna",
+		"url": "https://handlaprivatkund.ica.se/stores/1003510"
+	},
+	{
+		"id": "1003627",
+		"chain": "ica",
+		"name": "ICA Nära Evaldssons",
+		"lat": 58.02432,
+		"lng": 13.56666,
+		"address": "Centrumvägen 33, 52043, Åsarp",
+		"url": "https://handlaprivatkund.ica.se/stores/1003627"
+	},
+	{
+		"id": "1004013",
+		"chain": "ica",
+		"name": "ICA Nära Fors",
+		"lat": 60.20726,
+		"lng": 16.30873,
+		"address": "Bruksvägen 14, 77497, Fors",
+		"url": "https://handlaprivatkund.ica.se/stores/1004013"
+	},
+	{
+		"id": "1003610",
+		"chain": "ica",
+		"name": "ICA Nära Gällstad",
+		"lat": 57.66524,
+		"lng": 13.43078,
+		"address": "Boråsvägen 40, 52360, Gällstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003610"
+	},
+	{
+		"id": "1003919",
+		"chain": "ica",
+		"name": "ICA Nära Hovslätt",
+		"lat": 57.72766,
+		"lng": 14.11496,
+		"address": "Hammarvägen 140 A, 55628, Jönköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003919"
+	},
+	{
+		"id": "1003750",
+		"chain": "ica",
+		"name": "ICA Nära Järbo",
+		"lat": 60.71569,
+		"lng": 16.59535,
+		"address": "Kungsforsvägen 12, 81171, Järbo",
+		"url": "https://handlaprivatkund.ica.se/stores/1003750"
+	},
+	{
+		"id": "1004315",
+		"chain": "ica",
+		"name": "ICA Nära Kallhäll",
+		"lat": 59.45457,
+		"lng": 17.80584,
+		"address": "Kallhäll Centrum, 17671, Järfälla",
+		"url": "https://handlaprivatkund.ica.se/stores/1004315"
+	},
+	{
+		"id": "1004032",
+		"chain": "ica",
+		"name": "ICA Nära Klingan",
+		"lat": 57.40086,
+		"lng": 14.66397,
+		"address": "Västra Järnvägsgatan 12, 57635, Sävsjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004032"
+	},
+	{
+		"id": "1004318",
+		"chain": "ica",
+		"name": "ICA Nära Likenäs Allköp",
+		"lat": 60.61533,
+		"lng": 13.04109,
+		"address": "Likenäsvägen 26, 68063, Likenäs",
+		"url": "https://handlaprivatkund.ica.se/stores/1004318"
+	},
+	{
+		"id": "1003975",
+		"chain": "ica",
+		"name": "ICA Nära Lunda Livs",
+		"lat": 59.66937,
+		"lng": 18.04851,
+		"address": "Lilla Söderby 101, 19593, Märsta",
+		"url": "https://handlaprivatkund.ica.se/stores/1003975"
+	},
+	{
+		"id": "1004572",
+		"chain": "ica",
+		"name": "ICA Nära Mathörnan, Mariannelund",
+		"lat": 57.61603,
+		"lng": 15.57228,
+		"address": "Lingströmsgatan 4, 59897, Mariannelund",
+		"url": "https://handlaprivatkund.ica.se/stores/1004572"
+	},
+	{
+		"id": "1003806",
+		"chain": "ica",
+		"name": "ICA Nära Nyplan",
+		"lat": 61.25997,
+		"lng": 17.15048,
+		"address": "Bläckhornsvägen 1, 82673, Sandarne",
+		"url": "https://handlaprivatkund.ica.se/stores/1003806"
+	},
+	{
+		"id": "1004349",
+		"chain": "ica",
+		"name": "ICA Nära Optimisten",
+		"lat": 59.18515,
+		"lng": 12.11288,
+		"address": "Årjängsvägen 31, 66693, Gustavsfors",
+		"url": "https://handlaprivatkund.ica.se/stores/1004349"
+	},
+	{
+		"id": "1004211",
+		"chain": "ica",
+		"name": "ICA Nära Pettersberg",
+		"lat": 59.61635,
+		"lng": 16.51803,
+		"address": "Pettersbergs centrum, 72464, Västerås",
+		"url": "https://handlaprivatkund.ica.se/stores/1004211"
+	},
+	{
+		"id": "1004493",
+		"chain": "ica",
+		"name": "ICA Nära Rudboda",
+		"lat": 59.37495,
+		"lng": 18.17842,
+		"address": "Rudbodatorg 22, 18147, Lidingö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004493"
+	},
+	{
+		"id": "1004237",
+		"chain": "ica",
+		"name": "ICA Nära Ryd",
+		"lat": 56.46587,
+		"lng": 14.69313,
+		"address": "Värendsgatan 2, 36256, Ryd",
+		"url": "https://handlaprivatkund.ica.se/stores/1004237"
+	},
+	{
+		"id": "1003386",
+		"chain": "ica",
+		"name": "ICA Nära Stabby",
+		"lat": 59.8666,
+		"lng": 17.6082,
+		"address": "Hällbygatan 27, 75228, Uppsala",
+		"url": "https://handlaprivatkund.ica.se/stores/1003386"
+	},
+	{
+		"id": "1004420",
+		"chain": "ica",
+		"name": "ICA Nära Strandhallen",
+		"lat": 59.07908,
+		"lng": 17.01187,
+		"address": "Dagavägen 13, 64651, Stjärnhov",
+		"url": "https://handlaprivatkund.ica.se/stores/1004420"
+	},
+	{
+		"id": "1004251",
+		"chain": "ica",
+		"name": "ICA Nära Sälen",
+		"lat": 61.15494,
+		"lng": 13.26841,
+		"address": "Postvägen 2, 78067, Sälen",
+		"url": "https://handlaprivatkund.ica.se/stores/1004251"
+	},
+	{
+		"id": "1004539",
+		"chain": "ica",
+		"name": "ICA Nära Tjällmo handel",
+		"lat": 58.71484,
+		"lng": 15.35817,
+		"address": "Länsvägen 60, 59190, Tjällmo",
+		"url": "https://handlaprivatkund.ica.se/stores/1004539"
+	},
+	{
+		"id": "1004259",
+		"chain": "ica",
+		"name": "ICA Nära Trönö",
+		"lat": 61.39677,
+		"lng": 16.8341,
+		"address": "Glamsta 990, 82608, Trönödal",
+		"url": "https://handlaprivatkund.ica.se/stores/1004259"
+	},
+	{
+		"id": "1004356",
+		"chain": "ica",
+		"name": "ICA Nära Vallby",
+		"lat": 59.62251,
+		"lng": 16.50378,
+		"address": "Vallby centrum, 72480, Västerås",
+		"url": "https://handlaprivatkund.ica.se/stores/1004356"
+	},
+	{
+		"id": "1003551",
+		"chain": "ica",
+		"name": "ICA Nära Vilstahallen",
+		"lat": 59.39384,
+		"lng": 15.83215,
+		"address": "Jädersvägen 3, 73234, Arboga",
+		"url": "https://handlaprivatkund.ica.se/stores/1003551"
+	},
+	{
+		"id": "1004194",
+		"chain": "ica",
+		"name": "ICA Nära Ålem",
+		"lat": 56.95507,
+		"lng": 16.38156,
+		"address": "Alsteråvägen 56, 38440, Ålem",
+		"url": "https://handlaprivatkund.ica.se/stores/1004194"
+	},
+	{
+		"id": "1004436",
+		"chain": "ica",
+		"name": "ICA Nära Älvsjö",
+		"lat": 59.27256,
+		"lng": 17.97769,
+		"address": "Svartlösavägen 181, 12556, Älvsjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004436"
+	},
+	{
+		"id": "1004235",
+		"chain": "ica",
+		"name": "ICA Odenhallen, Odensbacken",
+		"lat": 59.1565,
+		"lng": 15.52554,
+		"address": "Valstavägen 1, 71531, Odensbacken",
+		"url": "https://handlaprivatkund.ica.se/stores/1004235"
+	},
+	{
+		"id": "1003490",
+		"chain": "ica",
+		"name": "ICA Rylander",
+		"lat": 60.10556,
+		"lng": 17.19842,
+		"address": "Forsbovägen 1, 74047, Harbo",
+		"url": "https://handlaprivatkund.ica.se/stores/1003490"
+	},
+	{
+		"id": "1004441",
+		"chain": "ica",
+		"name": "ICA Skansen",
+		"lat": 56.5256,
+		"lng": 16.38561,
+		"address": "Köpmangatan 21 C, 38650, Mörbylånga",
+		"url": "https://handlaprivatkund.ica.se/stores/1004441"
+	},
+	{
+		"id": "1003645",
+		"chain": "ica",
+		"name": "ICA Supermarket Algots Mönsterås",
+		"lat": 57.02797,
+		"lng": 16.43997,
+		"address": "Södra vägen 17, 38334, Mönsterås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003645"
+	},
+	{
+		"id": "1003654",
+		"chain": "ica",
+		"name": "ICA Supermarket Alunda",
+		"lat": 60.06414,
+		"lng": 18.08087,
+		"address": "Centrumvägen 1, 74731, Alunda",
+		"url": "https://handlaprivatkund.ica.se/stores/1003654"
+	},
+	{
+		"id": "1003883",
+		"chain": "ica",
+		"name": "ICA Supermarket Alvesta",
+		"lat": 56.90051,
+		"lng": 14.55293,
+		"address": "Allbogatan 11, 34230, Alvesta",
+		"url": "https://handlaprivatkund.ica.se/stores/1003883"
+	},
+	{
+		"id": "1003988",
+		"chain": "ica",
+		"name": "ICA Supermarket Aptiten",
+		"lat": 59.31773,
+		"lng": 18.0572,
+		"address": "Torkel Knutssonsgatan 16, 11849, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003988"
+	},
+	{
+		"id": "1003507",
+		"chain": "ica",
+		"name": "ICA Supermarket Bankeryd",
+		"lat": 57.86203,
+		"lng": 14.12615,
+		"address": "Sjöåkravägen 10, 56431, Bankeryd",
+		"url": "https://handlaprivatkund.ica.se/stores/1003507"
+	},
+	{
+		"id": "1003751",
+		"chain": "ica",
+		"name": "ICA Supermarket BBB Sunne",
+		"lat": 59.83758,
+		"lng": 13.14503,
+		"address": "Storgatan 32, 68630, Sunne",
+		"url": "https://handlaprivatkund.ica.se/stores/1003751"
+	},
+	{
+		"id": "1004523",
+		"chain": "ica",
+		"name": "ICA Supermarket Berga Centrum, Kalmar",
+		"lat": 56.69178,
+		"lng": 16.33906,
+		"address": "Rimsmedsvägen 19, 39352, Kalmar",
+		"url": "https://handlaprivatkund.ica.se/stores/1004523"
+	},
+	{
+		"id": "1003586",
+		"chain": "ica",
+		"name": "ICA Supermarket Berga Centrum, Linköping",
+		"lat": 58.39233,
+		"lng": 15.64308,
+		"address": "Söderleden 33, 58735, Linköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003586"
+	},
+	{
+		"id": "1003704",
+		"chain": "ica",
+		"name": "ICA Supermarket Bjästa",
+		"lat": 63.20197,
+		"lng": 18.50322,
+		"address": "Nätragatan 27, 89331, Bjästa",
+		"url": "https://handlaprivatkund.ica.se/stores/1003704"
+	},
+	{
+		"id": "1004503",
+		"chain": "ica",
+		"name": "ICA Supermarket Björksätra",
+		"lat": 60.60564,
+		"lng": 16.74991,
+		"address": "Björksätra mitt, 81150, Sandviken",
+		"url": "https://handlaprivatkund.ica.se/stores/1004503"
+	},
+	{
+		"id": "1004289",
+		"chain": "ica",
+		"name": "ICA Supermarket Bommen",
+		"lat": 62.26961,
+		"lng": 17.37273,
+		"address": "Njurunda Bommen, Torggatan, 86240, Njurunda",
+		"url": "https://handlaprivatkund.ica.se/stores/1004289"
+	},
+	{
+		"id": "1003723",
+		"chain": "ica",
+		"name": "ICA Supermarket Boström",
+		"lat": 58.13726,
+		"lng": 12.12772,
+		"address": "Göteborgsvägen 49, 46330, Lilla edet",
+		"url": "https://handlaprivatkund.ica.se/stores/1003723"
+	},
+	{
+		"id": "1004504",
+		"chain": "ica",
+		"name": "ICA Supermarket Bro",
+		"lat": 59.51534,
+		"lng": 17.64232,
+		"address": "Broplan 1, 19731, Bro",
+		"url": "https://handlaprivatkund.ica.se/stores/1004504"
+	},
+	{
+		"id": "1004577",
+		"chain": "ica",
+		"name": "ICA Supermarket Brommaplan",
+		"lat": 59.33801,
+		"lng": 17.93828,
+		"address": "Tunnlandet 1-3, 16836, Bromma",
+		"url": "https://handlaprivatkund.ica.se/stores/1004577"
+	},
+	{
+		"id": "1004069",
+		"chain": "ica",
+		"name": "ICA Supermarket Bunge",
+		"lat": 57.86333,
+		"lng": 19.05479,
+		"address": "Fårövägen 10, 62462, Fårösund",
+		"url": "https://handlaprivatkund.ica.se/stores/1004069"
+	},
+	{
+		"id": "1037008",
+		"chain": "ica",
+		"name": "ICA Supermarket Charlottenberg",
+		"lat": 59.87448,
+		"lng": 12.28653,
+		"address": "Källgatan 15B, 67392, Charlottenberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1037008"
+	},
+	{
+		"id": "1004362",
+		"chain": "ica",
+		"name": "ICA Supermarket Cityhallen Karlskrona",
+		"lat": 56.16107,
+		"lng": 15.58253,
+		"address": "Arklimästaregatan 40, 37136, Karlskrona",
+		"url": "https://handlaprivatkund.ica.se/stores/1004362"
+	},
+	{
+		"id": "1004127",
+		"chain": "ica",
+		"name": "ICA Supermarket Delsbohallen",
+		"lat": 61.79965,
+		"lng": 16.55719,
+		"address": "Edevägen 5, 82471, Delsbo",
+		"url": "https://handlaprivatkund.ica.se/stores/1004127"
+	},
+	{
+		"id": "1004290",
+		"chain": "ica",
+		"name": "ICA Supermarket Edsbyn",
+		"lat": 61.37666,
+		"lng": 15.8175,
+		"address": "Långgatan 19, 82832, Edsbyn",
+		"url": "https://handlaprivatkund.ica.se/stores/1004290"
+	},
+	{
+		"id": "1004151",
+		"chain": "ica",
+		"name": "ICA Supermarket Ekshärad",
+		"lat": 60.17244,
+		"lng": 13.49503,
+		"address": "Torsbyvägen 1, 68360, Ekshärad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004151"
+	},
+	{
+		"id": "1004391",
+		"chain": "ica",
+		"name": "ICA Supermarket Eksjö",
+		"lat": 57.66554,
+		"lng": 14.97695,
+		"address": "Prästgatan 4, 57531, Eksjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004391"
+	},
+	{
+		"id": "1004469",
+		"chain": "ica",
+		"name": "ICA Supermarket Emmaboda",
+		"lat": 56.63006,
+		"lng": 15.53666,
+		"address": "Järnvägsgatan 28, 36130, Emmaboda",
+		"url": "https://handlaprivatkund.ica.se/stores/1004469"
+	},
+	{
+		"id": "1003556",
+		"chain": "ica",
+		"name": "ICA Supermarket Eneby",
+		"lat": 58.60358,
+		"lng": 16.14527,
+		"address": "Slåttergatan 80/Eneby Centrum, 60212, Norrköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003556"
+	},
+	{
+		"id": "1004164",
+		"chain": "ica",
+		"name": "ICA Supermarket Esplanad, Sthlm",
+		"lat": 59.33903,
+		"lng": 18.08207,
+		"address": "Karlavägen 56, 11449, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004164"
+	},
+	{
+		"id": "1003764",
+		"chain": "ica",
+		"name": "ICA Supermarket Ettan",
+		"lat": 59.62265,
+		"lng": 16.55898,
+		"address": "Långmårtensgatan 1, 72226, Västerås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003764"
+	},
+	{
+		"id": "1003880",
+		"chain": "ica",
+		"name": "ICA Supermarket Falköping",
+		"lat": 58.17492,
+		"lng": 13.55393,
+		"address": "Falegatan 11A, 52133, Falköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003880"
+	},
+	{
+		"id": "1004519",
+		"chain": "ica",
+		"name": "ICA Supermarket Fanfaren",
+		"lat": 59.38339,
+		"lng": 13.486,
+		"address": "Gustaf Anders Gata 23, 65340, Karlstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004519"
+	},
+	{
+		"id": "1003837",
+		"chain": "ica",
+		"name": "ICA Supermarket Forshaga",
+		"lat": 59.53245,
+		"lng": 13.48093,
+		"address": "Storgatan 40, 66730, Forshaga",
+		"url": "https://handlaprivatkund.ica.se/stores/1003837"
+	},
+	{
+		"id": "1003392",
+		"chain": "ica",
+		"name": "ICA Supermarket Fyren",
+		"lat": 58.20236,
+		"lng": 16.60293,
+		"address": "Centralplan, 61530, Valdemarsvik",
+		"url": "https://handlaprivatkund.ica.se/stores/1003392"
+	},
+	{
+		"id": "1004228",
+		"chain": "ica",
+		"name": "ICA Supermarket Fältöversten",
+		"lat": 59.339,
+		"lng": 18.09094,
+		"address": "Karlaplan 13, 11520, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004228"
+	},
+	{
+		"id": "1004061",
+		"chain": "ica",
+		"name": "ICA Supermarket Hagsätra",
+		"lat": 59.26231,
+		"lng": 18.01387,
+		"address": "Hagsätra Torg 28, 12473, Bandhagen",
+		"url": "https://handlaprivatkund.ica.se/stores/1004061"
+	},
+	{
+		"id": "1004564",
+		"chain": "ica",
+		"name": "ICA Supermarket Hallsberg",
+		"lat": 59.06538,
+		"lng": 15.10953,
+		"address": "Allégatan 50, 69430, Hallsberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004564"
+	},
+	{
+		"id": "1003939",
+		"chain": "ica",
+		"name": "ICA Supermarket Hedemyrs",
+		"lat": 58.72481,
+		"lng": 11.32442,
+		"address": "Affärsvägen 12, 45730, Tanumshede",
+		"url": "https://handlaprivatkund.ica.se/stores/1003939"
+	},
+	{
+		"id": "1003931",
+		"chain": "ica",
+		"name": "ICA Supermarket Hofors",
+		"lat": 60.54608,
+		"lng": 16.28432,
+		"address": "Skolgatan 18, 81321, Hofors",
+		"url": "https://handlaprivatkund.ica.se/stores/1003931"
+	},
+	{
+		"id": "1003996",
+		"chain": "ica",
+		"name": "ICA Supermarket Hovmantorp",
+		"lat": 56.78767,
+		"lng": 15.13163,
+		"address": "Storgatan 61, Hovmantorp",
+		"url": "https://handlaprivatkund.ica.se/stores/1003996"
+	},
+	{
+		"id": "1003792",
+		"chain": "ica",
+		"name": "ICA Supermarket Hovshaga",
+		"lat": 56.90931,
+		"lng": 14.79609,
+		"address": "Pomonavägen 6, 35261, Växjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003792"
+	},
+	{
+		"id": "1004531",
+		"chain": "ica",
+		"name": "ICA Supermarket Hässelby Torg",
+		"lat": 59.36784,
+		"lng": 17.84369,
+		"address": "Hässelby Torg 18, 16555, Hässelby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004531"
+	},
+	{
+		"id": "1004009",
+		"chain": "ica",
+		"name": "ICA Supermarket Högbyhallen",
+		"lat": 57.24001,
+		"lng": 18.37645,
+		"address": "Storgatan 59, 62350, Hemse",
+		"url": "https://handlaprivatkund.ica.se/stores/1004009"
+	},
+	{
+		"id": "1003849",
+		"chain": "ica",
+		"name": "ICA Supermarket Hönö",
+		"lat": 57.69597,
+		"lng": 11.64336,
+		"address": "Lökholmsvägen 2, 47541, Hönö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003849"
+	},
+	{
+		"id": "1003395",
+		"chain": "ica",
+		"name": "ICA Supermarket Höör",
+		"lat": 55.93826,
+		"lng": 13.54874,
+		"address": "Friluftsvägen 14, 24330, Höör",
+		"url": "https://handlaprivatkund.ica.se/stores/1003395"
+	},
+	{
+		"id": "1004532",
+		"chain": "ica",
+		"name": "ICA Supermarket Jokkmokk",
+		"lat": 66.60614,
+		"lng": 19.82932,
+		"address": "Berggatan 6, 96232, Jokkmokk",
+		"url": "https://handlaprivatkund.ica.se/stores/1004532"
+	},
+	{
+		"id": "1003446",
+		"chain": "ica",
+		"name": "ICA Supermarket Jämjö",
+		"lat": 56.19144,
+		"lng": 15.83484,
+		"address": "Västra Riksvägen 15, 37372, Jämjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003446"
+	},
+	{
+		"id": "1004514",
+		"chain": "ica",
+		"name": "ICA Supermarket Järvsö",
+		"lat": 61.71534,
+		"lng": 16.16853,
+		"address": "Turistvägen 45, 82750, Järvsö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004514"
+	},
+	{
+		"id": "1003986",
+		"chain": "ica",
+		"name": "ICA Supermarket Kil",
+		"lat": 59.50413,
+		"lng": 13.31591,
+		"address": "Storgatan 28, 66530, Kil",
+		"url": "https://handlaprivatkund.ica.se/stores/1003986"
+	},
+	{
+		"id": "1003580",
+		"chain": "ica",
+		"name": "ICA Supermarket Kisa",
+		"lat": 57.98792,
+		"lng": 15.63212,
+		"address": "Stora Torget 1, 59037, Kisa",
+		"url": "https://handlaprivatkund.ica.se/stores/1003580"
+	},
+	{
+		"id": "1003868",
+		"chain": "ica",
+		"name": "ICA Supermarket Klingan",
+		"lat": 59.35256,
+		"lng": 13.11145,
+		"address": "Sveagatan 89, 66434, Grums",
+		"url": "https://handlaprivatkund.ica.se/stores/1003868"
+	},
+	{
+		"id": "1004054",
+		"chain": "ica",
+		"name": "ICA Supermarket Kramfors",
+		"lat": 62.93246,
+		"lng": 17.78219,
+		"address": "Dr. Barks gata 2, 87230, Kramfors",
+		"url": "https://handlaprivatkund.ica.se/stores/1004054"
+	},
+	{
+		"id": "1004026",
+		"chain": "ica",
+		"name": "ICA Supermarket Kungsholmstorg",
+		"lat": 59.32855,
+		"lng": 18.04334,
+		"address": "Kungsholmstorg 14, 11221, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004026"
+	},
+	{
+		"id": "1003833",
+		"chain": "ica",
+		"name": "ICA Supermarket Käppala",
+		"lat": 59.35426,
+		"lng": 18.21825,
+		"address": "Holavedsvägen 1, 18164, Lidingö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003833"
+	},
+	{
+		"id": "1004688",
+		"chain": "ica",
+		"name": "ICA Supermarket Laxå",
+		"lat": 58.98527,
+		"lng": 14.61973,
+		"address": "Centrumtorget 22, 69530, Laxå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004688"
+	},
+	{
+		"id": "1004544",
+		"chain": "ica",
+		"name": "ICA Supermarket Lejonet",
+		"lat": 59.05177,
+		"lng": 12.70173,
+		"address": "Mellanbrogatan 10, 66231, Åmål",
+		"url": "https://handlaprivatkund.ica.se/stores/1004544"
+	},
+	{
+		"id": "1004424",
+		"chain": "ica",
+		"name": "ICA Supermarket Lindesberg",
+		"lat": 59.59481,
+		"lng": 15.22388,
+		"address": "Koppgatan 1, 71130, Lindesberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004424"
+	},
+	{
+		"id": "1003696",
+		"chain": "ica",
+		"name": "ICA Supermarket Lindsdal",
+		"lat": 56.73616,
+		"lng": 16.29476,
+		"address": "Lindsdals Centrum, 39590, Kalmar",
+		"url": "https://handlaprivatkund.ica.se/stores/1003696"
+	},
+	{
+		"id": "1004707",
+		"chain": "ica",
+		"name": "ICA Supermarket Lindvallen",
+		"lat": 61.16442,
+		"lng": 13.20277,
+		"address": "Lindvallens Handelsområde 1, 78067, Sälen",
+		"url": "https://handlaprivatkund.ica.se/stores/1004707"
+	},
+	{
+		"id": "1004558",
+		"chain": "ica",
+		"name": "ICA Supermarket Ljungskile",
+		"lat": 58.22578,
+		"lng": 11.91907,
+		"address": "Vällebergsvägen 27, 45930, Ljungskile",
+		"url": "https://handlaprivatkund.ica.se/stores/1004558"
+	},
+	{
+		"id": "1004458",
+		"chain": "ica",
+		"name": "ICA Supermarket Luthagens Livs",
+		"lat": 59.86167,
+		"lng": 17.62705,
+		"address": "Sysslomansgatan 19-21, 75314, Uppsala",
+		"url": "https://handlaprivatkund.ica.se/stores/1004458"
+	},
+	{
+		"id": "1004459",
+		"chain": "ica",
+		"name": "ICA Supermarket Lycksele",
+		"lat": 64.59564,
+		"lng": 18.68047,
+		"address": "Hamngatan 11, 92131, Lycksele",
+		"url": "https://handlaprivatkund.ica.se/stores/1004459"
+	},
+	{
+		"id": "1004460",
+		"chain": "ica",
+		"name": "ICA Supermarket Lysekil",
+		"lat": 58.27626,
+		"lng": 11.44068,
+		"address": "Landsvägsgatan 17, 45335, Lysekil",
+		"url": "https://handlaprivatkund.ica.se/stores/1004460"
+	},
+	{
+		"id": "1003614",
+		"chain": "ica",
+		"name": "ICA Supermarket Malung",
+		"lat": 60.68336,
+		"lng": 13.71203,
+		"address": "Grönlandsvägen 30, 78231, Malung",
+		"url": "https://handlaprivatkund.ica.se/stores/1003614"
+	},
+	{
+		"id": "1004565",
+		"chain": "ica",
+		"name": "ICA Supermarket Malå",
+		"lat": 65.18266,
+		"lng": 18.74274,
+		"address": "Torget 1, 93931, Malå",
+		"url": "https://handlaprivatkund.ica.se/stores/1004565"
+	},
+	{
+		"id": "1004695",
+		"chain": "ica",
+		"name": "ICA Supermarket Margretelund",
+		"lat": 58.49541,
+		"lng": 13.16853,
+		"address": "Floragatan 8, 53136, Lidköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004695"
+	},
+	{
+		"id": "1003804",
+		"chain": "ica",
+		"name": "ICA Supermarket Matfors",
+		"lat": 62.34743,
+		"lng": 17.02479,
+		"address": "Skölevägen 2-4, 86431, Matfors",
+		"url": "https://handlaprivatkund.ica.se/stores/1003804"
+	},
+	{
+		"id": "00966",
+		"chain": "ica",
+		"name": "ICA Supermarket Matkassen",
+		"lat": 59.61444,
+		"lng": 16.22841,
+		"address": "Hammartorget, 73430, Hallstahammar",
+		"url": "https://handlaprivatkund.ica.se/stores/00966"
+	},
+	{
+		"id": "1003597",
+		"chain": "ica",
+		"name": "ICA Supermarket Mullsjö",
+		"lat": 57.91539,
+		"lng": 13.87091,
+		"address": "Skaraborgsgatan 3, 56531, Mullsjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003597"
+	},
+	{
+		"id": "1003771",
+		"chain": "ica",
+		"name": "ICA Supermarket Munka Ljungby",
+		"lat": 56.25811,
+		"lng": 12.97206,
+		"address": "Ringgatan 4, 26631, Munka-ljungby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003771"
+	},
+	{
+		"id": "1004520",
+		"chain": "ica",
+		"name": "ICA Supermarket Noltorp",
+		"lat": 57.93779,
+		"lng": 12.52219,
+		"address": "Noltorps Centrum, 44115, Alingsås",
+		"url": "https://handlaprivatkund.ica.se/stores/1004520"
+	},
+	{
+		"id": "1004536",
+		"chain": "ica",
+		"name": "ICA Supermarket Nora",
+		"lat": 59.51215,
+		"lng": 15.02299,
+		"address": "Storgatan 45, 71391, Nora",
+		"url": "https://handlaprivatkund.ica.se/stores/1004536"
+	},
+	{
+		"id": "1004291",
+		"chain": "ica",
+		"name": "ICA Supermarket Nordeviks",
+		"lat": 57.98582,
+		"lng": 11.5546,
+		"address": "Kroksdalsvägen 4, 47132, Skärhamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1004291"
+	},
+	{
+		"id": "1004294",
+		"chain": "ica",
+		"name": "ICA Supermarket Norrköp",
+		"lat": 59.76654,
+		"lng": 18.71452,
+		"address": "Noorsgatan 1, 76161, Norrtälje",
+		"url": "https://handlaprivatkund.ica.se/stores/1004294"
+	},
+	{
+		"id": "1004095",
+		"chain": "ica",
+		"name": "ICA Supermarket Nossebro",
+		"lat": 58.19021,
+		"lng": 12.71708,
+		"address": "Sturegatan 9, 46530, Nossebro",
+		"url": "https://handlaprivatkund.ica.se/stores/1004095"
+	},
+	{
+		"id": "1004335",
+		"chain": "ica",
+		"name": "ICA Supermarket Näsbyhallen",
+		"lat": 59.46675,
+		"lng": 15.36002,
+		"address": "Centralvägen 25, 71830, Frövi",
+		"url": "https://handlaprivatkund.ica.se/stores/1004335"
+	},
+	{
+		"id": "1004597",
+		"chain": "ica",
+		"name": "ICA Supermarket Odenhallen",
+		"lat": 63.1555,
+		"lng": 14.68315,
+		"address": "Slåttervägen 31, 83161, Östersund",
+		"url": "https://handlaprivatkund.ica.se/stores/1004597"
+	},
+	{
+		"id": "1003794",
+		"chain": "ica",
+		"name": "ICA Supermarket Osby",
+		"lat": 56.38077,
+		"lng": 13.99317,
+		"address": "Västra Järnvägsgatan 21, 28331, Osby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003794"
+	},
+	{
+		"id": "1003966",
+		"chain": "ica",
+		"name": "ICA Supermarket Perstorp",
+		"lat": 56.13918,
+		"lng": 13.39404,
+		"address": "Stockholmsvägen 7-9, 28431, Perstorp",
+		"url": "https://handlaprivatkund.ica.se/stores/1003966"
+	},
+	{
+		"id": "1003453",
+		"chain": "ica",
+		"name": "ICA Supermarket Pärlan",
+		"lat": 58.23729,
+		"lng": 11.67836,
+		"address": "Hamntorget, 47334, Henån",
+		"url": "https://handlaprivatkund.ica.se/stores/1003453"
+	},
+	{
+		"id": "1004066",
+		"chain": "ica",
+		"name": "ICA Supermarket Rimforsa",
+		"lat": 58.13659,
+		"lng": 15.68568,
+		"address": "Kalmarvägen 24, 59043, Rimforsa",
+		"url": "https://handlaprivatkund.ica.se/stores/1004066"
+	},
+	{
+		"id": "1003933",
+		"chain": "ica",
+		"name": "ICA Supermarket Ringen, Sthlm",
+		"lat": 59.30789,
+		"lng": 18.07588,
+		"address": "Götgatan 132, 11862, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003933"
+	},
+	{
+		"id": "1003474",
+		"chain": "ica",
+		"name": "ICA Supermarket Robertsfors",
+		"lat": 64.19367,
+		"lng": 20.84633,
+		"address": "Storgatan 30, 91532, Robertsfors",
+		"url": "https://handlaprivatkund.ica.se/stores/1003474"
+	},
+	{
+		"id": "1004134",
+		"chain": "ica",
+		"name": "ICA Supermarket Sabbatsberg",
+		"lat": 59.33989,
+		"lng": 18.04712,
+		"address": "Dalagatan 9 N, 11361, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004134"
+	},
+	{
+		"id": "1004689",
+		"chain": "ica",
+		"name": "ICA Supermarket Salem",
+		"lat": 59.20167,
+		"lng": 17.76556,
+		"address": "Säby Torg 27, 14430, Rönninge",
+		"url": "https://handlaprivatkund.ica.se/stores/1004689"
+	},
+	{
+		"id": "1003521",
+		"chain": "ica",
+		"name": "ICA Supermarket Sigtuna",
+		"lat": 59.61697,
+		"lng": 17.72198,
+		"address": "Stora Gatan 40 A, 19330, Sigtuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1003521"
+	},
+	{
+		"id": "1003463",
+		"chain": "ica",
+		"name": "ICA Supermarket Simrishamn",
+		"lat": 55.55665,
+		"lng": 14.3467,
+		"address": "Kristianstadsvägen 4, 27234, Simrishamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1003463"
+	},
+	{
+		"id": "1003754",
+		"chain": "ica",
+		"name": "ICA Supermarket Sjöstaden",
+		"lat": 59.3032,
+		"lng": 18.0895,
+		"address": "Hammarby Allé 49, 12030, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003754"
+	},
+	{
+		"id": "1003679",
+		"chain": "ica",
+		"name": "ICA Supermarket Skeppet, Kungshamn",
+		"lat": 58.36011,
+		"lng": 11.2481,
+		"address": "Skeppartorget, 45631, Kungshamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1003679"
+	},
+	{
+		"id": "1003688",
+		"chain": "ica",
+		"name": "ICA Supermarket Skrea Strand",
+		"lat": 56.88736,
+		"lng": 12.51107,
+		"address": "Ljungholmsvägen 20, 31146, Falkenberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1003688"
+	},
+	{
+		"id": "1003960",
+		"chain": "ica",
+		"name": "ICA Supermarket Skutan",
+		"lat": 58.55554,
+		"lng": 11.27301,
+		"address": "Skutan 1, 45745, Hamburgsund",
+		"url": "https://handlaprivatkund.ica.se/stores/1003960"
+	},
+	{
+		"id": "1003404",
+		"chain": "ica",
+		"name": "ICA Supermarket Skåre",
+		"lat": 59.43514,
+		"lng": 13.44212,
+		"address": "Centrumvägen 2, Skåre, 65350, Karlstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003404"
+	},
+	{
+		"id": "1004508",
+		"chain": "ica",
+		"name": "ICA Supermarket Slätta",
+		"lat": 60.62082,
+		"lng": 15.59653,
+		"address": "Slätta Centrum, 79174, Falun",
+		"url": "https://handlaprivatkund.ica.se/stores/1004508"
+	},
+	{
+		"id": "1003977",
+		"chain": "ica",
+		"name": "ICA Supermarket Smedby, Kalmar",
+		"lat": 56.67665,
+		"lng": 16.24094,
+		"address": "Dörbyvägen 3, Smedby, 39470, Kalmar",
+		"url": "https://handlaprivatkund.ica.se/stores/1003977"
+	},
+	{
+		"id": "1003461",
+		"chain": "ica",
+		"name": "ICA Supermarket Smedby, Norrköping",
+		"lat": 58.57073,
+		"lng": 16.22955,
+		"address": "Bigatan 101, 60361, Norrköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003461"
+	},
+	{
+		"id": "1004092",
+		"chain": "ica",
+		"name": "ICA Supermarket Sollebrunn",
+		"lat": 58.12009,
+		"lng": 12.53215,
+		"address": "Trollhättevägen 6, 44170, Sollebrunn",
+		"url": "https://handlaprivatkund.ica.se/stores/1004092"
+	},
+	{
+		"id": "1003929",
+		"chain": "ica",
+		"name": "ICA Supermarket Spara",
+		"lat": 58.35568,
+		"lng": 11.93388,
+		"address": "Odengatan 3, 45152, Uddevalla",
+		"url": "https://handlaprivatkund.ica.se/stores/1003929"
+	},
+	{
+		"id": "1004413",
+		"chain": "ica",
+		"name": "ICA Supermarket Stenby",
+		"lat": 59.35687,
+		"lng": 16.47473,
+		"address": "Stenbygatan 2, 63234, Eskilstuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1004413"
+	},
+	{
+		"id": "1004388",
+		"chain": "ica",
+		"name": "ICA Supermarket Stop Täby",
+		"lat": 59.44228,
+		"lng": 18.09619,
+		"address": "Bergtorpsvägen 45B, 18364, Täby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004388"
+	},
+	{
+		"id": "1004477",
+		"chain": "ica",
+		"name": "ICA Supermarket Storuman",
+		"lat": 65.09608,
+		"lng": 17.11475,
+		"address": "Skolgatan 21, 92331, Storuman",
+		"url": "https://handlaprivatkund.ica.se/stores/1004477"
+	},
+	{
+		"id": "1004534",
+		"chain": "ica",
+		"name": "ICA Supermarket Strömsbro",
+		"lat": 60.69969,
+		"lng": 17.17319,
+		"address": "Grönavägen 2, 80645, Gävle",
+		"url": "https://handlaprivatkund.ica.se/stores/1004534"
+	},
+	{
+		"id": "1004579",
+		"chain": "ica",
+		"name": "ICA Supermarket Sundbyberg",
+		"lat": 59.36133,
+		"lng": 17.96647,
+		"address": "Landsvägen 63, 17265, Sundbyberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004579"
+	},
+	{
+		"id": "1004393",
+		"chain": "ica",
+		"name": "ICA Supermarket Svenstavik",
+		"lat": 62.76769,
+		"lng": 14.43467,
+		"address": "Tingshusvägen 1, 84531, Svenstavik",
+		"url": "https://handlaprivatkund.ica.se/stores/1004393"
+	},
+	{
+		"id": "1004425",
+		"chain": "ica",
+		"name": "ICA Supermarket Sävar",
+		"lat": 63.90122,
+		"lng": 20.55111,
+		"address": "Generalsvägen 25, 91831, Sävar",
+		"url": "https://handlaprivatkund.ica.se/stores/1004425"
+	},
+	{
+		"id": "1004592",
+		"chain": "ica",
+		"name": "ICA Supermarket Söderköping",
+		"lat": 58.47541,
+		"lng": 16.33182,
+		"address": "Margaretagatan 40, 61431, Söderköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004592"
+	},
+	{
+		"id": "1003648",
+		"chain": "ica",
+		"name": "ICA Supermarket Söndrum",
+		"lat": 56.66085,
+		"lng": 12.80477,
+		"address": "Jutaplatsen 3, 30292, Halmstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003648"
+	},
+	{
+		"id": "1003876",
+		"chain": "ica",
+		"name": "ICA Supermarket Tappström",
+		"lat": 59.29023,
+		"lng": 17.8109,
+		"address": "Mälarötorg 1, 17830, Ekerö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003876"
+	},
+	{
+		"id": "1004554",
+		"chain": "ica",
+		"name": "ICA Supermarket Telefonplan",
+		"lat": 59.29662,
+		"lng": 18.00122,
+		"address": "Tellusborgsvägen 87, 12629, Hägersten",
+		"url": "https://handlaprivatkund.ica.se/stores/1004554"
+	},
+	{
+		"id": "1004486",
+		"chain": "ica",
+		"name": "ICA Supermarket Tibro",
+		"lat": 58.42451,
+		"lng": 14.16328,
+		"address": "Alletorget 8, 54330, Tibro",
+		"url": "https://handlaprivatkund.ica.se/stores/1004486"
+	},
+	{
+		"id": "01491",
+		"chain": "ica",
+		"name": "ICA Supermarket Tierp",
+		"lat": 60.34364,
+		"lng": 17.51503,
+		"address": "Centralgatan 12, 81538, Tierp",
+		"url": "https://handlaprivatkund.ica.se/stores/01491"
+	},
+	{
+		"id": "1003693",
+		"chain": "ica",
+		"name": "ICA Supermarket Tierp",
+		"lat": 60.34511,
+		"lng": 17.49161,
+		"address": "Handelsvägen 2C, 81591, Tierp",
+		"url": "https://handlaprivatkund.ica.se/stores/1003693"
+	},
+	{
+		"id": "1003820",
+		"chain": "ica",
+		"name": "ICA Supermarket Torghallen, Mariefred",
+		"lat": 59.25918,
+		"lng": 17.22242,
+		"address": "Storgatan 9, 64730, Mariefred",
+		"url": "https://handlaprivatkund.ica.se/stores/1003820"
+	},
+	{
+		"id": "1003822",
+		"chain": "ica",
+		"name": "ICA Supermarket Toria",
+		"lat": 60.13082,
+		"lng": 12.99399,
+		"address": "Toria Center/Gräsmarksv, 68532, Torsby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003822"
+	},
+	{
+		"id": "1004541",
+		"chain": "ica",
+		"name": "ICA Supermarket Tornet Ulricehamn",
+		"lat": 57.7925,
+		"lng": 13.41138,
+		"address": "Strandgatan 6, 52331, Ulricehamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1004541"
+	},
+	{
+		"id": "1003842",
+		"chain": "ica",
+		"name": "ICA Supermarket Ugglebo",
+		"lat": 60.88979,
+		"lng": 16.71715,
+		"address": "S Åsgatan 15, 81630, Ockelbo",
+		"url": "https://handlaprivatkund.ica.se/stores/1003842"
+	},
+	{
+		"id": "1003785",
+		"chain": "ica",
+		"name": "ICA Supermarket Vaggeryd",
+		"lat": 57.49888,
+		"lng": 14.14898,
+		"address": "Järnvägsgatan 2, 56730, Vaggeryd",
+		"url": "https://handlaprivatkund.ica.se/stores/1003785"
+	},
+	{
+		"id": "1003861",
+		"chain": "ica",
+		"name": "ICA Supermarket Vallhalla",
+		"lat": 63.1686,
+		"lng": 14.56621,
+		"address": "Valla Centrum, Önev.Vallaleden, 83253, Frösön",
+		"url": "https://handlaprivatkund.ica.se/stores/1003861"
+	},
+	{
+		"id": "1003855",
+		"chain": "ica",
+		"name": "ICA Supermarket Vanadis",
+		"lat": 59.34753,
+		"lng": 18.04878,
+		"address": "Vanadisvägen 12 B, 11346, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003855"
+	},
+	{
+		"id": "1003857",
+		"chain": "ica",
+		"name": "ICA Supermarket Varuhuset Tallen",
+		"lat": 64.62502,
+		"lng": 16.65407,
+		"address": "Volgsjövägen 36, 91232, Vilhelmina",
+		"url": "https://handlaprivatkund.ica.se/stores/1003857"
+	},
+	{
+		"id": "1004195",
+		"chain": "ica",
+		"name": "ICA Supermarket Vimmerby",
+		"lat": 57.66409,
+		"lng": 15.85504,
+		"address": "Falkängsgatan, 59839, Vimmerby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004195"
+	},
+	{
+		"id": "1003563",
+		"chain": "ica",
+		"name": "ICA Supermarket Väddö",
+		"lat": 59.96965,
+		"lng": 18.80637,
+		"address": "Norrtäljevägen 10, 76430, Väddö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003563"
+	},
+	{
+		"id": "1003566",
+		"chain": "ica",
+		"name": "ICA Supermarket Vännäs",
+		"lat": 63.90818,
+		"lng": 19.7525,
+		"address": "Östra Järnvägsgatan 20, 91132, Vännäs",
+		"url": "https://handlaprivatkund.ica.se/stores/1003566"
+	},
+	{
+		"id": "1004542",
+		"chain": "ica",
+		"name": "ICA Supermarket Värnamo",
+		"lat": 57.1761,
+		"lng": 14.03094,
+		"address": "Doktorsgatan 2, 33156, Värnamo",
+		"url": "https://handlaprivatkund.ica.se/stores/1004542"
+	},
+	{
+		"id": "1003787",
+		"chain": "ica",
+		"name": "ICA Supermarket Ystad",
+		"lat": 55.43428,
+		"lng": 13.84118,
+		"address": "Militärvägen 4, 27139, Ystad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003787"
+	},
+	{
+		"id": "1004709",
+		"chain": "ica",
+		"name": "ICA Supermarket Åkers Styckebruk",
+		"lat": 59.25568,
+		"lng": 17.10487,
+		"address": "Solbergavägen 5, 64752, Åkers styckebruk",
+		"url": "https://handlaprivatkund.ica.se/stores/1004709"
+	},
+	{
+		"id": "1003442",
+		"chain": "ica",
+		"name": "ICA Supermarket Åkersberga Centrum",
+		"lat": 59.47955,
+		"lng": 18.29939,
+		"address": "Storängstorget 4, 18430, Åkersberga",
+		"url": "https://handlaprivatkund.ica.se/stores/1003442"
+	},
+	{
+		"id": "1004338",
+		"chain": "ica",
+		"name": "ICA Supermarket Åre",
+		"lat": 63.39891,
+		"lng": 13.07623,
+		"address": "Sankt Olavs Väg 33, 83752, Åre",
+		"url": "https://handlaprivatkund.ica.se/stores/1004338"
+	},
+	{
+		"id": "1003759",
+		"chain": "ica",
+		"name": "ICA Supermarket Årjäng",
+		"lat": 59.39332,
+		"lng": 12.13182,
+		"address": "Kvarnåsgatan 8A, 67230, Årjäng",
+		"url": "https://handlaprivatkund.ica.se/stores/1003759"
+	},
+	{
+		"id": "1003426",
+		"chain": "ica",
+		"name": "ICA Supermarket Årstahallen",
+		"lat": 59.86555,
+		"lng": 17.68474,
+		"address": "Sparrisgatan 3, 75446, Uppsala",
+		"url": "https://handlaprivatkund.ica.se/stores/1003426"
+	},
+	{
+		"id": "1004546",
+		"chain": "ica",
+		"name": "ICA Supermarket Åtvidaberg",
+		"lat": 58.20085,
+		"lng": 15.99867,
+		"address": "Tilasvägen 2, 59730, Åtvidaberg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004546"
+	},
+	{
+		"id": "1135007",
+		"chain": "ica",
+		"name": "ICA Supermarket Älta",
+		"lat": 59.25524,
+		"lng": 18.17744,
+		"address": "Magnoliavägen 13, 13830, Älta",
+		"url": "https://handlaprivatkund.ica.se/stores/1135007"
+	},
+	{
+		"id": "1003864",
+		"chain": "ica",
+		"name": "ICA Supermarket Ödeshög",
+		"lat": 58.22895,
+		"lng": 14.65273,
+		"address": "Stora Torget 1A, 59931, Ödeshög",
+		"url": "https://handlaprivatkund.ica.se/stores/1003864"
+	},
+	{
+		"id": "1003784",
+		"chain": "ica",
+		"name": "ICA Supermarket Örbyhus",
+		"lat": 60.22722,
+		"lng": 17.70558,
+		"address": "Uppsalavägen 5, 74802, Örbyhus",
+		"url": "https://handlaprivatkund.ica.se/stores/1003784"
+	},
+	{
+		"id": "1004596",
+		"chain": "ica",
+		"name": "ICA Supermarket Örkelljunga",
+		"lat": 56.28177,
+		"lng": 13.27935,
+		"address": "David Anders Gata 6, 28637, Örkelljunga",
+		"url": "https://handlaprivatkund.ica.se/stores/1004596"
+	},
+	{
+		"id": "1051015",
+		"chain": "ica",
+		"name": "ICA Supermarket Östhammar",
+		"lat": 60.24949,
+		"lng": 18.34875,
+		"address": "Energivägen 1, 74234, Östhammar",
+		"url": "https://handlaprivatkund.ica.se/stores/1051015"
+	},
+	{
+		"id": "1003602",
+		"chain": "ica",
+		"name": "ICA Supermarket Östra Husby",
+		"lat": 58.5765,
+		"lng": 16.56781,
+		"address": "Bygdevägen 7, Östra Husby, 61024, Vikbolandet",
+		"url": "https://handlaprivatkund.ica.se/stores/1003602"
+	},
+	{
+		"id": "1003816",
+		"chain": "ica",
+		"name": "ICA Tor Center",
+		"lat": 60.51236,
+		"lng": 16.47373,
+		"address": "Berlins väg 8, 81340, Torsåker",
+		"url": "https://handlaprivatkund.ica.se/stores/1003816"
+	},
+	{
+		"id": "1004685",
+		"chain": "ica",
+		"name": "ICA Torghallen, Askersund",
+		"lat": 58.87958,
+		"lng": 14.90291,
+		"address": "Stöökagatan 13, 69630, Askersund",
+		"url": "https://handlaprivatkund.ica.se/stores/1004685"
+	},
+	{
+		"id": "1003830",
+		"chain": "ica",
+		"name": "ICA Trevehallen",
+		"lat": 59.49436,
+		"lng": 18.28091,
+		"address": "Trevebovägen 1, 18432, Åkersberga",
+		"url": "https://handlaprivatkund.ica.se/stores/1003830"
+	},
+	{
+		"id": "1003647",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Alingsås",
+		"lat": 57.92444,
+		"lng": 12.54461,
+		"address": "Hemvägen 19, 44139, Alingsås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003647"
+	},
+	{
+		"id": "1131004",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Arninge",
+		"lat": 59.46251,
+		"lng": 18.13013,
+		"address": "Kundvägen 1E, 18766, Täby",
+		"url": "https://handlaprivatkund.ica.se/stores/1131004"
+	},
+	{
+		"id": "1166011",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Arvika",
+		"lat": 59.66304,
+		"lng": 12.62662,
+		"address": "Långvaksvägen 4, 67134, Arvika",
+		"url": "https://handlaprivatkund.ica.se/stores/1166011"
+	},
+	{
+		"id": "1003408",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Barkarbystaden",
+		"lat": 59.41407,
+		"lng": 17.86371,
+		"address": "Majorsvägen 4 A, 17744, Järfälla",
+		"url": "https://handlaprivatkund.ica.se/stores/1003408"
+	},
+	{
+		"id": "1051012",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Bollnäs",
+		"lat": 61.33917,
+		"lng": 16.39687,
+		"address": "Handelsgatan 9, 82141, Bollnäs",
+		"url": "https://handlaprivatkund.ica.se/stores/1051012"
+	},
+	{
+		"id": "1004119",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Borlänge",
+		"lat": 60.48253,
+		"lng": 15.44783,
+		"address": "Mjälgavägen 2, 78437, Borlänge",
+		"url": "https://handlaprivatkund.ica.se/stores/1004119"
+	},
+	{
+		"id": "1003722",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Borås",
+		"lat": 57.71085,
+		"lng": 12.94286,
+		"address": "Trandögatan 16, 50433, Borås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003722"
+	},
+	{
+		"id": "1004407",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Botkyrka",
+		"lat": 59.2374,
+		"lng": 17.83219,
+		"address": "Kumla Gårdsväg 30, 14563, Norsborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004407"
+	},
+	{
+		"id": "1015001",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Bromma",
+		"lat": 59.35426,
+		"lng": 17.95524,
+		"address": "Köpsvängen 4, 16867, Bromma",
+		"url": "https://handlaprivatkund.ica.se/stores/1015001"
+	},
+	{
+		"id": "1003838",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Bromölla",
+		"lat": 56.06677,
+		"lng": 14.47998,
+		"address": "Tians väg 4, 29539, Bromölla",
+		"url": "https://handlaprivatkund.ica.se/stores/1003838"
+	},
+	{
+		"id": "1158001",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Brynäs",
+		"lat": 60.67017,
+		"lng": 17.182,
+		"address": "Atlasgatan 40, 80288, Gävle",
+		"url": "https://handlaprivatkund.ica.se/stores/1158001"
+	},
+	{
+		"id": "1003428",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Burlöv",
+		"lat": 55.63909,
+		"lng": 13.08475,
+		"address": "Kronetorpsvägen 2, 23237, Arlöv",
+		"url": "https://handlaprivatkund.ica.se/stores/1003428"
+	},
+	{
+		"id": "1003429",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Bålsta",
+		"lat": 59.5591,
+		"lng": 17.54989,
+		"address": "Lillsjörännan 9, 74650, Bålsta",
+		"url": "https://handlaprivatkund.ica.se/stores/1003429"
+	},
+	{
+		"id": "1004380",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Enköping",
+		"lat": 59.65204,
+		"lng": 17.08634,
+		"address": "Vagnsgatan 3, 74537, Enköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004380"
+	},
+	{
+		"id": "1004187",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Erikslund",
+		"lat": 59.61679,
+		"lng": 16.46229,
+		"address": "Traversgatan 12, 72138, Västerås",
+		"url": "https://handlaprivatkund.ica.se/stores/1004187"
+	},
+	{
+		"id": "1004513",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Eskilstuna",
+		"lat": 59.38825,
+		"lng": 16.53376,
+		"address": "Karl Hovbergsgatan 32, 63354, Eskilstuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1004513"
+	},
+	{
+		"id": "1003411",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Falun",
+		"lat": 60.60697,
+		"lng": 15.6586,
+		"address": "Bataljonsvägen 11, 79140, Falun",
+		"url": "https://handlaprivatkund.ica.se/stores/1003411"
+	},
+	{
+		"id": "1003430",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Flemingsberg",
+		"lat": 59.21854,
+		"lng": 17.94836,
+		"address": "Ebba Bååts torg 40, 14151, Huddinge",
+		"url": "https://handlaprivatkund.ica.se/stores/1003430"
+	},
+	{
+		"id": "1003781",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Flygstaden",
+		"lat": 56.679,
+		"lng": 12.80629,
+		"address": "Karlsrovägen 81, 30241, Halmstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003781"
+	},
+	{
+		"id": "1088004",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Gunnesbo, Lund",
+		"lat": 55.71647,
+		"lng": 13.16357,
+		"address": "Traktorvägen 1-3, 22660, Lund",
+		"url": "https://handlaprivatkund.ica.se/stores/1088004"
+	},
+	{
+		"id": "1003987",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Gävle",
+		"lat": 60.64671,
+		"lng": 17.14747,
+		"address": "Hemlingby Köpcentrum, 80293, Gävle",
+		"url": "https://handlaprivatkund.ica.se/stores/1003987"
+	},
+	{
+		"id": "1004219",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Göteborg",
+		"lat": 57.68022,
+		"lng": 12.00512,
+		"address": "Grafiska Vägen 16, 41263, Göteborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004219"
+	},
+	{
+		"id": "1003777",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Haninge",
+		"lat": 59.18147,
+		"lng": 18.15748,
+		"address": "Österport 4, 13665, Haninge",
+		"url": "https://handlaprivatkund.ica.se/stores/1003777"
+	},
+	{
+		"id": "1004084",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Helsingborg",
+		"lat": 56.06498,
+		"lng": 12.71972,
+		"address": "REGEMENTSVÄGEN 7, 25457, Helsingborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1004084"
+	},
+	{
+		"id": "1003414",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Hudiksvall",
+		"lat": 61.74287,
+		"lng": 17.11637,
+		"address": "Blockvägen 1, 82434, Hudiksvall",
+		"url": "https://handlaprivatkund.ica.se/stores/1003414"
+	},
+	{
+		"id": "1003937",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Hyllinge",
+		"lat": 56.10092,
+		"lng": 12.85959,
+		"address": "Dragaregatan 2, 26575, Hyllinge",
+		"url": "https://handlaprivatkund.ica.se/stores/1003937"
+	},
+	{
+		"id": "1003415",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Häggvik",
+		"lat": 59.43772,
+		"lng": 17.93237,
+		"address": "Mossvägen 1, 19162, Sollentuna",
+		"url": "https://handlaprivatkund.ica.se/stores/1003415"
+	},
+	{
+		"id": "1003947",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Hälla",
+		"lat": 59.60939,
+		"lng": 16.62062,
+		"address": "Stockholmsvägen 134, 72134, Västerås",
+		"url": "https://handlaprivatkund.ica.se/stores/1003947"
+	},
+	{
+		"id": "1003949",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Härnösand",
+		"lat": 62.63669,
+		"lng": 17.92837,
+		"address": "Kaptensgatan 8, 87152, Härnösand",
+		"url": "https://handlaprivatkund.ica.se/stores/1003949"
+	},
+	{
+		"id": "1003545",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Hässleholm",
+		"lat": 56.16431,
+		"lng": 13.78049,
+		"address": "Industrigatan 1, 28141, Hässleholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003545"
+	},
+	{
+		"id": "1003954",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Högsbo, Göteborg",
+		"lat": 57.65071,
+		"lng": 11.94889,
+		"address": "Lona Knapes gata 1, 42132, Västra frölunda",
+		"url": "https://handlaprivatkund.ica.se/stores/1003954"
+	},
+	{
+		"id": "1003925",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Högskolan",
+		"lat": 56.66349,
+		"lng": 12.87624,
+		"address": "Kristian IV:s väg 3, 30250, Halmstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003925"
+	},
+	{
+		"id": "1004015",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Jönköping",
+		"lat": 57.77188,
+		"lng": 14.17644,
+		"address": "Herkulesvägen 7, 55303, Jönköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004015"
+	},
+	{
+		"id": "1004348",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Kalmar",
+		"lat": 56.66992,
+		"lng": 16.33913,
+		"address": "Verkstadsgatan 6, 39239, Kalmar",
+		"url": "https://handlaprivatkund.ica.se/stores/1004348"
+	},
+	{
+		"id": "1004027",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Karlshamn",
+		"lat": 56.19558,
+		"lng": 14.84412,
+		"address": "Korpadalsvägen 3, 37451, Asarum",
+		"url": "https://handlaprivatkund.ica.se/stores/1004027"
+	},
+	{
+		"id": "1004704",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Karlskoga",
+		"lat": 59.32823,
+		"lng": 14.50692,
+		"address": "Gesällgatan 5, 69134, Karlskoga",
+		"url": "https://handlaprivatkund.ica.se/stores/1004704"
+	},
+	{
+		"id": "1004028",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Karlskrona",
+		"lat": 56.19597,
+		"lng": 15.64119,
+		"address": "Verkövägen 5, 37162, Lyckeby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004028"
+	},
+	{
+		"id": "1004029",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Karlstad",
+		"lat": 59.37651,
+		"lng": 13.42862,
+		"address": "Bergviks Köpcentrum, 65346, Karlstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004029"
+	},
+	{
+		"id": "1004034",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Katrineholm",
+		"lat": 59.00278,
+		"lng": 16.22539,
+		"address": "Starrvägen 17, 64149, Katrineholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1004034"
+	},
+	{
+		"id": "1004057",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Kristianstad",
+		"lat": 56.02535,
+		"lng": 14.16907,
+		"address": "Sjöcronas gata 7, 29153, Kristianstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1004057"
+	},
+	{
+		"id": "1004299",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Kristinehamn",
+		"lat": 59.31177,
+		"lng": 14.12878,
+		"address": "Närkevägen 28, 68143, Kristinehamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1004299"
+	},
+	{
+		"id": "1003562",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Kumla",
+		"lat": 59.12624,
+		"lng": 15.14178,
+		"address": "Köpmangatan 18, 69230, Kumla",
+		"url": "https://handlaprivatkund.ica.se/stores/1003562"
+	},
+	{
+		"id": "1004185",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Kungsbacka",
+		"lat": 57.51627,
+		"lng": 12.07393,
+		"address": "Hedebrovägen 50, 43439, Kungsbacka",
+		"url": "https://handlaprivatkund.ica.se/stores/1004185"
+	},
+	{
+		"id": "1004392",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Kungälv",
+		"lat": 57.87464,
+		"lng": 11.97356,
+		"address": "Gymnasiegatan 8, 44248, Kungälv",
+		"url": "https://handlaprivatkund.ica.se/stores/1004392"
+	},
+	{
+		"id": "1004375",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Köping",
+		"lat": 59.52228,
+		"lng": 15.97411,
+		"address": "Ringvägen 76, 73133, Köping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004375"
+	},
+	{
+		"id": "1003418",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Lindhagen",
+		"lat": 59.33714,
+		"lng": 18.00974,
+		"address": "Lindhagensgatan 118, 11251, Stockholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003418"
+	},
+	{
+		"id": "1003823",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Linköping",
+		"lat": 58.43243,
+		"lng": 15.59255,
+		"address": "Västra Svedengatan 12, 58273, Linköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1003823"
+	},
+	{
+		"id": "1004102",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Ljungby",
+		"lat": 56.83478,
+		"lng": 13.94396,
+		"address": "Drottninggatan 34, 34136, Ljungby",
+		"url": "https://handlaprivatkund.ica.se/stores/1004102"
+	},
+	{
+		"id": "1003382",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Luleå",
+		"lat": 65.61757,
+		"lng": 22.04802,
+		"address": "Storhedsvägen 14, 97345, Luleå",
+		"url": "https://handlaprivatkund.ica.se/stores/1003382"
+	},
+	{
+		"id": "1004060",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Löddeköpinge",
+		"lat": 55.76809,
+		"lng": 12.99096,
+		"address": "Marknadsvägen, Center Syd, 24642, Löddeköpinge",
+		"url": "https://handlaprivatkund.ica.se/stores/1004060"
+	},
+	{
+		"id": "1004492",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Malmö",
+		"lat": 55.57325,
+		"lng": 13.03664,
+		"address": "Cypressvägen 4, 21363, Malmö",
+		"url": "https://handlaprivatkund.ica.se/stores/1004492"
+	},
+	{
+		"id": "1004243",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Mellbystrand",
+		"lat": 56.5028,
+		"lng": 12.95675,
+		"address": "Mellby Centrum, 31261, Mellbystrand",
+		"url": "https://handlaprivatkund.ica.se/stores/1004243"
+	},
+	{
+		"id": "1003419",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Mora",
+		"lat": 61.00578,
+		"lng": 14.59665,
+		"address": "Siljanssågsvägen 15, 79250, Mora",
+		"url": "https://handlaprivatkund.ica.se/stores/1003419"
+	},
+	{
+		"id": "1003735",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Moraberg",
+		"lat": 59.19962,
+		"lng": 17.66934,
+		"address": "Morabergsvägen 26, 15242, Södertälje",
+		"url": "https://handlaprivatkund.ica.se/stores/1003735"
+	},
+	{
+		"id": "1004267",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Motala",
+		"lat": 58.55744,
+		"lng": 15.03462,
+		"address": "Hökartorget, 59153, Motala",
+		"url": "https://handlaprivatkund.ica.se/stores/1004267"
+	},
+	{
+		"id": "1004282",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Nacka",
+		"lat": 59.31148,
+		"lng": 18.17166,
+		"address": "Per Hallströms väg 15, 13139, Nacka",
+		"url": "https://handlaprivatkund.ica.se/stores/1004282"
+	},
+	{
+		"id": "1051010",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Norrköping",
+		"lat": 58.61535,
+		"lng": 16.16176,
+		"address": "Blygatan 27, 60223, Norrköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1051010"
+	},
+	{
+		"id": "1004303",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Nyköping",
+		"lat": 58.7703,
+		"lng": 17.02179,
+		"address": "Gustafsbergsstigen 6, 61167, Nyköping",
+		"url": "https://handlaprivatkund.ica.se/stores/1004303"
+	},
+	{
+		"id": "1003421",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Nynäshamn",
+		"lat": 58.91292,
+		"lng": 17.95592,
+		"address": "Telivägen 2, 14941, Nynäshamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1003421"
+	},
+	{
+		"id": "1004346",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Olofström",
+		"lat": 56.27497,
+		"lng": 14.54369,
+		"address": "Ekhagsvägen 2, 29340, Olofström",
+		"url": "https://handlaprivatkund.ica.se/stores/1004346"
+	},
+	{
+		"id": "1004340",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Oskarshamn",
+		"lat": 57.26567,
+		"lng": 16.43306,
+		"address": "Döderhultsvägen 26, 57231, Oskarshamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1004340"
+	},
+	{
+		"id": "1004365",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Partille",
+		"lat": 57.73664,
+		"lng": 12.10508,
+		"address": "Parallellvägen 1, 43335, Partille",
+		"url": "https://handlaprivatkund.ica.se/stores/1004365"
+	},
+	{
+		"id": "1003513",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Ronneby",
+		"lat": 56.21502,
+		"lng": 15.2723,
+		"address": "Karlshamnsvägen 8, 37231, Ronneby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003513"
+	},
+	{
+		"id": "1003916",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Råå Helsingborg",
+		"lat": 56.0023,
+		"lng": 12.7452,
+		"address": "Landskronavägen 33, 25232, Helsingborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1003916"
+	},
+	{
+		"id": "1003396",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Sandviken",
+		"lat": 60.62383,
+		"lng": 16.77242,
+		"address": "Linggatan 25, 81132, Sandviken",
+		"url": "https://handlaprivatkund.ica.se/stores/1003396"
+	},
+	{
+		"id": "1003910",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Skellefteå",
+		"lat": 64.76565,
+		"lng": 21.02495,
+		"address": "Varugatan 28, 93176, Skellefteå",
+		"url": "https://handlaprivatkund.ica.se/stores/1003910"
+	},
+	{
+		"id": "1004080",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Skövde",
+		"lat": 58.40497,
+		"lng": 13.85616,
+		"address": "Köpmannagatan 3, 54954, Skövde",
+		"url": "https://handlaprivatkund.ica.se/stores/1004080"
+	},
+	{
+		"id": "1003380",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Solna",
+		"lat": 59.35839,
+		"lng": 17.98009,
+		"address": "Svetsarvägen 18, 17141, Solna",
+		"url": "https://handlaprivatkund.ica.se/stores/1003380"
+	},
+	{
+		"id": "1004488",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Stenhagen Uppsala",
+		"lat": 59.84855,
+		"lng": 17.56014,
+		"address": "Fyrisparksvägen 1, 75267, Uppsala",
+		"url": "https://handlaprivatkund.ica.se/stores/1004488"
+	},
+	{
+		"id": "1003423",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Sundsvall",
+		"lat": 62.44256,
+		"lng": 17.34786,
+		"address": "Antennvägen 11, 86337, Sundsvall",
+		"url": "https://handlaprivatkund.ica.se/stores/1003423"
+	},
+	{
+		"id": "1003825",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Torslanda",
+		"lat": 57.70961,
+		"lng": 11.77233,
+		"address": "Gamla Flygplatsvägen 60, 42337, Torslanda",
+		"url": "https://handlaprivatkund.ica.se/stores/1003825"
+	},
+	{
+		"id": "1003620",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Trelleborg",
+		"lat": 55.37391,
+		"lng": 13.13078,
+		"address": "Strandridaregatan 10, 23161, Trelleborg",
+		"url": "https://handlaprivatkund.ica.se/stores/1003620"
+	},
+	{
+		"id": "1003604",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Trollhättan",
+		"lat": 58.31316,
+		"lng": 12.30381,
+		"address": "Överby Köpcentrum, 46170, Trollhättan",
+		"url": "https://handlaprivatkund.ica.se/stores/1003604"
+	},
+	{
+		"id": "1003734",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Ulricehamn",
+		"lat": 57.81267,
+		"lng": 13.4218,
+		"address": "Ubbarpsvägen 2A, 52337, Ulricehamn",
+		"url": "https://handlaprivatkund.ica.se/stores/1003734"
+	},
+	{
+		"id": "1003828",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Umeå",
+		"lat": 63.79721,
+		"lng": 20.30364,
+		"address": "Strömpilsplatsen 41, 90743, Umeå",
+		"url": "https://handlaprivatkund.ica.se/stores/1003828"
+	},
+	{
+		"id": "1003736",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Universitetet",
+		"lat": 59.25242,
+		"lng": 15.23136,
+		"address": "Sörbyängsvägen 24-30, 70218, Örebro",
+		"url": "https://handlaprivatkund.ica.se/stores/1003736"
+	},
+	{
+		"id": "1004109",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Vasa Handelsplats",
+		"lat": 59.18712,
+		"lng": 17.57854,
+		"address": "Genetaleden 9, 15159, Södertälje",
+		"url": "https://handlaprivatkund.ica.se/stores/1004109"
+	},
+	{
+		"id": "1003555",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Vetlanda",
+		"lat": 57.42572,
+		"lng": 15.09563,
+		"address": "Nygatan 3, 57433, Vetlanda",
+		"url": "https://handlaprivatkund.ica.se/stores/1003555"
+	},
+	{
+		"id": "1003730",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Visby",
+		"lat": 57.62369,
+		"lng": 18.32245,
+		"address": "Follingboväg 70, 62153, Visby",
+		"url": "https://handlaprivatkund.ica.se/stores/1003730"
+	},
+	{
+		"id": "1003565",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Välsviken",
+		"lat": 59.39624,
+		"lng": 13.58037,
+		"address": "Rävbergsvägen 2, 65639, Karlstad",
+		"url": "https://handlaprivatkund.ica.se/stores/1003565"
+	},
+	{
+		"id": "1003568",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Västervik",
+		"lat": 57.76764,
+		"lng": 16.59636,
+		"address": "Ljunghedsvägen 2, 59362, Västervik",
+		"url": "https://handlaprivatkund.ica.se/stores/1003568"
+	},
+	{
+		"id": "1003569",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Västra Hamnen",
+		"lat": 55.61183,
+		"lng": 12.98022,
+		"address": "Masttorget 12, 21177, Malmö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003569"
+	},
+	{
+		"id": "1003571",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Växjö",
+		"lat": 56.88362,
+		"lng": 14.76592,
+		"address": "Hejaregatan 30, 35246, Växjö",
+		"url": "https://handlaprivatkund.ica.se/stores/1003571"
+	},
+	{
+		"id": "1003525",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Älmhult",
+		"lat": 56.55711,
+		"lng": 14.14603,
+		"address": "Silverdalsgatan 3, 34331, Älmhult",
+		"url": "https://handlaprivatkund.ica.se/stores/1003525"
+	},
+	{
+		"id": "1003594",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Ängelholm",
+		"lat": 56.25209,
+		"lng": 12.89128,
+		"address": "Hugingatan 1, 26271, Ängelholm",
+		"url": "https://handlaprivatkund.ica.se/stores/1003594"
+	},
+	{
+		"id": "1004097",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Örebro Boglundsängen",
+		"lat": 59.29662,
+		"lng": 15.20606,
+		"address": "Boglundsgatan 2, 70374, Örebro",
+		"url": "https://handlaprivatkund.ica.se/stores/1004097"
+	},
+	{
+		"id": "1003733",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Östersund",
+		"lat": 63.19263,
+		"lng": 14.65066,
+		"address": "Arenavägen 19, 83132, Östersund",
+		"url": "https://handlaprivatkund.ica.se/stores/1003733"
+	},
+	{
+		"id": "1051011",
+		"chain": "ica",
+		"name": "Maxi ICA Stormarknad Österåker",
+		"lat": 59.48926,
+		"lng": 18.27092,
+		"address": "Långhundravägen 9, 18444, Åkersberga",
+		"url": "https://handlaprivatkund.ica.se/stores/1051011"
+	}
+]
