@@ -27,6 +27,10 @@ export interface AxfoodProduct {
 	manufacturer: string | null;
 	displayVolume: string | null;
 	priceValue: number;
+	/** "kr/kg" when `priceValue` is per kilo (sold by weight), else "kr/st". */
+	priceUnit?: string | null;
+	/** Average weight of one piece in kg, for products sold by weight. */
+	averageWeight?: number | null;
 	comparePrice: string | null;
 	comparePriceUnit: string | null;
 	outOfStock: boolean;
@@ -63,13 +67,18 @@ export function toHit(chain: ChainId, base: string, p: AxfoodProduct): ProductHi
 		url: `${base}/sok?q=${encodeURIComponent(p.name)}`,
 		pricing: 'chain'
 	};
+	if (p.priceUnit === 'kr/kg') {
+		hit.perKg = true;
+		if (p.averageWeight) hit.approxEach = Math.round(p.priceValue * p.averageWeight * 100) / 100;
+	}
 	if (!promo || promoPrice === undefined || promoPrice >= p.priceValue) return hit;
 
 	const quantity = promo.qualifyingCount ?? 1;
 	const unitPrice = parseSek(promo.comparePrice) ?? scaled(promoPrice);
 	if (quantity <= 1) {
 		// Single-item sale: it is simply the current price.
-		return { ...hit, price: promoPrice, oldPrice: p.priceValue, unitPrice };
+		const approxEach = p.averageWeight && hit.perKg ? Math.round(promoPrice * p.averageWeight * 100) / 100 : undefined;
+		return { ...hit, price: promoPrice, oldPrice: p.priceValue, unitPrice, approxEach };
 	}
 	const limit = Number(promo.redeemLimitLabel?.match(/\d+/)?.[0]);
 	hit.deal = {

@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "src/routes/+page.svelte"
+        ],
+        "createdAt": "2026-10-29T18:17:54.304Z",
+        "reason": "Claude: the 5px top edges on chain segments and suggestion tags are the shelf-label edge; their top corners are square (radius only on the bottom)"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-29T18:28:55.742Z",
+        "reason": "Claude: unchosen decision-round sketch of a different direction; never shipped, intentionally off the Shelf Edge type system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-orienteering.html"
+        ],
+        "createdAt": "2026-10-29T18:28:55.765Z",
+        "reason": "Claude: unchosen decision-round sketch of a different direction; never shipped, intentionally off the Shelf Edge type system"
+      }
+    ]
+  }
+}

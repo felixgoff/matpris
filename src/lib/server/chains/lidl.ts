@@ -46,7 +46,11 @@ export const lidl: ChainAdapter = {
 			const price = d?.price?.price;
 			if (!d || !price || !FOOD_CATEGORIES.has(d.category ?? '')) continue;
 			const size = d.price?.packaging?.text;
-			const unit = parseUnitPrice(d.price?.basePrice?.text) ?? unitPriceFromSize(price, size);
+			// A bare "/kg" base price means the price itself is per kilo (loose fruit).
+			const perKg = /^\s*\/\s*kg\b/i.test(d.price?.basePrice?.text ?? '');
+			const unit = perKg
+				? { unitPrice: price, unit: 'kg' as const }
+				: (parseUnitPrice(d.price?.basePrice?.text) ?? unitPriceFromSize(price, size));
 			const brand = typeof d.brand === 'string' ? d.brand : d.brand?.name;
 			hits.push({
 				chain: 'lidl',
@@ -58,6 +62,7 @@ export const lidl: ChainAdapter = {
 				price,
 				unitPrice: unit?.unitPrice,
 				unit: unit?.unit,
+				perKg: perKg || undefined,
 				oldPrice: d.price?.oldPrice && d.price.oldPrice > price ? d.price.oldPrice : undefined,
 				image: d.image,
 				url: `https://www.lidl.se${d.canonicalUrl ?? ''}`,

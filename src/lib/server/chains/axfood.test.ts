@@ -23,6 +23,20 @@ describe('Axfood toHit', () => {
 		expect(hit.oldPrice).toBeUndefined();
 	});
 
+	it('estimates the price of one piece for products sold by weight', () => {
+		const hit = toHit('willys', 'https://www.willys.se', {
+			...base,
+			name: 'Banan Klass 1',
+			displayVolume: 'ca: 180g',
+			priceValue: 19.9,
+			priceUnit: 'kr/kg',
+			averageWeight: 0.18,
+			comparePrice: '19,90 kr',
+			comparePriceUnit: 'kg'
+		});
+		expect(hit).toMatchObject({ price: 19.9, perKg: true, approxEach: 3.58, unitPrice: 19.9, unit: 'kg' });
+	});
+
 	it('maps a multi-buy "5 för 55 +pant" deal', () => {
 		const hit = toHit('willys', 'https://www.willys.se', {
 			...base,

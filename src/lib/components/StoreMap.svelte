@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import { km } from '../format';
 	import { loadMapKit } from '../mapkit';
 	import { CHAINS, type NearbyStore } from '../types';
@@ -10,19 +10,30 @@
 		stores: NearbyStore[];
 		/** Store id to emphasise (the cheapest one). */
 		highlight?: string;
+		/** Price shown on the emphasised store's pin. */
+		highlightLabel?: string;
+		/** Store id the shopper is pointing at in the list; every other pin dims. */
+		focus?: string;
 		/** Draw our own pin at `center`; off when MapKit already shows the device location there. */
 		showCenterPin?: boolean;
 		/** Called with each device location MapKit reports. */
 		onlocate?: (position: { lat: number; lng: number }) => void;
 		onlocateerror?: (message: string) => void;
 	}
-	let { center, radiusKm, stores, highlight, showCenterPin = true, onlocate, onlocateerror }: Props = $props();
+	let { center, radiusKm, stores, highlight, highlightLabel, focus, showCenterPin = true, onlocate, onlocateerror }: Props =
+		$props();
 
 	let el: HTMLDivElement;
 	let map = $state<mapkit.Map>();
 	let failed = $state('');
 	/** What the view is fitted to; refitted when the map changes size. */
 	let fitted: (mapkit.Annotation | mapkit.Overlay)[] = [];
+	/** Pin elements by store id, so focus changes restyle pins without rebuilding the map. */
+	const pins = new Map<string, HTMLElement>();
+	const focusClasses = (pin: HTMLElement, id: string) => {
+		pin.classList.toggle('dim', !!focus && id !== focus);
+		pin.classList.toggle('focus', id === focus);
+	};
 
 	// Every store lies inside the search circle, so fitting the circle is enough as
 	// long as the padding leaves room for a pin at its edge: a pin's height above,
@@ -86,12 +97,14 @@
 		logo.alt = CHAINS[s.chain].name;
 		logo.className = s.chain;
 		pin.append(logo);
-		if (hot) {
-			const star = document.createElement('span');
-			star.className = 'star';
-			star.textContent = '★';
-			pin.append(star);
+		if (hot && highlightLabel) {
+			const price = document.createElement('b');
+			price.textContent = highlightLabel;
+			pin.append(price);
 		}
+		pins.set(s.id, pin);
+		// MapKit may build pins inside the effect below; hovering must not rebuild the map.
+		untrack(() => focusClasses(pin, s.id));
 		return pin;
 	}
 
@@ -100,16 +113,17 @@
 		const at = (lat: number, lng: number) => new mapkit.Coordinate(lat, lng);
 		map.removeOverlays(map.overlays);
 		map.removeAnnotations(map.annotations);
+		pins.clear();
 
 		const items: (mapkit.Annotation | mapkit.Overlay)[] = [];
 		if (radiusKm) {
 			const circle = new mapkit.CircleOverlay(at(center.lat, center.lng), radiusKm * 1000, {
 				style: new mapkit.Style({
-					strokeColor: '#1a7f4b',
+					strokeColor: '#26292b',
 					lineWidth: 2,
 					lineDash: [6, 4],
-					fillColor: '#1a7f4b',
-					fillOpacity: 0.06
+					fillColor: '#26292b',
+					fillOpacity: 0.04
 				})
 			});
 			map.addOverlay(circle);
@@ -136,7 +150,7 @@
 		if (showCenterPin) {
 			annotations.unshift(
 				new mapkit.MarkerAnnotation(at(center.lat, center.lng), {
-					color: '#1b1f1d',
+					color: '#26292b',
 					title: 'Selected location',
 					glyphText: '•',
 					displayPriority: required,
@@ -152,6 +166,11 @@
 		// Not animated: overlapping animations (location fix + search results) can end at the wrong zoom.
 		map.showItems(fitted, { animate: false, padding: padding() });
 	});
+
+	$effect(() => {
+		focus;
+		for (const [id, pin] of pins) focusClasses(pin, id);
+	});
 </script>
 
 <div class="map" bind:this={el}>
@@ -161,34 +180,40 @@
 <style>
 	.map {
 		height: 100%;
-		min-height: 320px;
-		border-radius: 12px;
+		min-height: 280px;
 		overflow: hidden;
 		position: relative;
-		background: #e8ebe9;
+		background: #dfe4dc;
 	}
 	.failed {
 		position: absolute;
 		inset: 0;
 		margin: auto;
 		height: fit-content;
+		max-width: 36ch;
 		text-align: center;
-		color: #555;
+		color: #4a4e50;
 		padding: 16px;
 	}
-	/* Pins are created by MapKit outside this component's markup, hence :global. */
+	/* Pins are created by MapKit outside this component's markup, hence :global.
+	   Each pin is a small shelf label: white stock, the chain's colour as its edge. */
 	:global(.store-pin) {
 		position: relative;
 		display: flex;
 		align-items: center;
+		gap: 6px;
 		height: 24px;
-		padding: 0 5px;
+		padding: 0 6px;
 		box-sizing: border-box;
 		background: #fff;
 		border: 2px solid var(--chain);
-		border-radius: 7px;
-		box-shadow: 0 1px 4px #0005;
+		border-radius: 3px;
+		box-shadow: 0 2px 4px rgb(0 0 0 / 0.3);
 		cursor: pointer;
+		transition:
+			opacity 200ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+		transform-origin: bottom center;
 	}
 	:global(.store-pin::after) {
 		content: '';
@@ -210,41 +235,46 @@
 	:global(.store-pin:has(img.lidl)) {
 		padding: 0 1px;
 	}
+	:global(.store-pin img.ica) {
+		height: 13px;
+	}
 	/* Chains without online prices: shown for orientation, visually secondary. */
 	:global(.store-pin.offline) {
 		opacity: 0.75;
 		transform: scale(0.85);
-		transform-origin: bottom center;
 	}
-	:global(.store-pin img.ica) {
-		height: 13px;
-	}
+	/* The cheapest store wears the yellow label and its price. */
 	:global(.store-pin.hot) {
-		height: 34px;
-		padding: 0 8px;
-		border: 3px solid #1a7f4b;
-		box-shadow: 0 2px 10px #1a7f4b88;
+		height: 36px;
+		padding: 0 10px;
+		background: #ffd400;
+		box-shadow: 0 4px 10px rgb(0 0 0 / 0.35);
 	}
-	:global(.store-pin.hot::after) {
-		border-top-color: #1a7f4b;
+	:global(.store-pin.hot:has(img.lidl)) {
+		padding: 0 10px 0 2px;
 	}
 	:global(.store-pin.hot img) {
-		height: 16px;
+		height: 15px;
 	}
 	:global(.store-pin.hot img.lidl) {
-		height: 26px;
+		height: 28px;
 	}
-	:global(.store-pin .star) {
-		position: absolute;
-		top: -11px;
-		right: -11px;
-		width: 20px;
-		height: 20px;
-		display: grid;
-		place-items: center;
-		border-radius: 50%;
-		background: #1a7f4b;
-		color: #fff;
-		font-size: 12px;
+	:global(.store-pin b) {
+		font: 900 1.125rem/1 Archivo, system-ui, sans-serif;
+		font-stretch: 62%;
+		color: #1a1c1d;
+		white-space: nowrap;
+	}
+	:global(.store-pin.dim) {
+		opacity: 0.3;
+	}
+	:global(.store-pin.focus) {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		:global(.store-pin) {
+			transition: none;
+		}
 	}
 </style>

@@ -3,7 +3,7 @@ import { TtlCache } from './cache';
 import { adapters } from './chains';
 import type { ChainAdapter } from './chains/types';
 import { ThrottledError } from './http';
-import { matchQuality } from './normalize';
+import { relevance } from './normalize';
 import { MAP_ONLY_CHAINS, pricedArea, withMapOnlyStores } from './stores/registry';
 
 const priceCache = new TtlCache<ProductHit[]>(15 * 60 * 1000);
@@ -16,8 +16,8 @@ async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyS
 	const chain = adapter.chain;
 	const rate = (hits: ProductHit[], store: NearbyStore): ResultRow[] =>
 		hits.flatMap((h) => {
-			const q = matchQuality(query, h.name, h.brand);
-			return q ? [{ ...h, store, match: q === 2 ? 'strong' : 'weak' }] : [];
+			const match = relevance(query, h.name, h.brand);
+			return match ? [{ ...h, store, match }] : [];
 		});
 
 	if (adapter.pricing === 'chain') {

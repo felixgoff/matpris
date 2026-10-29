@@ -1,0 +1,404 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-29T18:27:58+00:00",
+  "title": "Design System: Matpris",
+  "extensions": {
+    "colorMeta": {
+      "steel": {
+        "role": "primary",
+        "displayName": "Shelf Steel",
+        "canonical": "#26292b",
+        "tonalRamp": [
+          "oklch(15% 0.006 237)",
+          "oklch(26% 0.006 237)",
+          "oklch(37% 0.006 237)",
+          "oklch(48% 0.006 237)",
+          "oklch(59% 0.006 237)",
+          "oklch(70% 0.006 237)",
+          "oklch(82% 0.006 237)",
+          "oklch(95% 0.006 237)"
+        ]
+      },
+      "steel-edge": {
+        "role": "primary",
+        "displayName": "Steel Edge",
+        "canonical": "#3a3e41",
+        "tonalRamp": [
+          "oklch(15% 0.007 240)",
+          "oklch(26% 0.007 240)",
+          "oklch(37% 0.007 240)",
+          "oklch(48% 0.007 240)",
+          "oklch(59% 0.007 240)",
+          "oklch(70% 0.007 240)",
+          "oklch(82% 0.007 240)",
+          "oklch(95% 0.007 240)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Label Yellow",
+        "canonical": "#ffd400",
+        "tonalRamp": [
+          "oklch(15% 0.022 94)",
+          "oklch(26% 0.046 94)",
+          "oklch(37% 0.070 94)",
+          "oklch(48% 0.094 94)",
+          "oklch(59% 0.118 94)",
+          "oklch(70% 0.141 94)",
+          "oklch(82% 0.167 94)",
+          "oklch(95% 0.166 94)"
+        ]
+      },
+      "yellow-ink": {
+        "role": "secondary",
+        "displayName": "Yellow Label Ink",
+        "canonical": "#4b4000",
+        "tonalRamp": [
+          "oklch(15% 0.056 98)",
+          "oklch(26% 0.067 98)",
+          "oklch(37% 0.077 98)",
+          "oklch(48% 0.067 98)",
+          "oklch(59% 0.057 98)",
+          "oklch(70% 0.047 98)",
+          "oklch(82% 0.035 98)",
+          "oklch(95% 0.024 98)"
+        ]
+      },
+      "offer": {
+        "role": "tertiary",
+        "displayName": "Offer Red",
+        "canonical": "#d4001a",
+        "tonalRamp": [
+          "oklch(15% 0.117 26)",
+          "oklch(26% 0.146 26)",
+          "oklch(37% 0.175 26)",
+          "oklch(48% 0.205 26)",
+          "oklch(59% 0.211 26)",
+          "oklch(70% 0.182 26)",
+          "oklch(82% 0.150 26)",
+          "oklch(95% 0.115 26)"
+        ]
+      },
+      "offer-ink": {
+        "role": "tertiary",
+        "displayName": "Offer Ink",
+        "canonical": "#a30015",
+        "tonalRamp": [
+          "oklch(15% 0.117 26)",
+          "oklch(26% 0.141 26)",
+          "oklch(37% 0.165 26)",
+          "oklch(48% 0.176 26)",
+          "oklch(59% 0.152 26)",
+          "oklch(70% 0.128 26)",
+          "oklch(82% 0.102 26)",
+          "oklch(95% 0.073 26)"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Fluorescent Grey",
+        "canonical": "#e6e8e4",
+        "tonalRamp": [
+          "oklch(15% 0.006 129)",
+          "oklch(26% 0.006 129)",
+          "oklch(37% 0.006 129)",
+          "oklch(48% 0.006 129)",
+          "oklch(59% 0.006 129)",
+          "oklch(70% 0.006 129)",
+          "oklch(82% 0.006 129)",
+          "oklch(95% 0.006 129)"
+        ]
+      },
+      "label": {
+        "role": "neutral",
+        "displayName": "Label Stock",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(26% 0.000 90)",
+          "oklch(37% 0.000 90)",
+          "oklch(48% 0.000 90)",
+          "oklch(59% 0.000 90)",
+          "oklch(70% 0.000 90)",
+          "oklch(82% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Price Ink",
+        "canonical": "#1a1c1d",
+        "tonalRamp": [
+          "oklch(15% 0.004 229)",
+          "oklch(26% 0.004 229)",
+          "oklch(37% 0.004 229)",
+          "oklch(48% 0.004 229)",
+          "oklch(59% 0.004 229)",
+          "oklch(70% 0.004 229)",
+          "oklch(82% 0.004 229)",
+          "oklch(95% 0.004 229)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Small Print",
+        "canonical": "#4a4e50",
+        "tonalRamp": [
+          "oklch(15% 0.006 229)",
+          "oklch(26% 0.006 229)",
+          "oklch(37% 0.006 229)",
+          "oklch(48% 0.006 229)",
+          "oklch(59% 0.006 229)",
+          "oklch(70% 0.006 229)",
+          "oklch(82% 0.006 229)",
+          "oklch(95% 0.006 229)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rail Grey",
+        "canonical": "#9a9e9c",
+        "tonalRamp": [
+          "oklch(15% 0.005 165)",
+          "oklch(26% 0.005 165)",
+          "oklch(37% 0.005 165)",
+          "oklch(48% 0.005 165)",
+          "oklch(59% 0.005 165)",
+          "oklch(70% 0.005 165)",
+          "oklch(82% 0.005 165)",
+          "oklch(95% 0.005 165)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "price-hero": {
+        "displayName": "Price Hero",
+        "purpose": "The price on the yellow answer label; 4rem on phones."
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "The price on every white label; 2.375rem on phones."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "The pre-search question only."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "MATPRIS on the rail, uppercase; PRIS in label yellow."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads: Cheapest near you, All results."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Product names; 1.1875rem on the answer label."
+      },
+      "unit-price": {
+        "displayName": "Unit Price",
+        "purpose": "Comparison price under each numeral; 1rem on the answer."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Intro copy, max 52ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Meta, store line, segments, toggles, counts (600-700)."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Uppercase Search and Use this address buttons only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hanging-label",
+        "value": "0 3px 6px rgb(0 0 0 / 0.12)",
+        "purpose": "Every white label at rest."
+      },
+      {
+        "name": "lifted-label",
+        "value": "0 8px 18px rgb(0 0 0 / 0.18)",
+        "purpose": "A label on hover or focus-within."
+      },
+      {
+        "name": "answer-label",
+        "value": "0 6px 14px rgb(0 0 0 / 0.16)",
+        "purpose": "The yellow answer label."
+      },
+      {
+        "name": "pin",
+        "value": "0 2px 4px rgb(0 0 0 / 0.3)",
+        "purpose": "Map pins."
+      },
+      {
+        "name": "pin-cheapest",
+        "value": "0 4px 10px rgb(0 0 0 / 0.35)",
+        "purpose": "The cheapest store's yellow pin."
+      },
+      {
+        "name": "tag",
+        "value": "0 2px 4px rgb(0 0 0 / 0.12)",
+        "purpose": "Suggestion tags at rest (0 4px 10px rgb(0 0 0 / 0.16) on hover)."
+      },
+      {
+        "name": "map-chip",
+        "value": "0 2px 6px rgb(0 0 0 / 0.18)",
+        "purpose": "The store-count chip over the map."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hang",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The one easing (--hang) for every transition."
+      },
+      {
+        "name": "hang-settle",
+        "value": "480ms hang; from translateY(-6px) rotate(-0.5deg), transform-origin top left",
+        "purpose": "Labels as they arrive. Disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "share-resize",
+        "value": "flex-grow 400ms hang",
+        "purpose": "Chain segments resizing as results stream in."
+      },
+      {
+        "name": "state",
+        "value": "200ms hang",
+        "purpose": "Label shadow lift, tag hover, pin dim and lift."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "900px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Search Button",
+      "kind": "button",
+      "refersTo": "button-search",
+      "description": "The rail's search field and its uppercase Search button, white stock on steel.",
+      "html": "<form class=\"ds-rail\"><input class=\"ds-search-input\" type=\"search\" placeholder=\"e.g. mjölk, kaffe, bananer\"><button class=\"ds-btn-search\">Search</button></form>",
+      "css": ".ds-rail { display: flex; gap: 3px; background: var(--steel, #26292b); padding: 13px 28px; border-bottom: 4px solid var(--steel-edge, #3a3e41); } .ds-search-input { font-family: Archivo, system-ui, sans-serif; flex: 1; height: 46px; border: 0; border-radius: 3px; padding: 0 16px; font-weight: 600; font-size: 1.0625rem; color: var(--ink, #1a1c1d); background: var(--label, #fff); } .ds-search-input::placeholder { color: #6a6e70; font-weight: 400; } .ds-btn-search { font-family: Archivo, system-ui, sans-serif; height: 46px; padding: 0 22px; border: 0; border-radius: 3px; background: var(--label, #fff); color: var(--ink, #1a1c1d); font-weight: 800; font-stretch: 80%; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; } .ds-btn-search:hover { background: var(--ground, #e6e8e4); } .ds-rail :focus-visible { outline: 3px solid #fff; outline-offset: 2px; }"
+    },
+    {
+      "name": "Sort Toggle",
+      "kind": "input",
+      "refersTo": "sort-toggle",
+      "description": "Joined two-option ranking control; the selected option fills steel.",
+      "html": "<div class=\"ds-sort\"><label class=\"ds-sort-on\"><input type=\"radio\" name=\"ds-s\" checked>Price per kg</label><label><input type=\"radio\" name=\"ds-s\">Item price</label></div>",
+      "css": ".ds-sort { display: flex; font-family: Archivo, system-ui, sans-serif; } .ds-sort label { position: relative; padding: 7px 12px; border: 1.5px solid var(--steel, #26292b); font-weight: 600; font-size: 0.8125rem; background: var(--label, #fff); color: var(--ink, #1a1c1d); cursor: pointer; } .ds-sort label + label { border-left: 0; } .ds-sort label:first-child { border-radius: 3px 0 0 3px; } .ds-sort label:last-child { border-radius: 0 3px 3px 0; } .ds-sort label:has(input:checked) { background: var(--steel, #26292b); color: #fff; } .ds-sort label:has(input:focus-visible) { outline: 3px solid var(--steel, #26292b); outline-offset: 2px; } .ds-sort input { position: absolute; opacity: 0; pointer-events: none; }"
+    },
+    {
+      "name": "Chain Share Rail",
+      "kind": "nav",
+      "refersTo": "chain-segment",
+      "description": "Share-proportional chain filter; segment width follows result count, chains without online prices get the hatched segment.",
+      "html": "<div class=\"ds-share\"><button class=\"ds-seg\" style=\"--chain:#e30613;flex-grow:35\" aria-pressed=\"true\"><b>Willys</b><span>35</span></button><button class=\"ds-seg\" style=\"--chain:#f07800;flex-grow:38\" aria-pressed=\"true\"><b>Hemköp</b><span>38</span></button><button class=\"ds-seg\" style=\"--chain:#0050aa;flex-grow:1\" aria-pressed=\"false\"><b>Lidl</b><span>1</span></button><span class=\"ds-seg ds-seg-none\"><b>ICA Coop</b><span>no online prices</span></span></div>",
+      "css": ".ds-share { display: flex; gap: 3px; font-family: Archivo, system-ui, sans-serif; } .ds-seg { --chain: var(--rule, #9a9e9c); flex: 1 1 0; min-width: 96px; height: 46px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 0; border-top: 5px solid var(--chain); border-radius: 0 0 2px 2px; background: var(--label, #fff); color: var(--ink, #1a1c1d); font: inherit; font-size: 0.8125rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; cursor: pointer; transition: flex-grow 400ms cubic-bezier(0.16, 1, 0.3, 1); } button.ds-seg:hover { background: #f4f5f3; } .ds-seg:focus-visible { outline: 3px solid var(--steel, #26292b); outline-offset: 2px; } .ds-seg[aria-pressed='false'] { background: transparent; box-shadow: inset 0 0 0 1.5px var(--rule, #9a9e9c); color: var(--ink-2, #4a4e50); text-decoration: line-through; } .ds-seg-none { flex: 0 0 auto; background: repeating-linear-gradient(135deg, #d6d9d5 0 6px, #ccd0cb 6px 12px); color: #3e4244; cursor: help; }"
+    },
+    {
+      "name": "Shelf Label",
+      "kind": "card",
+      "refersTo": "shelf-label",
+      "description": "A white result label hanging under its steel strip, price numeral on the right.",
+      "html": "<div class=\"ds-label\"><div><a class=\"ds-name\" href=\"#\">Originalet Mellanrost Bryggkaffe</a><p class=\"ds-meta\">Löfbergs · 450g</p><p class=\"ds-store\">Hemköp logo · Stockholm City · 0.2 km</p></div><div class=\"ds-price\"><span class=\"ds-sale\">Sale</span><span class=\"ds-num\">49<sup>95</sup></span><s>83.40 kr</s><p class=\"ds-unit\">111.00 kr/kg</p></div></div>",
+      "css": ".ds-label { font-family: Archivo, system-ui, sans-serif; position: relative; margin-top: 12px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 20px; background: var(--label, #fff); color: var(--ink, #1a1c1d); padding: 14px 18px 16px; border-radius: 0 0 3px 3px; box-shadow: 0 3px 6px rgb(0 0 0 / 0.12); transition: box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1); animation: ds-hang 480ms cubic-bezier(0.16, 1, 0.3, 1); transform-origin: top left; } .ds-label::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; border-radius: 2px 2px 0 0; background: linear-gradient(#61666a, var(--steel-edge, #3a3e41)); } .ds-label:hover, .ds-label:focus-within { box-shadow: 0 8px 18px rgb(0 0 0 / 0.18); } @keyframes ds-hang { from { transform: translateY(-6px) rotate(-0.5deg); } } @media (prefers-reduced-motion: reduce) { .ds-label { animation: none; } } .ds-label p { margin: 0; } .ds-name { color: inherit; font-weight: 700; font-size: 1rem; line-height: 1.25; text-decoration: none; } .ds-name:hover { text-decoration: underline; text-underline-offset: 3px; } .ds-name:focus-visible { outline: 3px solid var(--steel, #26292b); outline-offset: 2px; } .ds-meta { margin-top: 2px; font-size: 0.8125rem; color: var(--ink-2, #4a4e50); } .ds-store { margin-top: 8px; font-size: 0.8125rem; font-weight: 600; } .ds-price { display: flex; flex-direction: column; align-items: flex-end; white-space: nowrap; } .ds-num { font-weight: 900; font-stretch: 62%; font-size: 2.875rem; line-height: 0.78; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; } @supports (text-box: trim-both cap alphabetic) { .ds-num { line-height: 1; text-box: trim-both cap alphabetic; } } .ds-num sup { font-size: 0.46em; vertical-align: top; position: relative; top: 0.1em; margin-left: 0.05em; letter-spacing: 0; } .ds-unit { margin-top: 8px; font-size: 0.875rem; font-weight: 700; font-stretch: 85%; font-variant-numeric: tabular-nums; } .ds-price s { font-size: 0.8125rem; color: var(--offer-ink, #a30015); margin-top: 2px; } .ds-sale { font-size: 0.6875rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; background: var(--offer, #d4001a); padding: 2px 6px; border-radius: 2px; margin-bottom: 4px; }"
+    },
+    {
+      "name": "Answer Label",
+      "kind": "custom",
+      "refersTo": "answer-label",
+      "description": "The one yellow label: the cheapest answer with the hero price numeral.",
+      "html": "<div class=\"ds-answer\"><div><b class=\"ds-aname\">Originalet Mellanrost Bryggkaffe</b><p class=\"ds-ameta\">Löfbergs · 450g</p><p class=\"ds-astore\">Hemköp logo · Stockholm City · 0.2 km</p></div><div class=\"ds-aprice\"><span class=\"ds-anum\">49<sup>95</sup></span><p class=\"ds-aunit\">111.00 kr/kg</p></div></div>",
+      "css": ".ds-answer { font-family: Archivo, system-ui, sans-serif; position: relative; margin-top: 18px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 20px; background: var(--yellow, #ffd400); color: var(--ink, #1a1c1d); padding: 18px 22px 20px; border-radius: 0 0 3px 3px; box-shadow: 0 6px 14px rgb(0 0 0 / 0.16); animation: ds-ahang 480ms cubic-bezier(0.16, 1, 0.3, 1); transform-origin: top left; } .ds-answer::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; border-radius: 2px 2px 0 0; background: linear-gradient(#61666a, var(--steel-edge, #3a3e41)); } @keyframes ds-ahang { from { transform: translateY(-6px) rotate(-0.5deg); } } @media (prefers-reduced-motion: reduce) { .ds-answer { animation: none; } } .ds-answer p { margin: 0; } .ds-aname { font-size: 1.1875rem; font-weight: 700; line-height: 1.25; } .ds-ameta { margin-top: 2px; font-size: 0.8125rem; color: var(--yellow-ink, #4b4000); } .ds-astore { margin-top: 8px; font-size: 0.8125rem; font-weight: 600; } .ds-aprice { display: flex; flex-direction: column; align-items: flex-end; white-space: nowrap; } .ds-anum { font-weight: 900; font-stretch: 62%; font-size: clamp(4rem, 7vw, 6rem); line-height: 0.78; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; } @supports (text-box: trim-both cap alphabetic) { .ds-anum { line-height: 1; text-box: trim-both cap alphabetic; } } .ds-anum sup { font-size: 0.46em; vertical-align: top; position: relative; top: 0.1em; margin-left: 0.05em; letter-spacing: 0; } .ds-aunit { margin-top: 8px; font-size: 1rem; font-weight: 700; font-stretch: 85%; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Deal Tag",
+      "kind": "chip",
+      "refersTo": "deal-tag",
+      "description": "Offer-red multi-buy tag with the per-item price beside it.",
+      "html": "<div class=\"ds-deal\"><span class=\"ds-deal-tag\">2 for 89.90 kr</span><span>44.95 kr each · 99.89 kr/kg</span></div>",
+      "css": ".ds-deal { font-family: Archivo, system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 0.8125rem; font-variant-numeric: tabular-nums; color: var(--ink, #1a1c1d); } .ds-deal-tag { background: var(--offer, #d4001a); color: #fff; font-weight: 800; font-stretch: 85%; padding: 2px 7px; border-radius: 2px; }"
+    },
+    {
+      "name": "Suggestion Tag",
+      "kind": "chip",
+      "refersTo": "suggestion-tag",
+      "description": "Pre-search suggestion; a small white label under a steel-edge strip.",
+      "html": "<button class=\"ds-tag\">mjölk</button>",
+      "css": ".ds-tag { font-family: Archivo, system-ui, sans-serif; border: 0; border-top: 5px solid var(--steel-edge, #3a3e41); border-radius: 0 0 3px 3px; background: var(--label, #fff); color: var(--ink, #1a1c1d); padding: 8px 16px 9px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 2px 4px rgb(0 0 0 / 0.12); transition: box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1), transform 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-tag:hover { background: #f4f5f3; box-shadow: 0 4px 10px rgb(0 0 0 / 0.16); transform: translateY(1px); } .ds-tag:focus-visible { outline: 3px solid var(--steel, #26292b); outline-offset: 2px; } @media (prefers-reduced-motion: reduce) { .ds-tag { transition: none; } }"
+    },
+    {
+      "name": "Store Pins",
+      "kind": "custom",
+      "refersTo": "store-pin",
+      "description": "Map pins as miniature labels edged in the chain's colour; the cheapest is yellow with its price.",
+      "html": "<div class=\"ds-pins\"><div class=\"ds-pin\" style=\"--chain:#e30613\">Willys</div><div class=\"ds-pin ds-pin-hot\" style=\"--chain:#f07800\">Hemköp <b>49.95 kr</b></div><div class=\"ds-pin ds-pin-off\" style=\"--chain:#00aa46\">Coop</div></div>",
+      "css": ".ds-pins { display: flex; align-items: flex-end; gap: 16px; padding: 12px; background: #dfe4dc; font-family: Archivo, system-ui, sans-serif; } .ds-pin { position: relative; display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 6px; box-sizing: border-box; background: #fff; border: 2px solid var(--chain); border-radius: 3px; box-shadow: 0 2px 4px rgb(0 0 0 / 0.3); font-size: 0.6875rem; font-weight: 800; color: var(--chain); cursor: pointer; transform-origin: bottom center; transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1), transform 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-pin::after { content: ''; position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--chain); border-bottom: 0; } .ds-pin:hover { transform: scale(1.2); } .ds-pin-off { opacity: 0.75; transform: scale(0.85); } .ds-pin-hot { height: 36px; padding: 0 10px; background: var(--yellow, #ffd400); box-shadow: 0 4px 10px rgb(0 0 0 / 0.35); } .ds-pin b { font-weight: 900; font-stretch: 62%; font-size: 1.125rem; line-height: 1; color: var(--ink, #1a1c1d); white-space: nowrap; } @media (prefers-reduced-motion: reduce) { .ds-pin { transition: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Shelf Edge",
+    "overview": "Every result is a shelf-edge price label hanging from a steel shelf rail, ranked by the unit price shoppers read in the store. The page is the aisle: a charcoal steel rail across the top carries the wordmark, search and location, the ground is the cool grey of a fluorescent-lit store, and each product is a white label with its own thin steel strip above it. The cheapest answer is the one yellow label on the shelf, and the map repeats it: one yellow pin among white ones.\n\nThe system is dense and practical, built for scanning prices. Hierarchy comes from scale alone. The price numeral is the loudest thing on every label, set in condensed black Archivo with raised öre the way a printed shelf tag sets it. Everything else (product name, brand and size, store, distance) stays at normal width and modest size. Nothing is labelled twice: the chain logo names the chain, so the store name beside it drops the chain prefix.\n\nThe build replaced a green card list and a pill search bar; that world is gone. Each label keeps a small product image at its left edge so shoppers can recognise the pack.",
+    "keyCharacteristics": [
+      "Charcoal steel rail and steel strips on a cool grey ground; white label stock.",
+      "One yellow label per screen: the cheapest answer, echoed by its map pin.",
+      "Offer red only for deals, sale and errors.",
+      "Condensed black price numerals (62% width) with raised öre, trimmed to the figures.",
+      "Square 3px corners and short soft drop shadows under labels.",
+      "One motion: the \"hang\" settle as labels arrive."
+    ],
+    "rules": [
+      {
+        "name": "The One Yellow Label Rule",
+        "body": "Label yellow marks the cheapest answer: the answer label, the cheapest map pin, and the PRIS half of the wordmark. It is never a hover, focus or selection colour; state is shown in steel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Offer Red Rule",
+        "body": "Offer red means a deal, a sale or an error. It never decorates, never marks a chain, and never marks the cheapest result.",
+        "section": "colors"
+      },
+      {
+        "name": "The Shelf Tag Numeral Rule",
+        "body": "Prices are set in 62%-width, weight 900 Archivo with tabular lining figures. Öre is raised as a superscript at 0.46em, top-aligned. The numeral box is trimmed to the figures with `text-box: trim-both cap alphabetic` (line-height 0.78 fallback) so the unit price sits close beneath it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Width Carries Rank Rule",
+        "body": "Condensed width is reserved for prices, the wordmark, the display question and headlines. Product names and body copy stay at normal width.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Hang Rule",
+        "body": "Shadows are short, blurred and black at 12–35% opacity, always falling straight down. No hard offset shadows, no coloured glows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep label yellow for the cheapest answer, its map pin and the PRIS half of the wordmark.",
+      "Do show hover, focus, selection and pressed state in steel or with shadow, never in yellow.",
+      "Do keep offer red for deals, sale and errors.",
+      "Do set every price in 62%-width black Archivo with raised öre, trimmed with `text-box`.",
+      "Do drop the chain prefix from a store name when the chain logo sits beside it.",
+      "Do size chain filter segments by each chain's share of the results, and give chains without online prices the hatched segment.",
+      "Do limit pin dimming on hover to mouse pointers (`pointerType === 'mouse'`) and keyboard focus.",
+      "Do disable the hang settle and segment and tag transitions under `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "Don't let a product image grow past a small tile; the numeral stays the loudest thing on the label.",
+      "Don't use label yellow as a hover, focus or selection colour.",
+      "Don't use offer red for chain identity, decoration or the cheapest result.",
+      "Don't use chain colours anywhere except as a chain's identifying edge on its segment and pins.",
+      "Don't label anything twice.",
+      "Don't add motion beyond the hang settle and the small state transitions on segments, tags, labels and pins."
+    ]
+  }
+}

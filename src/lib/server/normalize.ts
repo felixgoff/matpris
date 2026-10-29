@@ -42,14 +42,45 @@ export function unitPriceFromSize(price: number, size: string | undefined) {
 	return s ? { unitPrice: Math.round((price / s.amount) * 100) / 100, unit: s.unit } : undefined;
 }
 
-const tokens = (s: string) => s.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+// Hyphens inside a word are dropped first, so "Yo-ghurt" reads as "yoghurt".
+const tokens = (s: string) =>
+	s
+		.toLowerCase()
+		.replace(/(\p{L})-(\p{L})/gu, '$1$2')
+		.split(/[^\p{L}\p{N}]+/u)
+		.filter(Boolean);
 
 // Swedish plural/definite endings, so "banan" matches "bananer" and "mjölk" "mjölken".
 const ENDINGS = ['', 'r', 'n', 's', 't', 'er', 'ar', 'or', 'en', 'et', 'na', 'erna', 'arna', 'orna'];
 
+// The reverse, for a query typed in plural or definite form: each ending with what may
+// replace it, so "bananer" finds "Banan", "gurkor" "Gurka" and "äpplen" "Äpple".
+const INFLECTIONS: [string, string[]][] = [
+	['orna', ['a']],
+	['arna', ['', 'e']],
+	['erna', ['']],
+	['or', ['a']],
+	['ar', ['', 'e']],
+	['er', ['', 'e']],
+	['en', ['e', '']],
+	['et', ['']],
+	['na', ['']],
+	['n', ['']]
+];
+
+/** Possible base forms of a query word: "bananer" → ["banan", "banane"]. */
+export function baseForms(word: string): string[] {
+	const forms = new Set<string>();
+	for (const [end, replacements] of INFLECTIONS)
+		if (word.endsWith(end) && word.length - end.length >= 3)
+			for (const r of replacements) forms.add(word.slice(0, -end.length) + r);
+	forms.delete(word);
+	return [...forms];
+}
+
 export type MatchQuality = 0 | 1 | 2;
 
-function wordQuality(q: string, word: string): MatchQuality {
+function formQuality(q: string, word: string): MatchQuality {
 	for (const end of ENDINGS) {
 		const form = q + end;
 		// Whole word, or the head of a compound ("mellanmjölk", "brieost").
@@ -57,6 +88,13 @@ function wordQuality(q: string, word: string): MatchQuality {
 	}
 	// Merely starts with it ("fanta" → "fantasty", "kaffe" → "kaffefilter"): weak.
 	return word.startsWith(q) ? 1 : 0;
+}
+
+function wordQuality(q: string, word: string): MatchQuality {
+	const direct = formQuality(q, word);
+	// Base forms only rescue words that don't match at all, so "banan" stays a weak
+	// match for "Banana" instead of reaching it through "bana" + "na".
+	return direct || (baseForms(q).some((b) => formQuality(b, word) === 2) ? 2 : 0);
 }
 
 /**
@@ -73,4 +111,35 @@ export function matchQuality(query: string, ...fields: (string | undefined)[]): 
 		if (worst === 0) break;
 	}
 	return worst;
+}
+
+// Words that name a kind of product. When a name has one the query didn't ask for,
+// the query word is usually a flavour or an ingredient: "Banan & Vanilj Yoghurt".
+// shortcut: a hand-kept list; replace it with the chains' category data if they expose it per product.
+const PRODUCT_TYPES = [
+	'yoghurt', 'kvarg', 'smoothie', 'juice', 'nektar', 'dryck', 'läsk', 'saft', 'glass', 'sorbet', 'gröt',
+	'välling', 'puré', 'bar', 'chips', 'snacks', 'sticks', 'puffs', 'kex', 'kaka', 'kakor', 'bulle', 'bullar',
+	'muffins', 'paj', 'tårta', 'godis', 'choklad', 'kola', 'sylt', 'marmelad', 'müsli', 'musli', 'granola',
+	'flingor', 'pulver', 'shake', 'whey', 'snus', 'sås', 'soppa', 'dressing', 'rulle', 'toffee', 'te',
+	'pudding', 'kräm', 'mjölk', 'ost', 'bröd', 'korv', 'pålägg', 'mousse', 'cream', 'split'
+];
+const isProductType = (word: string) =>
+	// Short words only as whole words, so "te" doesn't match every word ending in "te".
+	PRODUCT_TYPES.some((t) => word === t || (t.length >= 4 && word.endsWith(t)));
+const BABY_FOOD = /\bfrån \d+ (?:månader|mån|år)\b|\b\d+\s*-\s*\d+\s*år\b/i;
+
+/**
+ * 'best': the product is the thing searched for ("Banan Klass 1" for "banan").
+ * 'mention': the query only flavours or fills something else ("Banan & Vanilj Yoghurt", baby food).
+ * 'weak': the query only starts a longer word ("Fantasty" for "fanta").
+ */
+export type Relevance = 'best' | 'mention' | 'weak';
+
+export function relevance(query: string, name: string, brand?: string): Relevance | undefined {
+	const quality = matchQuality(query, name, brand);
+	if (!quality) return undefined;
+	if (quality === 1) return 'weak';
+	const asked = tokens(query);
+	const other = tokens(name).filter((w) => !asked.some((q) => wordQuality(q, w) === 2));
+	return other.some(isProductType) || BABY_FOOD.test(name) ? 'mention' : 'best';
 }

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Category standard</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#f4f5f3;color:#14181a;font-family:system-ui,-apple-system,sans-serif}
+header{height:68px;background:#fff;border-bottom:1px solid #e1e4e0;display:flex;align-items:center;gap:20px;padding:0 28px}
+.mark{font-weight:800;font-size:22px;color:#12804a}
+.q{flex:1;max-width:600px;height:42px;border:1px solid #cfd4d0;border-radius:21px;display:flex;align-items:center;padding:0 18px;font-size:16px}
+.btn{height:42px;padding:0 20px;border-radius:21px;background:#12804a;color:#fff;display:flex;align-items:center;font-weight:600}
+.loc{margin-left:auto;font-size:14px;color:#5b625e}
+.wrap{display:grid;grid-template-columns:620px 1fr;gap:20px;padding:20px 28px;height:832px}
+.chips{display:flex;gap:8px;margin-bottom:14px}
+.chips span{background:#fff;border:1px solid #dfe3df;border-radius:16px;padding:6px 12px;font-size:13px;font-weight:600}
+.best{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 8px #0000000f;border:2px solid #12804a;display:flex;gap:16px;align-items:center}
+.img{width:72px;height:72px;border-radius:10px;background:#eef1ee}
+.best .t{font-size:12px;font-weight:700;color:#12804a;text-transform:uppercase;letter-spacing:.05em}
+.best h2{font-size:18px;margin-top:4px}
+.best p,.card p{font-size:13px;color:#5b625e;margin-top:3px}
+.pr{margin-left:auto;text-align:right}
+.pr b{font-size:26px}
+.pr small{display:block;font-size:13px;color:#5b625e}
+.card{background:#fff;border-radius:12px;padding:12px;display:flex;gap:14px;align-items:center;margin-top:10px;box-shadow:0 1px 3px #0000000d}
+.card .img{width:56px;height:56px}
+.card h3{font-size:15px}
+.card .pr b{font-size:18px}
+.lh{display:flex;justify-content:space-between;margin:20px 0 4px;font-size:13px;color:#5b625e}
+.map{background:#e3e8e3;border-radius:14px;position:relative;overflow:hidden}
+.map .w{position:absolute;left:0;top:330px;width:800px;height:100px;background:#c4d9e6;transform:rotate(-6deg)}
+.map .pin{position:absolute;width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff}
+</style></head><body>
+<header><div class="mark">Matpris</div><div class="q">mjölk</div><div class="btn">Search</div><div class="loc">📍 Södermalm, Stockholm</div></header>
+<div class="wrap"><div>
+  <div class="chips"><span>Willys · 20</span><span>Hemköp · 33</span><span>Lidl · 1</span><span style="opacity:.5">ICA · no prices</span><span style="opacity:.5">Coop · no prices</span></div>
+  <div class="best"><div class="img"></div><div><div class="t">Cheapest near you</div><h2>Laktosfri Mellanmjölk 1,5%</h2><p>Garant · 1.5 l · Willys Mariahallen · 1.7 km</p></div><div class="pr"><b>15.90 kr</b><small>10.60 kr/l</small></div></div>
+  <div class="lh"><span>54 products for “mjölk”</span><span>Sort: Unit price ▾</span></div>
+  <div class="card"><div class="img"></div><div><h3>Mellanmjölk 1,5%</h3><p>Arla · Hemköp Götgatan · 0.9 km</p></div><div class="pr"><b>15.95 kr</b><small>10.63 kr/l</small></div></div>
+  <div class="card"><div class="img"></div><div><h3>Standardmjölk 3%</h3><p>Garant · Willys Hornstull · 2.1 km</p></div><div class="pr"><b>17.50 kr</b><small>11.67 kr/l</small></div></div>
+  <div class="card"><div class="img"></div><div><h3>Mjölk 3%</h3><p>Milbona · Lidl Ringvägen · 1.2 km</p></div><div class="pr"><b>12.90 kr</b><small>12.90 kr/l</small></div></div>
+  <div class="card"><div class="img"></div><div><h3>Ekologisk Mellanmjölk</h3><p>Arla · Hemköp Götgatan · 0.9 km</p></div><div class="pr"><b>21.95 kr</b><small>14.63 kr/l</small></div></div>
+</div>
+<div class="map"><div class="w"></div><div class="pin" style="left:300px;top:260px;background:#12804a"></div><div class="pin" style="left:500px;top:320px;background:#f07800"></div><div class="pin" style="left:260px;top:480px;background:#0050aa"></div></div>
+</div></body></html>

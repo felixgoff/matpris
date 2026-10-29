@@ -56,6 +56,10 @@ export interface ProductHit {
 	/** Comparison price ("jämförpris") in kr per unit. */
 	unitPrice?: number;
 	unit?: Unit;
+	/** `price` is per kilo: the product is sold by weight (loose bananas, tomatoes). */
+	perKg?: boolean;
+	/** Estimated price of one piece of a product sold by weight, from its average weight. */
+	approxEach?: number;
 	/** Regular price when `price` is a sale price. */
 	oldPrice?: number;
 	deal?: Deal;
@@ -68,8 +72,8 @@ export interface ProductHit {
 export interface ResultRow extends ProductHit {
 	/** Nearest store in the search circle where this price applies. */
 	store: NearbyStore;
-	/** 'weak' = the query only starts a longer word ("fanta" in "Fantasty"); hidden when strong matches exist. */
-	match: 'strong' | 'weak';
+	/** How well it answers the query; see `relevance` in server/normalize.ts. */
+	match: 'best' | 'mention' | 'weak';
 }
 
 export type ChainStatus = 'ok' | 'error' | 'throttled' | 'no-stores' | 'no-online-prices';

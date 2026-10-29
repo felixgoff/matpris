@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Test Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#fff;color:#141414;font-family:"Libre Franklin",sans-serif}
+.top{display:flex;align-items:center;gap:24px;padding:20px 32px;border-bottom:3px solid #141414}
+.mark{font-weight:900;font-size:26px;letter-spacing:-.02em}
+.q{flex:1;max-width:640px;height:46px;border:2px solid #141414;display:flex;align-items:center;padding:0 16px;font-size:18px}
+.btn{height:46px;padding:0 24px;background:#141414;color:#fff;display:flex;align-items:center;font-weight:800}
+.loc{margin-left:auto;font-size:14px;color:#555}
+.loc b{color:#141414}
+.wrap{display:grid;grid-template-columns:760px 1fr;height:821px}
+.left{padding:24px 32px;overflow:hidden}
+.verdict{position:relative;border:3px solid #141414;padding:20px 24px 20px 130px}
+.round{position:absolute;left:20px;top:18px;width:92px;height:92px;border-radius:50%;background:#e2231a;color:#fff;display:grid;place-items:center;text-align:center;font-weight:900;font-size:13px;line-height:1.05;text-transform:uppercase}
+.verdict h2{font-size:22px;font-weight:800}
+.verdict p{font-size:14px;color:#555;margin-top:4px}
+.big{position:absolute;right:24px;top:18px;text-align:right}
+.big b{font-size:52px;font-weight:900;letter-spacing:-.03em;font-feature-settings:"tnum"}
+.big div{font-size:14px;font-weight:600}
+.why{display:flex;gap:28px;margin-top:14px;font-size:13px}
+.why span b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#555}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin:26px 0 8px;display:flex;justify-content:space-between}
+h3 span{text-transform:none;letter-spacing:0;font-weight:400;color:#555}
+table{width:100%;border-collapse:collapse;font-size:14px;font-feature-settings:"tnum"}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid #141414;padding:6px 8px}
+th.s::after{content:" ▾"}
+td{padding:11px 8px;border-bottom:1px solid #e3e1db;vertical-align:middle}
+td.r,th.r{text-align:right}
+td.n{font-weight:900;font-size:18px;width:36px}
+td.p{font-weight:800;font-size:17px}
+.bar{height:8px;background:#e3e1db;width:120px}
+.bar i{display:block;height:8px;background:#141414}
+.chain{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.deal{font-size:12px;font-weight:700;color:#e2231a}
+.chips{display:flex;gap:8px;margin-top:18px;font-size:13px}
+.chips span{border:1.5px solid #141414;padding:5px 12px;font-weight:600}
+.chips .off{border-style:dashed;color:#777;border-color:#999}
+.map{background:#eceae4;position:relative;overflow:hidden;border-left:3px solid #141414}
+.map .w{position:absolute;background:#c9d8e2}
+.map .c{position:absolute;left:150px;top:150px;width:520px;height:520px;border:2px dashed #141414;border-radius:50%}
+.map .pin{position:absolute;width:22px;height:22px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 3px #0005}
+.map .win{position:absolute;left:300px;top:260px;background:#e2231a;color:#fff;font-weight:900;font-size:12px;padding:6px 10px}
+</style></head><body>
+<div class="top"><div class="mark">Matpris</div><div class="q">mjölk</div><div class="btn">Search</div><div class="loc">Testing stores near <b>Södermalm, Stockholm</b> · 2.5 km</div></div>
+<div class="wrap"><div class="left">
+  <div class="verdict">
+    <div class="round">Cheapest<br>near you</div>
+    <h2>Laktosfri Mellanmjölk 1,5%</h2>
+    <p>Garant · 1.5 l · Willys Stockholm Mariahallen, 1.7 km</p>
+    <div class="big"><b>15.90 kr</b><div>10.60 kr/l</div></div>
+    <div class="why"><span><b>Tested</b>54 products, 3 chains</span><span><b>Ranked by</b>Unit price, deals counted</span><span><b>Not tested</b>ICA, Coop (no online prices)</span></div>
+  </div>
+  <div class="chips"><span>Willys 20</span><span>Hemköp 33</span><span>Lidl 1</span><span class="off">ICA no prices</span><span class="off">Coop no prices</span></div>
+  <h3>All results <span>Sorted by unit price</span></h3>
+  <table>
+    <tr><th>#</th><th>Product</th><th>Store</th><th class="r">Price</th><th class="r s">kr/l</th><th>vs cheapest</th></tr>
+    <tr><td class="n">1</td><td>Laktosfri Mellanmjölk 1,5%<br><small>Garant · 1.5 l</small></td><td><i class="chain" style="background:#e30613"></i>Willys Mariahallen</td><td class="r p">15.90</td><td class="r">10.60</td><td><div class="bar"><i style="width:100%"></i></div></td></tr>
+    <tr><td class="n">2</td><td>Mellanmjölk 1,5%<br><span class="deal">2 for 30 kr</span></td><td><i class="chain" style="background:#f07800"></i>Hemköp Götgatan</td><td class="r p">15.95</td><td class="r">10.63</td><td><div class="bar"><i style="width:94%"></i></div></td></tr>
+    <tr><td class="n">3</td><td>Standardmjölk 3%<br><small>Garant · 1.5 l</small></td><td><i class="chain" style="background:#e30613"></i>Willys Hornstull</td><td class="r p">17.50</td><td class="r">11.67</td><td><div class="bar"><i style="width:82%"></i></div></td></tr>
+    <tr><td class="n">4</td><td>Mjölk 3%<br><small>Milbona · 1 l</small></td><td><i class="chain" style="background:#0050aa"></i>Lidl Ringvägen</td><td class="r p">12.90</td><td class="r">12.90</td><td><div class="bar"><i style="width:68%"></i></div></td></tr>
+    <tr><td class="n">5</td><td>Ekologisk Mellanmjölk<br><small>Arla · 1.5 l</small></td><td><i class="chain" style="background:#f07800"></i>Hemköp Götgatan</td><td class="r p">21.95</td><td class="r">14.63</td><td><div class="bar"><i style="width:56%"></i></div></td></tr>
+  </table>
+</div>
+<div class="map"><div class="w" style="left:0;top:340px;width:800px;height:110px;transform:rotate(-6deg)"></div><div class="c"></div>
+<div class="pin" style="left:330px;top:300px;background:#e30613"></div><div class="pin" style="left:520px;top:330px;background:#f07800"></div><div class="pin" style="left:260px;top:480px;background:#0050aa"></div><div class="pin" style="left:600px;top:500px;background:#e30613"></div>
+<div class="win">1 · Willys 15.90</div></div>
+</div></body></html>

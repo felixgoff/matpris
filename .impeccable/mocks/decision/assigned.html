@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Shelf Edge</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#e6e8e4;color:#1a1c1d;font-family:Archivo,sans-serif;font-variation-settings:"wdth" 100}
+.rail{height:72px;background:#26292b;display:flex;align-items:center;gap:20px;padding:0 28px;border-bottom:4px solid #3a3e41}
+.mark{color:#fff;font-weight:900;font-size:28px;font-variation-settings:"wdth" 70;letter-spacing:-.01em}
+.mark i{font-style:normal;color:#ffd400}
+.q{flex:1;max-width:620px;height:44px;background:#fff;border-radius:3px;display:flex;align-items:center;padding:0 16px;font-size:18px;font-weight:600}
+.btn{height:44px;padding:0 22px;background:#fff;color:#1a1c1d;border-radius:3px;display:flex;align-items:center;font-weight:800;font-size:15px;font-variation-settings:"wdth" 80;text-transform:uppercase;letter-spacing:.04em}
+.loc{margin-left:auto;color:#c9ccca;font-size:14px;display:flex;gap:14px;align-items:center}
+.loc b{color:#fff;font-weight:700}
+.loc u{color:#fff;text-underline-offset:3px}
+.wrap{display:grid;grid-template-columns:640px 1fr;height:824px}
+.left{padding:22px 28px;overflow:hidden}
+.share{display:flex;height:34px;border-radius:3px;overflow:hidden;font-size:12px;font-weight:700;font-variation-settings:"wdth" 75;text-transform:uppercase;letter-spacing:.05em}
+.share span{display:flex;align-items:center;padding:0 10px;color:#fff;gap:6px}
+.share .off{background:repeating-linear-gradient(135deg,#d3d6d2 0 6px,#c8cbc7 6px 12px);color:#4a4e50}
+.sub{display:flex;justify-content:space-between;margin:10px 0 18px;font-size:13px;color:#4a4e50}
+.shelf{height:12px;background:linear-gradient(#5c6164,#3a3e41);border-radius:2px}
+.label{background:#fff;display:grid;grid-template-columns:1fr auto;gap:8px 24px;padding:14px 18px 16px;border-radius:0 0 3px 3px;box-shadow:0 3px 6px #0002}
+.label.hot{background:#ffd400;padding:18px 22px 20px}
+.name{font-size:17px;font-weight:700;line-height:1.2}
+.hot .name{font-size:20px}
+.meta{font-size:13px;color:#4a4e50;margin-top:4px}
+.hot .meta{color:#4b4000}
+.store{font-size:13px;margin-top:10px;font-weight:600}
+.price{grid-row:span 3;text-align:right;align-self:center}
+.num{font-weight:900;font-variation-settings:"wdth" 62;font-size:58px;line-height:.85;letter-spacing:-.02em;font-feature-settings:"tnum"}
+.num sup{font-size:.48em;vertical-align:.95em;margin-left:2px}
+.hot .num{font-size:96px}
+.jmf{font-size:13px;font-weight:700;margin-top:6px;font-variation-settings:"wdth" 80}
+.jmf small{font-weight:500;color:#4a4e50}
+.hot .jmf{font-size:16px}
+.tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-variation-settings:"wdth" 75;margin-bottom:6px}
+.deal{display:inline-block;margin-top:10px;background:#d4001a;color:#fff;font-weight:800;font-size:13px;padding:3px 8px;border-radius:2px}
+.row{margin-top:14px}
+.row .num{font-size:44px}
+.lh{display:flex;justify-content:space-between;align-items:center;margin:22px 0 4px;font-size:13px;color:#4a4e50}
+.lh b{color:#1a1c1d}
+.seg{display:flex;border:1px solid #9a9e9c;border-radius:3px;overflow:hidden}
+.seg span{padding:5px 10px;font-weight:600}
+.seg .on{background:#26292b;color:#fff}
+.map{position:relative;background:#dfe4dc;overflow:hidden;border-left:4px solid #3a3e41}
+.water{position:absolute;background:#b9d3e3}
+.park{position:absolute;background:#cfdcc4;border-radius:40% 55% 45% 50%}
+.road{position:absolute;background:#fff;height:6px;transform-origin:left}
+.circle{position:absolute;left:180px;top:120px;width:560px;height:560px;border:2px dashed #26292b;border-radius:50%}
+.pin{position:absolute;background:#fff;border:2px solid #555;border-radius:3px;font-size:11px;font-weight:800;padding:3px 6px;font-variation-settings:"wdth" 75;box-shadow:0 2px 4px #0003;opacity:.45}
+.pin.hot{opacity:1;background:#ffd400;border-color:#26292b;font-size:14px;padding:6px 10px}
+.you{position:absolute;left:452px;top:392px;width:16px;height:16px;border-radius:50%;background:#26292b;box-shadow:0 0 0 5px #26292b33}
+.legend{position:absolute;left:20px;bottom:20px;background:#fff;padding:10px 14px;font-size:13px;border-radius:3px;box-shadow:0 2px 6px #0002}
+</style></head><body>
+<div class="rail">
+  <div class="mark">MAT<i>PRIS</i></div>
+  <div class="q">mjölk</div>
+  <div class="btn">Search</div>
+  <div class="loc"><span>Near <b>Södermalm, Stockholm</b></span><u>Use my location</u><u>Change address</u></div>
+</div>
+<div class="wrap">
+  <div class="left">
+    <div class="share">
+      <span style="background:#e30613;flex:20">Willys · 20</span>
+      <span style="background:#f07800;color:#1a1c1d;flex:33">Hemköp · 33</span>
+      <span style="background:#0050aa;flex:4">Lidl · 1</span>
+      <span class="off" style="flex:14">ICA · Coop — no online prices</span>
+    </div>
+    <div class="sub"><span>54 products for “mjölk” · 24 stores within 2.5 km</span><span>Tap a chain to hide it</span></div>
+
+    <div class="shelf"></div>
+    <div class="label hot">
+      <div><div class="tag">Cheapest near you</div><div class="name">Laktosfri Mellanmjölk Längre Hållbarhet 1,5%</div><div class="meta">Garant · 1.5 l</div></div>
+      <div class="price"><div class="num">15<sup>90</sup></div><div class="jmf">10.60 kr/l <small>unit price</small></div></div>
+      <div class="store">Willys Stockholm Mariahallen · 1.7 km</div>
+    </div>
+
+    <div class="lh"><span><b>All results</b> · ranked by unit price</span><span class="seg"><span class="on">kr/l</span><span>Price</span></span></div>
+
+    <div class="row"><div class="shelf"></div><div class="label">
+      <div><div class="name">Mellanmjölk Längre Hållbarhet 1,5%</div><div class="meta">Arla · 1.5 l</div><span class="deal">2 for 30 kr</span></div>
+      <div class="price"><div class="num">15<sup>95</sup></div><div class="jmf">10.00 kr/l <small>with deal</small></div></div>
+      <div class="store">Hemköp Götgatan · 0.9 km</div></div></div>
+
+    <div class="row"><div class="shelf"></div><div class="label">
+      <div><div class="name">Standardmjölk 3%</div><div class="meta">Garant · 1.5 l</div></div>
+      <div class="price"><div class="num">17<sup>50</sup></div><div class="jmf">11.67 kr/l</div></div>
+      <div class="store">Willys Hornstull · 2.1 km</div></div></div>
+  </div>
+  <div class="map">
+    <div class="water" style="left:0;top:330px;width:900px;height:110px;transform:rotate(-6deg)"></div>
+    <div class="water" style="left:520px;top:0;width:90px;height:340px;transform:rotate(12deg)"></div>
+    <div class="park" style="left:90px;top:520px;width:220px;height:160px"></div>
+    <div class="park" style="left:600px;top:560px;width:180px;height:120px"></div>
+    <div class="road" style="left:0;top:250px;width:900px;transform:rotate(4deg)"></div>
+    <div class="road" style="left:300px;top:0;width:900px;transform:rotate(80deg)"></div>
+    <div class="road" style="left:0;top:620px;width:900px;transform:rotate(-3deg)"></div>
+    <div class="circle"></div>
+    <div class="you"></div>
+    <div class="pin hot" style="left:300px;top:250px">WILLYS · 15.90</div>
+    <div class="pin" style="left:520px;top:300px;border-color:#f07800">HEMKÖP</div>
+    <div class="pin" style="left:610px;top:480px;border-color:#e30613">WILLYS</div>
+    <div class="pin" style="left:260px;top:470px;border-color:#0050aa">LIDL</div>
+    <div class="pin" style="left:420px;top:190px;border-color:#e3000b">ICA</div>
+    <div class="pin" style="left:680px;top:240px;border-color:#00aa46">COOP</div>
+    <div class="legend">24 stores within 2.5 km</div>
+  </div>
+</div>
+</body></html>
