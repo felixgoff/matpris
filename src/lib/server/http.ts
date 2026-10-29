@@ -26,6 +26,8 @@ export interface FetchOptions {
 	intervalMs: number;
 	maxWaitMs?: number;
 	timeoutMs?: number;
+	/** Extra headers (e.g. a cookie jar a session refresher maintains). */
+	headers?: Record<string, string>;
 }
 
 export async function fetchJson<T>(url: string, opts: FetchOptions): Promise<T> {
@@ -33,7 +35,7 @@ export async function fetchJson<T>(url: string, opts: FetchOptions): Promise<T> 
 	await takeSlot(host, opts.intervalMs, opts.maxWaitMs ?? 8000);
 	const res = await fetch(url, {
 		// Not 'application/json': Lidl's search answers 401 to that (it serves its own media type).
-		headers: { 'user-agent': USER_AGENT, accept: '*/*' },
+		headers: { 'user-agent': USER_AGENT, accept: '*/*', ...opts.headers },
 		signal: AbortSignal.timeout(opts.timeoutMs ?? 8000)
 	});
 	if (!res.ok) throw new Error(`${host} answered ${res.status}`);

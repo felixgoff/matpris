@@ -9,7 +9,7 @@ export const CHAINS: Record<ChainId, { name: string; color: string; logo: string
 	hemkop: { name: 'Hemköp', color: '#f07800', logo: '/logos/hemkop.svg', online: true },
 	lidl: { name: 'Lidl', color: '#0050aa', logo: '/logos/lidl.svg', online: true },
 	citygross: { name: 'City Gross', color: '#0171b9', logo: '/logos/citygross.svg', online: true },
-	ica: { name: 'ICA', color: '#e3000b', logo: '/logos/ica.svg', online: false },
+	ica: { name: 'ICA', color: '#e3000b', logo: '/logos/ica.svg', online: true },
 	coop: { name: 'Coop', color: '#00aa46', logo: '/logos/coop.svg', online: true }
 };
 

@@ -8,6 +8,6 @@ import type { ChainAdapter } from './types';
 
 // To add a chain: implement ChainAdapter in its own file and register it here
 // (and set online: true in CHAINS, src/lib/types.ts).
-// ICA searches the locally assembled price index data/ica-catalogue.json (see README)
-// but is offline (CHAINS.ica.online) until that index has real crawled content.
+// ICA searches the shop's own API server-side with a WAF session cookie file
+// (scripts/ica-warm.mjs mints it; see ica.ts).
 export const adapters: Partial<Record<ChainId, ChainAdapter>> = { willys, hemkop, lidl, citygross, coop, ica };
