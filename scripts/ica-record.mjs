@@ -26,6 +26,9 @@ const ctx = await chromium.launchPersistentContext(new URL('./.ica-profile/', im
 });
 const page = ctx.pages()[0] ?? (await ctx.newPage());
 log('recording — browse the shop by hand; closing the window ends the recording');
+// Go to the store (the profile's cookies/consent carry over between runs).
+await page.goto(`${BASE}/stores/${accountId}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+log(`opened ${BASE}/stores/${accountId}`);
 
 page.on('framenavigated', async (f) => {
 	if (f !== page.mainFrame()) return;
