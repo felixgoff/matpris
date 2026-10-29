@@ -1,23 +1,29 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import StoreMap from '../lib/components/StoreMap.svelte';
+	import { km, kr } from '../lib/format';
 	import { distanceKm } from '../lib/geo';
 	import {
 		CHAINS,
 		type ChainId,
 		type ChainStatus,
+		type Deal,
 		type NearbyStore,
 		type ResultRow,
-		type SearchEvent
+		type SearchEvent,
+		type Unit
 	} from '../lib/types';
 
 	const chainIds = Object.keys(CHAINS) as ChainId[];
-	const kr = (n: number) => n.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+	const pricedChains = chainIds.filter((c) => CHAINS[c].online);
+	const mapOnlyChains = chainIds.filter((c) => !CHAINS[c].online);
+	const unitLabel: Record<Unit, string> = { kg: 'kg', l: 'l', st: 'pc' };
+	const perUnit = (n: number, unit?: Unit) => (unit ? `${kr(n)}/${unitLabel[unit]}` : kr(n));
 
 	let query = $state('');
 	let address = $state('');
 	// Starts in Stockholm; the map moves it to the device location once MapKit reports one.
-	let location = $state({ lat: 59.3326, lng: 18.0649, label: 'Stockholm (standard)', device: false });
+	let location = $state({ lat: 59.3326, lng: 18.0649, label: 'Stockholm (default)', device: false });
 	/** Follow device location updates until the user picks an address. */
 	let followDevice = true;
 	let mapRef = $state<ReturnType<typeof StoreMap>>();
@@ -32,6 +38,8 @@
 	let searched = $state('');
 
 	let sort = $state<'unit' | 'price'>('unit');
+	/** Rank multi-buy deals ("5 for 55 kr") by their deal price. */
+	let countDeals = $state(true);
 	let hidden = $state<Set<ChainId>>(new Set());
 
 	let controller: AbortController | undefined;
@@ -40,42 +48,51 @@
 	// prefix with it ("fanta" vs "Fantasty" bouillon).
 	const relevant = $derived(rows.some((r) => r.match === 'strong') ? rows.filter((r) => r.match === 'strong') : rows);
 
-	// Compare unit prices only within the unit most results use (kr/kg vs kr/l vs kr/st).
+	// Compare unit prices only within the unit most results use (kr/kg vs kr/l vs kr/pc).
 	const mainUnit = $derived.by(() => {
-		const counts = new Map<string, number>();
+		const counts = new Map<Unit, number>();
 		for (const r of relevant) if (r.unit) counts.set(r.unit, (counts.get(r.unit) ?? 0) + 1);
 		return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
 	});
+
+	/** Whether the ranking uses this row's multi-buy deal rather than its single-item price. */
+	function usesDeal(r: ResultRow): r is ResultRow & { deal: Deal } {
+		if (!countDeals || !r.deal) return false;
+		if (sort === 'price') return true;
+		return r.deal.unitPrice !== undefined && (r.unitPrice === undefined || r.deal.unitPrice < r.unitPrice);
+	}
+	const rankUnitPrice = (r: ResultRow) => (usesDeal(r) ? r.deal.unitPrice : r.unitPrice);
+	const rankPrice = (r: ResultRow) => (usesDeal(r) ? r.deal.each : r.price);
 
 	const visible = $derived(
 		relevant
 			.filter((r) => !hidden.has(r.chain))
 			.toSorted((a, b) => {
 				if (sort === 'unit') {
-					const ua = a.unit === mainUnit ? (a.unitPrice ?? Infinity) : Infinity;
-					const ub = b.unit === mainUnit ? (b.unitPrice ?? Infinity) : Infinity;
+					const ua = a.unit === mainUnit ? (rankUnitPrice(a) ?? Infinity) : Infinity;
+					const ub = b.unit === mainUnit ? (rankUnitPrice(b) ?? Infinity) : Infinity;
 					if (ua !== ub) return ua - ub;
 				}
-				return a.price - b.price;
+				return rankPrice(a) - rankPrice(b);
 			})
 	);
 
 	const cheapest = $derived(
-		visible.find((r) => sort === 'price' || (r.unit === mainUnit && r.unitPrice !== undefined)) ?? visible[0]
+		visible.find((r) => sort === 'price' || (r.unit === mainUnit && rankUnitPrice(r) !== undefined)) ?? visible[0]
 	);
 
 	const cheapestPerChain = $derived(
-		chainIds
-			.map((c) => visible.find((r) => r.chain === c))
-			.filter((r): r is ResultRow => !!r)
+		pricedChains.map((c) => visible.find((r) => r.chain === c)).filter((r): r is ResultRow => !!r)
 	);
+
+	const storeCount = (c: ChainId) => area?.stores.filter((s) => s.chain === c).length ?? 0;
 
 	function onLocate(p: { lat: number; lng: number }) {
 		locating = false;
 		if (!followDevice) return;
 		// MapKit reports small GPS jitter continuously; only move for real changes.
 		if (location.device && distanceKm(location, p) < 0.3) return;
-		location = { ...p, label: 'Din position', device: true };
+		location = { ...p, label: 'Your location', device: true };
 		locationError = '';
 		rerun();
 	}
@@ -83,7 +100,7 @@
 	function onLocateError(message: string) {
 		locating = false;
 		if (followDevice && !location.device)
-			locationError = `Kunde inte hämta din position (${message}). Visar ${location.label}.`;
+			locationError = `Couldn't get your location (${message}). Showing ${location.label}.`;
 	}
 
 	function useMyPosition() {
@@ -181,46 +198,59 @@
 	}
 
 	const statusText: Record<ChainStatus | 'loading', string> = {
-		loading: 'hämtar…',
+		loading: 'loading…',
 		ok: '',
-		error: 'otillgänglig',
-		throttled: 'upptagen, försök igen om en stund',
-		'no-stores': 'ingen butik i närheten'
+		error: 'unavailable',
+		throttled: 'busy, try again shortly',
+		'no-stores': 'no store nearby',
+		'no-online-prices': 'no online prices'
 	};
 
 	onMount(loadArea);
 </script>
 
+{#snippet dealInfo(d: Deal, unit: Unit | undefined)}
+	<div class="deal">
+		<b>Deal: {d.quantity} for {kr(d.total)}</b>
+		· {kr(d.each)} each{d.unitPrice !== undefined ? ` · ${perUnit(d.unitPrice, unit)}` : ''}
+		<small>
+			Buy {d.quantity}{d.mixAndMatch ? ' · mix & match' : ''}{d.plusDeposit ? ' · + deposit' : ''}{d.limit
+				? ` · max ${d.limit} per customer`
+				: ''}
+		</small>
+	</div>
+{/snippet}
+
 <svelte:head>
-	<title>Matpris – jämför matpriser nära dig</title>
+	<title>Matpris – compare grocery prices near you</title>
 </svelte:head>
 
 <main class="layout">
 	<div class="top">
 		<header>
 			<h1>Matpris</h1>
-			<p class="tag">Sök en vara och se priset hos Willys, Hemköp och Lidl i närheten.</p>
+			<p class="tag">Search for a product and compare prices at Willys, Hemköp and Lidl near you.</p>
 		</header>
 
 		<section class="controls">
 			<form class="search" onsubmit={runSearch}>
 				<input
 					type="search"
-					placeholder="Sök vara, t.ex. mjölk, kaffe, bananer…"
+					placeholder="Search for a product, e.g. mjölk, kaffe, bananer…"
 					bind:value={query}
-					aria-label="Sök vara"
+					aria-label="Search for a product"
 				/>
 				<button type="submit" disabled={searching || query.trim().length < 2}>
-					{searching ? 'Söker…' : 'Sök'}
+					{searching ? 'Searching…' : 'Search'}
 				</button>
 			</form>
 
 			<div class="location">
 				<span class="pin">📍 {location.label}</span>
-				<button class="link" onclick={useMyPosition} disabled={locating}>Använd min position</button>
+				<button class="link" onclick={useMyPosition} disabled={locating}>Use my location</button>
 				<form onsubmit={lookupAddress}>
-					<input placeholder="…eller ange adress/ort" bind:value={address} aria-label="Adress" />
-					<button type="submit" disabled={locating}>Byt</button>
+					<input placeholder="…or enter an address or town" bind:value={address} aria-label="Address" />
+					<button type="submit" disabled={locating}>Change</button>
 				</form>
 			</div>
 			{#if locationError}<p class="error">{locationError}</p>{/if}
@@ -230,27 +260,31 @@
 	<section class="results">
 		{#if searched}
 			<div class="chips">
-				{#each chainIds as c (c)}
+				{#each pricedChains as c (c)}
 					{@const s = status[c]}
 					{@const n = relevant.filter((r) => r.chain === c).length}
-					<button
-						class="chip"
-						class:off={hidden.has(c)}
-						onclick={() => toggle(c)}
-						title="Visa/dölj {CHAINS[c].name}"
-					>
+					<button class="chip" class:off={hidden.has(c)} onclick={() => toggle(c)} title="Show/hide {CHAINS[c].name}">
 						<img class="logo" src={CHAINS[c].logo} alt={CHAINS[c].name} />
-						<small>{s?.status === 'ok' ? `${n} träffar` : statusText[s?.status ?? 'loading']}</small>
+						<small>{s?.status === 'ok' ? `${n} ${n === 1 ? 'result' : 'results'}` : statusText[s?.status ?? 'loading']}</small>
 					</button>
 				{/each}
-				<span class="chip muted" title="Stöds inte ännu – se README">ICA, Coop: ej med</span>
+				{#each mapOnlyChains as c (c)}
+					<span
+						class="chip static"
+						title="{CHAINS[c].name} doesn't publish prices openly, so only its stores are shown on the map"
+					>
+						<img class="logo {c}" src={CHAINS[c].logo} alt={CHAINS[c].name} />
+						<small>{storeCount(c) ? `${storeCount(c)} stores · ` : ''}no online prices</small>
+					</span>
+				{/each}
 			</div>
 
 			{#if searchError}<p class="error">{searchError}</p>{/if}
 
 			{#if cheapest}
+				{@const deal = usesDeal(cheapest) ? cheapest.deal : undefined}
 				<div class="cheapest">
-					<div class="label">Billigast nära dig</div>
+					<div class="label">Cheapest near you</div>
 					<div class="best">
 						{#if cheapest.image}<img src={cheapest.image} alt="" />{/if}
 						<div>
@@ -259,21 +293,30 @@
 							<div class="store">
 								<img class="logo" src={CHAINS[cheapest.chain].logo} alt={CHAINS[cheapest.chain].name} />
 								<b>{cheapest.store.name}</b>
-								· {cheapest.store.distanceKm.toLocaleString('sv-SE', { maximumFractionDigits: 1 })} km
+								· {km(cheapest.store.distanceKm)}
 							</div>
 						</div>
 						<div class="price big">
-							{kr(cheapest.price)} kr
-							{#if cheapest.unitPrice}<small>{kr(cheapest.unitPrice)} kr/{cheapest.unit}</small>{/if}
+							{#if deal}
+								{kr(deal.each)}
+								<small class="when">each when you buy {deal.quantity}</small>
+								{#if deal.unitPrice !== undefined}<small>{perUnit(deal.unitPrice, cheapest.unit)}</small>{/if}
+							{:else}
+								{kr(cheapest.price)}
+								{#if cheapest.unitPrice !== undefined}<small>{perUnit(cheapest.unitPrice, cheapest.unit)}</small>{/if}
+							{/if}
 						</div>
 					</div>
+					{#if deal}{@render dealInfo(deal, cheapest.unit)}{/if}
 					{#if cheapestPerChain.length > 1}
 						<ul class="per-chain">
 							{#each cheapestPerChain as r (r.chain)}
 								<li>
 									<span class="pc-logo"><img class="logo" src={CHAINS[r.chain].logo} alt={CHAINS[r.chain].name} /></span>
 									<span class="pc-name">{r.name}</span>
-									<b>{kr(r.price)} kr</b>
+									<b>
+										{kr(rankPrice(r))}{#if usesDeal(r)}<small> each ×{r.deal.quantity}</small>{/if}
+									</b>
 								</li>
 							{/each}
 						</ul>
@@ -282,12 +325,16 @@
 			{/if}
 
 			<div class="list-head">
-				<span>{visible.length} varor för ”{searched}”</span>
+				<span>{visible.length} products for “{searched}”</span>
+				<label class="check">
+					<input type="checkbox" bind:checked={countDeals} />
+					Count multi-buy deals
+				</label>
 				<label>
-					Sortera
+					Sort by
 					<select bind:value={sort}>
-						<option value="unit">Jämförpris{mainUnit ? ` (kr/${mainUnit})` : ''}</option>
-						<option value="price">Pris</option>
+						<option value="unit">Unit price{mainUnit ? ` (kr/${unitLabel[mainUnit]})` : ''}</option>
+						<option value="price">Price</option>
 					</select>
 				</label>
 			</div>
@@ -301,24 +348,27 @@
 							<div class="meta">{[r.brand, r.size].filter(Boolean).join(' · ')}</div>
 							<div class="store">
 								<img class="logo" src={CHAINS[r.chain].logo} alt={CHAINS[r.chain].name} />
-								{r.store.name} · {r.store.distanceKm.toLocaleString('sv-SE', { maximumFractionDigits: 1 })} km
+								{r.store.name} · {km(r.store.distanceKm)}
 							</div>
-							{#if r.promo}<div class="promo">{r.promo}</div>{/if}
+							{#if r.deal}{@render dealInfo(r.deal, r.unit)}{/if}
 						</div>
 						<div class="price">
-							{kr(r.price)} kr
+							{#if r.oldPrice}<span class="sale">Sale</span>{/if}
+							{kr(r.price)}
 							{#if r.oldPrice}<s>{kr(r.oldPrice)}</s>{/if}
-							{#if r.unitPrice}<small>{kr(r.unitPrice)} kr/{r.unit}</small>{/if}
+							{#if r.unitPrice !== undefined}<small>{perUnit(r.unitPrice, r.unit)}</small>{/if}
 						</div>
 					</li>
 				{:else}
-					{#if !searching}<li class="empty">Inga träffar. Prova ett annat ord.</li>{/if}
+					{#if !searching}<li class="empty">No results. Try another word.</li>{/if}
 				{/each}
 			</ul>
 		{:else}
 			<div class="intro">
-				<p>Skriv en vara ovan. Vi letar i butikerna inom cirkeln på kartan – den växer automatiskt tills den
-					innehåller tillräckligt många butiker.</p>
+				<p>
+					Type a product above. We search the stores inside the circle on the map – it grows automatically until it
+					contains enough stores. ICA and Coop don't publish their prices openly, so only their stores are shown.
+				</p>
 			</div>
 		{/if}
 	</section>
@@ -335,15 +385,13 @@
 			highlight={cheapest?.store.id}
 		/>
 		{#if area}
-			<p class="area">
-				{area.stores.length} butiker inom {area.radiusKm.toLocaleString('sv-SE')} km
-			</p>
+			<p class="area">{area.stores.length} stores within {km(area.radiusKm)}</p>
 		{/if}
 	</aside>
 
 	<footer>
-		Priser hämtas direkt från kedjornas webbplatser och kan skilja sig från priset i butik. Willys, Hemköp och
-		Lidl har samma pris i hela landet på nätet; butiken som visas är den närmaste.
+		Prices come straight from the chains' websites and may differ from the price in store. Willys, Hemköp and Lidl
+		use one online price nationwide; the store shown is the nearest one. ICA and Coop don't publish prices openly.
 	</footer>
 </main>
 
@@ -504,12 +552,14 @@
 	.chip.off {
 		opacity: 0.45;
 	}
-	.chip.muted {
-		color: #888;
+	.chip.static {
 		border-style: dashed;
-		font-size: 0.85rem;
-		padding: 6px 12px;
 		border-radius: 10px;
+		cursor: default;
+		background: #fafafa;
+	}
+	.chip .logo.ica {
+		height: 14px;
 	}
 
 	.cheapest {
@@ -633,14 +683,47 @@
 	.store .logo {
 		margin-right: 4px;
 	}
-	.promo {
-		display: inline-block;
-		margin-top: 4px;
+	.deal {
+		margin-top: 6px;
 		background: #fff3c4;
+		color: #5c4400;
+		font-size: 0.85rem;
+		padding: 4px 8px;
+		border-radius: 6px;
+		width: fit-content;
+	}
+	.deal small {
+		display: block;
+		font-size: 0.78rem;
 		color: #7a5b00;
-		font-size: 0.8rem;
-		padding: 2px 6px;
+	}
+	.cheapest .deal {
+		margin-top: 10px;
+	}
+	.sale {
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #fff;
+		background: #b42318;
+		padding: 1px 6px;
 		border-radius: 4px;
+		margin-bottom: 2px;
+	}
+	.price small.when {
+		color: #1a7f4b;
+		font-weight: 600;
+	}
+	.per-chain small {
+		font-weight: 400;
+		color: #555;
+		margin-left: 3px;
+	}
+	.check {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-left: auto;
 	}
 	.price {
 		text-align: right;

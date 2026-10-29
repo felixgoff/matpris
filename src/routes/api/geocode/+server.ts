@@ -17,6 +17,6 @@ export const GET: RequestHandler = async ({ url }) => {
 		);
 		return res[0] ? { lat: Number(res[0].lat), lng: Number(res[0].lon), label: res[0].display_name } : null;
 	});
-	if (!place) error(404, 'Hittade inte adressen');
+	if (!place) error(404, 'Address not found');
 	return json(place);
 };

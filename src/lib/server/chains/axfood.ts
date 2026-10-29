@@ -12,12 +12,16 @@ import type { ChainAdapter } from './types';
 
 interface AxfoodPromotion {
 	qualifyingCount: number | null;
-	conditionLabel: string | null;
 	rewardLabel: string | null;
 	price: { value: number } | null;
+	/** Comparison price at the promotion price, e.g. "7,33 kr". */
+	comparePrice: string | null;
+	promotionType: string | null;
+	/** e.g. "Max 5 köp" */
+	redeemLimitLabel: string | null;
 }
 
-interface AxfoodProduct {
+export interface AxfoodProduct {
 	code: string;
 	name: string;
 	manufacturer: string | null;
@@ -39,34 +43,45 @@ interface AxfoodStore {
 
 const CRAWL_DELAY_MS = 10_000;
 
-function toHit(chain: ChainId, base: string, p: AxfoodProduct): ProductHit {
+export function toHit(chain: ChainId, base: string, p: AxfoodProduct): ProductHit {
 	const promo = p.potentialPromotions[0];
-	const singleItemDeal = promo?.qualifyingCount === 1 && promo.price && promo.price.value < p.priceValue;
-	const price = singleItemDeal ? promo.price!.value : p.priceValue;
-	let unitPrice = parseSek(p.comparePrice);
-	// comparePrice reflects the regular price; scale it to the deal price.
-	if (unitPrice !== undefined && singleItemDeal) unitPrice = Math.round((unitPrice * price * 100) / p.priceValue) / 100;
-
-	return {
+	const promoPrice = promo?.price?.value;
+	const regularUnitPrice = parseSek(p.comparePrice);
+	// comparePrice reflects the regular price; scale it when the promotion has none.
+	const scaled = (price: number) =>
+		regularUnitPrice !== undefined ? Math.round((regularUnitPrice * price * 100) / p.priceValue) / 100 : undefined;
+	const hit: ProductHit = {
 		chain,
 		id: p.code,
 		name: p.name,
 		brand: p.manufacturer ?? undefined,
 		size: p.displayVolume ?? undefined,
-		price,
-		unitPrice,
+		price: p.priceValue,
+		unitPrice: regularUnitPrice,
 		unit: toUnit(p.comparePriceUnit),
-		oldPrice: singleItemDeal ? p.priceValue : undefined,
-		// A single-item deal is already reflected in price/oldPrice; only multi-buys need their label.
-		promo: singleItemDeal
-			? promo.conditionLabel || 'Kampanjpris'
-			: promo
-				? [promo.rewardLabel, promo.conditionLabel].filter(Boolean).join(' · ') || undefined
-				: undefined,
 		image: p.image?.url,
 		url: `${base}/sok?q=${encodeURIComponent(p.name)}`,
 		pricing: 'chain'
 	};
+	if (!promo || promoPrice === undefined || promoPrice >= p.priceValue) return hit;
+
+	const quantity = promo.qualifyingCount ?? 1;
+	const unitPrice = parseSek(promo.comparePrice) ?? scaled(promoPrice);
+	if (quantity <= 1) {
+		// Single-item sale: it is simply the current price.
+		return { ...hit, price: promoPrice, oldPrice: p.priceValue, unitPrice };
+	}
+	const limit = Number(promo.redeemLimitLabel?.match(/\d+/)?.[0]);
+	hit.deal = {
+		quantity,
+		each: promoPrice,
+		total: Math.round(promoPrice * quantity * 100) / 100,
+		unitPrice,
+		mixAndMatch: promo.promotionType === 'MixMatchPricePromotion',
+		plusDeposit: /pant/i.test(promo.rewardLabel ?? ''),
+		limit: limit > 0 ? limit : undefined
+	};
+	return hit;
 }
 
 function axfoodAdapter(chain: ChainId, base: string): ChainAdapter {

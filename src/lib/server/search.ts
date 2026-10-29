@@ -4,8 +4,7 @@ import { adapters } from './chains';
 import type { ChainAdapter } from './chains/types';
 import { ThrottledError } from './http';
 import { matchQuality } from './normalize';
-import { pickArea } from './stores/radius';
-import { allStores } from './stores/registry';
+import { MAP_ONLY_CHAINS, pricedArea, withMapOnlyStores } from './stores/registry';
 
 const priceCache = new TtlCache<ProductHit[]>(15 * 60 * 1000);
 
@@ -43,40 +42,54 @@ async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyS
 	return [...best.values()];
 }
 
-/** Yields the search area first, then each chain's results as soon as they arrive. */
+/**
+ * Yields the search area first, then each chain's results as soon as they arrive.
+ * Stores of chains without online prices (ICA, Coop) are looked up in parallel and
+ * sent as a second, complete `area` event, so they never delay the prices.
+ */
 export async function* search(rawQuery: string, center: { lat: number; lng: number }): AsyncGenerator<SearchEvent> {
 	const query = normalizeQuery(rawQuery);
-	const area = pickArea(center, await allStores());
+	const area = await pricedArea(center);
 	yield { type: 'area', center, ...area };
 
 	const byChain = new Map<ChainId, NearbyStore[]>();
 	for (const s of area.stores) byChain.set(s.chain, [...(byChain.get(s.chain) ?? []), s]);
 
-	const pending = new Map<ChainId, Promise<SearchEvent & { type: 'chain' }>>();
+	const pending = new Map<string, Promise<SearchEvent[]>>();
 	for (const adapter of Object.values(adapters)) {
 		const chain = adapter.chain;
 		const stores = byChain.get(chain);
 		pending.set(
 			chain,
 			!stores
-				? Promise.resolve({ type: 'chain', chain, status: 'no-stores', results: [] })
+				? Promise.resolve([{ type: 'chain', chain, status: 'no-stores', results: [] }])
 				: searchChain(adapter, query, stores).then(
-						(results) => ({ type: 'chain', chain, status: 'ok', results }),
-						(e: Error) => ({
-							type: 'chain',
-							chain,
-							status: e instanceof ThrottledError ? 'throttled' : 'error',
-							results: [],
-							message: e.message
-						})
+						(results): SearchEvent[] => [{ type: 'chain', chain, status: 'ok', results }],
+						(e: Error): SearchEvent[] => [
+							{
+								type: 'chain',
+								chain,
+								status: e instanceof ThrottledError ? 'throttled' : 'error',
+								results: [],
+								message: e.message
+							}
+						]
 					)
 		);
 	}
+	pending.set(
+		'map-only',
+		withMapOnlyStores(center, area).then((full): SearchEvent[] => [
+			{ type: 'area', center, ...full },
+			...MAP_ONLY_CHAINS.map((chain): SearchEvent => ({ type: 'chain', chain, status: 'no-online-prices', results: [] }))
+		])
+	);
 
+	const keyed = (key: string) => pending.get(key)!.then((events) => ({ key, events }));
 	while (pending.size) {
-		const event = await Promise.race(pending.values());
-		pending.delete(event.chain);
-		yield event;
+		const { key, events } = await Promise.race([...pending.keys()].map(keyed));
+		pending.delete(key);
+		yield* events;
 	}
 	yield { type: 'done' };
 }

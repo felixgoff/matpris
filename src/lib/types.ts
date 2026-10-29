@@ -1,12 +1,15 @@
 // Types shared between server and browser.
 
-export type ChainId = 'willys' | 'hemkop' | 'lidl';
+export type ChainId = 'willys' | 'hemkop' | 'lidl' | 'ica' | 'coop';
 
-// Logos are the chains' own SVGs from their websites, served from static/logos.
-export const CHAINS: Record<ChainId, { name: string; color: string; logo: string }> = {
-	willys: { name: 'Willys', color: '#e30613', logo: '/logos/willys.svg' },
-	hemkop: { name: 'Hemköp', color: '#f07800', logo: '/logos/hemkop.svg' },
-	lidl: { name: 'Lidl', color: '#0050aa', logo: '/logos/lidl.svg' }
+// Logos are served from static/logos (see README for sources).
+// `online: false` chains have no public price data: their stores are shown, their prices aren't.
+export const CHAINS: Record<ChainId, { name: string; color: string; logo: string; online: boolean }> = {
+	willys: { name: 'Willys', color: '#e30613', logo: '/logos/willys.svg', online: true },
+	hemkop: { name: 'Hemköp', color: '#f07800', logo: '/logos/hemkop.svg', online: true },
+	lidl: { name: 'Lidl', color: '#0050aa', logo: '/logos/lidl.svg', online: true },
+	ica: { name: 'ICA', color: '#e3000b', logo: '/logos/ica.svg', online: false },
+	coop: { name: 'Coop', color: '#00aa46', logo: '/logos/coop.svg', online: false }
 };
 
 export interface Store {
@@ -25,21 +28,37 @@ export interface NearbyStore extends Store {
 
 export type Unit = 'kg' | 'l' | 'st';
 
+/** A multi-buy offer such as "5 for 55 kr". */
+export interface Deal {
+	/** Items you must buy to get the deal price. */
+	quantity: number;
+	/** Price per item when buying `quantity`. */
+	each: number;
+	total: number;
+	/** Comparison price per unit at the deal price. */
+	unitPrice?: number;
+	/** The quantity can be any mix of the products in the offer. */
+	mixAndMatch: boolean;
+	/** Bottle deposit ("pant") is charged on top. */
+	plusDeposit: boolean;
+	/** Maximum number of deal purchases per customer. */
+	limit?: number;
+}
+
 export interface ProductHit {
 	chain: ChainId;
 	id: string;
 	name: string;
 	brand?: string;
 	size?: string;
-	/** Price you pay for one item right now (campaign price if a single-item campaign applies). */
+	/** Price you pay for one item right now (sale price if a single-item sale applies). */
 	price: number;
 	/** Comparison price ("jämförpris") in kr per unit. */
 	unitPrice?: number;
 	unit?: Unit;
-	/** Regular price when `price` is a campaign price. */
+	/** Regular price when `price` is a sale price. */
 	oldPrice?: number;
-	/** Human-readable deal text, e.g. "3 för 50 kr". */
-	promo?: string;
+	deal?: Deal;
 	image?: string;
 	url: string;
 	/** Where the price applies: one store, or the whole chain. */
@@ -53,7 +72,7 @@ export interface ResultRow extends ProductHit {
 	match: 'strong' | 'weak';
 }
 
-export type ChainStatus = 'ok' | 'error' | 'throttled' | 'no-stores';
+export type ChainStatus = 'ok' | 'error' | 'throttled' | 'no-stores' | 'no-online-prices';
 
 /** One line of the NDJSON stream returned by /api/search. */
 export type SearchEvent =

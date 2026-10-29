@@ -7,11 +7,11 @@ let loading: Promise<typeof mapkit> | undefined;
 export function loadMapKit(): Promise<typeof mapkit> {
 	return (loading ??= new Promise<typeof mapkit>((resolve, reject) => {
 		const token = PUBLIC_MAPKIT_TOKEN;
-		if (!token) return reject(new Error('PUBLIC_MAPKIT_TOKEN saknas i .env'));
+		if (!token) return reject(new Error('PUBLIC_MAPKIT_TOKEN is missing from .env'));
 
 		const callback = '__mapkitReady';
 		(window as unknown as Record<string, () => void>)[callback] = () => {
-			mapkit.init({ authorizationCallback: (done) => done(token), language: 'sv' });
+			mapkit.init({ authorizationCallback: (done) => done(token), language: 'en' });
 			resolve(mapkit);
 		};
 		const script = document.createElement('script');
@@ -19,7 +19,7 @@ export function loadMapKit(): Promise<typeof mapkit> {
 		script.crossOrigin = 'anonymous';
 		script.dataset.libraries = 'map,annotations,overlays,user-location';
 		script.dataset.callback = callback;
-		script.onerror = () => reject(new Error('Kunde inte ladda Apple Maps'));
+		script.onerror = () => reject(new Error('Apple Maps failed to load'));
 		document.head.append(script);
 	}).catch((e) => {
 		loading = undefined; // allow a retry on the next mount

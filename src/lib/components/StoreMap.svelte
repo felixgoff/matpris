@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { km } from '../format';
 	import { loadMapKit } from '../mapkit';
 	import { CHAINS, type NearbyStore } from '../types';
 
@@ -47,7 +48,7 @@
 					onlocate?.({ lat: e.coordinate.latitude, lng: e.coordinate.longitude })
 				);
 				created.addEventListener('user-location-error', (e: { message?: string }) =>
-					onlocateerror?.(e.message || 'platsåtkomst nekad')
+					onlocateerror?.(e.message || 'location access denied')
 				);
 				// Asks the browser for the location and draws MapKit's blue dot. We don't
 				// set tracksUserLocation: the view should fit the stores, not follow the dot.
@@ -78,7 +79,7 @@
 
 	function pinElement(s: NearbyStore, hot: boolean) {
 		const pin = document.createElement('div');
-		pin.className = hot ? 'store-pin hot' : 'store-pin';
+		pin.className = ['store-pin', hot && 'hot', !CHAINS[s.chain].online && 'offline'].filter(Boolean).join(' ');
 		pin.style.setProperty('--chain', CHAINS[s.chain].color);
 		const logo = document.createElement('img');
 		logo.src = CHAINS[s.chain].logo;
@@ -124,7 +125,9 @@
 			(s) =>
 				new mapkit.Annotation(at(s.lat, s.lng), () => pinElement(s, s.id === highlight), {
 					title: s.name,
-					subtitle: `${s.address} · ${s.distanceKm.toLocaleString('sv-SE', { maximumFractionDigits: 1 })} km bort`,
+					subtitle: [s.address, `${km(s.distanceKm)} away`, !CHAINS[s.chain].online && 'No online prices']
+						.filter(Boolean)
+						.join(' · '),
 					displayPriority: required,
 					// Pins are anchored at their bottom centre; lift them by the pointer's height.
 					anchorOffset: new DOMPoint(0, -7)
@@ -134,7 +137,7 @@
 			annotations.unshift(
 				new mapkit.MarkerAnnotation(at(center.lat, center.lng), {
 					color: '#1b1f1d',
-					title: 'Vald plats',
+					title: 'Selected location',
 					glyphText: '•',
 					displayPriority: required,
 					titleVisibility: mapkit.FeatureVisibility.Hidden
@@ -152,7 +155,7 @@
 </script>
 
 <div class="map" bind:this={el}>
-	{#if failed}<p class="failed">Kartan kunde inte laddas: {failed}</p>{/if}
+	{#if failed}<p class="failed">The map could not be loaded: {failed}</p>{/if}
 </div>
 
 <style>
@@ -206,6 +209,15 @@
 	}
 	:global(.store-pin:has(img.lidl)) {
 		padding: 0 1px;
+	}
+	/* Chains without online prices: shown for orientation, visually secondary. */
+	:global(.store-pin.offline) {
+		opacity: 0.75;
+		transform: scale(0.85);
+		transform-origin: bottom center;
+	}
+	:global(.store-pin img.ica) {
+		height: 13px;
 	}
 	:global(.store-pin.hot) {
 		height: 34px;
