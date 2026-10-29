@@ -216,14 +216,19 @@ async function flush() {
 }
 
 async function flushSoon() {
-	if (++saves % 5 === 0) await flush();
+	if (++saves % 2 === 0) await flush(); // 2 saves between flushes: an 8s page at most is lost
 }
 
 function attachHarvester() {
 	page.on('response', async (r) => {
 		const u = new URL(r.url());
 		const h = handlers.find((x) => u.pathname.includes(x.marker));
-		if (!h) return;
+		if (!h) {
+			// LOG_API=1: show the product APIs the site actually calls, to calibrate markers.
+			if (process.env.LOG_API && /\/api\//.test(u.pathname) && /product/i.test(u.pathname))
+				log(`api ${r.request().method()} ${u.pathname}`);
+			return;
+		}
 		try {
 			const ct = r.headers()['content-type'] ?? '';
 			if (!ct.includes('json')) return;
@@ -336,18 +341,34 @@ if (!(await hasWafToken())) {
 }
 
 let done = 0;
+let strikes = 0;
 try {
 	for (;;) {
+		if (browser.isClosed()) {
+			log('browser window is gone — stopping (run again to resume)');
+			break;
+		}
 		const [key, cat] = selectNext() ?? [];
 		if (!key) break;
 		try {
+			const before = db.products.filter((x) => x.price).length;
 			await visitCategory(cat.href);
-			log(`[${++done}${MAX_PAGES ? `/${MAX_PAGES}` : ''}] ${key}`);
+			strikes = 0;
+			log(`[${++done}${MAX_PAGES ? `/${MAX_PAGES}` : ''}] ${key} (${db.products.length} products in index)`);
 			if (MAX_PAGES && done >= MAX_PAGES) break;
 			await sleep(2_500 + Math.random() * 2_500); // shopper pacing
 		} catch (e) {
 			console.error(`  failed: ${e.message.split('\n')[0]}`);
-			if (/CAPTCHA|no human solve|keeps challenging/.test(e.message)) break; // reputation came back; retry later
+			// The window lost (crashed/closed) or the WAF came back hard: stop the loop so
+			// `finally` flushes what we have and exits; progress can be resumed later.
+			if (/has been closed|CAPTCHA|no human solve|keeps challenging/.test(e.message)) {
+				strikes = 2; // fatal — no more tries this run
+			}
+			if (++strikes >= 3) {
+				log('several failures in a row — stopping (run again to resume)');
+				break;
+			}
+			await sleep(5_000);
 		}
 	}
 } finally {
