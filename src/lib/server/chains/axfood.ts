@@ -119,7 +119,9 @@ function axfoodAdapter(chain: ChainId, base: string): ChainAdapter {
 		async search(query) {
 			const data = await fetchJson<{ results: AxfoodProduct[] }>(
 				`${base}/search?q=${encodeURIComponent(query)}&size=40`,
-				{ intervalMs: CRAWL_DELAY_MS }
+				// Wait for the slot rather than fail: on a cold cache the store list has just
+				// taken it, so the first search is always ~10 s behind.
+				{ intervalMs: CRAWL_DELAY_MS, maxWaitMs: 30_000 }
 			);
 			return data.results.filter((p) => !p.outOfStock && p.priceValue > 0).map((p) => toHit(chain, base, p));
 		}

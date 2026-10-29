@@ -54,6 +54,14 @@ typography:
     fontSize: "1rem"
     fontWeight: 700
     lineHeight: 1.25
+  segment-count:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontSize: "1.625rem"
+    fontWeight: 900
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+    fontFeature: "'tnum', 'lnum'"
+    fontVariation: "'wdth' 62"
   unit-price:
     fontFamily: "Archivo, system-ui, sans-serif"
     fontSize: "0.875rem"
@@ -103,9 +111,9 @@ components:
   chain-segment:
     backgroundColor: "{colors.label}"
     textColor: "{colors.ink}"
-    typography: "{typography.label}"
-    padding: "0 12px"
-    height: "46px"
+    typography: "{typography.segment-count}"
+    padding: "8px 10px 9px"
+    height: "62px"
   shelf-label:
     backgroundColor: "{colors.label}"
     textColor: "{colors.ink}"
@@ -218,6 +226,7 @@ Chain colours (Willys, Hemköp, Lidl, ICA, Coop) belong to the chains, not to th
 - **Wordmark** (900, 1.75rem, 70% width, uppercase): MAT in white, PRIS in label yellow, on the rail.
 - **Headline** (800, 1.375rem, 80% width): section heads such as "Cheapest near you" and "All results".
 - **Title** (700, 1rem, 1.25 line height): product names; 1.1875rem on the answer label.
+- **Segment count** (900, 1.625rem, 62% width, tabular): the result count in each chain segment, set like a price so it reads at a glance.
 - **Unit price** (700, 0.875rem, 85% width, tabular): the comparison price under each numeral; 1rem on the answer.
 - **Body** (400, 1.0625rem, 1.5 line height, max 52ch): intro copy.
 - **Label** (600–700, 0.8125rem): meta, store line, segments, toggles, counts.
@@ -263,7 +272,7 @@ Square forms with small 3px corners. A label is square on top where it meets its
 - **Focus:** a 3px steel outline at 2px offset everywhere; white on the steel rail.
 
 ### Chain Share Rail (signature)
-The chain filter is a share-proportional segment rail: one white segment per priced chain, 46px tall, with a 5px top strip in the chain's colour, the chain logo and its result count. Each segment's flex-grow equals its number of results, so widths show each chain's share and animate (400ms, hang easing) as results stream in. A hidden chain turns transparent with a 1.5px rail-grey outline, line-through text and a greyscale logo. A failed chain shows its status in offer ink. Chains without online prices (ICA, Coop) share one fixed segment with a 135° hatched grey fill (6px stripes) and "no online prices".
+The chain filter is a share-proportional segment rail: one white segment per priced chain, at least 62px tall, with a 5px top strip in the chain's colour. Each segment is a small tag: the chain logo top-left (14px; Lidl 22px, City Gross 18px; 12/20/16px on phones, shrunk to fit), and the result count at the bottom in the segment-count numeral, small print when it is 0. Each segment's flex-grow equals its number of results, so widths show each chain's share and animate (400ms, hang easing) as results stream in, but no segment gets narrower than its content (76px, 62px on phones), so a low-count chain never clips its figure and five chains still share one row on a phone. In place of the count a segment shows a status at 0.75rem, 85% width, wrapping to a second line rather than being cut: "searching…" and "no store nearby" in small print, "busy, try again" and "unavailable" in offer ink. A hidden chain turns transparent with a 1.5px rail-grey outline, line-through text and a greyscale logo. Chains without online prices (ICA) share one full-width segment under the rail with a 135° hatched grey fill (6px stripes) and "no online prices".
 
 ### Shelf Labels
 - **Corner Style:** square top, 3px bottom corners, hung under a 12px steel strip.

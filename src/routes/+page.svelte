@@ -23,7 +23,7 @@
 	let query = $state('');
 	let address = $state('');
 	// Starts in Stockholm; the map moves it to the device location once MapKit reports one.
-	let location = $state({ lat: 59.3326, lng: 18.0649, label: 'Stockholm (default)', device: false });
+	let location = $state({ lat: 55.70584, lng: 13.19321, label: 'Lund (default)', device: false });
 	/** Follow device location updates until the user picks an address. */
 	let followDevice = true;
 	let mapRef = $state<ReturnType<typeof StoreMap>>();
@@ -260,7 +260,7 @@
 		loading: 'searching…',
 		ok: '',
 		error: 'unavailable',
-		throttled: 'busy, try again shortly',
+		throttled: 'busy, try again',
 		'no-stores': 'no store nearby',
 		'no-online-prices': 'no online prices'
 	};
@@ -394,7 +394,7 @@
 							{@const n = relevant.filter((r) => r.chain === c).length}
 							<button
 								class="seg"
-								class:down={s !== 'ok' && s !== 'loading'}
+								class:down={s === 'error' || s === 'throttled'}
 								style:flex-grow={s === 'ok' ? Math.max(n, 1) : 1}
 								style:--chain={CHAINS[c].color}
 								aria-pressed={!hidden.has(c)}
@@ -402,7 +402,11 @@
 								onclick={() => toggle(c)}
 							>
 								{@render logo(c)}
-								<span>{s === 'ok' ? n || 'none' : statusText[s]}</span>
+								{#if s === 'ok'}
+									<b class="num" class:zero={!n}>{n}</b>
+								{:else}
+									<span>{statusText[s]}</span>
+								{/if}
 							</button>
 						{/each}
 						<span
@@ -795,7 +799,9 @@
 		margin-bottom: 12px;
 	}
 
-	/* Chain filter: one segment per chain, as wide as its share of the results. */
+	/* Chain filter: one segment per chain, as wide as its share of the results. Each
+	   segment is a small tag (logo on top, its count below in the price numeral) and
+	   never gets narrower than that content, so a low-count chain can't clip its figure. */
 	.share {
 		display: flex;
 		flex-wrap: wrap;
@@ -805,26 +811,39 @@
 		--chain: var(--rule);
 		box-sizing: border-box;
 		flex: 1 1 0;
-		min-width: 96px;
-		height: 46px;
+		min-width: 76px;
+		min-height: 62px;
 		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 0 12px;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 6px;
+		padding: 8px 10px 9px;
 		border: 0;
 		border-top: 5px solid var(--chain);
 		border-radius: 0 0 2px 2px;
 		background: var(--label);
 		color: var(--ink);
-		font-size: 0.8125rem;
-		font-weight: 700;
-		font-variant-numeric: tabular-nums;
-		white-space: nowrap;
+		text-align: left;
 		overflow: hidden;
 		transition: flex-grow 400ms var(--hang);
 	}
 	button.seg:hover {
 		background: #f4f5f3;
+	}
+	.seg .num {
+		font-size: 1.625rem;
+	}
+	.seg .num.zero {
+		color: var(--ink-2);
+	}
+	/* A status in place of the count; it may wrap to a second line rather than be cut. */
+	.seg span {
+		font-size: 0.75rem;
+		font-weight: 700;
+		font-stretch: 85%;
+		line-height: 1.15;
+		color: var(--ink-2);
 	}
 	.seg[aria-pressed='false'] {
 		background: transparent;
@@ -838,25 +857,37 @@
 	}
 	.seg.down span {
 		color: var(--offer-ink);
-		font-weight: 600;
 	}
 	/* The chains without prices get their own row under the priced ones. */
 	.seg.none {
 		flex: 1 0 100%;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 8px;
+		min-height: 0;
 		height: 36px;
+		padding: 0 12px;
 		background: repeating-linear-gradient(135deg, #d6d9d5 0 6px, #ccd0cb 6px 12px);
-		color: #3e4244;
 		cursor: help;
 	}
+	.seg.none span {
+		font-size: 0.8125rem;
+		font-stretch: 100%;
+		color: #3e4244;
+	}
 	.seg :global(.logo) {
-		height: 16px;
+		height: 14px;
+		max-width: 100%;
+		object-fit: contain;
+		object-position: left center;
 	}
 	.seg :global(.logo.lidl) {
-		height: 26px;
+		height: 22px;
 	}
 	/* City Gross's logo is a small boxed wordmark; it needs more height to be read. */
 	.seg :global(.logo.citygross) {
-		height: 22px;
+		height: 18px;
 	}
 	.count {
 		margin-top: 10px;
@@ -1367,16 +1398,19 @@
 			border-left: 0;
 			border-block: 4px solid var(--steel-edge);
 		}
+		/* Five chains share one row on a phone; the logos shrink to fit their segment. */
 		.seg {
-			min-width: fit-content;
-			padding: 0 10px;
-			gap: 6px;
+			min-width: 62px;
+			padding: 7px 8px 8px;
 		}
 		.seg :global(.logo) {
-			height: 14px;
+			height: 12px;
 		}
 		.seg :global(.logo.lidl) {
-			height: 24px;
+			height: 20px;
+		}
+		.seg :global(.logo.citygross) {
+			height: 16px;
 		}
 
 		.label {
