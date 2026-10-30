@@ -1,8 +1,11 @@
-import adapter from '@sveltejs/adapter-auto';
+/// <reference types="vitest/config" />
+import adapter from '@sveltejs/adapter-node';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+	// Only our tests: Electrobun's SDK copy in .hutch/ ships its own.
+	test: { include: ['src/**/*.test.ts'] },
 	plugins: [
 		sveltekit({
 			compilerOptions: {
@@ -11,9 +14,8 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 
-			// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-			// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-			// See https://svelte.dev/docs/kit/adapters for more information about adapters.
+			// A standalone server in build/: run it with `node build`, or inside the desktop
+			// app (desktop/main.ts), which starts its handler on a free localhost port.
 			adapter: adapter()
 		})
 	]

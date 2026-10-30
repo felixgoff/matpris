@@ -96,6 +96,21 @@ The data comes from the chains' own websites, not from official APIs, so check e
 - Willys' and Hemköp's robots.txt also state `Visit-time: 0400-0845` UTC, a preferred crawl window. Live, user-triggered searches outside that window go against that preference. For a public deployment, consider prefetching common products inside that window, or asking Axfood for access.
 - Nominatim's usage policy allows at most 1 request per second, and results are cached for 7 days.
 
+## Desktop app (macOS)
+
+The same app as a small native Mac app, built with [Electrobun](https://framework.blackboard.sh/electrobun/) 2:
+
+```bash
+bun run desktop        # build, then open a dev window (console output in the terminal)
+bun run desktop:build  # release app: desktop/build/stable-macos-arm64/Matpris.app (~32 MB)
+```
+
+`vite build` produces the SvelteKit server (`adapter-node`, in `build/`). Electrobun copies it into the app, and `desktop/main.ts`, running in the app's Bun process, starts it on a free `127.0.0.1` port and opens a window on it. Everything else works as on the web: searches, caches and request spacing all live in that server. The window uses macOS's own WebKit, not a bundled Chrome. Device location asks for permission the first time.
+
+- **Map token:** the app has no `.env`, so `electrobun.config.ts` builds `PUBLIC_MAPKIT_TOKEN` in from `.env` at build time. Rebuild after renewing the token. It's a public token, but don't hand the app around.
+- **ICA** shows "busy" in the app: its session files and warm script live in `scripts/` on this Mac, outside the app bundle.
+- The first build downloads Electrobun's runtime into `~/.hutch`. There is no app icon yet (Electrobun looks for `icon.iconset`), and the app isn't code-signed, so macOS may ask before opening it the first time.
+
 ## Deploying
 
-`adapter-auto` works on Vercel, Netlify and similar hosts. The caches live in memory, so a single long-running Node server (`@sveltejs/adapter-node`) gets much more out of them than short-lived serverless functions do.
+`vite build` produces a standalone Node server (`@sveltejs/adapter-node`, `node build`). The caches live in memory, so one long-running server gets much more out of them than short-lived serverless functions would.

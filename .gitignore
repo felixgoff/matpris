@@ -8,6 +8,11 @@ node_modules
 /.svelte-kit
 /build
 
+# Desktop app (Electrobun): its builds and the SDK it projects into the project
+/desktop/build
+/desktop/artifacts
+.hutch/
+
 # OS
 .DS_Store
 Thumbs.db
