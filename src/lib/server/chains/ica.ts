@@ -12,6 +12,7 @@
 // Lidl's list: chain pricing, a good approximation for nearby stores ranked with it.
 import { execFile } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { promisify } from 'node:util';
 import type { ProductHit, Store, Unit } from '../../types';
 import icaStores from '../data/ica-stores.json';
@@ -25,14 +26,33 @@ const BASE = 'https://handlaprivatkund.ica.se';
 const BROWSER_UA =
 	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
-const SESSION_FILE =
-	process.env.ICA_SESSION_FILE ??
-	new URL('../../../../scripts/.ica-profile/session.json', import.meta.url).pathname;
-const WARM_SCRIPT = new URL('../../../../scripts/ica-warm.mjs', import.meta.url).pathname;
+/** Where session.json and the warm script live, tried in order:
+ *  1. explicit env overrides (ICA_SESSION_FILE, ICA_WARM_SCRIPT)
+ *  2. the repo, found relative to this module's own file (works in dev and tests)
+ *  3. the repo, found via the working directory (the Electrobun desktop app copies
+ *     this module inside its bundle, but runs it with the repo as cwd)
+ *  A packaged app without the repo nearby cannot warm itself — it reads the
+ *  session file (set ICA_SESSION_FILE) and reports that `bun run warm:ica` is needed. */
+function discoverPaths(): { session?: string; warm?: string } {
+	const session = process.env.ICA_SESSION_FILE;
+	const warm = process.env.ICA_WARM_SCRIPT;
+	if (session && warm) return { session, warm };
+	const roots = [
+		new URL('../../../../', import.meta.url).pathname,
+		process.env.MATPRIS_ROOT,
+		process.cwd()
+	].filter((root, i, all) => root && all.indexOf(root) === i) as string[];
+	const found: { session?: string; warm?: string } = {};
+	for (const root of roots) {
+		found.session ??= join(root, 'scripts/.ica-profile/session.json');
+		found.warm ??= join(root, 'scripts/ica-warm.mjs');
+	}
+	return { session: session ?? found.session, warm: warm ?? found.warm };
+}
 
 /** WAF tokens outlive a session, but matval refreshed every ~4 min. */
 const STALE_MS = 3 * 60 * 1000;
-/** Only until the next search pair; real crumbs live in the browser profile. */
+/** Between warm attempts; real browser work should stay rare. */
 const WARM_GAP_MS = 60 * 1000;
 
 interface IcaSession {
@@ -188,11 +208,16 @@ export function makeIca(jar: CookieJar): ChainAdapter {
 	};
 }
 
-// Default jar: reads scripts/.ica-profile/session.json; warms by running the warm script.
+// Default jar: reads scripts/.ica-profile/session.json (discovered across the repo,
+// even when this module runs from inside the Electrobun app bundle); warms by
+// running the warm script headless first and — if the WAF demands a human — again
+// headed, where the visible window waits (and beeps) for the puzzle to be clicked.
 const jar: CookieJar = {
 	async read() {
+		const file = discoverPaths().session;
+		if (!file) return undefined;
 		try {
-			return JSON.parse(await readFile(SESSION_FILE, 'utf8')) as IcaSession;
+			return JSON.parse(await readFile(file, 'utf8')) as IcaSession;
 		} catch {
 			return undefined;
 		}
@@ -201,12 +226,25 @@ const jar: CookieJar = {
 	async warm() {
 		if (jarWarm.pending) return jarWarm.pending;
 		jarWarm.lastWarmAt = Date.now();
-		jarWarm.pending = promisify(execFile)(process.execPath, [WARM_SCRIPT], { timeout: 120_000 }).then(
-			() => undefined,
-			() => undefined
-		).finally(() => {
-			jarWarm.pending = undefined;
-		});
+		const warm = discoverPaths().warm;
+		if (!warm)
+			throw new ThrottledError('no ICA warm script nearby — run `bun run warm:ica` inside the matpris repo');
+		const run = (env: Record<string, string>, timeout: number) =>
+			promisify(execFile)(process.execPath, [warm], { timeout, env: { ...process.env, ...env } }).then(
+				() => undefined,
+				(err) => {
+					throw new Error(String((err as { stderr?: string }).stderr ?? 'warm failed').split('\n')[0]);
+				}
+			);
+		jarWarm.pending = run({}, 70_000)
+			.catch((e) =>
+				/The WAF shows a visual challenge|no WAF token/.test(String(e.message))
+					? run({ HEADED: '1' }, 620_000)
+					: Promise.reject(e)
+			)
+			.finally(() => {
+				jarWarm.pending = undefined;
+			});
 		return jarWarm.pending;
 	}
 };
