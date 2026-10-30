@@ -149,6 +149,10 @@ export function relevance(query: string, name: string, brand?: string, categorie
 	if (quality === 1) return 'weak';
 	const asked = tokens(query);
 	const isAsked = (w: string) => asked.some((q) => wordQuality(q, w) === 2);
+	// A search for a brand ("fanta") asks for that brand's products, whatever type word
+	// their names carry ("Orange Fanta Läsk"): they are the product, not a flavour of läsk.
+	const brandWords = tokens(brand ?? '');
+	if (brandWords.length && asked.every((q) => brandWords.some((w) => wordQuality(q, w) === 2))) return 'best';
 	if (specific && tokens(specific).some(isAsked)) return 'best';
 	// The broader levels name the shelf ("Godis", "Barnmat"); the specific one can be a
 	// buying code ("DJ FRUKT/BÄR/JUICE") that would misfire here.

@@ -90,6 +90,17 @@ describe('relevance', () => {
 	});
 });
 
+describe('relevance for a brand search', () => {
+	it("counts the brand's products as the product, whatever type word they carry", () => {
+		expect(relevance('fanta', 'Orange Fanta Läsk, Pet', 'Fanta')).toBe('best');
+		expect(relevance('fanta', 'Orange Zero', 'Fanta Zero', ['Dryck', 'Läsk', 'Läsk PET'])).toBe('best');
+		// Only whole words of the brand: "Fantasty" stock cubes stay a weak prefix match.
+		expect(relevance('fanta', 'Köttbuljong Pulver', 'Fantasty')).toBe('weak');
+		// Not a brand search: banana yoghurt from Arla is still only flavoured.
+		expect(relevance('banan', 'Banan & Vanilj Yo-ghurt 0,1%', 'Arla')).toBe('mention');
+	});
+});
+
 describe('relevance with chain categories', () => {
 	const coffee = ['Skafferiet', 'Kaffe, te & choklad', 'Bryggkaffe'];
 	it('uses the most specific category as part of the name', () => {
