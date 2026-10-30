@@ -12,6 +12,7 @@ node_modules
 /desktop/build
 /desktop/artifacts
 .hutch/
+.cottontail-tmp/
 
 # OS
 .DS_Store

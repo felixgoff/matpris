@@ -109,7 +109,8 @@ bun run desktop:build  # release app: desktop/build/stable-macos-arm64/Matpris.a
 
 - **Map token:** the app has no `.env`, so `electrobun.config.ts` builds `PUBLIC_MAPKIT_TOKEN` in from `.env` at build time. Rebuild after renewing the token. It's a public token, but don't hand the app around.
 - **ICA** shows "busy" in the app: its session files and warm script live in `scripts/` on this Mac, outside the app bundle.
-- The first build downloads Electrobun's runtime into `~/.hutch`. There is no app icon yet (Electrobun looks for `icon.iconset`), and the app isn't code-signed, so macOS may ask before opening it the first time.
+- **Icon:** `desktop/icons/Matpris.icon`, an Icon Composer document (open it in Icon Composer to adjust the glass, shadows or colours). The other candidates and a comparison sheet are in `desktop/icons/drafts/`.
+- The first build downloads Electrobun's runtime into `~/.hutch`. The app isn't code-signed, so macOS may ask before opening it the first time.
 
 ## Deploying
 

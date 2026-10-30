@@ -33,6 +33,7 @@ export default {
 		buildFolder: 'desktop/build',
 		artifactFolder: 'desktop/artifacts',
 		copy: { build: 'server' },
-		mac: { createDmg: false }
+		// Icon Composer document; the other candidates are in desktop/icons/drafts.
+		mac: { createDmg: false, icons: 'desktop/icons/Matpris.icon' }
 	}
 } satisfies ElectrobunConfig;
