@@ -11,8 +11,9 @@
 // Prices anchor to one store (Maxi ICA Stormarknad Gunnesbo, Lund), presented like
 // Lidl's list: chain pricing, a good approximation for nearby stores ranked with it.
 import { execFile } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { promisify } from 'node:util';
 import type { ProductHit, Store, Unit } from '../../types';
 import icaStores from '../data/ica-stores.json';
@@ -29,25 +30,30 @@ const BROWSER_UA =
 /** Where session.json and the warm script live, tried in order:
  *  1. explicit env overrides (ICA_SESSION_FILE, ICA_WARM_SCRIPT)
  *  2. the repo, found relative to this module's own file (works in dev and tests)
- *  3. the repo, found via the working directory (the Electrobun desktop app copies
- *     this module inside its bundle, but runs it with the repo as cwd)
- *  A packaged app without the repo nearby cannot warm itself — it reads the
- *  session file (set ICA_SESSION_FILE) and reports that `bun run warm:ica` is needed. */
+ *  3. this directory and its ancestors (the Electrobun app runs its server from
+ *     the bundle; the repo is a few levels up when launched from the project)
+ *  A packaged app without the repo nearby cannot warm itself — it reads the session
+ *  file (set ICA_SESSION_FILE) tells the user that `bun run warm:ica` is needed. */
 function discoverPaths(): { session?: string; warm?: string } {
-	const session = process.env.ICA_SESSION_FILE;
-	const warm = process.env.ICA_WARM_SCRIPT;
-	if (session && warm) return { session, warm };
-	const roots = [
-		new URL('../../../../', import.meta.url).pathname,
-		process.env.MATPRIS_ROOT,
-		process.cwd()
-	].filter((root, i, all) => root && all.indexOf(root) === i) as string[];
-	const found: { session?: string; warm?: string } = {};
-	for (const root of roots) {
-		found.session ??= join(root, 'scripts/.ica-profile/session.json');
-		found.warm ??= join(root, 'scripts/ica-warm.mjs');
+	const envSession = process.env.ICA_SESSION_FILE;
+	const envWarm = process.env.ICA_WARM_SCRIPT;
+	if (envSession && envWarm) return { session: envSession, warm: envWarm };
+	for (const root of candidateRoots()) {
+		if (!existsSync(join(root, 'scripts/ica-warm.mjs'))) continue;
+		return {
+			session: envSession ?? join(root, 'scripts/.ica-profile/session.json'),
+			warm: envWarm ?? join(root, 'scripts/ica-warm.mjs')
+		};
 	}
-	return { session: session ?? found.session, warm: warm ?? found.warm };
+	return {};
+}
+
+function candidateRoots(): string[] {
+	const roots = new Set<string>();
+	roots.add(new URL('../../../../', import.meta.url).pathname);
+	if (process.env.MATPRIS_ROOT) roots.add(process.env.MATPRIS_ROOT);
+	for (let dir = process.cwd(); dir !== '/' && dir !== '.'; dir = dirname(dir)) roots.add(dir);
+	return [...roots];
 }
 
 /** WAF tokens outlive a session, but matval refreshed every ~4 min. */
@@ -230,7 +236,12 @@ const jar: CookieJar = {
 		if (!warm)
 			throw new ThrottledError('no ICA warm script nearby — run `bun run warm:ica` inside the matpris repo');
 		const run = (env: Record<string, string>, timeout: number) =>
-			promisify(execFile)(process.execPath, [warm], { timeout, env: { ...process.env, ...env } }).then(
+			promisify(execFile)(process.execPath, [warm], {
+				timeout,
+				// Playwright and the .ica-profile live in the repo, not next to the app binary.
+				cwd: dirname(dirname(warm)),
+				env: { ...process.env, ...env }
+			}).then(
 				() => undefined,
 				(err) => {
 					throw new Error(String((err as { stderr?: string }).stderr ?? 'warm failed').split('\n')[0]);
