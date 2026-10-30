@@ -24,32 +24,42 @@ export const DEFAULT_AREA: AreaOptions = {
 	maxStores: 25
 };
 
+/** A circle the shopper sized themselves holds every store inside it, up to this many.
+ *  Every chain prices nationally (one request per chain), so more stores cost nothing.
+ *  shortcut: assumes no per-store-priced chain; one would need its own cap here. */
+export const PICKED_MAX_STORES = 150;
+
 /**
  * Pick a search circle around `center` that is just big enough: dense cities get
- * a small circle, the countryside a large one.
+ * a small circle, the countryside a large one. `pickedKm` is a size the shopper chose.
  */
-export function pickArea(center: { lat: number; lng: number }, all: Store[], opts = DEFAULT_AREA) {
+export function pickArea(center: { lat: number; lng: number }, all: Store[], opts = DEFAULT_AREA, pickedKm?: number) {
 	const sorted: NearbyStore[] = all
 		.map((s) => ({ ...s, distanceKm: Math.round(distanceKm(center, s) * 100) / 100 }))
 		.sort((a, b) => a.distanceKm - b.distanceKm);
 	const minChains = Math.min(opts.minChains, new Set(all.map((s) => s.chain)).size);
 
 	let radiusKm = opts.startKm;
-	for (; radiusKm < opts.maxKm; radiusKm *= opts.growth) {
-		const inside = sorted.filter((s) => s.distanceKm <= radiusKm);
-		if (inside.length >= opts.minStores && new Set(inside.map((s) => s.chain)).size >= minChains) break;
+	if (pickedKm) radiusKm = pickedKm;
+	else {
+		for (; radiusKm < opts.maxKm; radiusKm *= opts.growth) {
+			const inside = sorted.filter((s) => s.distanceKm <= radiusKm);
+			if (inside.length >= opts.minStores && new Set(inside.map((s) => s.chain)).size >= minChains) break;
+		}
+		radiusKm = Math.min(radiusKm, opts.maxKm);
+		// Nothing within the cap (very remote): stretch to the single nearest store.
+		if (sorted.length && sorted[0].distanceKm > radiusKm) radiusKm = sorted[0].distanceKm;
+		radiusKm = Math.ceil(radiusKm * 10) / 10;
 	}
-	radiusKm = Math.min(radiusKm, opts.maxKm);
-	// Nothing within the cap (very remote): stretch to the single nearest store.
-	if (sorted.length && sorted[0].distanceKm > radiusKm) radiusKm = sorted[0].distanceKm;
-	radiusKm = Math.ceil(radiusKm * 10) / 10;
+	const maxPerChain = pickedKm ? Infinity : opts.maxPerChain;
+	const maxStores = pickedKm ? PICKED_MAX_STORES : opts.maxStores;
 
 	const perChain = new Map<string, number>();
 	const stores: NearbyStore[] = [];
 	for (const s of sorted) {
-		if (s.distanceKm > radiusKm || stores.length >= opts.maxStores) break;
+		if (s.distanceKm > radiusKm || stores.length >= maxStores) break;
 		const n = perChain.get(s.chain) ?? 0;
-		if (n >= opts.maxPerChain) continue;
+		if (n >= maxPerChain) continue;
 		perChain.set(s.chain, n + 1);
 		stores.push(s);
 	}

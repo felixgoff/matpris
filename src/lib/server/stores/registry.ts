@@ -28,9 +28,9 @@ export function allStores(): Promise<Store[]> {
 
 export type Area = { radiusKm: number; stores: NearbyStore[] };
 
-/** The search circle, sized by the stores that have prices. */
-export async function pricedArea(center: { lat: number; lng: number }): Promise<Area> {
-	return pickArea(center, await allStores());
+/** The search circle, sized by the stores that have prices, or as the shopper picked it. */
+export async function pricedArea(center: { lat: number; lng: number }, pickedKm?: number): Promise<Area> {
+	return pickArea(center, await allStores(), DEFAULT_AREA, pickedKm);
 }
 
 export const MAP_ONLY_CHAINS = (Object.keys(CHAINS) as ChainId[]).filter((c) => !CHAINS[c].online);

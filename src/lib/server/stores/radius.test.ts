@@ -42,4 +42,16 @@ describe('pickArea', () => {
 		expect(willys.length).toBe(5);
 		expect(stores.length).toBe(15);
 	});
+
+	it('keeps a size the shopper picked, with every store inside it', () => {
+		const all = [...ring(60, 1), ...ring(30, 10, 60)];
+		const near = pickArea(center, all, undefined, 2);
+		expect(near.radiusKm).toBe(2);
+		expect(near.stores.length).toBe(60); // no 5-per-chain cap
+		const wide = pickArea(center, all, undefined, 12);
+		expect(wide.stores.length).toBe(90);
+		// Nothing inside: the picked size stays, it doesn't stretch to the nearest store.
+		const empty = pickArea(center, ring(2, 80), undefined, 1);
+		expect([empty.radiusKm, empty.stores.length]).toEqual([1, 0]);
+	});
 });

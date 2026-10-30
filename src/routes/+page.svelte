@@ -198,9 +198,30 @@
 		else loadArea();
 	}
 
+	// The search circle: automatic, or a size the shopper stepped to on the map.
+	const CIRCLE_STEPS = [0.5, 1, 2, 3, 5, 7.5, 10, 15, 20, 30];
+	let pickedKm = $state<number>();
+	const radiusParam = () => (pickedKm ? `&radius=${pickedKm}` : '');
+	const circleKm = $derived(pickedKm ?? area?.radiusKm ?? 0);
+
+	/** Steps from the current size, so an automatic 3.9 km goes to 5 or 3. */
+	function resizeCircle(dir: 1 | -1) {
+		const steps = dir > 0 ? CIRCLE_STEPS : CIRCLE_STEPS.toReversed();
+		pickedKm = steps.find((s) => (dir > 0 ? s > circleKm : s < circleKm)) ?? steps.at(-1);
+		rerun();
+	}
+
+	function autoCircle() {
+		pickedKm = undefined;
+		rerun();
+	}
+
+	let areaRequest = 0;
 	async function loadArea() {
-		const res = await fetch(`/api/stores?lat=${location.lat}&lng=${location.lng}`);
-		if (res.ok) area = await res.json();
+		const id = ++areaRequest;
+		const res = await fetch(`/api/stores?lat=${location.lat}&lng=${location.lng}${radiusParam()}`);
+		// Quick steps on the circle: only the latest answer counts.
+		if (res.ok && id === areaRequest) area = await res.json();
 	}
 
 	async function runSearch(e?: SubmitEvent) {
@@ -217,7 +238,7 @@
 
 		try {
 			const res = await fetch(
-				`/api/search?q=${encodeURIComponent(q)}&lat=${location.lat}&lng=${location.lng}`,
+				`/api/search?q=${encodeURIComponent(q)}&lat=${location.lat}&lng=${location.lng}${radiusParam()}`,
 				{ signal: controller.signal }
 			);
 			if (!res.ok || !res.body) throw new Error((await res.json()).message ?? res.statusText);
@@ -266,6 +287,100 @@
 		'no-stores': 'no store nearby',
 		'no-online-prices': 'no online prices'
 	};
+
+	// Share: the answer label as an image, drawn from the real card.
+	let answerEl = $state<HTMLElement>();
+	let shareNote = $state('');
+	let noteTimer: ReturnType<typeof setTimeout>;
+	const note = (text: string) => {
+		shareNote = text;
+		clearTimeout(noteTimer);
+		noteTimer = setTimeout(() => (shareNote = ''), 2500);
+	};
+	/** Everything the card shows, so a prepared image is never stale. */
+	const answerKey = $derived(
+		cheapest ? [searched, sort, countDeals, ...cheapestPerChain.map((r) => `${r.chain}:${r.id}`)].join('|') : ''
+	);
+	/** Started when the pointer or focus reaches Share, so the image is usually ready by
+	 *  the click: Safari only opens its share sheet from inside the click. */
+	let prepared: { key: string; image: Promise<Blob> } | undefined;
+	const NO_PHOTO =
+		"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23f1f2f0'/%3E%3C/svg%3E";
+
+	async function renderAnswer(card: HTMLElement): Promise<Blob> {
+		const { toBlob } = await import('html-to-image');
+		// An off-screen copy: room above for the steel strip (drawn 12px outside the card),
+		// no shadow or entrance animation, and product photos via our own origin (a page
+		// may only draw another site's image if that site allows it; City Gross's doesn't).
+		const frame = document.createElement('div');
+		frame.style.cssText = `position:absolute;left:-10000px;top:0;width:${card.offsetWidth}px;padding-top:12px;background:#e6e8e4`;
+		const copy = card.cloneNode(true) as HTMLElement;
+		copy.style.cssText = 'margin:0;animation:none;box-shadow:none';
+		for (const img of copy.querySelectorAll('img')) {
+			img.loading = 'eager';
+			if (new URL(img.src).origin !== window.location.origin) img.src = `/api/image?src=${encodeURIComponent(img.src)}`;
+		}
+		frame.append(copy);
+		card.parentElement!.append(frame);
+		try {
+			await Promise.all([...copy.querySelectorAll('img')].map((img) => img.decode().catch(() => {})));
+			// A photo that won't load becomes the grey tile shown for products without one.
+			// The copy is drawn with its computed styles, so put it back at the origin.
+			const options = { pixelRatio: 2, imagePlaceholder: NO_PHOTO, style: { position: 'static', left: '0' } };
+			await toBlob(frame, options); // a first pass lets WebKit finish decoding embedded images
+			const blob = await toBlob(frame, options);
+			if (!blob) throw new Error('The image could not be drawn');
+			return blob;
+		} finally {
+			frame.remove();
+		}
+	}
+
+	function prepareShare() {
+		if (!answerEl || !answerKey || prepared?.key === answerKey) return;
+		const entry = { key: answerKey, image: renderAnswer(answerEl) };
+		prepared = entry;
+		entry.image.catch(() => prepared === entry && (prepared = undefined));
+	}
+
+	/** The share sheet where the browser has one; otherwise copy the image, else save it. */
+	function shareAnswer() {
+		prepareShare();
+		if (!prepared || !cheapest) return;
+		const image = prepared.image;
+		const name = `matpris-${searched.replace(/[^\p{L}\p{N}]+/gu, '-')}.png`;
+		const title = `${cheapest.name}: cheapest near you`;
+		if (navigator.canShare) {
+			image
+				.then((blob) => {
+					const file = new File([blob], name, { type: 'image/png' });
+					if (!navigator.canShare({ files: [file] })) throw new Error('no file sharing');
+					return navigator.share({ files: [file], title });
+				})
+				.catch((e: Error) => e.name !== 'AbortError' && copyOrSave(image, name));
+		} else copyOrSave(image, name);
+	}
+
+	function copyOrSave(image: Promise<Blob>, name: string) {
+		// Safari only accepts a clipboard write started inside the click, so the image goes
+		// in as a promise rather than awaited first.
+		const copied = window.ClipboardItem
+			? navigator.clipboard.write([new ClipboardItem({ 'image/png': image })])
+			: Promise.reject(new Error('no clipboard'));
+		copied.then(
+			() => note('Image copied'),
+			async () => {
+				try {
+					const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(await image), download: name });
+					a.click();
+					setTimeout(() => URL.revokeObjectURL(a.href), 10_000);
+					note('Image saved');
+				} catch {
+					note("Couldn't make the image");
+				}
+			}
+		);
+	}
 
 	onMount(loadArea);
 </script>
@@ -454,7 +569,23 @@
 
 					{#if cheapest}
 						{@const deal = usesDeal(cheapest) ? cheapest.deal : undefined}
-						<h2 class="answer-head">Cheapest near you</h2>
+						<div class="answer-head">
+							<h2>Cheapest near you</h2>
+							<span class="share-note" role="status">{shareNote}</span>
+							<button class="share" onclick={shareAnswer} onpointerenter={prepareShare} onfocus={prepareShare}>
+								<svg viewBox="0 0 16 16" aria-hidden="true"
+									><path
+										d="M8 10V1.8M5.2 4.6 8 1.8l2.8 2.8M5.6 7H3.6v7.2h8.8V7h-2"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="1.6"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								Share
+							</button>
+						</div>
 						<p class="basis">
 							Lowest {sort === 'unit' && mainUnit ? `price per ${unitLabel[mainUnit]}` : 'item price'}{countDeals
 								? ', multi-buy deals counted'
@@ -463,6 +594,7 @@
 						{#key cheapest.chain + cheapest.id}
 							<article
 								class="label answer"
+								bind:this={answerEl}
 								onpointerenter={(e) => point(e, cheapest.store.id)}
 								onpointerleave={(e) => point(e)}
 							>
@@ -506,7 +638,7 @@
 						</div>
 						<p class="fine">
 							We search the stores inside the circle on the map. It grows automatically until it contains enough
-							stores.{#if mapOnlyChains.length}
+							stores, or set its size with − and + on the map.{#if mapOnlyChains.length}
 								{listNames(mapOnlyChains.map((c) => CHAINS[c].name))} don't publish their prices openly, so only their stores
 								are shown.{/if}
 						</p>
@@ -569,7 +701,28 @@
 				highlightLabel={pinLabel}
 				focus={focusStore}
 			/>
-			{#if area}<p class="area">{area.stores.length} stores within {km(area.radiusKm)}</p>{/if}
+			{#if area}
+				<div class="area" role="group" aria-label="Search circle">
+					<button
+						class="step"
+						onclick={() => resizeCircle(-1)}
+						disabled={circleKm <= CIRCLE_STEPS[0]}
+						aria-label="Smaller circle"
+						><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9" /></svg></button
+					>
+					<span aria-live="polite"
+						>{area.stores.length} {area.stores.length === 1 ? 'store' : 'stores'} within {km(area.radiusKm)}</span
+					>
+					<button
+						class="step"
+						onclick={() => resizeCircle(1)}
+						disabled={circleKm >= CIRCLE_STEPS.at(-1)!}
+						aria-label="Bigger circle"
+						><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9" /></svg></button
+					>
+					{#if pickedKm}<button class="auto" onclick={autoCircle}>Auto</button>{/if}
+				</div>
+			{/if}
 		</aside>
 	</main>
 </div>
@@ -794,12 +947,54 @@
 		position: absolute;
 		top: 12px;
 		left: 12px;
+		display: flex;
+		align-items: center;
+		gap: 4px;
 		background: var(--label);
-		padding: 7px 11px;
+		padding: 4px;
 		border-radius: 3px;
 		font-size: 0.8125rem;
 		font-weight: 700;
+		font-variant-numeric: tabular-nums;
 		box-shadow: 0 2px 6px rgb(0 0 0 / 0.18);
+	}
+	.area span {
+		padding: 0 6px;
+	}
+	/* Same control vocabulary as the sort toggle: label stock, steel edge, 3px corners. */
+	.area button {
+		height: 28px;
+		border: 1.5px solid var(--steel);
+		border-radius: 3px;
+		background: var(--label);
+		color: var(--steel);
+		font-size: 0.75rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+	.area button:hover:not(:disabled) {
+		background: var(--ground);
+	}
+	.area button:disabled {
+		opacity: 0.35;
+		cursor: default;
+	}
+	.area .step {
+		width: 28px;
+		display: grid;
+		place-items: center;
+		padding: 0;
+	}
+	.area .step svg {
+		width: 14px;
+		height: 14px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.8;
+		stroke-linecap: round;
+	}
+	.area .auto {
+		padding: 0 9px;
 	}
 
 	.notice {
@@ -1080,10 +1275,42 @@
 
 	/* The answer: the yellow label. */
 	.answer-head {
+		display: flex;
+		align-items: center;
+		gap: 12px;
 		margin: 26px 0 2px;
+	}
+	.answer-head h2 {
+		margin-right: auto;
 		font-size: 1.375rem;
 		font-weight: 800;
 		font-stretch: 80%;
+	}
+	.share-note {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--ink-2);
+	}
+	/* Same control vocabulary as the sort toggle: label stock, steel edge, 3px corners. */
+	.share {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 11px;
+		border: 1.5px solid var(--steel);
+		border-radius: 3px;
+		background: var(--label);
+		color: var(--ink);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.share:hover {
+		background: var(--ground);
+	}
+	.share svg {
+		width: 15px;
+		height: 15px;
 	}
 	.answer {
 		background: var(--yellow);
@@ -1410,6 +1637,13 @@
 		   wrapping the third segment. */
 		.seg {
 			min-width: calc((100% - 7px) / 3);
+		}
+		/* Finger-sized steps on the map's circle control. */
+		.area button {
+			height: 36px;
+		}
+		.area .step {
+			width: 36px;
 		}
 
 		.label {

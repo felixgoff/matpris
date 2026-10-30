@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { readCenter } from '../../../lib/server/params';
+import { readCenter, readRadius } from '../../../lib/server/params';
 import { search } from '../../../lib/server/search';
 import type { RequestHandler } from './$types';
 
@@ -10,7 +10,7 @@ export const GET: RequestHandler = ({ url }) => {
 	const center = readCenter(url);
 
 	const encoder = new TextEncoder();
-	const events = search(q, center);
+	const events = search(q, center, readRadius(url));
 	const stream = new ReadableStream({
 		async pull(controller) {
 			try {

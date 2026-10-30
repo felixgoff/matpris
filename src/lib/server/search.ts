@@ -47,9 +47,13 @@ async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyS
  * Stores of chains without online prices (ICA, Coop) are looked up in parallel and
  * sent as a second, complete `area` event, so they never delay the prices.
  */
-export async function* search(rawQuery: string, center: { lat: number; lng: number }): AsyncGenerator<SearchEvent> {
+export async function* search(
+	rawQuery: string,
+	center: { lat: number; lng: number },
+	pickedKm?: number
+): AsyncGenerator<SearchEvent> {
 	const query = normalizeQuery(rawQuery);
-	const area = await pricedArea(center);
+	const area = await pricedArea(center, pickedKm);
 	yield { type: 'area', center, ...area };
 
 	const byChain = new Map<ChainId, NearbyStore[]>();

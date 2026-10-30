@@ -27,6 +27,7 @@
 		"@types/apple-mapkit-js-browser": "^5.78.1",
 		"@types/node": "^26.6.6",
 		"electrobun": "2.0.5",
+		"html-to-image": "^1.11.13",
 		"playwright": "^1.64.1",
 		"svelte": "^5.57.1",
 		"svelte-check": "^4.6.0",
