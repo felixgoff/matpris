@@ -15,14 +15,20 @@ const env = (() => {
 	}
 })();
 const mapkitToken = /^PUBLIC_MAPKIT_TOKEN=(.*)$/m.exec(env)?.[1]?.trim().replace(/^(['"])(.*)\1$/, '$2') ?? '';
+// One version for everything: `bun run bump patch` changes package.json, and a release
+// is published for each version (.github/workflows/desktop-release.yml).
+const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 export default {
 	app: {
 		name: 'Matpris',
 		identifier: 'se.matpris.desktop',
-		version: '0.0.1',
+		version,
 		description: 'Grocery prices from the stores around you'
 	},
+	// The updater reads the latest GitHub release. The repo is private, so desktop/update.ts
+	// answers these URLs through the GitHub API with this Mac's `gh` login.
+	release: { baseUrl: 'https://github.com/felixgoff/matpris/releases/latest/download', generatePatch: false },
 	build: {
 		mainProcess: 'bun',
 		bun: {

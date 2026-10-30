@@ -6,6 +6,7 @@ import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { desktopRoute, updateBeforeLaunch, watchForUpdates } from './update';
 
 /** Built in from .env by electrobun.config.ts. */
 declare const MAPKIT_TOKEN: string;
@@ -34,13 +35,13 @@ ApplicationMenu.setApplicationMenu([
 const serverDir = join(import.meta.dir, '..', 'server');
 const { handler } = await import(pathToFileURL(join(serverDir, 'handler.js')).href);
 
-const server = createServer(handler);
+const server = createServer((req, res) => desktopRoute(req, res) || handler(req, res));
 await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
 const { port } = server.address() as AddressInfo;
 console.log(`Matpris server on http://127.0.0.1:${port}/`);
 
-new BrowserWindow({
-	title: 'Matpris',
-	url: `http://127.0.0.1:${port}/`,
-	frame: { x: 120, y: 80, width: 1280, height: 820 }
-});
+const frame = { x: 120, y: 80, width: 1280, height: 820 };
+// A newer release installs before the window opens; then the app restarts as it.
+await updateBeforeLaunch(port, frame);
+new BrowserWindow({ title: 'Matpris', url: `http://127.0.0.1:${port}/`, frame });
+watchForUpdates();

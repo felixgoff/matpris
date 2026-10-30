@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import StoreMap from '../lib/components/StoreMap.svelte';
+	import UpdateToast from '../lib/components/UpdateToast.svelte';
 	import { km, kr, krParts } from '../lib/format';
 	import { distanceKm } from '../lib/geo';
 	import {
@@ -725,6 +726,7 @@
 			{/if}
 		</aside>
 	</main>
+	<UpdateToast />
 </div>
 
 <style>

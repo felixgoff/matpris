@@ -112,6 +112,19 @@ bun run desktop:build  # release app: desktop/build/stable-macos-arm64/Matpris.a
 - **Icon:** `desktop/icons/Matpris.icon`, an Icon Composer document (open it in Icon Composer to adjust the glass, shadows or colours). The other candidates and a comparison sheet are in `desktop/icons/drafts/`.
 - The first build downloads Electrobun's runtime into `~/.hutch`. The app isn't code-signed, so macOS may ask before opening it the first time.
 
+### Releases and updates
+
+The version lives in `package.json` only. To ship one:
+
+```bash
+bun run bump patch     # or minor, major, or an exact 0.2.0
+git commit -am "Version 0.0.2" && git push
+```
+
+or run **Actions › Bump version**. The **Desktop release** workflow then builds the app on a `macos-26` runner and publishes the GitHub release `v<version>` with `Matpris-<version>-macos-arm64.zip` (for a first install: unzip, move to Applications) and the two files installed copies update from. Pushes whose version is already released skip the build, so everyday commits cost no macOS minutes. The workflow needs the repository secret `PUBLIC_MAPKIT_TOKEN` (`gh secret set PUBLIC_MAPKIT_TOKEN`), or the released map shows "The map could not be loaded".
+
+Installed copies update like RustRadar (`desktop/update.ts`, Electrobun's updater): on launch a newer release downloads and installs behind a small progress window, then the app restarts as the new version; while it's open it looks every hour, downloads quietly and offers **Restart** (Later installs it at the next launch). Offline, a slow check (8 s) or any failure just opens the installed version. The repo is private, so release files are fetched through the GitHub API with this Mac's `gh` login (`gh auth login`); the token is kept in memory only, and a Mac without gh never updates. Dev builds (`bun run desktop`) never update.
+
 ## Deploying
 
 `vite build` produces a standalone Node server (`@sveltejs/adapter-node`, `node build`). The caches live in memory, so one long-running server gets much more out of them than short-lived serverless functions would.

@@ -1,0 +1,82 @@
+name: Desktop release
+
+# Builds the macOS app and publishes it as the GitHub release v<package.json version>,
+# which installed copies update to (desktop/update.ts). A push to main only builds when
+# its version hasn't been released yet, so everyday commits cost no macOS minutes: to
+# ship, raise the version (`bun run bump patch` and push, or the "Bump version" workflow).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: desktop-release
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Version to release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      new: ${{ steps.v.outputs.new }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" >/dev/null 2>&1; then
+            echo "new=false" >> "$GITHUB_OUTPUT"
+            echo "v$version is already released. Raise the version to publish a new one." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  release:
+    name: Build and publish
+    needs: version
+    if: needs.version.outputs.new == 'true'
+    # Apple silicon with Xcode 26+, which compiles the Icon Composer icon.
+    runs-on: macos-26
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      # Electrobun downloads its runtime into ~/.hutch on the first build.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.hutch
+          key: hutch-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - name: MapKit token
+        env:
+          TOKEN: ${{ secrets.PUBLIC_MAPKIT_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::No PUBLIC_MAPKIT_TOKEN secret: this release's map shows \"The map could not be loaded\"."
+          else
+            printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
+          fi
+      - run: bun run check
+      - run: bun run test
+      - run: bun run desktop:build
+      - name: Publish v${{ env.VERSION }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The app zipped for a first install, plus the two files installed copies update from.
+          zip="Matpris-$VERSION-macos-arm64.zip"
+          ditto -c -k --keepParent desktop/build/stable-macos-arm64/Matpris.app "$zip"
+          gh release create "v$VERSION" --target "$GITHUB_SHA" --title "Matpris $VERSION" \
+            --notes "Installed copies update to this version the next time they open, or sooner when the app offers a restart. First install: unzip $zip and move Matpris.app to Applications." \
+            "$zip" desktop/artifacts/stable-macos-arm64-update.json desktop/artifacts/stable-macos-arm64-Matpris.app.tar.zst
+          echo "### Released Matpris $VERSION" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,43 @@
+name: Bump version
+
+# Actions > Bump version > Run workflow: raises the version in package.json, commits it
+# to the branch picked under "Use workflow from", and starts "Desktop release" for it.
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "patch, minor, major, or an exact version like 0.2.0"
+        required: true
+        default: patch
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: bump-${{ github.ref }}
+
+jobs:
+  bump:
+    name: Bump version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Change the version
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: npm version "$(printf '%s' "$BUMP" | tr -d '[:space:]')" --no-git-tag-version
+
+      - name: Commit, push and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Version $version"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          # A push made with this workflow's token doesn't start other workflows, so ask directly.
+          gh workflow run desktop-release.yml --ref "${GITHUB_REF_NAME}"
+          echo "### Version $version committed to \`${GITHUB_REF_NAME}\`, release started" >> "$GITHUB_STEP_SUMMARY"
