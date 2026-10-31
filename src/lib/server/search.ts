@@ -14,11 +14,16 @@ export function normalizeQuery(q: string) {
 
 async function searchChain(adapter: ChainAdapter, query: string, stores: NearbyStore[]): Promise<ResultRow[]> {
 	const chain = adapter.chain;
-	const rate = (hits: ProductHit[], store: NearbyStore): ResultRow[] =>
-		hits.flatMap((h) => {
+	const rate = (hits: ProductHit[], store: NearbyStore): ResultRow[] => {
+		// A chain can list one product twice (ICA repeats it across product groups); the page keys rows by id.
+		const seen = new Set<string>();
+		return hits.flatMap((h) => {
+			if (seen.has(h.id)) return [];
+			seen.add(h.id);
 			const match = relevance(query, h.name, h.brand, h.categories);
 			return match ? [{ ...h, store, match }] : [];
 		});
+	};
 
 	if (adapter.pricing === 'chain') {
 		// One national price list: price it once, point at the nearest store.

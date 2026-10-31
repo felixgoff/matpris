@@ -61,6 +61,8 @@
 				created.addEventListener('user-location-error', (e: { message?: string }) =>
 					onlocateerror?.(e.message || 'location access denied')
 				);
+				// Zooming in makes room for culled pins; zooming out culls more.
+				created.addEventListener('region-change-end', cull);
 				// Asks the browser for the location and draws MapKit's blue dot. We don't
 				// set tracksUserLocation: the view should fit the stores, not follow the dot.
 				created.showsUserLocation = true;
@@ -108,6 +110,47 @@
 		return pin;
 	}
 
+	/** The annotations culling places; `store` is unset for the location pin. */
+	let placed: { a: mapkit.Annotation; store?: NearbyStore }[] = [];
+
+	// MapKit's displayPriority/collisionMode leave custom pins piled on each other, so
+	// pins are culled here. They're placed most important first: the cheapest and the
+	// store the shopper points at (both always shown), the location, priced stores,
+	// then map-only ones, nearest first. A pin that would overlap one already placed
+	// hides until zooming in makes room for it.
+	const rank = (s?: NearbyStore) =>
+		!s ? 2 : s.id === highlight ? 0 : s.id === focus ? 1 : CHAINS[s.chain].online ? 3 : 4;
+	function cull() {
+		if (!map) return;
+		const m = map;
+		/** Page box of a w×h shape whose bottom centre sits `below` px under the coordinate. */
+		const box = (c: mapkit.Coordinate, w: number, h: number, below = 0) => {
+			const p = m.convertCoordinateToPointOnPage(c);
+			return { l: p.x - w / 2 - 1, r: p.x + w / 2 + 1, t: p.y + below - h - 1, b: p.y + below + 1 };
+		};
+		type Box = ReturnType<typeof box>;
+		const hits = (a: Box, b: Box) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
+		const taken: Box[] = [];
+		// MapKit's own blue dot can't be hidden, so pins make room for it.
+		const me = m.userLocationAnnotation?.coordinate;
+		if (me) taken.push(box(me, 22, 22, 11));
+		const order = placed.toSorted(
+			(x, y) => rank(x.store) - rank(y.store) || (x.store?.distanceKm ?? 0) - (y.store?.distanceKm ?? 0)
+		);
+		for (const { a, store } of order) {
+			const pin = store && pins.get(store.id);
+			if (store && !pin?.offsetWidth) continue; // not laid out yet
+			// Store pins plus their pointer, or MapKit's marker balloon for the location.
+			const b = pin ? box(a.coordinate, pin.offsetWidth, pin.offsetHeight + 7) : box(a.coordinate, 30, 40);
+			const show = rank(store) <= 1 || !taken.some((t) => hits(b, t));
+			if (show) taken.push(b);
+			// A class hides our own pins at once and keeps them measurable; MapKit applies
+			// `visible` only when it next redraws.
+			if (pin) pin.classList.toggle('culled', !show);
+			else a.visible = show;
+		}
+	}
+
 	$effect(() => {
 		if (!map) return;
 		const at = (lat: number, lng: number) => new mapkit.Coordinate(lat, lng);
@@ -130,30 +173,17 @@
 			items.push(circle);
 		}
 
-		// Let MapKit thin the pile-up instead of forcing every pin to stay: the cheapest
-		// wins collisions, other priced stores yield to it, and the price-less (map-only)
-		// pins drop out first. Hidden pins reappear as you zoom in. The cheapest is also
-		// placed last so it draws on top of any peer it doesn't already outrank.
-		const { Required, High, Low } = mapkit.Annotation.DisplayPriority;
-		// Custom annotations only drop out of a collision when a collisionMode is set;
-		// Rectangle matches the label shape, so the wide cheapest label clears a wide berth.
-		const Rectangle = mapkit.Annotation.CollisionMode.Rectangle;
-		const priority = (s: NearbyStore) => (s.id === highlight ? Required : CHAINS[s.chain].online ? High : Low);
-		const ordered = stores.toSorted((a, b) => Number(a.id === highlight) - Number(b.id === highlight));
-		const annotations: mapkit.Annotation[] = ordered.map((s) => {
-			const a = new mapkit.Annotation(at(s.lat, s.lng), () => pinElement(s, s.id === highlight), {
+		placed = stores.map((s) => ({
+			store: s,
+			a: new mapkit.Annotation(at(s.lat, s.lng), () => pinElement(s, s.id === highlight), {
 				title: s.name,
 				subtitle: [s.address, `${km(s.distanceKm)} away`, !CHAINS[s.chain].online && 'No online prices']
 					.filter(Boolean)
 					.join(' · '),
 				// Pins are anchored at their bottom centre; lift them by the pointer's height.
 				anchorOffset: new DOMPoint(0, -7)
-			});
-			// Set on the instance: the Annotation constructor ignores these as options.
-			a.displayPriority = priority(s);
-			a.collisionMode = Rectangle;
-			return a;
-		});
+			})
+		}));
 		if (showCenterPin) {
 			const dot = new mapkit.MarkerAnnotation(at(center.lat, center.lng), {
 				color: '#26292b',
@@ -161,14 +191,13 @@
 				glyphText: '•',
 				titleVisibility: mapkit.FeatureVisibility.Hidden
 			});
-			// Above the stores but below the cheapest, so its wide label is never pierced
-			// by the location pin when both sit on the same spot.
-			dot.displayPriority = 900;
-			dot.collisionMode = Rectangle;
-			annotations.unshift(dot);
+			placed.push({ a: dot });
 		}
+		const annotations = placed.map((p) => p.a);
 		map.addAnnotations(annotations);
 		items.push(...annotations);
+		// After MapKit has laid the pins out, so they can be measured.
+		requestAnimationFrame(cull);
 
 		// Fit the circle when there is one; MapKit's own fit of the wide pins zooms out too far.
 		fitted = items[0] instanceof mapkit.CircleOverlay ? [items[0]] : items;
@@ -179,6 +208,8 @@
 	$effect(() => {
 		focus;
 		for (const [id, pin] of pins) focusClasses(pin, id);
+		// The store the shopper points at outranks its neighbours, so it shows even when culled.
+		requestAnimationFrame(cull);
 	});
 </script>
 
@@ -308,6 +339,10 @@
 	:global(.store-pin.focus) {
 		opacity: 1;
 		transform: scale(1.2);
+	}
+	/* Hidden by culling (it would overlap a more important pin). */
+	:global(.store-pin.culled) {
+		visibility: hidden;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		:global(.store-pin) {
