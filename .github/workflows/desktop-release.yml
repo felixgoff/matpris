@@ -10,11 +10,13 @@ name: Release
 # "Bump version" workflow, which starts this one by its file name).
 #
 # Secrets (all optional; each missing one is a warning, never a failed build):
-#   PUBLIC_MAPKIT_TOKEN                      the map (desktop and phone)
+#   MAPKIT_PRIVATE_KEY                       the MapKit .p8: each release signs its own map
+#                                            token (or PUBLIC_MAPKIT_TOKEN, a ready-made one)
 #   TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]     signs the desktop update bundles
 #   ANDROID_KEYSTORE (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS,
 #   ANDROID_KEY_PASSWORD                     signs the phone and watch APKs alike
-# Variables: TAURI_UPDATER_PUBKEY, the public half of the updater key, built into the app.
+# Variables: TAURI_UPDATER_PUBKEY, the public half of the updater key, built into the app;
+#   MAPKIT_KEY_ID, the MapKit key's ID.
 on:
   push:
     branches: [main]
@@ -93,12 +95,18 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: MapKit token
         env:
+          MAPKIT_PRIVATE_KEY: ${{ secrets.MAPKIT_PRIVATE_KEY }}
+          MAPKIT_KEY_ID: ${{ vars.MAPKIT_KEY_ID }}
           TOKEN: ${{ secrets.PUBLIC_MAPKIT_TOKEN }}
         run: |
-          if [ -z "$TOKEN" ]; then
-            echo "::warning::No PUBLIC_MAPKIT_TOKEN secret: this release's map shows \"The map could not be loaded\"."
-          else
+          # A fresh token signed from the MapKit key for every release (scripts/mapkit-token.mjs),
+          # else a hand-made one from PUBLIC_MAPKIT_TOKEN.
+          if [ -n "$MAPKIT_PRIVATE_KEY" ] && [ -n "$MAPKIT_KEY_ID" ]; then
+            node scripts/mapkit-token.mjs
+          elif [ -n "$TOKEN" ]; then
             printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
+          else
+            echo "::warning::No MAPKIT_PRIVATE_KEY secret + MAPKIT_KEY_ID variable (or PUBLIC_MAPKIT_TOKEN): this release's map shows \"The map could not be loaded\"."
           fi
       # Checks once, on the cheapest runner. The Tauri crate itself is built by the bundle step.
       - if: runner.os == 'Linux'
@@ -218,12 +226,18 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: MapKit token
         env:
+          MAPKIT_PRIVATE_KEY: ${{ secrets.MAPKIT_PRIVATE_KEY }}
+          MAPKIT_KEY_ID: ${{ vars.MAPKIT_KEY_ID }}
           TOKEN: ${{ secrets.PUBLIC_MAPKIT_TOKEN }}
         run: |
-          if [ -z "$TOKEN" ]; then
-            echo "::warning::No PUBLIC_MAPKIT_TOKEN secret: this release's map shows \"The map could not be loaded\"."
-          else
+          # A fresh token signed from the MapKit key for every release (scripts/mapkit-token.mjs),
+          # else a hand-made one from PUBLIC_MAPKIT_TOKEN.
+          if [ -n "$MAPKIT_PRIVATE_KEY" ] && [ -n "$MAPKIT_KEY_ID" ]; then
+            node scripts/mapkit-token.mjs
+          elif [ -n "$TOKEN" ]; then
             printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
+          else
+            echo "::warning::No MAPKIT_PRIVATE_KEY secret + MAPKIT_KEY_ID variable (or PUBLIC_MAPKIT_TOKEN): this release's map shows \"The map could not be loaded\"."
           fi
       - name: Signing key
         env:

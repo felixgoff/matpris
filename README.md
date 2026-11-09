@@ -25,9 +25,15 @@ bun run check          # type check the page
 
 ## Map token
 
-The map uses [MapKit JS](https://developer.apple.com/maps/web/) and needs a JWT in `PUBLIC_MAPKIT_TOKEN` (`.env`, which is gitignored). The token is sent to the browser by design, but keep it out of git so it can be rotated.
+The map uses [MapKit JS](https://developer.apple.com/maps/web/), which needs a token (a JWT) in `PUBLIC_MAPKIT_TOKEN`. The token is built into the page, because the apps have no server to read it from.
 
-Tokens made in the Apple Developer dashboard expire. When the map shows "The map could not be loaded", generate a new one, update `.env` (and the `PUBLIC_MAPKIT_TOKEN` repo secret), and rebuild: the token is built into the page, because the apps have no server to read it from. For production, sign short-lived tokens on the server from your MapKit `.p8` key (ES256, with your Team ID as `iss` and the Key ID as `kid`), and set an `origin` claim to your domain.
+Tokens are signed here from the MapKit private key (`AuthKey_<KEYID>.p8`, Apple Developer → Keys, with MapKit JS enabled), so nothing expires by surprise:
+
+```bash
+bun run mapkit:token   # signs a token (valid 180 days) into .env from ~/.matpris/AuthKey_*.p8
+```
+
+Releases do the same with every build, from the `MAPKIT_PRIVATE_KEY` secret and the `MAPKIT_KEY_ID` variable (`scripts/setup-release-secrets.sh` sets both). The tokens have no `origin` claim on purpose: the apps' pages come from `tauri://localhost` / `http://tauri.localhost`, not from a website, so a token tied to a hostname would be refused there. MapKit logs a console warning about that; it's expected. Anyone who digs the token out of the app could use the MapKit quota; revoke the key in Apple Developer if that ever happens.
 
 ## How it works
 
@@ -159,11 +165,11 @@ git commit -am "Version 0.0.2" && git push
 
 or run **Actions › Bump version**. The **Release** workflow (`desktop-release.yml`) then builds on macOS, Windows and Linux runners plus one Android job (phone + watch), checks that the iPhone app compiles (without signing), and publishes the GitHub release `v<version>` with the installers (`.dmg`, `-setup.exe`/`.msi`, `.AppImage`/`.deb`, the two APKs), the signed update bundles and `latest.json`. Pushes whose version is already released skip the builds.
 
-Set these up once (each missing one is a warning, not a failed release). `bash scripts/setup-release-secrets.sh` does it from your computer with your `gh` login: it makes the keys there, keeps them in `~/.matpris/` (back that up), never replaces a key that's already set, and takes the MapKit token from `.env`.
+Set these up once (each missing one is a warning, not a failed release). `bash scripts/setup-release-secrets.sh` does it from your computer with your `gh` login: it makes the keys there, keeps them in `~/.matpris/` (back that up), never replaces a key that's already set, and uploads the MapKit key from `~/.matpris` or Downloads.
 
 | Name | Kind | For |
 | --- | --- | --- |
-| `PUBLIC_MAPKIT_TOKEN` | secret | The map |
+| `MAPKIT_PRIVATE_KEY` + `MAPKIT_KEY_ID` | secret + variable | The map: each release signs its own token (or `PUBLIC_MAPKIT_TOKEN`, a ready-made token) |
 | `TAURI_SIGNING_PRIVATE_KEY`, `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | secrets | Signing desktop updates: `bunx tauri signer generate -w ~/.tauri/matpris.key` |
 | `TAURI_UPDATER_PUBKEY` | variable | The public half of that key, built into the app; without it the app never updates itself |
 | `ANDROID_KEYSTORE` (base64), `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | secrets | One key for the phone and watch APKs, so they update in place and can talk to each other |

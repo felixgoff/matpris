@@ -6,7 +6,8 @@
 #   bash scripts/setup-release-secrets.sh            # set what's missing
 #   DRY_RUN=1 bash scripts/setup-release-secrets.sh  # show what it would do
 #
-# Needs: gh (logged in, with admin rights on the repo), bun, keytool (any JDK), openssl.
+# Needs: gh (logged in, with admin rights on the repo), bun, node, keytool (any JDK),
+# openssl. On Windows run it from Git Bash.
 #
 # It never replaces an existing key: a new updater key or Android keystore would stop
 # installed copies from updating (and the watch from talking to the phone). The keys
@@ -24,23 +25,32 @@ set_secret() { # name, value on stdin
 	if [ -n "${DRY_RUN:-}" ]; then echo "would set secret $1"; cat >/dev/null; else gh secret set "$1" --repo "$REPO"; fi
 }
 
-for tool in gh bun keytool openssl; do
+for tool in gh bun node keytool openssl; do
 	command -v "$tool" >/dev/null || { echo "Missing $tool. Install it and run this again." >&2; exit 1; }
 done
 gh auth status >/dev/null 2>&1 || { echo "Run gh auth login first." >&2; exit 1; }
 mkdir -p "$KEYS" && chmod 700 "$KEYS"
 
-# 1. The map: the token from .env, if there is one.
-if have_secret PUBLIC_MAPKIT_TOKEN; then
-	echo "✓ PUBLIC_MAPKIT_TOKEN is already set"
-else
-	token=$( { sed -n 's/^PUBLIC_MAPKIT_TOKEN=//p' .env 2>/dev/null || true; } | tr -d "\"'" | head -1)
-	if [ -n "$token" ]; then
-		printf '%s' "$token" | set_secret PUBLIC_MAPKIT_TOKEN
-		echo "✓ PUBLIC_MAPKIT_TOKEN set from .env"
-	else
-		echo "! No PUBLIC_MAPKIT_TOKEN in .env: make a MapKit JS token in Apple Developer and run this again"
+# 1. The map: the MapKit key (.p8), from which every release signs its own token
+#    (scripts/mapkit-token.mjs). Looked for in ~/.matpris, then Downloads (and copied
+#    to ~/.matpris, where `bun run mapkit:token` finds it too).
+p8=$(ls "$KEYS"/AuthKey_*.p8 2>/dev/null | head -1 || true)
+if [ -z "$p8" ]; then
+	found=$(ls "$HOME"/Downloads/AuthKey_*.p8 2>/dev/null | head -1 || true)
+	if [ -n "$found" ]; then
+		cp "$found" "$KEYS/" && chmod 600 "$KEYS/$(basename "$found")"
+		p8="$KEYS/$(basename "$found")"
 	fi
+fi
+if [ -n "$p8" ]; then
+	key_id=$(basename "$p8" .p8 | sed 's/^AuthKey_//')
+	set_secret MAPKIT_PRIVATE_KEY <"$p8"
+	run gh variable set MAPKIT_KEY_ID --repo "$REPO" --body "$key_id"
+	echo "✓ MapKit key $key_id set (MAPKIT_PRIVATE_KEY + MAPKIT_KEY_ID); releases sign their own map token"
+elif have_secret PUBLIC_MAPKIT_TOKEN; then
+	echo "✓ PUBLIC_MAPKIT_TOKEN is already set (no MapKit key found to replace it with)"
+else
+	echo "! No MapKit key: put AuthKey_<KEYID>.p8 in ~/.matpris or Downloads and run this again"
 fi
 
 # 2. Desktop updates: a Tauri updater key pair.

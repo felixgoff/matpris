@@ -25,6 +25,7 @@
 		"stores:ica": "node scripts/ica-stores.mjs",
 		"catalogue:ica": "node scripts/ica-catalogue.mjs",
 		"warm:ica": "node scripts/ica-warm.mjs",
+		"mapkit:token": "node scripts/mapkit-token.mjs",
 		"record:ica": "node scripts/ica-record.mjs"
 	},
 	"devDependencies": {
