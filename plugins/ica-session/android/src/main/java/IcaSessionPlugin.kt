@@ -44,6 +44,12 @@ class IcaSessionPlugin(private val activity: Activity) : Plugin(activity) {
     fun mint(invoke: Invoke) {
         val args = invoke.parseArgs(MintArgs::class.java)
         activity.runOnUiThread {
+            // The watch's searches (WearSearchService) can run on after the app's window
+            // has closed: with no activity to show ICA's check in, ICA is just busy.
+            if (activity.isFinishing || activity.isDestroyed) {
+                invoke.reject("Open Matpris on the phone for ICA's prices")
+                return@runOnUiThread
+            }
             if (visit != null) {
                 invoke.reject("ICA's shop is already open")
                 return@runOnUiThread

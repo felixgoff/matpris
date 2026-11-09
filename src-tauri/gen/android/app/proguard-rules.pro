@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# The watch bridge: Rust calls WatchBridge.search's callback by name over JNI
+# (src-tauri/src/watch.rs), which R8 can't see.
+-keep class se.matpris.matpris.WatchBridge { *; }
+-keep interface se.matpris.matpris.WatchBridge$Events { *; }
+-keepclassmembers class * implements se.matpris.matpris.WatchBridge$Events { boolean onEvent(java.lang.String); }

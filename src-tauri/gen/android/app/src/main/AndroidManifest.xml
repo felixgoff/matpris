@@ -29,6 +29,18 @@
             </intent-filter>
         </activity>
 
+        <!-- The Galaxy Watch's searches (wear/, Api.kt). Play services starts it for a
+             message on /matpris/search, also when the app isn't open; it isn't exported
+             in the ordinary sense, Play services binds it for the paired watch only. -->
+        <service
+            android:name=".WearSearchService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data android:scheme="wear" android:host="*" android:pathPrefix="/matpris/search" />
+            </intent-filter>
+        </service>
+
         <provider
           android:name="androidx.core.content.FileProvider"
           android:authorities="${applicationId}.fileprovider"
