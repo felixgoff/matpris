@@ -113,7 +113,7 @@ private fun saveSearch(context: Context, query: String) {
 }
 
 @Composable
-internal fun Home(onSearch: (String) -> Unit, serverUrl: String = BuildConfig.SERVER_URL) {
+internal fun Home(onSearch: (String) -> Unit) {
     val context = LocalContext.current
     val listState = rememberScalingLazyListState()
     val recent = remember { recentSearches(context) }
@@ -137,16 +137,6 @@ internal fun Home(onSearch: (String) -> Unit, serverUrl: String = BuildConfig.SE
     ScreenScaffold(scrollState = listState) {
         ScalingLazyColumn(state = listState, modifier = Modifier.fillMaxWidth()) {
             item { Wordmark() }
-            if (serverUrl.isEmpty()) {
-                item {
-                    Text(
-                        "This build has no Matpris server. Build it with MATPRIS_SERVER_URL.",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-                return@ScalingLazyColumn
-            }
             item {
                 Button(
                     onClick = {
@@ -190,8 +180,14 @@ private fun Results(query: String) {
     LaunchedEffect(query) {
         val here = currentPlace(context)
         place = here
-        search(query, here)
-            .catch { failure = "Matpris can't be reached right now." }
+        search(context, query, here)
+            .catch { e ->
+                failure = when (e) {
+                    is NoPhoneException -> e.message
+                    is kotlinx.coroutines.TimeoutCancellationException -> "Your phone didn't answer in time."
+                    else -> "Your phone couldn't search right now."
+                }
+            }
             .collect { e ->
                 when (e) {
                     is SearchEvent.ChainResult -> {
@@ -199,6 +195,7 @@ private fun Results(query: String) {
                         rows.addAll(e.rows)
                     }
                     SearchEvent.Done -> done = true
+                    is SearchEvent.Failed -> failure = e.message
                     SearchEvent.Other -> {}
                 }
             }

@@ -12,24 +12,19 @@ plugins {
 val matprisVersion = (JsonSlurper().parse(file("../../package.json")) as Map<String, Any>)["version"] as String
 val matprisVersionCode = matprisVersion.split('.', '-').take(3).fold(0) { n, part -> n * 100 + (part.toIntOrNull() ?: 0) }
 
-// The watch asks the hosted Matpris server (Dockerfile in the repo root), like the phone
-// app: MATPRIS_SERVER_URL=https://… ./gradlew assembleDebug, or -Pmatpris.serverUrl=…
-val serverUrl = (System.getenv("MATPRIS_SERVER_URL") ?: (findProperty("matpris.serverUrl") as String?) ?: "")
-    .trim().trimEnd('/')
-
 android {
     namespace = "se.matpris.wear"
     compileSdk = 36
 
     defaultConfig {
-        // Same id as the phone app: Wear OS pairs a watch app with its phone app by id.
-        applicationId = "se.matpris.app"
+        // Same id (and signing key) as the Tauri phone app: the Wear OS Data Layer only
+        // connects a watch app to a phone app with the same id and signature.
+        applicationId = "se.matpris.matpris"
         // Wear OS 3+; the Galaxy Watch 5 runs Wear OS 4 (API 33) and later.
         minSdk = 30
         targetSdk = 36
         versionCode = matprisVersionCode
         versionName = matprisVersion
-        buildConfigField("String", "SERVER_URL", "\"$serverUrl\"")
     }
 
     buildTypes {
@@ -39,7 +34,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     // Screenshot tests draw the screens on a JVM (Robolectric): no emulator needed.
     testOptions {
@@ -66,6 +60,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.11.0")
     implementation("androidx.core:core-splashscreen:1.2.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.android.gms:play-services-wearable:19.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
 

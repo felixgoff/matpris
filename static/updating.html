@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Updating Matpris</title>
+<!-- The desktop app's launch progress window (src-tauri/src/update.rs): the Shelf Edge
+     rail, the wordmark and a yellow bar. -->
+<style>
+	@font-face { font-family: Archivo; src: url(/fonts/archivo-latin.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+	html { background: #26292b; color: #fff; font: 600 13px/1.4 Archivo, system-ui, sans-serif; height: 100%; }
+	body { margin: 0; height: 100%; display: grid; place-content: center; gap: 12px; padding: 0 32px; -webkit-user-select: none; user-select: none; cursor: default; }
+	b { font: 900 24px/1 Archivo; font-stretch: 70%; letter-spacing: -0.01em; }
+	b i { font-style: normal; color: #ffd400; }
+	.bar { width: 316px; height: 6px; border-radius: 2px; background: #3a3e41; overflow: hidden; }
+	.bar span { display: block; height: 100%; width: 0; background: #ffd400; transition: width 0.2s; }
+	.bar.busy span { width: 35%; animation: slide 1.1s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+	@keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(320%); } }
+	@media (prefers-reduced-motion: reduce) { .bar.busy span { animation: none; width: 100%; opacity: 0.5; } }
+</style>
+<b data-tauri-drag-region>MAT<i>PRIS</i></b>
+<p id="status">Updating Matpris…</p>
+<div class="bar busy" id="bar"><span></span></div>
+<script>
+	const status = document.getElementById('status'),
+		bar = document.getElementById('bar');
+	setInterval(async () => {
+		const s = await window.__TAURI_INTERNALS__.invoke('update_status').catch(() => null);
+		if (!s) return;
+		const known = s.phase === 'downloading' && s.progress != null;
+		if (s.phase === 'installing') status.textContent = 'Installing…';
+		else if (s.phase === 'downloading') status.textContent = 'Downloading Matpris ' + s.version + '…';
+		bar.classList.toggle('busy', !known);
+		bar.firstElementChild.style.width = known ? s.progress + '%' : '';
+	}, 250);
+</script>

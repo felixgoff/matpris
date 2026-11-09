@@ -1,0 +1,8 @@
+{
+	"$schema": "../gen/schemas/mobile-schema.json",
+	"identifier": "mobile",
+	"description": "Location on phones, for the map's 'Use my location'",
+	"windows": ["main"],
+	"platforms": ["android", "iOS"],
+	"permissions": ["geolocation:default"]
+}

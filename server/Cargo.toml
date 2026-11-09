@@ -1,0 +1,15 @@
+[package]
+name = "matpris-server"
+version = "0.0.0"
+edition.workspace = true
+publish = false
+description = "Matpris's backend over HTTP, for developing the page in a browser (bun run dev)"
+
+[dependencies]
+matpris-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio = { workspace = true, features = ["process", "fs", "net"] }
+async-trait.workspace = true
+axum = "0.8"
+tokio-stream = "0.1"

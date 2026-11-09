@@ -1,0 +1,7 @@
+{
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "default",
+	"description": "The Matpris page: its own commands (allowed by default) and core APIs",
+	"windows": ["main", "updating"],
+	"permissions": ["core:default"]
+}

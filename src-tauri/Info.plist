@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- "Use my location" on the Mac: the map asks WebKit, WebKit asks macOS. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Matpris finds the grocery stores around you.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Matpris finds the grocery stores around you.</string>
+</dict>
+</plist>

@@ -5,6 +5,8 @@
 pub mod cache;
 pub mod chains;
 pub mod geo;
+pub mod geocode;
+pub mod image;
 pub mod http;
 pub mod normalize;
 pub mod search;

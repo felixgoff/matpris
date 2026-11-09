@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { inApp } from '../api';
 
-	// Desktop app only (desktop/update.ts): a newer version downloaded while the app was
-	// open waits for a restart. Opening the app installs it anyway, so Later only hides
-	// the offer for now.
+	// Desktop app only (src-tauri/src/update.rs): a newer version downloaded while the app
+	// was open waits for a restart. Opening the app installs it anyway, so Later only
+	// hides the offer for now.
 	let version = $state<string>();
 	let dismissed = $state<string>();
 	let restarting = $state(false);
 	let error = $state('');
 
 	onMount(() => {
-		// Electrobun's preload marks its windows; a browser tab never asks.
-		if (!('__electrobunWebviewId' in window)) return;
+		// A browser tab never asks; phones update from their store or a new APK.
+		if (!inApp) return;
 		const poll = async () => {
-			const s = await fetch('/__desktop/update')
-				.then((r) => r.json())
-				.catch(() => undefined);
+			const { invoke } = await import('@tauri-apps/api/core');
+			const s = await invoke<{ phase: string; version?: string } | null>('update_status').catch(() => undefined);
 			version = s?.phase === 'ready' || s?.phase === 'installing' ? s.version : undefined;
 		};
 		poll();
@@ -26,8 +26,12 @@
 	async function restart() {
 		restarting = true;
 		error = '';
-		const res = await fetch('/__desktop/update/restart', { method: 'POST' }).catch(() => undefined);
-		if (!res?.ok) {
+		const { invoke } = await import('@tauri-apps/api/core');
+		const ok = await invoke('update_restart').then(
+			() => true,
+			() => false
+		);
+		if (!ok) {
 			restarting = false;
 			error = "Couldn't install it now. It installs the next time Matpris opens.";
 		}

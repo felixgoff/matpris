@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import StoreMap from '../lib/components/StoreMap.svelte';
 	import UpdateToast from '../lib/components/UpdateToast.svelte';
+	import * as api from '../lib/api';
 	import { km, kr, krParts } from '../lib/format';
 	import { distanceKm } from '../lib/geo';
 	import {
@@ -180,9 +181,7 @@
 		locationError = '';
 		locating = true;
 		try {
-			const res = await fetch(`/api/geocode?q=${encodeURIComponent(address)}`);
-			if (!res.ok) throw new Error((await res.json()).message ?? res.statusText);
-			const p = await res.json();
+			const p = await api.geocode(address);
 			followDevice = false;
 			location = { lat: p.lat, lng: p.lng, label: p.label.split(',').slice(0, 3).join(','), device: false };
 			editingAddress = false;
@@ -202,7 +201,6 @@
 	// The search circle: automatic, or a size the shopper stepped to on the map.
 	const CIRCLE_STEPS = [0.5, 1, 2, 3, 5, 7.5, 10, 15, 20, 30];
 	let pickedKm = $state<number>();
-	const radiusParam = () => (pickedKm ? `&radius=${pickedKm}` : '');
 	const circleKm = $derived(pickedKm ?? area?.radiusKm ?? 0);
 
 	/** Steps from the current size, so an automatic 3.9 km goes to 5 or 3. */
@@ -220,9 +218,9 @@
 	let areaRequest = 0;
 	async function loadArea() {
 		const id = ++areaRequest;
-		const res = await fetch(`/api/stores?lat=${location.lat}&lng=${location.lng}${radiusParam()}`);
+		const next = await api.stores(location, pickedKm).catch(() => undefined);
 		// Quick steps on the circle: only the latest answer counts.
-		if (res.ok && id === areaRequest) area = await res.json();
+		if (next && id === areaRequest) area = next;
 	}
 
 	async function runSearch(e?: SubmitEvent) {
@@ -238,21 +236,7 @@
 		status = Object.fromEntries(chainIds.map((c) => [c, { status: 'loading' }]));
 
 		try {
-			const res = await fetch(
-				`/api/search?q=${encodeURIComponent(q)}&lat=${location.lat}&lng=${location.lng}${radiusParam()}`,
-				{ signal: controller.signal }
-			);
-			if (!res.ok || !res.body) throw new Error((await res.json()).message ?? res.statusText);
-			const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
-			let buffer = '';
-			for (;;) {
-				const { value, done } = await reader.read();
-				if (done) break;
-				buffer += value;
-				const lines = buffer.split('\n');
-				buffer = lines.pop()!;
-				for (const line of lines) if (line) handle(JSON.parse(line));
-			}
+			await api.search(q, location, pickedKm, handle, controller.signal);
 		} catch (err) {
 			if ((err as Error).name !== 'AbortError') searchError = (err as Error).message;
 		} finally {
@@ -260,7 +244,7 @@
 		}
 	}
 
-	function handle(ev: SearchEvent | { type: 'error'; message: string }) {
+	function handle(ev: api.BackendEvent) {
 		if (ev.type === 'area') area = ev;
 		else if (ev.type === 'chain') {
 			rows = [...rows, ...ev.results];
@@ -319,7 +303,8 @@
 		copy.style.cssText = 'margin:0;animation:none;box-shadow:none';
 		for (const img of copy.querySelectorAll('img')) {
 			img.loading = 'eager';
-			if (new URL(img.src).origin !== window.location.origin) img.src = `/api/image?src=${encodeURIComponent(img.src)}`;
+			if (new URL(img.src).origin !== window.location.origin)
+				img.src = await api.drawableImage(img.src).catch(() => NO_PHOTO);
 		}
 		frame.append(copy);
 		card.parentElement!.append(frame);

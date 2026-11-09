@@ -39,6 +39,6 @@ class ScreensTest {
     }
 
     @Test fun home() {
-        captureRoboImage("build/outputs/roborazzi/home.png") { Screen { Home(onSearch = {}, serverUrl = "https://matpris.example.se") } }
+        captureRoboImage("build/outputs/roborazzi/home.png") { Screen { Home(onSearch = {}) } }
     }
 }

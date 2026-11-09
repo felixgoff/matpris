@@ -51,6 +51,8 @@ data class Row(
 sealed interface SearchEvent {
     data class ChainResult(val chain: Chain, val status: String, val rows: List<Row>) : SearchEvent
     data object Done : SearchEvent
+    /** The phone couldn't search (e.g. no network there). */
+    data class Failed(val message: String) : SearchEvent
     data object Other : SearchEvent
 }
 
@@ -67,6 +69,7 @@ fun parseEvent(line: String): SearchEvent {
             SearchEvent.ChainResult(chain, e.getString("status"), rows)
         }
         "done" -> SearchEvent.Done
+        "error" -> SearchEvent.Failed(e.optString("message", "The search failed"))
         else -> SearchEvent.Other
     }
 }
