@@ -134,6 +134,14 @@ pub(crate) fn open_main_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     let builder = WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()));
     #[cfg(desktop)]
     let builder = builder.title("Matpris").inner_size(1280.0, 820.0).min_inner_size(380.0, 600.0);
+    // WebKitGTK denies any permission request nobody answers, so on Linux "Use my
+    // location" always said location access was off. The page is our own; where the
+    // position comes from (GeoClue) is still up to the system.
+    #[cfg(target_os = "linux")]
+    let builder = builder.on_permission_request(|_, kind| match kind {
+        tauri::webview::PermissionKind::Geolocation => tauri::webview::PermissionResponse::Allow,
+        _ => tauri::webview::PermissionResponse::Default,
+    });
     builder.build()?;
     Ok(())
 }
@@ -184,11 +192,17 @@ pub fn run() {
         ])
         .build(tauri::generate_context!())
         .expect("error while building Matpris")
-        .run(|_app, event| {
-            if let tauri::RunEvent::ExitRequested { code: None, api, .. } = event {
-                if !MAIN_OPENED.load(Ordering::SeqCst) {
-                    api.prevent_exit();
-                }
+        .run(|_app, event| match event {
+            tauri::RunEvent::ExitRequested { code: None, api, .. } if !MAIN_OPENED.load(Ordering::SeqCst) => {
+                api.prevent_exit();
             }
+            // Closing the page is leaving the app, even while ICA's hidden window is still
+            // warming: otherwise the process lives on unseen, or ICA's check pops up for
+            // an app the person already closed.
+            #[cfg(desktop)]
+            tauri::RunEvent::WindowEvent { label, event: tauri::WindowEvent::Destroyed, .. } if label == "main" => {
+                _app.exit(0);
+            }
+            _ => {}
         });
 }
