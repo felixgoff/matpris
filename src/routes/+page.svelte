@@ -100,8 +100,6 @@
 
 	const visible = $derived(relevant.filter((r) => !hidden.has(r.chain)).toSorted(byRank));
 	const others = $derived(rows.filter((r) => r.match !== tier && !hidden.has(r.chain)).toSorted(byRank));
-	/** Index of the first row that can't be compared on the chosen basis, for the divider. */
-	const firstOther = $derived(visible.findIndex((r) => !comparable(r)));
 
 	/** The cheapest store's pin repeats the answer's large figure. */
 	const pinLabel = $derived.by(() => {
@@ -140,6 +138,26 @@
 	const cheapest = $derived(
 		visible.find(comparable) ?? visible[0]
 	);
+
+	/** Same chain and store, same size, price and offer as the cheapest: varieties of one
+	 *  thing (five flavours of one drink at 12.50). The answer shows them together, so it
+	 *  doesn't look as if one flavour alone has the price. */
+	const sameOffer = (a: ResultRow, b: ResultRow) =>
+		a.chain === b.chain &&
+		a.store.id === b.store.id &&
+		a.size === b.size &&
+		a.oldPrice === b.oldPrice &&
+		JSON.stringify(figures(a)) === JSON.stringify(figures(b)) &&
+		JSON.stringify(a.deal ?? null) === JSON.stringify(b.deal ?? null);
+	const tied = $derived(cheapest ? visible.filter((r) => r !== cheapest && sameOffer(r, cheapest)) : []);
+	/** What the varieties have in common, to name the group by: their brand. */
+	const tiedBrand = $derived(
+		tied.length && cheapest?.brand && tied.every((r) => r.brand === cheapest.brand) ? cheapest.brand : undefined
+	);
+	/** The list under the answer: everything the answer doesn't already show. */
+	const listed = $derived(visible.filter((r) => r !== cheapest && !tied.includes(r)));
+	/** Index of the first row that can't be compared on the chosen basis, for the divider. */
+	const firstOther = $derived(listed.findIndex((r) => !comparable(r)));
 
 	const cheapestPerChain = $derived(
 		pricedChains.map((c) => visible.find((r) => r.chain === c)).filter((r): r is ResultRow => !!r)
@@ -618,12 +636,30 @@
 							>
 								{@render thumb(cheapest)}
 								<div class="info">
-									<a class="name" href={cheapest.url} target="_blank" rel="noopener">{cheapest.name}</a>
-									<p class="meta">{[cheapest.brand, cheapest.size].filter(Boolean).join(' · ')}</p>
+									{#if tied.length}
+										<p class="name">{tiedBrand ?? cheapest.name}</p>
+										<p class="meta">
+											{[cheapest.size, tiedBrand ? `${tied.length + 1} varieties at this price` : `and ${tied.length} more at this price`]
+												.filter(Boolean)
+												.join(' · ')}
+										</p>
+									{:else}
+										<a class="name" href={cheapest.url} target="_blank" rel="noopener">{cheapest.name}</a>
+										<p class="meta">{[cheapest.brand, cheapest.size].filter(Boolean).join(' · ')}</p>
+									{/if}
 									<p class="store">{@render logo(cheapest.chain)}{storeName(cheapest.store)} · {km(cheapest.store.distanceKm)}</p>
 								</div>
 								{@render figure(cheapest)}
 								{#if deal}<div class="wide">{@render dealInfo(deal, cheapest.unit)}</div>{/if}
+								{#if tied.length}
+									<ul class="varieties wide">
+										{#each [cheapest, ...tied] as r (r.id)}
+											<li>
+												{@render thumb(r)}<a href={r.url} target="_blank" rel="noopener">{r.name}</a>
+											</li>
+										{/each}
+									</ul>
+								{/if}
 								{#if cheapestPerChain.length > 1}
 									<div class="best wide">
 										<h3>Best at each chain</h3>
@@ -632,7 +668,11 @@
 												{@const f = figures(r)}
 												<li>
 													<span class="best-logo">{@render logo(r.chain)}</span>
-													<span class="best-name">{r.name}</span>
+													<span class="best-name"
+														>{r === cheapest && tied.length
+															? `${tiedBrand ?? r.name} (${tied.length + 1} varieties)`
+															: r.name}</span
+													>
 													{#if f.small}<small>{f.small}</small>{/if}
 													<b>{f.approx ? '≈ ' : ''}{kr(f.big)}{f.per}</b>
 												</li>
@@ -666,24 +706,26 @@
 
 			{#if searched}
 				<section class="results" aria-labelledby="all-results">
-					<h2 id="all-results" class="list-head">All results</h2>
+					{#if listed.length || !cheapest}
+						<h2 id="all-results" class="list-head">{cheapest ? 'More results' : 'All results'}</h2>
 
-					<ul class="shelves">
-						{#each visible as r, i (r.chain + r.id)}
-							{#if i === firstOther && i > 0}
-								<li class="divider">
-									{sort === 'unit' && mainUnit
-										? `Can't be compared per ${unitLabel[mainUnit]}`
-										: 'Sold by weight, priced per kg'}
-								</li>
-							{/if}
-							{@render shelfLabel(r)}
-						{:else}
-							{#if !searching}
-								<li class="label empty">No products matched “{searched}”. Try a shorter or different word.</li>
-							{/if}
-						{/each}
-					</ul>
+						<ul class="shelves">
+							{#each listed as r, i (r.chain + r.id)}
+								{#if i === firstOther && i > 0}
+									<li class="divider">
+										{sort === 'unit' && mainUnit
+											? `Can't be compared per ${unitLabel[mainUnit]}`
+											: 'Sold by weight, priced per kg'}
+									</li>
+								{/if}
+								{@render shelfLabel(r)}
+							{:else}
+								{#if !searching}
+									<li class="label empty">No products matched “{searched}”. Try a shorter or different word.</li>
+								{/if}
+							{/each}
+						</ul>
+					{/if}
 
 					{#if others.length}
 						<details class="others">
@@ -1379,6 +1421,34 @@
 	}
 	.answer {
 		margin-top: 18px;
+	}
+	/* Varieties at the answer's price: small photos with their names, wrapping. */
+	.varieties {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+		gap: 6px 14px;
+		margin: 10px 0 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.875rem;
+		font-weight: 600;
+	}
+	.varieties li {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 0;
+	}
+	.varieties .thumb {
+		width: 32px;
+		height: 32px;
+		flex: none;
+	}
+	.varieties a {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: inherit;
 	}
 	.best {
 		margin-top: 12px;
