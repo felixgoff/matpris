@@ -106,9 +106,15 @@ jobs:
       - name: Build
         run: |
           config='{}'
+          if [ -n "$TAURI_UPDATER_PUBKEY" ]; then
+            # With the key built in, the app registers the updater plugin, whose config needs
+            # a pubkey (tauri.conf.json has none): without this the release fails to start.
+            # It also makes the CLI check that the signing secret is this key's other half.
+            config="$(jq -c --arg k "$TAURI_UPDATER_PUBKEY" '. * {plugins: {updater: {pubkey: $k}}}' <<< "$config")"
+          fi
           if [ -n "$TAURI_SIGNING_PRIVATE_KEY" ]; then
             # Signed update bundles (.sig beside each), which installed copies verify.
-            config='{"bundle":{"createUpdaterArtifacts":true}}'
+            config="$(jq -c '. * {bundle: {createUpdaterArtifacts: true}}' <<< "$config")"
             if [ -z "$TAURI_UPDATER_PUBKEY" ]; then
               echo "::warning::TAURI_SIGNING_PRIVATE_KEY is set but the TAURI_UPDATER_PUBKEY variable isn't: this build signs updates but never looks for any."
             fi
@@ -124,35 +130,46 @@ jobs:
       - name: Collect
         run: |
           # A cargo workspace: the bundles land in the repo's target/, not src-tauri/target/.
+          # The version is in each name because rust-cache can bring back an older bundle.
           b=target/release/bundle
           mkdir out
+          # Copies a bundle and notes for latest.json which asset each updater target gets,
+          # with its signature. The updater asks for "<os>-<arch>-<installer>" first (the
+          # bundle type is built into the binary), then "<os>-<arch>", so a .deb or .msi
+          # install gets its own kind of file when that one is signed.
+          bundle() { # <file in bundle/> <asset name> [latest.json key...]
+            local file="$1" name="$2"
+            shift 2
+            cp "$file" "out/$name"
+            [ -f "$file.sig" ] || return 0
+            for platform in "$@"; do
+              jq -n --arg platform "$platform" --arg file "$name" --rawfile signature "$file.sig" \
+                '{platform: $platform, file: $file, signature: ($signature | rtrimstr("\n"))}' > "out/updater-$platform.json"
+            done
+          }
           case "$KEY" in
             darwin-aarch64)
               # First install: the .dmg, or the app zipped (ditto keeps its symlinks and signature).
               ditto -c -k --keepParent "$b/macos/Matpris.app" "out/Matpris-$VERSION-macos-arm64.zip"
-              cp "$b"/dmg/Matpris_*.dmg "out/Matpris-$VERSION-macos-arm64.dmg"
-              updater="$b/macos/Matpris.app.tar.gz"
-              name="Matpris-$VERSION-macos-arm64.app.tar.gz"
+              bundle "$b/dmg/Matpris_${VERSION}_aarch64.dmg" "Matpris-$VERSION-macos-arm64.dmg"
+              bundle "$b/macos/Matpris.app.tar.gz" "Matpris-$VERSION-macos-arm64.app.tar.gz" \
+                darwin-aarch64 darwin-aarch64-app
               ;;
             windows-x86_64)
-              cp "$b"/msi/Matpris_*.msi "out/Matpris-$VERSION-windows-x64.msi"
               # The NSIS setup is both the first install and the update bundle.
-              updater="$(ls "$b"/nsis/Matpris_*-setup.exe)"
-              name="Matpris-$VERSION-windows-x64-setup.exe"
+              bundle "$b/nsis/Matpris_${VERSION}_x64-setup.exe" "Matpris-$VERSION-windows-x64-setup.exe" \
+                windows-x86_64 windows-x86_64-nsis
+              bundle "$b/msi/Matpris_${VERSION}_x64_en-US.msi" "Matpris-$VERSION-windows-x64.msi" \
+                windows-x86_64-msi
               ;;
             linux-x86_64)
-              cp "$b"/deb/Matpris_*.deb "out/Matpris-$VERSION-linux-amd64.deb"
               # Tauri's updater replaces the AppImage, so it's both install and update.
-              updater="$(ls "$b"/appimage/Matpris_*.AppImage)"
-              name="Matpris-$VERSION-linux-x86_64.AppImage"
+              bundle "$b/appimage/Matpris_${VERSION}_amd64.AppImage" "Matpris-$VERSION-linux-x86_64.AppImage" \
+                linux-x86_64 linux-x86_64-appimage
+              bundle "$b/deb/Matpris_${VERSION}_amd64.deb" "Matpris-$VERSION-linux-amd64.deb" \
+                linux-x86_64-deb
               ;;
           esac
-          cp "$updater" "out/$name"
-          # What publish needs for latest.json: the asset to point at and its signature.
-          if [ -f "$updater.sig" ]; then
-            jq -n --arg platform "$KEY" --arg file "$name" --rawfile signature "$updater.sig" \
-              '{platform: $platform, file: $file, signature: $signature}' > "out/updater-$KEY.json"
-          fi
           ls -l out
       - uses: actions/upload-artifact@v4
         with:
@@ -269,8 +286,11 @@ jobs:
           cp wear/app/build/outputs/apk/release/app-release.apk "out/Matpris-$VERSION-wear-os.apk"
           # Refuse a release whose watch app couldn't talk to its phone app.
           certs() { "$signer" verify --print-certs "$1" | grep 'SHA-256 digest'; }
-          if [ "$(certs "out/Matpris-$VERSION-android.apk")" != "$(certs "out/Matpris-$VERSION-wear-os.apk")" ]; then
-            echo "::error::The phone and watch APKs are signed with different keys."
+          phone_cert="$(certs "out/Matpris-$VERSION-android.apk" || true)"
+          watch_cert="$(certs "out/Matpris-$VERSION-wear-os.apk" || true)"
+          # Empty means apksigner read no signature, which mustn't pass as a match.
+          if [ -z "$phone_cert" ] || [ "$phone_cert" != "$watch_cert" ]; then
+            echo "::error::The phone and watch APKs aren't signed with the same key."
             exit 1
           fi
           ls -l out
