@@ -228,7 +228,7 @@
 		const q = query.trim();
 		if (q.length < 2) return;
 		controller?.abort();
-		controller = new AbortController();
+		const mine = (controller = new AbortController());
 		searching = true;
 		searchError = '';
 		searched = q;
@@ -236,11 +236,12 @@
 		status = Object.fromEntries(chainIds.map((c) => [c, { status: 'loading' }]));
 
 		try {
-			await api.search(q, location, pickedKm, handle, controller.signal);
+			await api.search(q, location, pickedKm, handle, mine.signal);
 		} catch (err) {
-			if ((err as Error).name !== 'AbortError') searchError = (err as Error).message;
+			if (!mine.signal.aborted) searchError = (err as Error).message;
 		} finally {
-			searching = false;
+			// A search replaced by a newer one ends first: the newer one is still running.
+			if (controller === mine) searching = false;
 		}
 	}
 

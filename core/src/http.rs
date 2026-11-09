@@ -166,16 +166,30 @@ pub async fn take_slot(host: &str, interval: Duration, max_wait: Duration, lates
             Ok(())
         }
         Some((id, rx)) => {
+            // However this wait ends (its turn, a newer request, or the search being
+            // dropped mid-wait when the person searches again), the entry goes with it. A
+            // stale entry would hand its long-past slot to the next request without moving
+            // `next`, letting two requests through closer than the host's crawl delay.
+            let _leave = LeaveQueue { host, id };
             tokio::select! {
-                _ = tokio::time::sleep_until(slot) => {
-                    let mut s = SLOTS.lock().unwrap();
-                    if s.waiting.get(host).is_some_and(|w| w.id == id) {
-                        s.waiting.remove(host);
-                    }
-                    Ok(())
-                }
+                _ = tokio::time::sleep_until(slot) => Ok(()),
                 _ = rx => Err(Error::Superseded(format!("{host}: replaced by a newer search"))),
             }
+        }
+    }
+}
+
+/// Removes a `latest_only` request's waiting entry when its wait ends or is dropped.
+struct LeaveQueue<'a> {
+    host: &'a str,
+    id: u64,
+}
+
+impl Drop for LeaveQueue<'_> {
+    fn drop(&mut self) {
+        let mut s = SLOTS.lock().unwrap();
+        if s.waiting.get(self.host).is_some_and(|w| w.id == self.id) {
+            s.waiting.remove(self.host);
         }
     }
 }
@@ -251,6 +265,24 @@ mod tests {
         take_slot("queue.test", SPACING, MAX, false).await.unwrap();
         take_slot("queue.test", SPACING, MAX, false).await.unwrap();
         assert_eq!(Instant::now() - start, SPACING);
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn a_dropped_wait_keeps_the_spacing() {
+        let start = Instant::now();
+        take_slot("dropped.test", SPACING, MAX, true).await.unwrap(); // t=0
+        // Queued for t=10, then abandoned (the search was replaced and aborted).
+        let queued = tokio::spawn(take_slot("dropped.test", SPACING, MAX, true));
+        tokio::task::yield_now().await;
+        queued.abort();
+        let _ = queued.await;
+        tokio::time::advance(Duration::from_secs(60)).await;
+        // Two later requests must still be a full Crawl-delay apart.
+        take_slot("dropped.test", SPACING, MAX, true).await.unwrap();
+        let first = Instant::now();
+        take_slot("dropped.test", SPACING, MAX, true).await.unwrap();
+        assert_eq!(Instant::now() - first, SPACING);
+        assert!(first - start >= Duration::from_secs(60));
     }
 
     #[tokio::test(start_paused = true)]

@@ -4,7 +4,6 @@
     <uses-feature android:name="android.hardware.type.watch" />
     <uses-feature android:name="android.hardware.location.gps" android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -15,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Matpris">
 
-        <!-- Works without the phone app: it asks the Matpris server itself. -->
+        <!-- Needs the Matpris app on the paired Android phone: the phone runs the search
+             (Wear Data Layer) and the watch only shows it. -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
-            android:value="true" />
+            android:value="false" />
 
         <activity
             android:name=".MainActivity"

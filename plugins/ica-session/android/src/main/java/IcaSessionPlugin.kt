@@ -1,6 +1,7 @@
 package se.matpris.icasession
 
 import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -36,13 +37,26 @@ class MintArgs {
  * check.
  */
 @TauriPlugin
-class IcaSessionPlugin(private val activity: Activity) : Plugin(activity) {
+class IcaSessionPlugin(activity: Activity) : Plugin(activity) {
     /** One visit at a time (Rust asks one at a time too). */
     private var visit: Visit? = null
+
+    /** The activity on screen now. Android recreates it (rotation, dark mode, coming back
+     *  from the background), and one that's gone can't host the WebView or the dialog. */
+    @Volatile private var current: Activity = activity
+
+    override fun onResume(activity: AppCompatActivity) {
+        current = activity
+    }
+
+    override fun onRestart(activity: AppCompatActivity) {
+        current = activity
+    }
 
     @Command
     fun mint(invoke: Invoke) {
         val args = invoke.parseArgs(MintArgs::class.java)
+        val activity = current
         activity.runOnUiThread {
             // The watch's searches (WearSearchService) can run on after the app's window
             // has closed: with no activity to show ICA's check in, ICA is just busy.
@@ -172,7 +186,8 @@ private class Visit(
         finished = true
         main.removeCallbacks(tick)
         dialog?.setOnCancelListener(null)
-        dialog?.dismiss()
+        // The dialog's activity may be gone by now; dismissing it then throws.
+        runCatching { dialog?.dismiss() }
         view?.let {
             (it.parent as? ViewGroup)?.removeView(it)
             it.stopLoading()

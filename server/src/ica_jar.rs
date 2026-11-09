@@ -7,7 +7,7 @@ use std::path::PathBuf;
 use std::time::Duration;
 
 use async_trait::async_trait;
-use matpris_core::chains::ica::{CookieJar, IcaSession};
+use matpris_core::chains::ica::{CookieJar, IcaSession, Warm};
 use matpris_core::http;
 use tokio::process::Command;
 use tokio::sync::Mutex;
@@ -60,7 +60,8 @@ impl CookieJar for ScriptJar {
         serde_json::from_str(&text).ok()
     }
 
-    async fn warm(&self) -> http::Result<()> {
+    async fn warm(&self, _why: Warm) -> http::Result<()> {
+        // The script always starts a new browser visit; a challenge opens a visible window.
         let _one = self.running.lock().await;
         if !self.warm.exists() {
             return Err(http::Error::Throttled("no ICA warm script — run `bun run warm:ica` in the matpris repo".into()));

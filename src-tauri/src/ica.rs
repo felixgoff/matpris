@@ -12,7 +12,7 @@ use std::sync::Mutex;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use async_trait::async_trait;
-use matpris_core::chains::ica::{Cookie, CookieJar, IcaSession};
+use matpris_core::chains::ica::{Cookie, CookieJar, IcaSession, Warm};
 use matpris_core::http;
 use tauri::AppHandle;
 
@@ -94,8 +94,10 @@ mod desktop {
             if loaded_at.is_none() && loaded.is_some_and(|l| l.load(Ordering::SeqCst)) {
                 loaded_at = Some(tokio::time::Instant::now());
             }
+            // The person closed ICA's check: that's a no, not a reason to keep waiting.
+            window.app_handle().get_webview_window(LABEL)?;
             // Off the main thread: on Windows reading cookies from it deadlocks.
-            let cookies = window.cookies_for_url(url.clone()).unwrap_or_default();
+            let Ok(cookies) = window.cookies_for_url(url.clone()) else { return None };
             let Some(token) = waf_token(&cookies) else { continue };
             if Some(token.as_str()) != old || loaded_at.is_some_and(|t| t.elapsed() >= SETTLE) {
                 return Some(cookies.iter().map(|c| Cookie { name: c.name().into(), value: c.value().into() }).collect());
@@ -104,13 +106,16 @@ mod desktop {
         None
     }
 
-    pub async fn warm(app: &AppHandle) -> Result<Vec<Cookie>, http::Error> {
+    pub async fn warm(app: &AppHandle, why: Warm) -> Result<Vec<Cookie>, http::Error> {
         let loaded = Arc::new(AtomicBool::new(false));
         let window = open(app, loaded.clone()).map_err(|e| http::Error::Throttled(format!("can't open ICA's shop: {e}")))?;
         let url: url::Url = SHOP.parse().map_err(|e| http::Error::Other(format!("{e}")))?;
         // What the cookie store held before this visit (the window shares it).
         let old = waf_token(&window.cookies_for_url(url).unwrap_or_default());
-        let mut cookies = token(&window, QUIET_WAIT, old.as_deref(), Some(&loaded)).await;
+        // After a rejection the stored token is the one the WAF turned down: only a new one
+        // counts, even once the page has loaded (a challenge page loads too).
+        let renewable = (why == Warm::Stale).then_some(&*loaded);
+        let mut cookies = token(&window, QUIET_WAIT, old.as_deref(), renewable).await;
         if cookies.is_none() {
             // A visual check: only a person can answer it, so show it to the person here.
             // Answering it mints a new token; the old one can't stand in for that.
@@ -152,12 +157,17 @@ impl CookieJar for WebviewJar {
         self.session.lock().unwrap().clone()
     }
 
-    async fn warm(&self) -> http::Result<()> {
+    async fn warm(&self, why: Warm) -> http::Result<()> {
         let _one = self.warming.lock().await;
         #[cfg(desktop)]
-        let cookies = desktop::warm(&self.app).await?;
+        let cookies = desktop::warm(&self.app, why).await?;
+        // The phone plugin expires the old token before every visit, so any token it
+        // returns is new, whatever the reason.
         #[cfg(mobile)]
-        let cookies = mobile::warm(&self.app).await?;
+        let cookies = {
+            let _ = why;
+            mobile::warm(&self.app).await?
+        };
         *self.session.lock().unwrap() = Some(IcaSession { stored_at: now_ms(), cookies });
         Ok(())
     }

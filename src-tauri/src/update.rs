@@ -134,10 +134,13 @@ async fn newer_release(app: &AppHandle) -> Result<Option<Update>, String> {
         .endpoints(vec![endpoint])
         .and_then(|b| b.header("authorization", &auth))
         .and_then(|b| b.header("accept", "application/octet-stream"))
-        .map(|b| b.timeout(CHECK_TIMEOUT))
         .and_then(|b| b.build())
         .map_err(|e| e.to_string())?;
-    updater.check().await.map_err(|e| e.to_string())
+    // Only the check is bounded: the updater's own timeout would cut the download short too.
+    tokio::time::timeout(CHECK_TIMEOUT, updater.check())
+        .await
+        .map_err(|_| "the update check timed out".to_string())?
+        .map_err(|e| e.to_string())
 }
 
 async fn download(app: &AppHandle, update: &Update) -> Result<Vec<u8>, String> {

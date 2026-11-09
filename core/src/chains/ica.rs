@@ -49,7 +49,17 @@ pub trait CookieJar: Send + Sync {
     async fn read(&self) -> Option<IcaSession>;
     /// Mint a fresh session (open the shop the way a browser does). An error means ICA
     /// can't be searched right now.
-    async fn warm(&self) -> http::Result<()>;
+    async fn warm(&self, why: Warm) -> http::Result<()>;
+}
+
+/// Why a session is being minted.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Warm {
+    /// None yet, or older than STALE: the shop page may simply renew the token it has.
+    Stale,
+    /// The WAF just turned the current token down (a 202 challenge): only a new token
+    /// helps, and if the shop won't mint one quietly, a person has to answer its check.
+    Rejected,
 }
 
 static JAR: LazyLock<RwLock<Option<Arc<dyn CookieJar>>>> = LazyLock::new(|| RwLock::new(None));
@@ -250,7 +260,7 @@ impl WarmGate {
     /// Warm the jar, or join the warm already running. The warm runs as its own task
     /// (like the TS promise): a search dropped mid-warm neither pauses it nor leaves it
     /// pending, and it stops being pending when it ends, success or not (TS `finally`).
-    async fn warm(&self, jar: &Arc<dyn CookieJar>) -> http::Result<()> {
+    async fn warm(&self, jar: &Arc<dyn CookieJar>, why: Warm) -> http::Result<()> {
         let fut = {
             let mut s = self.state.lock().unwrap();
             match &s.pending {
@@ -262,7 +272,7 @@ impl WarmGate {
                     let jar = jar.clone();
                     let state = self.state.clone();
                     let task = tokio::spawn(async move {
-                        let result = jar.warm().await;
+                        let result = jar.warm(why).await;
                         let mut s = state.lock().unwrap();
                         if s.run == run {
                             s.pending = None;
@@ -295,7 +305,7 @@ impl WarmGate {
                     ));
                 }
             } else {
-                self.warm(jar).await?;
+                self.warm(jar, Warm::Stale).await?;
                 session = jar.read().await;
             }
         }
@@ -318,7 +328,7 @@ impl WarmGate {
         let cookie = self.cookie_header(jar).await?;
         match fetch(cookie).await {
             Err(http::Error::Status { status: 202 | 403 | 405, .. }) => {
-                self.warm(jar).await?;
+                self.warm(jar, Warm::Rejected).await?;
                 // As in the TS, anything failing after the re-mint (the session read
                 // included) means the challenge survived it.
                 let retry = match self.cookie_header(jar).await {
@@ -561,7 +571,7 @@ mod tests {
         async fn read(&self) -> Option<IcaSession> {
             self.session.lock().unwrap().clone()
         }
-        async fn warm(&self) -> http::Result<()> {
+        async fn warm(&self, _why: Warm) -> http::Result<()> {
             let n = self.warms.fetch_add(1, Ordering::SeqCst) + 1;
             tokio::time::sleep(Duration::from_millis(20)).await;
             if self.mint {
@@ -617,12 +627,12 @@ mod tests {
         let jar = FakeJar::new(None, true);
         let gate = WarmGate::default();
         let j = dyn_jar(&jar);
-        let (a, b) = tokio::join!(gate.warm(&j), gate.warm(&j));
+        let (a, b) = tokio::join!(gate.warm(&j, Warm::Stale), gate.warm(&j, Warm::Stale));
         a.unwrap();
         b.unwrap();
         assert_eq!(jar.warms(), 1);
         // Once it's done, the next warm is a new run.
-        gate.warm(&j).await.unwrap();
+        gate.warm(&j, Warm::Stale).await.unwrap();
         assert_eq!(jar.warms(), 2);
     }
 
@@ -701,7 +711,7 @@ mod tests {
         async fn read(&self) -> Option<IcaSession> {
             (self.reads.fetch_add(1, Ordering::SeqCst) == 0).then(|| session(0, "t"))
         }
-        async fn warm(&self) -> http::Result<()> {
+        async fn warm(&self, _why: Warm) -> http::Result<()> {
             Ok(())
         }
     }
@@ -722,12 +732,12 @@ mod tests {
         let gate = WarmGate::default();
         let j = dyn_jar(&jar);
         // The search gives up while the warm (20 ms) is still running.
-        assert!(tokio::time::timeout(Duration::from_millis(2), gate.warm(&j)).await.is_err());
+        assert!(tokio::time::timeout(Duration::from_millis(2), gate.warm(&j, Warm::Stale)).await.is_err());
         tokio::time::sleep(Duration::from_millis(80)).await;
         // It finished on its own and is no longer pending: the next warm is a new run.
         assert!(jar.session.lock().unwrap().is_some());
         assert!(gate.state.lock().unwrap().pending.is_none());
-        gate.warm(&j).await.unwrap();
+        gate.warm(&j, Warm::Stale).await.unwrap();
         assert_eq!(jar.warms(), 2);
     }
 

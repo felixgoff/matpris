@@ -152,8 +152,11 @@ jobs:
               # First install: the .dmg, or the app zipped (ditto keeps its symlinks and signature).
               ditto -c -k --keepParent "$b/macos/Matpris.app" "out/Matpris-$VERSION-macos-arm64.zip"
               bundle "$b/dmg/Matpris_${VERSION}_aarch64.dmg" "Matpris-$VERSION-macos-arm64.dmg"
-              bundle "$b/macos/Matpris.app.tar.gz" "Matpris-$VERSION-macos-arm64.app.tar.gz" \
-                darwin-aarch64 darwin-aarch64-app
+              # Only built for the updater (with the signing key); the zip above installs.
+              if [ -f "$b/macos/Matpris.app.tar.gz" ]; then
+                bundle "$b/macos/Matpris.app.tar.gz" "Matpris-$VERSION-macos-arm64.app.tar.gz" \
+                  darwin-aarch64 darwin-aarch64-app
+              fi
               ;;
             windows-x86_64)
               # The NSIS setup is both the first install and the update bundle.

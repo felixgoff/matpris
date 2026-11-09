@@ -54,7 +54,7 @@ The app's commands (`src-tauri/src/lib.rs`: `search`, `stores`, `geocode`, `imag
 | Hemköp | Same Axfood platform (`hemkop.se/search`) | `hemkop.se/axfood/rest/store` | Online price of the site's default store |
 | Lidl | Public site search (`lidl.se/q/api/search`): current assortment and weekly deals only | `core/data/lidl-stores.json`, built from Lidl's public store sitemap | National |
 | City Gross | Site search JSON (`citygross.se/api/v1/Loop54/search`), with each product's category | `citygross.se/api/v1/PageData/stores` | Online price of the site's default store |
-| Coop | The web shop's own APIM API: `external.api.coop.se/personalization/search/global` (search) and `…/search/entities/by-attribute` (per category) | `proxy.api.coop.se/external/store/stores/map` | National online store (`store=251300`) |
+| Coop | The web shop's own APIM API: `external.api.coop.se/personalization/search/global` (search) | `proxy.api.coop.se/external/store/stores/map` | National online store (`store=251300`) |
 | ICA | The shop's own search API `handlaprivatkund.ica.se/stores/{id}/api/webproductpagews/v6/product-pages/search?q=`, with a WAF session cookie refreshed by `scripts/ica-warm.mjs` | `core/data/ica-stores.json`, built from `handla.ica.se/api/store/v1` | Prices of Maxi ICA Gunnesbo, Lund (store 1088004), shown as chain pricing |
 
 Rebuild the Lidl store list now and then (it takes about 4 minutes and makes about 1 request per second):
@@ -63,10 +63,11 @@ Rebuild the Lidl store list now and then (it takes about 4 minutes and makes abo
 bun run stores:lidl
 ```
 
-Rebuild Coop's and ICA's lists the same way (`bun run stores:ica` needs Playwright and a Chromium, `npx playwright install chromium`):
+Rebuild ICA's and the Axfood chains' lists the same way (`bun run stores:ica` needs Playwright and a Chromium, `npx playwright install chromium`). Coop's and City Gross's stores are fetched live and cached for a day.
 
 ```bash
 bun run stores:ica
+bun run stores:axfood   # Willys and Hemköp, one request per site
 ```
 
 City Gross's robots.txt disallows the `/loop54/` page route; the `/api/v1/` JSON the shop itself calls is not covered by it. Requests are spaced 2 s apart. Members-only offers ("Klubbpris" in City Gross, "Medlemspris" in Coop) are left out because they need an account.
@@ -88,7 +89,7 @@ ICA's shop (`handlaprivatkund.ica.se`) sits behind an AWS WAF. The decisive poin
 - Prices anchor to one store (Maxi ICA Stormarknad Gunnesbo, Lund) and are shown for the whole chain, like Lidl's list. Deals (`promoPrice` below the regular price) surface as the current price with the regular one as the old price.
 - `bun run record:ica` opens the shop for a human to browse by hand and logs every API call the site makes (URLs, parameters, response snippets) to `.ica-profile/journey.jsonl` — the tool that produced the endpoint recon above.
 
-Backup plan: `scripts/ica-catalogue.mjs` pre-builds a full priced assortment index for one store (`data/ica-catalogue.json`, resumable, pauses for a human on CAPTCHA), which an Lidl-style index adapter can search if live requests ever stop working.
+Backup plan: `scripts/ica-catalogue.mjs` pre-builds a full priced assortment index for one store (`core/data/ica-catalogue.json`, resumable, pauses for a human on CAPTCHA), which an Lidl-style index adapter can search if live requests ever stop working.
 
 ### Multi-buy deals
 
