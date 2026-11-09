@@ -16,9 +16,18 @@ export type BackendEvent = SearchEvent | { type: 'error'; message: string };
 /** A failed call's message, whichever way it came. */
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
+/** A failed /api answer's message. Vite answers 500 with an empty body when nothing
+ *  listens behind its proxy: say which half of `bun run dev` is missing. */
+async function failure(res: Response): Promise<Error> {
+	const text = await res.text().catch(() => '');
+	if (!text && res.status >= 500)
+		return new Error("The Matpris backend isn't running: start it with `bun run server` (or `bun run dev`).");
+	return new Error(text || res.statusText);
+}
+
 async function http<T>(path: string): Promise<T> {
 	const res = await fetch(path);
-	if (!res.ok) throw new Error((await res.text()) || res.statusText);
+	if (!res.ok) throw await failure(res);
 	return res.json();
 }
 
@@ -54,7 +63,7 @@ export async function search(
 		return;
 	}
 	const res = await fetch(`/api/search?${query({ q, lat: center.lat, lng: center.lng, radius: radiusKm })}`, { signal });
-	if (!res.ok || !res.body) throw new Error((await res.text()) || res.statusText);
+	if (!res.ok || !res.body) throw await failure(res);
 	const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
 	let buffer = '';
 	for (;;) {

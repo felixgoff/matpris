@@ -6,12 +6,14 @@ One app for macOS, Windows, Linux, Android and iPhone, built with [Tauri 2](http
 
 ```bash
 bun install
-cp .env.example .env   # then paste your MapKit JS token into PUBLIC_MAPKIT_TOKEN
-bun run dev            # the page in a browser at http://localhost:5173, with the Rust dev server
+bun run mapkit:token   # signs a MapKit token into .env from ~/.matpris/AuthKey_*.p8
+bun run dev            # builds the Rust dev server, then the page at http://localhost:5173 (first build: a few minutes)
 bun run app            # the desktop app (Tauri dev window)
 bun run test           # Rust tests: parsing, relevance, search circle, every chain's mapping
 bun run check          # type check the page
 ```
+
+Needs [Bun](https://bun.sh) and [Rust](https://rustup.rs) (on Windows, rustup also asks for Visual Studio's C++ build tools).
 
 | Folder | What it is |
 | --- | --- |

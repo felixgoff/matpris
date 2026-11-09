@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently -k -n api,web \"cargo run -q -p matpris-server\" \"vite dev\"",
+		"dev": "cargo build -p matpris-server && concurrently -k -n api,web \"cargo run -q -p matpris-server\" \"vite dev\"",
 		"dev:web": "vite dev",
 		"server": "cargo run -p matpris-server",
 		"build": "vite build",
