@@ -79,7 +79,8 @@ pub struct CoopProduct {
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 struct CoopStore {
-    store_id: Option<serde_json::Number>,
+    /// A number in practice; read as whatever arrives, then stringified like JS `String()`.
+    store_id: Option<Value>,
     name: Option<String>,
     address: Option<String>,
     postal_code: Option<String>,
@@ -220,7 +221,15 @@ fn to_store(s: CoopStore) -> Option<Store> {
     let lat = positive(s.latitude)?;
     let name = s.name.filter(|n| !n.is_empty())?;
     let lng = s.longitude?;
-    let id = s.store_id?.to_string();
+    let id = match s.store_id? {
+        Value::String(id) if !id.is_empty() => id,
+        // JS prints an integral float without ".0" (251300.0 → "251300").
+        Value::Number(n) => match n.as_f64() {
+            Some(f) if f.fract() == 0.0 && f.abs() < 1e15 => format!("{}", f as i64),
+            _ => n.to_string(),
+        },
+        _ => return None,
+    };
     let place = [s.postal_code, s.city].into_iter().flatten().filter(|x| !x.is_empty()).collect::<Vec<_>>().join(" ");
     let address = [s.address.unwrap_or_default(), place].into_iter().filter(|x| !x.is_empty()).collect::<Vec<_>>().join(", ");
     Some(Store {
@@ -441,5 +450,44 @@ mod tests {
         assert_eq!(stores[0].url.as_deref(), Some("https://www.coop.se/butiker/coop-lund"));
         assert_eq!(stores[1].address, "Malmö");
         assert_eq!(stores[1].url, None);
+    }
+
+    #[test]
+    fn store_ids_are_stringified_like_js_string() {
+        // String(s.storeId): an id sent as a string, or as an integral float, reads the same.
+        let raw = vec![
+            json!({ "storeId": "251300", "name": "A", "latitude": 55.7, "longitude": 13.19 }),
+            json!({ "storeId": 251301.0, "name": "B", "latitude": 55.7, "longitude": 13.19 }),
+        ];
+        let ids: Vec<String> = each_of::<CoopStore>(raw).filter_map(to_store).map(|s| s.id).collect();
+        assert_eq!(ids, ["251300", "251301"]);
+    }
+
+    #[test]
+    fn a_zero_bundle_size_counts_as_a_single_item_price() {
+        // `numberOfProductRequired ?? 1` keeps 0, so the promotion is read as a plain sale.
+        let hit = to_hit(
+            &CoopProduct { online_promotions: Some(vec![promo("MULTI_BUY_FIXED_PRICE", Some(0.0), 40.0, false)]), ..base() },
+            ChainId::Coop,
+        )
+        .unwrap();
+        assert_eq!((hit.price, hit.old_price, hit.deal), (40.0, Some(45.38), None));
+    }
+
+    #[test]
+    fn a_second_sale_scales_the_already_scaled_unit_price() {
+        // The TS scales best.unitPrice (already lowered by the first sale) by promo / regular price.
+        let hit = to_hit(
+            &CoopProduct {
+                sales_price_data: price(20.0),
+                comparative_price_data: price(10.0),
+                online_promotions: Some(vec![promo("FIXED_PRICE", None, 16.0, false), promo("FIXED_PRICE", None, 10.0, false)]),
+                ..base()
+            },
+            ChainId::Coop,
+        )
+        .unwrap();
+        // first: 10 * 16 / 20 = 8; second: 8 * 10 / 20 = 4
+        assert_eq!((hit.price, hit.old_price, hit.unit_price), (10.0, Some(16.0), Some(4.0)));
     }
 }
