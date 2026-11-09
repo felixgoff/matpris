@@ -12,7 +12,7 @@ use tokio::sync::mpsc::Sender;
 use crate::cache::TtlCache;
 use crate::chains::{adapters, ChainAdapter};
 use crate::http;
-use crate::normalize::relevance;
+use crate::normalize::{make_comparable, relevance};
 use crate::stores::registry::{map_only_chains, priced_area, with_map_only_stores};
 use crate::types::{ChainId, ChainStatus, LatLng, NearbyStore, Pricing, ProductHit, ResultRow, SearchEvent};
 
@@ -29,7 +29,8 @@ fn rate(query: &str, hits: Vec<ProductHit>, store: &NearbyStore) -> Vec<ResultRo
     let mut seen = HashSet::new();
     hits.into_iter()
         .filter(|h| seen.insert(h.id.clone()))
-        .filter_map(|h| {
+        .filter_map(|mut h| {
+            make_comparable(&mut h);
             let categories = h.categories.clone().unwrap_or_default();
             let m = relevance(query, &h.name, h.brand.as_deref(), &categories)?;
             Some(ResultRow { hit: h, store: store.clone(), match_: m })

@@ -292,6 +292,7 @@ mod tests {
                 }),
                 image: Some("https://assets.axfood.se/image/upload/f_auto,t_200/07310350118342_C1N1_s01".into()),
                 url: "https://www.willys.se/produkt/fanta-101".into(),
+                pieces: None,
                 pricing: Pricing::Chain,
             },
             store: NearbyStore {

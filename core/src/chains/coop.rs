@@ -162,6 +162,7 @@ pub fn to_hit(p: &CoopProduct, chain: ChainId) -> Option<ProductHit> {
             format!("https://res.cloudinary.com/coopsverige/image/upload/f_auto,q_80/{rest}")
         }),
         url: format!("https://www.coop.se/handla/varor/{}-{}", slug(&p.name), p.id),
+        pieces: None,
         pricing: Pricing::Chain,
     };
     // Deals: skip MedMera member prices (like City Gross), take the cheapest remaining.

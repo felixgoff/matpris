@@ -8,7 +8,7 @@ use std::sync::LazyLock;
 
 use regex::Regex;
 
-use crate::types::{Match, Unit};
+use crate::types::{Match, ProductHit, Unit};
 
 /// JavaScript's `\s`, as a regex character class body.
 const JS_SPACE: &str = r"\t\n\x0B\x0C\r \u{a0}\u{1680}\u{2000}-\u{200a}\u{2028}\u{2029}\u{202f}\u{205f}\u{3000}\u{feff}";
@@ -106,6 +106,32 @@ pub fn parse_size(text: &str) -> Option<(f64, Unit)> {
         _ => return None,
     };
     (n > 0.0).then_some((n * f, unit))
+}
+
+/// "4x60g" → 4: the pieces in a multipack, when the size says so (and more than one).
+pub fn pack_count(text: &str) -> Option<u32> {
+    let lower = text.to_lowercase().replacen(',', ".", 1);
+    let count = SIZE.captures(&lower)?.get(1)?.as_str().parse::<u32>().ok()?;
+    (count > 1).then_some(count)
+}
+
+/// Makes a chain's hit comparable with the others'. A multipack gets its piece count,
+/// so "item price" can compare one bun with one bun. And where the chain gives no
+/// comparison price, or one per piece (Hemköp's "6.00 kr/st" for a 4x60g pack), while
+/// the size tells the weight or volume, the price per kg or litre is worked out from
+/// it: per piece can't be ranked against the other chains' kr/kg.
+pub fn make_comparable(hit: &mut ProductHit) {
+    let Some(size) = hit.size.as_deref() else { return };
+    hit.pieces = pack_count(size);
+    if hit.per_kg == Some(true) || !matches!(hit.unit, None | Some(Unit::St)) {
+        return;
+    }
+    let Some((amount, unit)) = parse_size(size).filter(|(_, u)| *u != Unit::St) else { return };
+    hit.unit_price = Some(round2(hit.price / amount));
+    hit.unit = Some(unit);
+    if let Some(deal) = &mut hit.deal {
+        deal.unit_price = Some(round2(deal.each / amount));
+    }
 }
 
 /// Comparison price from the item price and its size, rounded to öre.
@@ -541,4 +567,60 @@ mod tests {
             Some(Match::Best)
         );
     }
+
+    fn pack(size: &str, price: f64, unit_price: Option<f64>, unit: Option<Unit>) -> ProductHit {
+        ProductHit {
+            chain: crate::types::ChainId::Hemkop,
+            id: "1".into(),
+            name: "Lussekatt Saffran".into(),
+            brand: None,
+            size: Some(size.into()),
+            price,
+            unit_price,
+            unit,
+            categories: None,
+            per_kg: None,
+            approx_each: None,
+            pieces: None,
+            old_price: None,
+            deal: None,
+            image: None,
+            url: String::new(),
+            pricing: crate::types::Pricing::Chain,
+        }
+    }
+
+    #[test]
+    fn a_multipack_priced_per_piece_becomes_comparable_per_kg() {
+        // Hemköp: 4 buns of 60 g for 24 kr, comparison price 6.00 kr/st.
+        let mut hit = pack("4x60g", 24.0, Some(6.0), Some(Unit::St));
+        make_comparable(&mut hit);
+        assert_eq!(hit.pieces, Some(4));
+        assert_eq!((hit.unit_price, hit.unit), (Some(100.0), Some(Unit::Kg)));
+    }
+
+    #[test]
+    fn a_chains_own_weight_price_is_left_alone() {
+        let mut hit = pack("60g", 7.0, Some(116.67), Some(Unit::Kg));
+        make_comparable(&mut hit);
+        assert_eq!(hit.pieces, None);
+        assert_eq!((hit.unit_price, hit.unit), (Some(116.67), Some(Unit::Kg)));
+        // A count-only size ("6 st") tells no weight: nothing to work out.
+        let mut eggs = pack("6 st", 30.0, Some(5.0), Some(Unit::St));
+        make_comparable(&mut eggs);
+        assert_eq!((eggs.unit_price, eggs.unit), (Some(5.0), Some(Unit::St)));
+    }
+
+    #[test]
+    fn a_missing_comparison_price_is_filled_in_and_a_deals_follows() {
+        let mut hit = pack("6 x 33 cl", 60.0, None, None);
+        hit.deal = Some(crate::types::Deal {
+            quantity: 2, each: 49.5, total: 99.0, unit_price: None, mix_and_match: false, plus_deposit: false, limit: None,
+        });
+        make_comparable(&mut hit);
+        assert_eq!(hit.pieces, Some(6));
+        assert_eq!((hit.unit_price, hit.unit), (Some(30.3), Some(Unit::L)));
+        assert_eq!(hit.deal.unwrap().unit_price, Some(25.0));
+    }
+
 }

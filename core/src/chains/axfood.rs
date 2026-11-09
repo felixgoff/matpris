@@ -169,6 +169,7 @@ pub fn to_hit(chain: ChainId, base: &str, p: &AxfoodProduct) -> ProductHit {
         deal: None,
         image: p.image.as_ref().and_then(|i| i.url.clone()),
         url: format!("{base}/sok?q={}", encode_uri_component(&p.name)),
+        pieces: None,
         pricing: Pricing::Chain,
     };
     let average_weight = truthy(p.average_weight);

@@ -316,6 +316,7 @@ pub fn to_hit(item: &LidlItem) -> Option<ProductHit> {
         deal: None,
         image: d.image.clone(),
         url: format!("https://www.lidl.se{}", d.canonical_url.as_deref().unwrap_or("")),
+        pieces: None,
         pricing: Pricing::Chain,
     })
 }

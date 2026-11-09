@@ -145,6 +145,9 @@ pub struct ProductHit {
     /// Estimated price of one piece of a product sold by weight, from its average weight.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub approx_each: Option<f64>,
+    /// How many pieces a multipack holds ("4x60g" → 4): `price` buys them all.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pieces: Option<u32>,
     /// Regular price when `price` is a sale price.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub old_price: Option<f64>,

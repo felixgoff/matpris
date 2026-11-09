@@ -78,7 +78,9 @@
 	}
 	const rankUnitPrice = (r: ResultRow) => (usesDeal(r) ? r.deal.unitPrice : r.unitPrice);
 	/** Price of one item; for loose fruit, one piece at its average weight. */
-	const rankPrice = (r: ResultRow) => (usesDeal(r) ? r.deal.each : (r.approxEach ?? r.price));
+	/** A multipack's price is for all its pieces: "item price" compares one with one. */
+	const pieces = (r: ResultRow) => r.pieces ?? 1;
+	const rankPrice = (r: ResultRow) => (usesDeal(r) ? r.deal.each : (r.approxEach ?? r.price)) / pieces(r);
 	/** Sold by weight with no known piece weight: its price is per kg, not per item. */
 	const loose = (r: ResultRow) => !!r.perKg && r.approxEach === undefined;
 	const comparable = (r: ResultRow) =>
@@ -125,7 +127,13 @@
 			per: loose(r) ? '/kg' : '',
 			approx: !loose(r) && !usesDeal(r) && r.approxEach !== undefined,
 			small: unitPrice !== undefined ? perUnit(unitPrice, r.unit) : undefined,
-			note: usesDeal(r) ? `each when you buy ${r.deal.quantity}` : undefined
+			note:
+				pieces(r) > 1
+					? `each in a pack of ${pieces(r)} for ${kr(usesDeal(r) ? r.deal.each : r.price)}` +
+						(usesDeal(r) ? ` when you buy ${r.deal.quantity} packs` : '')
+					: usesDeal(r)
+						? `each when you buy ${r.deal.quantity}`
+						: undefined
 		};
 	}
 

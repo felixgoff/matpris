@@ -212,6 +212,7 @@ pub fn to_hit(p: &CgProduct) -> Option<ProductHit> {
             .filter(|u| !u.is_empty())
             .map(|u| format!("{BASE}/images/products/{u}")),
         url: format!("{BASE}{}", p.url),
+        pieces: None,
         pricing: Pricing::Chain,
     };
     if let Some(ordinary) = truthy(prices.ordinary_price.as_ref().and_then(|o| o.price)) {

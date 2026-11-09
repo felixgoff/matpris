@@ -227,6 +227,7 @@ pub fn to_hit(p: &IcaProduct) -> ProductHit {
         deal: None,
         image: p.image.as_ref().and_then(|i| i.src.clone()),
         url: format!("{BASE}/stores/{STORE_ID}/products/{}/{}", slug(&p.name), p.retailer_product_id),
+        pieces: None,
         pricing: Pricing::Chain,
     }
 }

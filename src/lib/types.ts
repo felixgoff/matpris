@@ -63,6 +63,8 @@ export interface ProductHit {
 	perKg?: boolean;
 	/** Estimated price of one piece of a product sold by weight, from its average weight. */
 	approxEach?: number;
+	/** How many pieces a multipack holds ("4x60g" → 4): `price` buys them all. */
+	pieces?: number;
 	/** Regular price when `price` is a sale price. */
 	oldPrice?: number;
 	deal?: Deal;
