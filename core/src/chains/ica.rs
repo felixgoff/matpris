@@ -80,6 +80,16 @@ static STORES: LazyLock<Vec<Store>> = LazyLock::new(|| {
     serde_json::from_str(include_str!("../../data/ica-stores.json")).expect("core/data/ica-stores.json")
 });
 
+/// Product ids are strings in the shop's JSON; take numbers (and null) too instead of
+/// dropping the product, as the TS passes them through.
+fn id<'de, D: Deserializer<'de>>(d: D) -> Result<String, D::Error> {
+    Ok(match Option::<serde_json::Value>::deserialize(d)? {
+        Some(serde_json::Value::String(s)) => s,
+        Some(serde_json::Value::Number(n)) => n.to_string(),
+        _ => String::new(),
+    })
+}
+
 /// The shop writes amounts as strings ("19.40"); accept numbers too.
 fn amount<'de, D: Deserializer<'de>>(d: D) -> Result<Option<f64>, D::Error> {
     Ok(match Option::<serde_json::Value>::deserialize(d)? {
@@ -113,7 +123,9 @@ pub struct Image {
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct IcaProduct {
+    #[serde(deserialize_with = "id")]
     pub product_id: String,
+    #[serde(deserialize_with = "id")]
     pub retailer_product_id: String,
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -215,39 +227,59 @@ fn now_ms() -> u64 {
 
 type PendingWarm = Shared<BoxFuture<'static, http::Result<()>>>;
 
-/// When the jar was last asked to warm (ms since the epoch), and the warm still running,
-/// if any: at most one warm per WARM_GAP from the session check, and never two at once.
+#[derive(Default)]
+struct WarmState {
+    /// When the jar was last asked to warm (ms since the epoch).
+    last: u64,
+    /// The warm still running, if any.
+    pending: Option<PendingWarm>,
+    run: u64,
+}
+
+/// At most one warm per WARM_GAP from the session check, and never two at once.
 #[derive(Default)]
 struct WarmGate {
-    state: Mutex<(u64, Option<PendingWarm>)>,
+    state: Arc<Mutex<WarmState>>,
 }
 
 impl WarmGate {
     fn last_warm(&self) -> u64 {
-        self.state.lock().unwrap().0
+        self.state.lock().unwrap().last
     }
 
-    /// Warm the jar, or join the warm already running.
+    /// Warm the jar, or join the warm already running. The warm runs as its own task
+    /// (like the TS promise): a search dropped mid-warm neither pauses it nor leaves it
+    /// pending, and it stops being pending when it ends, success or not (TS `finally`).
     async fn warm(&self, jar: &Arc<dyn CookieJar>) -> http::Result<()> {
         let fut = {
             let mut s = self.state.lock().unwrap();
-            match &s.1 {
+            match &s.pending {
                 Some(p) => p.clone(),
                 None => {
-                    s.0 = now_ms();
+                    s.last = now_ms();
+                    s.run += 1;
+                    let run = s.run;
                     let jar = jar.clone();
-                    let p = async move { jar.warm().await }.boxed().shared();
-                    s.1 = Some(p.clone());
+                    let state = self.state.clone();
+                    let task = tokio::spawn(async move {
+                        let result = jar.warm().await;
+                        let mut s = state.lock().unwrap();
+                        if s.run == run {
+                            s.pending = None;
+                        }
+                        result
+                    });
+                    let p = async move {
+                        task.await.unwrap_or_else(|e| Err(http::Error::Other(format!("ICA warm failed: {e}"))))
+                    }
+                    .boxed()
+                    .shared();
+                    s.pending = Some(p.clone());
                     p
                 }
             }
         };
-        let result = fut.clone().await;
-        let mut s = self.state.lock().unwrap();
-        if s.1.as_ref().is_some_and(|p| p.ptr_eq(&fut)) {
-            s.1 = None;
-        }
-        result
+        fut.await
     }
 
     /// The cookie header for the next request, warming first when the session is
@@ -287,8 +319,13 @@ impl WarmGate {
         match fetch(cookie).await {
             Err(http::Error::Status { status: 202 | 403 | 405, .. }) => {
                 self.warm(jar).await?;
-                let cookie = self.cookie_header(jar).await?;
-                fetch(cookie).await.map_err(|_| {
+                // As in the TS, anything failing after the re-mint (the session read
+                // included) means the challenge survived it.
+                let retry = match self.cookie_header(jar).await {
+                    Ok(cookie) => fetch(cookie).await,
+                    Err(e) => Err(e),
+                };
+                retry.map_err(|_| {
                     http::Error::Throttled(
                         "ICA challenged us again after re-minting — the IP needs a human session".into(),
                     )
@@ -645,6 +682,53 @@ mod tests {
         assert!(matches!(e, http::Error::Status { status: 500, .. }));
         assert_eq!(calls.load(Ordering::SeqCst), 1);
         assert_eq!(jar.warms(), 0);
+    }
+
+    #[test]
+    fn numeric_ids_keep_the_product() {
+        let hit = to_hit(&with(json!({ "productId": 42, "retailerProductId": 2294810 })));
+        assert_eq!(hit.id, "42");
+        assert!(hit.url.ends_with("/läsk-orange-1-5l-fanta/2294810"), "{}", hit.url);
+    }
+
+    /// A jar whose session is gone after the first read (e.g. deleted by the re-mint).
+    struct VanishingJar {
+        reads: AtomicUsize,
+    }
+
+    #[async_trait]
+    impl CookieJar for VanishingJar {
+        async fn read(&self) -> Option<IcaSession> {
+            (self.reads.fetch_add(1, Ordering::SeqCst) == 0).then(|| session(0, "t"))
+        }
+        async fn warm(&self) -> http::Result<()> {
+            Ok(())
+        }
+    }
+
+    #[tokio::test]
+    async fn a_failed_session_read_after_the_re_mint_is_the_challenge_message() {
+        let jar: Arc<dyn CookieJar> = Arc::new(VanishingJar { reads: AtomicUsize::new(0) });
+        let e = WarmGate::default()
+            .fetch(&jar, |_| async { Err::<(), _>(http::Error::Status { host: "h".into(), status: 202 }) })
+            .await
+            .unwrap_err();
+        assert!(matches!(&e, http::Error::Throttled(m) if m.contains("challenged us again")), "{e}");
+    }
+
+    #[tokio::test]
+    async fn a_dropped_search_does_not_strand_the_warm() {
+        let jar = FakeJar::new(None, true);
+        let gate = WarmGate::default();
+        let j = dyn_jar(&jar);
+        // The search gives up while the warm (20 ms) is still running.
+        assert!(tokio::time::timeout(Duration::from_millis(2), gate.warm(&j)).await.is_err());
+        tokio::time::sleep(Duration::from_millis(80)).await;
+        // It finished on its own and is no longer pending: the next warm is a new run.
+        assert!(jar.session.lock().unwrap().is_some());
+        assert!(gate.state.lock().unwrap().pending.is_none());
+        gate.warm(&j).await.unwrap();
+        assert_eq!(jar.warms(), 2);
     }
 
     #[tokio::test]
