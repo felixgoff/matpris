@@ -3,7 +3,7 @@
 # for development in a browser.
 [workspace]
 resolver = "2"
-members = ["core"]
+members = ["core", "server", "src-tauri"]
 
 [workspace.package]
 edition = "2021"

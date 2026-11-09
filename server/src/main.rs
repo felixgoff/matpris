@@ -21,19 +21,23 @@ use tokio_stream::wrappers::ReceiverStream;
 use tokio_stream::StreamExt;
 
 type Params = Query<HashMap<String, String>>;
+// A response as the error is fine here: it goes straight back to the browser.
+type Checked<T> = Result<T, Response>;
 
 fn bad(msg: &str) -> Response {
     (StatusCode::BAD_REQUEST, msg.to_string()).into_response()
 }
 
-fn center(p: &HashMap<String, String>) -> Result<LatLng, Response> {
+#[allow(clippy::result_large_err)]
+fn center(p: &HashMap<String, String>) -> Checked<LatLng> {
     let num = |k: &str| p.get(k).and_then(|v| v.parse::<f64>().ok()).unwrap_or(f64::NAN);
     let c = LatLng { lat: num("lat"), lng: num("lng") };
     if in_sweden(c) { Ok(c) } else { Err(bad("lat/lng must be a location in Sweden")) }
 }
 
 /// An optional search radius the shopper picked, in km; absent means automatic.
-fn radius(p: &HashMap<String, String>) -> Result<Option<f64>, Response> {
+#[allow(clippy::result_large_err)]
+fn radius(p: &HashMap<String, String>) -> Checked<Option<f64>> {
     match p.get("radius").filter(|r| !r.is_empty()) {
         None => Ok(None),
         Some(r) => match r.parse::<f64>() {

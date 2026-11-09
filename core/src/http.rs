@@ -256,7 +256,7 @@ mod tests {
     #[tokio::test(start_paused = true)]
     async fn a_wait_beyond_max_wait_is_throttled() {
         for _ in 0..4 {
-            let _ = tokio::spawn(take_slot("busy.test", SPACING, MAX, false));
+            drop(tokio::spawn(take_slot("busy.test", SPACING, MAX, false)));
         }
         tokio::task::yield_now().await;
         assert!(matches!(take_slot("busy.test", SPACING, MAX, false).await, Err(Error::Throttled(_))));
