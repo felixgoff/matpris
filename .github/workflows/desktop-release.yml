@@ -56,7 +56,7 @@ jobs:
     needs: version
     if: needs.version.outputs.new == 'true'
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           # Apple silicon with Xcode 26+. Intel Macs aren't built (another 10x runner).
@@ -119,6 +119,25 @@ jobs:
             # a pubkey (tauri.conf.json has none): without this the release fails to start.
             # It also makes the CLI check that the signing secret is this key's other half.
             config="$(jq -c --arg k "$TAURI_UPDATER_PUBKEY" '. * {plugins: {updater: {pubkey: $k}}}' <<< "$config")"
+          fi
+          if [ -n "$TAURI_SIGNING_PRIVATE_KEY" ]; then
+            # The password as stored may lack a line ending the key was made with: the
+            # setup script, run on Windows, made the key with a password ending in a
+            # carriage return, which gh strips from the secret. Find the form that opens it.
+            echo probe > "$RUNNER_TEMP/probe.txt"
+            opens=
+            for end in '' $'\r' $'\n' $'\r\n'; do
+              if TAURI_SIGNING_PRIVATE_KEY_PASSWORD="$TAURI_SIGNING_PRIVATE_KEY_PASSWORD$end" \
+                bunx tauri signer sign "$RUNNER_TEMP/probe.txt" > /dev/null 2>&1; then
+                export TAURI_SIGNING_PRIVATE_KEY_PASSWORD="$TAURI_SIGNING_PRIVATE_KEY_PASSWORD$end"
+                opens=yes
+                break
+              fi
+            done
+            if [ -z "$opens" ]; then
+              echo "::warning::TAURI_SIGNING_PRIVATE_KEY_PASSWORD doesn't open the updater key: no signed update bundles, so installed copies won't update to this release."
+              unset TAURI_SIGNING_PRIVATE_KEY TAURI_SIGNING_PRIVATE_KEY_PASSWORD
+            fi
           fi
           if [ -n "$TAURI_SIGNING_PRIVATE_KEY" ]; then
             # Signed update bundles (.sig beside each), which installed copies verify.
@@ -251,7 +270,29 @@ jobs:
           # an APK signed like it. Both Gradle builds read these (see their build.gradle.kts).
           if [ -n "$KEYSTORE" ]; then
             ks="$RUNNER_TEMP/matpris-release.jks"
-            printf '%s' "$KEYSTORE" | base64 -d > "$ks"
+            printf '%s' "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/stored.jks"
+            # As with the updater key: the keystore may have been made with a password
+            # ending in a carriage return that the stored secret lacks. Find the form that
+            # opens it and save the same key under the password as stored. With openssl:
+            # keytool refuses a password with a control character in it.
+            opens=
+            for end in '' $'\r' $'\n' $'\r\n'; do
+              if SRC="$STORE_PASSWORD$end" openssl pkcs12 -in "$RUNNER_TEMP/stored.jks" -passin env:SRC -nodes \
+                -out "$RUNNER_TEMP/key.pem" 2> /dev/null; then
+                opens=yes
+                break
+              fi
+            done
+            if [ -z "$opens" ]; then
+              rm -f "$RUNNER_TEMP/stored.jks" "$RUNNER_TEMP/key.pem"
+              echo "::error::ANDROID_KEYSTORE_PASSWORD doesn't open ANDROID_KEYSTORE. Signing with another key would make APKs that can't update installed ones."
+              exit 1
+            fi
+            DST="$STORE_PASSWORD" openssl pkcs12 -export -in "$RUNNER_TEMP/key.pem" -name "$KEY_ALIAS" \
+              -passout env:DST -out "$ks"
+            rm -f "$RUNNER_TEMP/stored.jks" "$RUNNER_TEMP/key.pem"
+            keytool -list -keystore "$ks" -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" > /dev/null
+            KEY_PASSWORD="$STORE_PASSWORD" # PKCS12: the key's password is the store's
             {
               echo "ANDROID_KEYSTORE_FILE=$ks"
               echo "ANDROID_KEYSTORE_PASSWORD=$STORE_PASSWORD"

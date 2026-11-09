@@ -60,7 +60,9 @@ if have_secret TAURI_SIGNING_PRIVATE_KEY; then
 else
 	key="$KEYS/updater.key"
 	if [ ! -f "$key" ]; then
-		openssl rand -base64 24 | tr -d '\n' >"$KEYS/updater.password"
+		# No line ending at all: on Windows openssl ends its output with \r\n, and gh strips
+		# that from a secret, so a password kept with its \r wouldn't match the stored one.
+		openssl rand -base64 24 | tr -d '\r\n' >"$KEYS/updater.password"
 		chmod 600 "$KEYS/updater.password"
 		run bunx tauri signer generate --ci -w "$key" -p "$(cat "$KEYS/updater.password")" >/dev/null
 	fi
@@ -84,7 +86,7 @@ if have_secret ANDROID_KEYSTORE; then
 else
 	store="$KEYS/android-release.jks"
 	if [ ! -f "$store" ]; then
-		openssl rand -base64 24 | tr -d '\n/+=' >"$KEYS/android.password"
+		openssl rand -base64 24 | tr -d '\r\n/+=' >"$KEYS/android.password"
 		chmod 600 "$KEYS/android.password"
 		run keytool -genkeypair -keystore "$store" -storetype PKCS12 -alias matpris \
 			-keyalg RSA -keysize 4096 -validity 10000 -dname "CN=Matpris" \
