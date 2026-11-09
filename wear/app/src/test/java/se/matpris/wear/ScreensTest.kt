@@ -1,5 +1,7 @@
 package se.matpris.wear
 
+import androidx.compose.runtime.Composable
+import androidx.wear.compose.material3.AppScaffold
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,15 +26,19 @@ class ScreensTest {
     )
     private val statuses = mapOf(Chain.willys to "ok", Chain.coop to "ok", Chain.lidl to "ok", Chain.hemkop to "ok", Chain.ica to "throttled")
 
+    /** As in the app: the scaffold paints the watch's black background. */
+    @Composable
+    private fun Screen(content: @Composable () -> Unit) = MatprisTheme { AppScaffold { content() } }
+
     @Test fun results() {
-        captureRoboImage("build/outputs/roborazzi/results.png") { MatprisTheme { ResultsList("mjölk", rows, statuses, LUND, true, null) } }
+        captureRoboImage("build/outputs/roborazzi/results.png") { Screen { ResultsList("mjölk", rows, statuses, LUND, true, null) } }
     }
 
     @Test fun loading() {
-        captureRoboImage("build/outputs/roborazzi/loading.png") { MatprisTheme { ResultsList("mjölk", emptyList(), emptyMap(), null, false, null) } }
+        captureRoboImage("build/outputs/roborazzi/loading.png") { Screen { ResultsList("mjölk", emptyList(), emptyMap(), null, false, null) } }
     }
 
     @Test fun home() {
-        captureRoboImage("build/outputs/roborazzi/home.png") { MatprisTheme { Home(onSearch = {}) } }
+        captureRoboImage("build/outputs/roborazzi/home.png") { Screen { Home(onSearch = {}, serverUrl = "https://matpris.example.se") } }
     }
 }

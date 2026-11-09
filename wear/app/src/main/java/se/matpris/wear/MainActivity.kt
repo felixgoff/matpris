@@ -113,7 +113,7 @@ private fun saveSearch(context: Context, query: String) {
 }
 
 @Composable
-internal fun Home(onSearch: (String) -> Unit) {
+internal fun Home(onSearch: (String) -> Unit, serverUrl: String = BuildConfig.SERVER_URL) {
     val context = LocalContext.current
     val listState = rememberScalingLazyListState()
     val recent = remember { recentSearches(context) }
@@ -137,7 +137,7 @@ internal fun Home(onSearch: (String) -> Unit) {
     ScreenScaffold(scrollState = listState) {
         ScalingLazyColumn(state = listState, modifier = Modifier.fillMaxWidth()) {
             item { Wordmark() }
-            if (BuildConfig.SERVER_URL.isEmpty()) {
+            if (serverUrl.isEmpty()) {
                 item {
                     Text(
                         "This build has no Matpris server. Build it with MATPRIS_SERVER_URL.",
