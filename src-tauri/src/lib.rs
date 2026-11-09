@@ -189,7 +189,7 @@ pub fn run() {
         ])
         .build(tauri::generate_context!())
         .expect("error while building Matpris")
-        .run(|app, event| match event {
+        .run(|_app, event| match event {
             tauri::RunEvent::ExitRequested { code: None, api, .. } if !MAIN_OPENED.load(Ordering::SeqCst) => {
                 api.prevent_exit();
             }
@@ -198,7 +198,7 @@ pub fn run() {
             // an app the person already closed.
             #[cfg(desktop)]
             tauri::RunEvent::WindowEvent { label, event: tauri::WindowEvent::Destroyed, .. } if label == "main" => {
-                app.exit(0);
+                _app.exit(0);
             }
             _ => {}
         });
