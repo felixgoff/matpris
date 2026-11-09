@@ -1,9 +1,6 @@
 package se.matpris.wear
 
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.captureRoboImage
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,8 +13,6 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [33], qualifiers = "w227dp-h227dp-round-xhdpi")
 class ScreensTest {
-    @get:Rule val compose = createComposeRule()
-
     private fun row(id: String, name: String, chain: Chain, price: Double, unitPrice: Double, store: String, km: Double, deal: Deal? = null) =
         Row(chain, id, name, null, "1.5 l", price, unitPrice, "l", false, null, null, deal, store, km, "best")
 
@@ -30,17 +25,14 @@ class ScreensTest {
     private val statuses = mapOf(Chain.willys to "ok", Chain.coop to "ok", Chain.lidl to "ok", Chain.hemkop to "ok", Chain.ica to "throttled")
 
     @Test fun results() {
-        compose.setContent { MatprisTheme { ResultsList("mjölk", rows, statuses, LUND, true, null) } }
-        compose.onRoot().captureRoboImage("build/outputs/roborazzi/results.png")
+        captureRoboImage("build/outputs/roborazzi/results.png") { MatprisTheme { ResultsList("mjölk", rows, statuses, LUND, true, null) } }
     }
 
     @Test fun loading() {
-        compose.setContent { MatprisTheme { ResultsList("mjölk", emptyList(), emptyMap(), null, false, null) } }
-        compose.onRoot().captureRoboImage("build/outputs/roborazzi/loading.png")
+        captureRoboImage("build/outputs/roborazzi/loading.png") { MatprisTheme { ResultsList("mjölk", emptyList(), emptyMap(), null, false, null) } }
     }
 
     @Test fun home() {
-        compose.setContent { MatprisTheme { Home(onSearch = {}) } }
-        compose.onRoot().captureRoboImage("build/outputs/roborazzi/home.png")
+        captureRoboImage("build/outputs/roborazzi/home.png") { MatprisTheme { Home(onSearch = {}) } }
     }
 }
