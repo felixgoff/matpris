@@ -6,7 +6,7 @@
 //
 // Releases are on this private repo, so the updater's plain requests to the release
 // download URL (release.baseUrl in electrobun.config.ts) are answered through the
-// GitHub API with this Mac's `gh` login. The token is asked for when needed and kept
+// GitHub API with this computer's `gh` login. The token is asked for when needed and kept
 // in memory only; without gh there is simply never an update.
 import { BrowserWindow, Updater } from 'electrobun/main';
 import { existsSync } from 'node:fs';
@@ -14,8 +14,15 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 
 const DOWNLOADS = 'https://github.com/felixgoff/matpris/releases/latest/download/';
 const LATEST = 'https://api.github.com/repos/felixgoff/matpris/releases/latest';
-// Apps opened from Finder don't get the shell's PATH.
-const GH = ['/opt/homebrew/bin/gh', '/usr/local/bin/gh'].find((p) => existsSync(p));
+// Apps opened from Finder, the Start menu or a desktop entry don't get the shell's PATH.
+const GH = [
+	'/opt/homebrew/bin/gh',
+	'/usr/local/bin/gh',
+	'/usr/bin/gh',
+	'/home/linuxbrew/.linuxbrew/bin/gh',
+	'C:\\Program Files\\GitHub CLI\\gh.exe',
+	`${process.env.LOCALAPPDATA}\\Programs\\GitHub CLI\\gh.exe`
+].find((p) => existsSync(p));
 const CHECK_TIMEOUT_MS = 8_000;
 const WATCH_EVERY_MS = 60 * 60 * 1000;
 

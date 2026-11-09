@@ -1,0 +1,14 @@
+node_modules
+build
+.svelte-kit
+desktop/build
+desktop/artifacts
+.hutch
+mobile/node_modules
+mobile/android
+mobile/ios
+wear
+scripts/.ica-profile
+.env
+.env.*
+.git

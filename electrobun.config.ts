@@ -1,4 +1,4 @@
-// Matpris as a macOS desktop app (Electrobun 2). The SvelteKit server (`vite build`,
+// Matpris as a desktop app for macOS, Windows and Linux (Electrobun 2). The SvelteKit server (`vite build`,
 // adapter-node output in build/) is copied into the app and run by the Bun main
 // process in desktop/main.ts. Build with `bun run desktop` / `bun run desktop:build`.
 import type { ElectrobunConfig } from 'electrobun';
@@ -40,6 +40,13 @@ export default {
 		artifactFolder: 'desktop/artifacts',
 		copy: { build: 'server' },
 		// Icon Composer document; the other candidates are in desktop/icons/drafts.
-		mac: { createDmg: false, icons: 'desktop/icons/Matpris.icon' }
+		mac: { createDmg: false, icons: 'desktop/icons/Matpris.icon' },
+		// The same icon flattened (desktop/icons/matpris.svg). Hutch builds for the host it
+		// runs on only, so each OS has its own runner in desktop-release.yml.
+		// "Use my location" needs WebView2's geolocation permission, granted to the app's
+		// own localhost page (the only origin the window opens).
+		win: { icon: 'desktop/icons/matpris.png', autoGrantPermissions: ['geolocation'] },
+		// WebKitGTK 4.1, like Safari's engine on the Mac.
+		linux: { icon: 'desktop/icons/matpris.png' }
 	}
 } satisfies ElectrobunConfig;

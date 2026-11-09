@@ -96,14 +96,27 @@ The data comes from the chains' own websites, not from official APIs, so check e
 - Willys' and Hemköp's robots.txt also state `Visit-time: 0400-0845` UTC, a preferred crawl window. Live, user-triggered searches outside that window go against that preference. For a public deployment, consider prefetching common products inside that window, or asking Axfood for access.
 - Nominatim's usage policy allows at most 1 request per second, and results are cached for 7 days.
 
-## Desktop app (macOS)
+## Apps
 
-The same app as a small native Mac app, built with [Electrobun](https://framework.blackboard.sh/electrobun/) 2:
+| Platform | What it is | Where | Server |
+| --- | --- | --- | --- |
+| macOS, Windows, Linux | Electrobun desktop app | `desktop/`, `electrobun.config.ts` | Runs its own |
+| Android, iPhone | Capacitor app around the server's pages | `mobile/` ([README](mobile/README.md)) | Hosted ([below](#hosting-the-server-for-the-phone-and-watch-apps)) |
+| Galaxy Watch 5 / Wear OS 3+ | Native Kotlin + Compose for Wear OS | `wear/` ([README](wear/README.md)) | Hosted |
+| Any browser | The site is installable ("Add to Home Screen") | `static/manifest.webmanifest` | Hosted |
+
+The flat app icon for Windows, Linux, Android, Wear OS and the web is `desktop/icons/matpris.svg` (plus `matpris-foreground.svg` for Android's adaptive icon and `matpris-round.svg` for round screens), drawn from the layers of the Mac's `Matpris.icon`.
+
+## Desktop app (macOS, Windows, Linux)
+
+The same app as a small native desktop app, built with [Electrobun](https://framework.blackboard.sh/electrobun/) 2:
 
 ```bash
 bun run desktop        # build, then open a dev window (console output in the terminal)
-bun run desktop:build  # release app: desktop/build/stable-macos-arm64/Matpris.app (~32 MB)
+bun run desktop:build  # release app for this OS, e.g. desktop/build/stable-macos-arm64/Matpris.app (~32 MB)
 ```
+
+Electrobun builds only for the OS it runs on, so each platform has its own runner in the Release workflow. The window is the system's own webview: WebKit on macOS, WebView2 on Windows (geolocation granted to the app's localhost page in `electrobun.config.ts`), WebKitGTK 4.1 on Linux (install `libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 librsvg2-2` on Ubuntu/Debian).
 
 `vite build` produces the SvelteKit server (`adapter-node`, in `build/`). Electrobun copies it into the app, and `desktop/main.ts`, running in the app's Bun process, starts it on a free `127.0.0.1` port and opens a window on it. Everything else works as on the web: searches, caches and request spacing all live in that server. The window uses macOS's own WebKit, not a bundled Chrome. Device location asks for permission the first time.
 
@@ -121,10 +134,26 @@ bun run bump patch     # or minor, major, or an exact 0.2.0
 git commit -am "Version 0.0.2" && git push
 ```
 
-or run **Actions › Bump version**. The **Desktop release** workflow then builds the app on a `macos-26` runner and publishes the GitHub release `v<version>` with `Matpris-<version>-macos-arm64.zip` (for a first install: unzip, move to Applications) and the two files installed copies update from. Pushes whose version is already released skip the build, so everyday commits cost no macOS minutes. The workflow needs the repository secret `PUBLIC_MAPKIT_TOKEN` (`gh secret set PUBLIC_MAPKIT_TOKEN`), or the released map shows "The map could not be loaded".
+or run **Actions › Bump version**. The **Release** workflow (`desktop-release.yml`) then builds on `macos-26`, `windows-latest` and `ubuntu-24.04` runners plus one Android job, and publishes the GitHub release `v<version>` with:
 
-Installed copies update like RustRadar (`desktop/update.ts`, Electrobun's updater): on launch a newer release downloads and installs behind a small progress window, then the app restarts as the new version; while it's open it looks every hour, downloads quietly and offers **Restart** (Later installs it at the next launch). Offline, a slow check (8 s) or any failure just opens the installed version. The repo is private, so release files are fetched through the GitHub API with this Mac's `gh` login (`gh auth login`); the token is kept in memory only, and a Mac without gh never updates. Dev builds (`bun run desktop`) never update.
+- `Matpris-<version>-macos-arm64.zip` (unzip, move to Applications), `win-x64-Matpris-Setup.zip` (unzip, run the setup), `linux-x64-Matpris-Setup.tar.gz` (extract, run `./installer`), and for each the `stable-<os>-<arch>-update.json` and `.tar.zst` installed copies update from;
+- `Matpris-<version>-android.apk` and `Matpris-<version>-wear-os.apk`, which ask the server in the repo variable `MATPRIS_SERVER_URL` and are signed with the secret `ANDROID_DEBUG_KEYSTORE` (see `mobile/README.md`).
+
+Pushes whose version is already released skip the builds, so everyday commits cost no runner minutes. The workflow needs the repository secret `PUBLIC_MAPKIT_TOKEN` (`gh secret set PUBLIC_MAPKIT_TOKEN`), or the released map shows "The map could not be loaded".
+
+Installed copies update like RustRadar (`desktop/update.ts`, Electrobun's updater): on launch a newer release downloads and installs behind a small progress window, then the app restarts as the new version; while it's open it looks every hour, downloads quietly and offers **Restart** (Later installs it at the next launch). Offline, a slow check (8 s) or any failure just opens the installed version. The repo is private, so release files are fetched through the GitHub API with the computer's `gh` login (`gh auth login`; looked for in Homebrew, `/usr/bin` and GitHub CLI's Windows install folders); the token is kept in memory only, and a computer without gh never updates. Dev builds (`bun run desktop`) never update.
 
 ## Deploying
+
+### Hosting the server for the phone and watch apps
+
+The phone and watch apps don't search the chains themselves; they ask a Matpris server, which has to be on the internet over HTTPS (browsers only offer location to secure pages). The `Dockerfile` builds one, with Google Chrome for ICA's headless session:
+
+```bash
+docker build -t matpris .
+docker run -d -p 3000:3000 -e PUBLIC_MAPKIT_TOKEN=… --restart unless-stopped matpris
+```
+
+Put it behind HTTPS (any host with Docker: a small VPS, Fly.io, Render, or a home server behind Caddy or Cloudflare Tunnel), then set the repo variable `MATPRIS_SERVER_URL` to its address (`gh variable set MATPRIS_SERVER_URL`) and release. Read "Being a good citizen" above first: a public server can be asked by anyone, and the chains' limits (Axfood's 10 s crawl delay) are per server, not per user. ICA's WAF may challenge a data-centre IP more than a home one; then ICA shows "busy" and the other chains still answer.
 
 `vite build` produces a standalone Node server (`@sveltejs/adapter-node`, `node build`). The caches live in memory, so one long-running server gets much more out of them than short-lived serverless functions would.

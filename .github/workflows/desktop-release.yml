@@ -1,8 +1,8 @@
-name: Desktop release
+name: Release
 
-# Builds the macOS app and publishes it as the GitHub release v<package.json version>,
+# Builds the macOS, Windows, Linux, Android and Wear OS apps and publishes it as the GitHub release v<package.json version>,
 # which installed copies update to (desktop/update.ts). A push to main only builds when
-# its version hasn't been released yet, so everyday commits cost no macOS minutes: to
+# its version hasn't been released yet, so everyday commits cost no runner minutes: to
 # ship, raise the version (`bun run bump patch` and push, or the "Bump version" workflow).
 on:
   push:
@@ -38,12 +38,23 @@ jobs:
             echo "new=true" >> "$GITHUB_OUTPUT"
           fi
 
-  release:
-    name: Build and publish
+  build:
+    name: Build (${{ matrix.target }})
     needs: version
     if: needs.version.outputs.new == 'true'
-    # Apple silicon with Xcode 26+, which compiles the Icon Composer icon.
-    runs-on: macos-26
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          # Apple silicon with Xcode 26+, which compiles the Icon Composer icon.
+          - { target: macos-arm64, os: macos-26 }
+          - { target: win-x64, os: windows-latest }
+          - { target: linux-x64, os: ubuntu-24.04 }
+    # Hutch builds only for the OS and CPU it runs on.
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     env:
       VERSION: ${{ needs.version.outputs.version }}
     steps:
@@ -51,6 +62,9 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
+      # Electrobun's Linux wrapper links GTK 3, WebKitGTK 4.1, AppIndicator and librsvg.
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 librsvg2-2
       # Electrobun downloads its runtime into ~/.hutch on the first build.
       - uses: actions/cache@v4
         with:
@@ -66,17 +80,106 @@ jobs:
           else
             printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
           fi
-      - run: bun run check
-      - run: bun run test
+      # Checks once, on the cheapest runner.
+      - if: runner.os == 'Linux'
+        run: bun run check && bun run test
       - run: bun run desktop:build
+      - name: Collect
+        run: |
+          mkdir out
+          if [ "${{ matrix.target }}" = macos-arm64 ]; then
+            # The app zipped for a first install, plus the two files installed copies update from.
+            ditto -c -k --keepParent desktop/build/stable-macos-arm64/Matpris.app "out/Matpris-$VERSION-macos-arm64.zip"
+            cp desktop/artifacts/stable-macos-arm64-update.json desktop/artifacts/stable-macos-arm64-Matpris.app.tar.zst out/
+          else
+            # The installer (win: Setup zip, linux: Setup tar.gz) and the update json + archive.
+            cp desktop/artifacts/*${{ matrix.target }}* out/
+            rm -f out/*.patch
+          fi
+          ls -l out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.target }}
+          path: out/*
+          if-no-files-found: error
+
+  android:
+    name: Build (Android phone + Galaxy Watch)
+    needs: version
+    if: needs.version.outputs.new == 'true'
+    runs-on: ubuntu-24.04
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+      # The hosted Matpris server the phone and watch apps ask (repo variable).
+      MATPRIS_SERVER_URL: ${{ vars.MATPRIS_SERVER_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Signing key
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
+        run: |
+          # One key for every release, so an installed app updates in place.
+          if [ -z "$KEYSTORE" ]; then
+            echo "::warning::No ANDROID_DEBUG_KEYSTORE secret: these APKs are signed with a throwaway key and won't install over an earlier release."
+          else
+            mkdir -p ~/.android && echo "$KEYSTORE" | base64 -d > ~/.android/debug.keystore
+          fi
+          if [ -z "$MATPRIS_SERVER_URL" ]; then
+            echo "::warning::No MATPRIS_SERVER_URL variable: the phone and watch apps say they have no server."
+          fi
+      - name: Phone (Capacitor)
+        working-directory: mobile
+        run: |
+          bun install --frozen-lockfile
+          bunx cap sync android
+          (cd android && ./gradlew assembleDebug --no-daemon)
+      - name: Watch (Wear OS)
+        working-directory: wear
+        run: ./gradlew testDebugUnitTest assembleDebug --no-daemon
+      - name: Collect
+        run: |
+          mkdir out
+          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk "out/Matpris-$VERSION-android.apk"
+          cp wear/app/build/outputs/apk/debug/app-debug.apk "out/Matpris-$VERSION-wear-os.apk"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: out/*
+          if-no-files-found: error
+
+  release:
+    name: Publish
+    needs: [version, build, android]
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
       - name: Publish v${{ env.VERSION }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # The app zipped for a first install, plus the two files installed copies update from.
-          zip="Matpris-$VERSION-macos-arm64.zip"
-          ditto -c -k --keepParent desktop/build/stable-macos-arm64/Matpris.app "$zip"
-          gh release create "v$VERSION" --target "$GITHUB_SHA" --title "Matpris $VERSION" \
-            --notes "Installed copies update to this version the next time they open, or sooner when the app offers a restart. First install: unzip $zip and move Matpris.app to Applications." \
-            "$zip" desktop/artifacts/stable-macos-arm64-update.json desktop/artifacts/stable-macos-arm64-Matpris.app.tar.zst
+          ls -l out
+          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "Matpris $VERSION" \
+            --notes "Installed copies update to this version the next time they open, or sooner when the app offers a restart.
+
+          First install:
+          - **macOS**: unzip Matpris-$VERSION-macos-arm64.zip and move Matpris.app to Applications.
+          - **Windows**: unzip win-x64-Matpris-Setup.zip and run Matpris Setup.
+          - **Linux**: extract linux-x64-Matpris-Setup.tar.gz and run ./installer (needs GTK 3 and WebKitGTK 4.1).
+          - **Android phone**: install Matpris-$VERSION-android.apk.
+          - **Galaxy Watch 5 / Wear OS**: install Matpris-$VERSION-wear-os.apk with adb over Wi-Fi (wear/README.md).
+          - **iPhone**: built from mobile/ios in Xcode (mobile/README.md)." \
+            out/*
           echo "### Released Matpris $VERSION" >> "$GITHUB_STEP_SUMMARY"

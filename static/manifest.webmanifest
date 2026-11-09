@@ -1,0 +1,14 @@
+{
+	"name": "Matpris",
+	"short_name": "Matpris",
+	"description": "Grocery prices from the stores around you",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#26292b",
+	"theme_color": "#26292b",
+	"icons": [
+		{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+		{ "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+	]
+}

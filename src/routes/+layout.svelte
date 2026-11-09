@@ -7,6 +7,11 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<!-- Installable from the browser ("Add to Home Screen" on iPhone, "Install app" on Android). -->
+	<link rel="manifest" href="/manifest.webmanifest" />
+	<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="Matpris" />
+	<meta name="mobile-web-app-capable" content="yes" />
 	<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 

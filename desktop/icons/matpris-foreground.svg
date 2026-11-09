@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Android adaptive-icon foreground: the tag and "kr" shrunk into the 66 dp safe zone
+       (background colour #26292b). -->
+  <g transform="translate(512 512) scale(0.62) translate(-512 -512)">
+    <rect x="176" y="272" width="672" height="480" rx="32" fill="#ffd400"/>
+    <path fill="#1a1c1d" transform="translate(347.31 662.00) scale(0.41379 -0.41379)" d="M33 0V725H195V368L286 528H453L328 327L457 0H281L219 163L195 125V0ZM495 0V528H634L643 458H647Q654 482 665.0 500.5Q676 519 691.5 529.5Q707 540 727 540Q735 540 744.5 538.5Q754 537 763 533V362H710Q690 362 679.0 353.5Q668 345 663.5 328.5Q659 312 658.0 288.5Q657 265 657 235V0Z"/>
+  </g>
+</svg>

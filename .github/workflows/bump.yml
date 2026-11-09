@@ -1,7 +1,7 @@
 name: Bump version
 
 # Actions > Bump version > Run workflow: raises the version in package.json, commits it
-# to the branch picked under "Use workflow from", and starts "Desktop release" for it.
+# to the branch picked under "Use workflow from", and starts "Release" for it.
 on:
   workflow_dispatch:
     inputs:

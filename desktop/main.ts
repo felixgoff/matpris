@@ -14,8 +14,8 @@ declare const MAPKIT_TOKEN: string;
 process.env.PUBLIC_MAPKIT_TOKEN ||= MAPKIT_TOKEN;
 
 // On macOS, Cmd+A/C/V/X/Z are menu shortcuts: without an Edit menu they do nothing in
-// the window's text fields.
-ApplicationMenu.setApplicationMenu([
+// the window's text fields. Windows and Linux webviews handle Ctrl+C etc. themselves.
+if (process.platform === 'darwin') ApplicationMenu.setApplicationMenu([
 	{ label: 'Matpris', submenu: [{ role: 'hide' }, { role: 'hideOthers' }, { role: 'showAll' }, { type: 'separator' }, { role: 'quit' }] },
 	{
 		label: 'Edit',
