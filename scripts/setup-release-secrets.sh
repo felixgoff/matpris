@@ -34,9 +34,10 @@ mkdir -p "$KEYS" && chmod 700 "$KEYS"
 # 1. The map: the MapKit key (.p8), from which every release signs its own token
 #    (scripts/mapkit-token.mjs). Looked for in ~/.matpris, then Downloads (and copied
 #    to ~/.matpris, where `bun run mapkit:token` finds it too).
-p8=$(ls "$KEYS"/AuthKey_*.p8 2>/dev/null | head -1 || true)
+# The newest file: a new key replaces one that was revoked.
+p8=$(ls -t "$KEYS"/AuthKey_*.p8 2>/dev/null | head -1 || true)
 if [ -z "$p8" ]; then
-	found=$(ls "$HOME"/Downloads/AuthKey_*.p8 2>/dev/null | head -1 || true)
+	found=$(ls -t "$HOME"/Downloads/AuthKey_*.p8 2>/dev/null | head -1 || true)
 	if [ -n "$found" ]; then
 		cp "$found" "$KEYS/" && chmod 600 "$KEYS/$(basename "$found")"
 		p8="$KEYS/$(basename "$found")"

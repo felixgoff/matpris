@@ -10,7 +10,7 @@
 // the first ~/.matpris/AuthKey_*.p8. Key ID: MAPKIT_KEY_ID, else read from the file
 // name. Team: MAPKIT_TEAM_ID, default JWR5UX55S5. Lifetime: MAPKIT_TOKEN_DAYS (180).
 import { createPrivateKey, sign } from 'node:crypto';
-import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 
@@ -25,7 +25,11 @@ if (!pem) {
 	let file = process.env.MAPKIT_KEY_FILE;
 	if (!file) {
 		const dir = join(homedir(), '.matpris');
-		const found = existsSync(dir) ? readdirSync(dir).find((f) => /^AuthKey_\w+\.p8$/.test(f)) : undefined;
+		const found = existsSync(dir)
+			? readdirSync(dir)
+					.filter((f) => /^AuthKey_\w+\.p8$/.test(f))
+					.sort((a, b) => statSync(join(dir, b)).mtimeMs - statSync(join(dir, a)).mtimeMs)[0] // newest
+			: undefined;
 		if (!found) fail('No MapKit key: put AuthKey_<KEYID>.p8 in ~/.matpris/, or set MAPKIT_KEY_FILE.');
 		file = join(dir, found);
 	}
