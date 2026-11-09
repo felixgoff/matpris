@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -11,6 +12,20 @@ plugins {
 @Suppress("UNCHECKED_CAST")
 val matprisVersion = (JsonSlurper().parse(file("../../package.json")) as Map<String, Any>)["version"] as String
 val matprisVersionCode = matprisVersion.split('.', '-').take(3).fold(0) { n, part -> n * 100 + (part.toIntOrNull() ?: 0) }
+
+// The release key, shared with the Tauri phone app: the Data Layer only pairs apps signed
+// alike, and Android only installs an update over an app signed with the same key. The
+// Release workflow sets ANDROID_KEYSTORE_FILE and the passwords from secrets; locally a
+// keystore.properties in wear/ (storeFile, storePassword, keyAlias, keyPassword; gitignored)
+// does the same. Without either, release builds are signed with the debug key so they
+// still build, but they won't pair with or update over a properly signed copy.
+val keystoreProperties = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+fun signingValue(env: String, prop: String): String? =
+    System.getenv(env)?.takeIf { it.isNotEmpty() } ?: keystoreProperties.getProperty(prop)
+val releaseStoreFile = signingValue("ANDROID_KEYSTORE_FILE", "storeFile")
 
 android {
     namespace = "se.matpris.wear"
@@ -27,9 +42,27 @@ android {
         versionName = matprisVersion
     }
 
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = rootProject.file(releaseStoreFile)
+                storePassword = signingValue("ANDROID_KEYSTORE_PASSWORD", "storePassword")
+                keyAlias = signingValue("ANDROID_KEY_ALIAS", "keyAlias")
+                // A PKCS12 keystore (keytool's default) has one password for both.
+                keyPassword = signingValue("ANDROID_KEY_PASSWORD", "keyPassword") ?: storePassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = if (releaseStoreFile != null) {
+                signingConfigs.getByName("release")
+            } else {
+                logger.warn("w: No release key (ANDROID_KEYSTORE_FILE or keystore.properties): the release build is signed with the debug key.")
+                signingConfigs.getByName("debug")
+            }
         }
     }
     buildFeatures {

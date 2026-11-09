@@ -27,7 +27,12 @@ MATPRIS_SERVER_URL=https://matpris.example.se ./gradlew assembleDebug
 ```
 
 The Release workflow builds it as `Matpris-<version>-wear-os.apk`, signed with the same key as
-the phone app (see `../mobile/README.md`).
+the Tauri phone app (secrets `ANDROID_KEYSTORE` (base64), `ANDROID_KEYSTORE_PASSWORD`,
+`ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`): the Data Layer only connects the watch to a
+phone app with the same id and signature. To sign a local release build the same way, set
+`ANDROID_KEYSTORE_FILE`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS` and
+`ANDROID_KEY_PASSWORD`, or put `storeFile`, `storePassword`, `keyAlias` and `keyPassword` in
+`wear/keystore.properties` (gitignored); without them `assembleRelease` uses the debug key.
 
 ## Install on the watch
 

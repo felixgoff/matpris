@@ -21,6 +21,11 @@ Thumbs.db
 # Crawler browser profiles (cookies/WAF tokens — never commit)
 scripts/.ica-profile/
 
+# Android release key and its passwords (CI gets them from secrets)
+keystore.properties
+*.jks
+*.keystore
+
 # Env
 .env
 .env.*
