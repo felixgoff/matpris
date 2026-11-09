@@ -159,7 +159,7 @@ git commit -am "Version 0.0.2" && git push
 
 or run **Actions › Bump version**. The **Release** workflow (`desktop-release.yml`) then builds on macOS, Windows and Linux runners plus one Android job (phone + watch), checks that the iPhone app compiles (without signing), and publishes the GitHub release `v<version>` with the installers (`.dmg`, `-setup.exe`/`.msi`, `.AppImage`/`.deb`, the two APKs), the signed update bundles and `latest.json`. Pushes whose version is already released skip the builds.
 
-Set these up once in the repo's settings (each missing one is a warning, not a failed release):
+Set these up once (each missing one is a warning, not a failed release). `bash scripts/setup-release-secrets.sh` does it from your computer with your `gh` login: it makes the keys there, keeps them in `~/.matpris/` (back that up), never replaces a key that's already set, and takes the MapKit token from `.env`.
 
 | Name | Kind | For |
 | --- | --- | --- |
