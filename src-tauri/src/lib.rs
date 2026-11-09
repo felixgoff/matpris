@@ -131,6 +131,14 @@ pub(crate) fn open_main_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     let builder = WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()));
     #[cfg(desktop)]
     let builder = builder.title("Matpris").inner_size(1280.0, 820.0).min_inner_size(380.0, 600.0);
+    // WebKitGTK denies any permission request nobody answers, so on Linux "Use my
+    // location" always said location access was off. The page is our own; where the
+    // position comes from (GeoClue) is still up to the system.
+    #[cfg(target_os = "linux")]
+    let builder = builder.on_permission_request(|_, kind| match kind {
+        tauri::webview::PermissionKind::Geolocation => tauri::webview::PermissionResponse::Allow,
+        _ => tauri::webview::PermissionResponse::Default,
+    });
     builder.build()?;
     Ok(())
 }
