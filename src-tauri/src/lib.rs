@@ -189,11 +189,17 @@ pub fn run() {
         ])
         .build(tauri::generate_context!())
         .expect("error while building Matpris")
-        .run(|_app, event| {
-            if let tauri::RunEvent::ExitRequested { code: None, api, .. } = event {
-                if !MAIN_OPENED.load(Ordering::SeqCst) {
-                    api.prevent_exit();
-                }
+        .run(|app, event| match event {
+            tauri::RunEvent::ExitRequested { code: None, api, .. } if !MAIN_OPENED.load(Ordering::SeqCst) => {
+                api.prevent_exit();
             }
+            // Closing the page is leaving the app, even while ICA's hidden window is still
+            // warming: otherwise the process lives on unseen, or ICA's check pops up for
+            // an app the person already closed.
+            #[cfg(desktop)]
+            tauri::RunEvent::WindowEvent { label, event: tauri::WindowEvent::Destroyed, .. } if label == "main" => {
+                app.exit(0);
+            }
+            _ => {}
         });
 }

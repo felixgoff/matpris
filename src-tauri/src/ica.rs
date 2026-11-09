@@ -40,9 +40,15 @@ impl WebviewJar {
 #[cfg(desktop)]
 mod desktop {
     use super::*;
+    use std::sync::atomic::{AtomicBool, Ordering};
+    use std::sync::Arc;
+    use tauri::webview::PageLoadEvent;
     use tauri::{Manager, WebviewUrl, WebviewWindow, WebviewWindowBuilder};
 
-    fn open(app: &AppHandle) -> Result<WebviewWindow, String> {
+    /// After the shop page has loaded, how long its WAF script gets to renew the token.
+    const SETTLE: Duration = Duration::from_secs(2);
+
+    fn open(app: &AppHandle, loaded: Arc<AtomicBool>) -> Result<WebviewWindow, String> {
         if let Some(w) = app.get_webview_window(LABEL) {
             return Ok(w);
         }
@@ -51,19 +57,42 @@ mod desktop {
             .title("ICA wants to check that you're a person")
             .inner_size(480.0, 640.0)
             .visible(false)
+            .on_page_load(move |_, page| {
+                if page.event() == PageLoadEvent::Finished {
+                    loaded.store(true, Ordering::SeqCst);
+                }
+            })
             .build()
             .map_err(|e| e.to_string())
     }
 
-    /// The shop's cookies once the WAF token is among them.
-    async fn token(window: &WebviewWindow, within: Duration) -> Option<Vec<Cookie>> {
+    fn waf_token(cookies: &[tauri::webview::Cookie<'static>]) -> Option<String> {
+        cookies.iter().find(|c| c.name() == "aws-waf-token" && !c.value().is_empty()).map(|c| c.value().to_string())
+    }
+
+    /// The shop's cookies once this visit has a WAF token. The webview keeps its cookies
+    /// on disk and the token cookie says it lasts four days, while the WAF accepts it
+    /// for minutes: a token that was already there (`old`) only counts once the page
+    /// has loaded and had SETTLE to renew it (and `loaded` is given), else every warm
+    /// would hand back the token the WAF just turned down. A new token counts at once.
+    async fn token(
+        window: &WebviewWindow,
+        within: Duration,
+        old: Option<&str>,
+        loaded: Option<&AtomicBool>,
+    ) -> Option<Vec<Cookie>> {
         let url: url::Url = SHOP.parse().ok()?;
         let deadline = tokio::time::Instant::now() + within;
+        let mut loaded_at = None;
         while tokio::time::Instant::now() < deadline {
             tokio::time::sleep(Duration::from_millis(500)).await;
+            if loaded_at.is_none() && loaded.is_some_and(|l| l.load(Ordering::SeqCst)) {
+                loaded_at = Some(tokio::time::Instant::now());
+            }
             // Off the main thread: on Windows reading cookies from it deadlocks.
             let cookies = window.cookies_for_url(url.clone()).unwrap_or_default();
-            if cookies.iter().any(|c| c.name() == "aws-waf-token" && !c.value().is_empty()) {
+            let Some(token) = waf_token(&cookies) else { continue };
+            if Some(token.as_str()) != old || loaded_at.is_some_and(|t| t.elapsed() >= SETTLE) {
                 return Some(cookies.iter().map(|c| Cookie { name: c.name().into(), value: c.value().into() }).collect());
             }
         }
@@ -71,13 +100,18 @@ mod desktop {
     }
 
     pub async fn warm(app: &AppHandle) -> Result<Vec<Cookie>, http::Error> {
-        let window = open(app).map_err(|e| http::Error::Throttled(format!("can't open ICA's shop: {e}")))?;
-        let mut cookies = token(&window, QUIET_WAIT).await;
+        let loaded = Arc::new(AtomicBool::new(false));
+        let window = open(app, loaded.clone()).map_err(|e| http::Error::Throttled(format!("can't open ICA's shop: {e}")))?;
+        let url: url::Url = SHOP.parse().map_err(|e| http::Error::Other(format!("{e}")))?;
+        // What the cookie store held before this visit (the window shares it).
+        let old = waf_token(&window.cookies_for_url(url).unwrap_or_default());
+        let mut cookies = token(&window, QUIET_WAIT, old.as_deref(), Some(&loaded)).await;
         if cookies.is_none() {
             // A visual check: only a person can answer it, so show it to the person here.
+            // Answering it mints a new token; the old one can't stand in for that.
             let _ = window.show();
             let _ = window.set_focus();
-            cookies = token(&window, PERSON_WAIT).await;
+            cookies = token(&window, PERSON_WAIT, old.as_deref(), None).await;
         }
         let _ = window.close();
         cookies.ok_or_else(|| http::Error::Throttled("ICA wants a person to answer its check first".into()))
