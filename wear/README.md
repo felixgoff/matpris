@@ -10,18 +10,35 @@ that are what you searched for: `app/src/main/java/se/matpris/wear/Ranking.kt`).
   six searches are kept as buttons, starting with mjölk, kaffe, bananer, ägg and smör.
 - **Location**: the watch's GPS, or the phone's location through it. Without permission or
   a fix within 15 s it searches around Lund and says so.
-- **Data**: `GET /api/search` on the Matpris server, streamed, so the first chains show while
-  the others answer. Like the phone app, it needs the server on the internet.
-- It runs on its own (`com.google.android.wearable.standalone`): over Wi-Fi, LTE, or the
-  phone's Bluetooth connection.
+- **Data**: the watch asks the Matpris app on the paired **Android phone** over the Wear OS
+  Data Layer (Bluetooth or Wi-Fi). The phone runs the search in its Rust backend and sends
+  each chain's results back as they arrive, so the first chains show while the others
+  answer. The phone app doesn't have to be open (a `WearableListenerService` wakes it). An
+  iPhone can't do this: Wear OS watches pair with Android phones.
+
+### The protocol
+
+Both sides must stay in step: `app/src/main/java/se/matpris/wear/Api.kt` here, and
+`WearSearchService.kt` / `WatchBridge.kt` in `src-tauri/gen/android` with
+`src-tauri/src/watch.rs` on the phone.
+
+| Step | Path | Payload |
+| --- | --- | --- |
+| The phone app declares the capability | `matpris_search` | `res/values/wear.xml` |
+| Watch → phone | `/matpris/search` | `{"id","q","lat","lng"}` (UTF-8 JSON) |
+| Phone → watch, once per event | `/matpris/event/<id>` | one search event as JSON, trimmed to the fields the watch reads, ending with `{"type":"done"}` or `{"type":"error","message":…}` |
+
+The Data Layer only connects apps with the **same application id** (`se.matpris.matpris`)
+and the **same signing key**: build both with the same keystore (the Release workflow does,
+from the `ANDROID_KEYSTORE` secrets). When the phone app isn't running, ICA has no session
+cookie in that process and shows as busy on the watch.
 
 ## Build
 
 From this folder (`wear/`), with JDK 21 and the Android SDK:
 
 ```bash
-MATPRIS_SERVER_URL=https://matpris.example.se ./gradlew assembleDebug
-# → app/build/outputs/apk/debug/app-debug.apk
+./gradlew assembleDebug           # → app/build/outputs/apk/debug/app-debug.apk
 ./gradlew testDebugUnitTest      # ranking and parsing tests
 ./gradlew recordRoborazziDebug   # screenshots of the screens → app/build/outputs/roborazzi
 ```

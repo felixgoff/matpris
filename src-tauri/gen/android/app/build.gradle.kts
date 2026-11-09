@@ -14,6 +14,20 @@ val tauriProperties = Properties().apply {
     }
 }
 
+// The release key, shared with the Wear OS app (wear/app/build.gradle.kts): the Data Layer
+// only pairs apps signed alike, and Android only installs an update over an app signed with
+// the same key. The Release workflow sets ANDROID_KEYSTORE_FILE and the passwords from
+// secrets; locally a keystore.properties in gen/android (storeFile, storePassword, keyAlias,
+// keyPassword; gitignored) does the same. Without either, release builds are signed with
+// the debug key so they still install, but not over a properly signed copy.
+val keystoreProperties = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+fun signingValue(env: String, prop: String): String? =
+    System.getenv(env)?.takeIf { it.isNotEmpty() } ?: keystoreProperties.getProperty(prop)
+val releaseStoreFile = signingValue("ANDROID_KEYSTORE_FILE", "storeFile")
+
 android {
     compileSdk = 37
     namespace = "se.matpris.matpris"
@@ -24,6 +38,17 @@ android {
         targetSdk = 37
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
         versionName = tauriProperties.getProperty("tauri.android.versionName", "1.0")
+    }
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = rootProject.file(releaseStoreFile)
+                storePassword = signingValue("ANDROID_KEYSTORE_PASSWORD", "storePassword")
+                keyAlias = signingValue("ANDROID_KEY_ALIAS", "keyAlias")
+                // A PKCS12 keystore (keytool's default) has one password for both.
+                keyPassword = signingValue("ANDROID_KEY_PASSWORD", "keyPassword") ?: storePassword
+            }
+        }
     }
     buildTypes {
         getByName("debug") {
@@ -39,6 +64,12 @@ android {
             }
         }
         getByName("release") {
+            signingConfig = if (releaseStoreFile != null) {
+                signingConfigs.getByName("release")
+            } else {
+                logger.warn("w: No release key (ANDROID_KEYSTORE_FILE or keystore.properties): the release build is signed with the debug key.")
+                signingConfigs.getByName("debug")
+            }
             optimization {
                enable = true
             }

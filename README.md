@@ -2,30 +2,43 @@
 
 Search for a grocery product and see one merged, price-sorted list from Swedish chains near you, with a map of the stores and a "cheapest near you" pick.
 
-Built with SvelteKit + TypeScript. Apple MapKit JS for the map, OpenStreetMap Nominatim for address lookup.
+One app for macOS, Windows, Linux, Android and iPhone, built with [Tauri 2](https://tauri.app): the page is SvelteKit + TypeScript, and everything behind it (searching the chains, ranking, finding stores) is a Rust backend that runs inside the app on each device. A Galaxy Watch app asks the phone. Apple MapKit JS draws the map, OpenStreetMap Nominatim looks up addresses.
 
 ```bash
 bun install
 cp .env.example .env   # then paste your MapKit JS token into PUBLIC_MAPKIT_TOKEN
-bun run dev        # http://localhost:5173
-bun run test       # unit tests (price parsing, search radius)
-bun run check      # type check
+bun run dev            # the page in a browser at http://localhost:5173, with the Rust dev server
+bun run app            # the desktop app (Tauri dev window)
+bun run test           # Rust tests: parsing, relevance, search circle, every chain's mapping
+bun run check          # type check the page
 ```
+
+| Folder | What it is |
+| --- | --- |
+| `core/` | The backend (crate `matpris-core`): chain adapters, request spacing, cache, relevance, store circle, search stream, geocoding |
+| `src/` | The page (SvelteKit, built static). `src/lib/api.ts` reaches the backend: Tauri commands in the app, `/api/*` in a browser |
+| `src-tauri/` | The Tauri app: commands, ICA's session window, desktop self-update, the Android project (`gen/android`) and the watch bridge |
+| `plugins/ica-session/` | Tauri mobile plugin (Kotlin, Swift) that gets ICA's session cookie on phones |
+| `server/` | The backend over HTTP (`/api/search` etc.) for developing the page in a browser (`bun run dev` starts it) |
+| `wear/` | The Galaxy Watch / Wear OS app (Kotlin, Compose for Wear OS) |
+| `scripts/` | Store-list builders and ICA's session tools (Node + Playwright) |
 
 ## Map token
 
 The map uses [MapKit JS](https://developer.apple.com/maps/web/) and needs a JWT in `PUBLIC_MAPKIT_TOKEN` (`.env`, which is gitignored). The token is sent to the browser by design, but keep it out of git so it can be rotated.
 
-Tokens made in the Apple Developer dashboard expire. When the map shows "Kartan kunde inte laddas", generate a new one and update `.env`; no rebuild is needed in dev, just a restart. For production, sign short-lived tokens on the server from your MapKit `.p8` key (ES256, with your Team ID as `iss` and the Key ID as `kid`), and set an `origin` claim to your domain.
+Tokens made in the Apple Developer dashboard expire. When the map shows "The map could not be loaded", generate a new one, update `.env` (and the `PUBLIC_MAPKIT_TOKEN` repo secret), and rebuild: the token is built into the page, because the apps have no server to read it from. For production, sign short-lived tokens on the server from your MapKit `.p8` key (ES256, with your Team ID as `iss` and the Key ID as `kid`), and set an `origin` claim to your domain.
 
 ## How it works
 
-1. **Location.** On load the map turns on MapKit's user location (`showsUserLocation`), and the first location fix moves the search there. Until then, or if location access is denied, it shows central Lund. Entering an address (geocoded through Nominatim) stops following the device; "Använd min position" resumes it.
-2. **Automatic search radius** (`src/lib/server/stores/radius.ts`). Starts at 1.5 km and grows ×1.6 until the circle holds at least 12 stores from at least 3 chains, up to a 30 km cap. In a city centre the circle stays small; in the countryside it widens. At most 5 stores per chain and 25 in total are queried.
-3. **Live search** (`src/lib/server/search.ts`). All chains are queried in parallel. Results stream to the browser as NDJSON (`/api/search`), so fast chains appear first. Prices are cached for 15 minutes and store lists for 24 hours.
-4. **Normalising** (`src/lib/server/normalize.ts`). Prices and comparison prices (kr/kg, kr/l, kr/st) are parsed from each chain's format. Irrelevant hits are dropped: every query word must appear in the product name, and Swedish compounds count, so "mjölk" matches "Mellanmjölk". Plural and definite queries are reduced to their base form, so "bananer" finds "Banan". Each hit then gets a relevance tier: **best** when it is the thing searched for ("Banan Klass 1"), **mention** when the query only flavours or fills another product type or baby food ("Banan & Vanilj Yoghurt"), **weak** when the query only starts a longer word ("Bananchips"). Chains that publish category paths (City Gross, Coop) hand those to the tier logic; the hand-kept list of product-type words fills the rest. Only the top tier is ranked and can be "Cheapest near you"; the rest fold into an "other products" list. Products sold by weight are priced per kg, with a piece price estimated from Willys'/Hemköp's average weight.
+1. **Location.** On load the map turns on MapKit's user location (`showsUserLocation`), and the first location fix moves the search there. Until then, or if location access is denied, it shows central Lund. Entering an address (geocoded through Nominatim) stops following the device; "Use my location" resumes it. In the apps the system asks for location permission the first time (Android: the webview's prompt becomes the system one; iOS and macOS: the usage text in `Info.ios.plist` / `Info.plist`).
+2. **Automatic search radius** (`core/src/stores/radius.rs`). Starts at 1.5 km and grows ×1.6 until the circle holds at least 12 stores from at least 3 chains, up to a 30 km cap. In a city centre the circle stays small; in the countryside it widens. At most 5 stores per chain and 25 in total are queried.
+3. **Live search** (`core/src/search.rs`). All chains are queried in parallel. Results stream to the page as they arrive (a Tauri channel in the app, NDJSON from `/api/search` in a browser), so fast chains appear first. Prices are cached for 15 minutes and store lists for 24 hours.
+4. **Normalising** (`core/src/normalize.rs`). Prices and comparison prices (kr/kg, kr/l, kr/st) are parsed from each chain's format. Irrelevant hits are dropped: every query word must appear in the product name, and Swedish compounds count, so "mjölk" matches "Mellanmjölk". Plural and definite queries are reduced to their base form, so "bananer" finds "Banan". Each hit then gets a relevance tier: **best** when it is the thing searched for ("Banan Klass 1"), **mention** when the query only flavours or fills another product type or baby food ("Banan & Vanilj Yoghurt"), **weak** when the query only starts a longer word ("Bananchips"). Chains that publish category paths (City Gross, Coop) hand those to the tier logic; the hand-kept list of product-type words fills the rest. Only the top tier is ranked and can be "Cheapest near you"; the rest fold into an "other products" list. Products sold by weight are priced per kg, with a piece price estimated from Willys'/Hemköp's average weight.
 
 ### API
+
+The app's commands (`src-tauri/src/lib.rs`: `search`, `stores`, `geocode`, `image`) and the dev server's routes (`server/`) answer the same things:
 
 | Endpoint | Returns |
 | --- | --- |
@@ -39,10 +52,10 @@ Tokens made in the Apple Developer dashboard expire. When the map shows "Kartan 
 | --- | --- | --- | --- |
 | Willys | Public site search JSON (`willys.se/search`) | `willys.se/axfood/rest/store` | National online price |
 | Hemköp | Same Axfood platform (`hemkop.se/search`) | `hemkop.se/axfood/rest/store` | Online price of the site's default store |
-| Lidl | Public site search (`lidl.se/q/api/search`): current assortment and weekly deals only | `src/lib/server/data/lidl-stores.json`, built from Lidl's public store sitemap | National |
+| Lidl | Public site search (`lidl.se/q/api/search`): current assortment and weekly deals only | `core/data/lidl-stores.json`, built from Lidl's public store sitemap | National |
 | City Gross | Site search JSON (`citygross.se/api/v1/Loop54/search`), with each product's category | `citygross.se/api/v1/PageData/stores` | Online price of the site's default store |
 | Coop | The web shop's own APIM API: `external.api.coop.se/personalization/search/global` (search) and `…/search/entities/by-attribute` (per category) | `proxy.api.coop.se/external/store/stores/map` | National online store (`store=251300`) |
-| ICA | The shop's own search API `handlaprivatkund.ica.se/stores/{id}/api/webproductpagews/v6/product-pages/search?q=`, with a WAF session cookie refreshed by `scripts/ica-warm.mjs` | `src/lib/server/data/ica-stores.json`, built from `handla.ica.se/api/store/v1` | Prices of Maxi ICA Gunnesbo, Lund (store 1088004), shown as chain pricing |
+| ICA | The shop's own search API `handlaprivatkund.ica.se/stores/{id}/api/webproductpagews/v6/product-pages/search?q=`, with a WAF session cookie refreshed by `scripts/ica-warm.mjs` | `core/data/ica-stores.json`, built from `handla.ica.se/api/store/v1` | Prices of Maxi ICA Gunnesbo, Lund (store 1088004), shown as chain pricing |
 
 Rebuild the Lidl store list now and then (it takes about 4 minutes and makes about 1 request per second):
 
@@ -60,14 +73,17 @@ City Gross's robots.txt disallows the `/loop54/` page route; the `/api/v1/` JSON
 
 ### Coop prices: the shop's own API
 
-Coop's web shop talks to its APIM API with an `Ocp-Apim-Subscription-Key`, and the keys it hands to every visitor in its page source are used as a browser would (`external.api.coop.se` for search, `proxy.api.coop.se` for the store list); `src/lib/server/chains/coop.ts` fetches them from coop.se like the site's own apps do and caches them for a day. Search uses `personalization/search/global`, the same endpoint the site's search page calls; requests are spaced 2 s apart. Prices are one national list for the online store (store=251300), like the Axfood chains, and deals ("Läsk 2 för 29", single-item offers) are parsed into `deal`/`oldPrice`. MedMera member prices are skipped.
+Coop's web shop talks to its APIM API with an `Ocp-Apim-Subscription-Key`, and the keys it hands to every visitor in its page source are used as a browser would (`external.api.coop.se` for search, `proxy.api.coop.se` for the store list); `core/src/chains/coop.rs` fetches them from coop.se like the site's own apps do and caches them for a day. Search uses `personalization/search/global`, the same endpoint the site's search page calls; requests are spaced 2 s apart. Prices are one national list for the online store (store=251300), like the Axfood chains, and deals ("Läsk 2 för 29", single-item offers) are parsed into `deal`/`oldPrice`. MedMera member prices are skipped.
 
 ### ICA prices: the shop's own search API with a maintained WAF session
 
 ICA's shop (`handlaprivatkund.ica.se`) sits behind an AWS WAF. The decisive point (worked out 2026-10-29): the WAF answer depends on the **client IP's reputation**, not on automation as such. After a period of gentle browsing from a clean residential IP, the shop's own search API answers full product JSON to a plain server-side `fetch` — if the request carries the `aws-waf-token` session cookie the token-minting JS challenge has issued. The token is short-lived, which is the only maintenance this needs:
 
-- `bun run warm:ica` (`scripts/ica-warm.mjs`) opens the shop in the persistent Chrome profile (`scripts/.ica-profile/`) — headless is fine when the IP is clean — and saves the current cookies to `.ica-profile/session.json`. It exits within seconds once the token is minted.
-- `src/lib/server/chains/ica.ts` loads those cookies for every search, and when the session gets stale (tokens last ~4 minutes) or the WAF answers a challenge (HTTP 202), it re-runs the warm script automatically, once, and retries. If the WAF still issues its **visual image-grid CAPTCHA** after that (which follows heavy probing and a burned IP reputation; it cools off after minutes to hours), the search returns "throttled" instead of pretending to have prices. Solving CAPTCHAs programmatically stays out of scope by design: a visual puzzle is cleared by a human running `HEADED=1 bun run warm:ica` and clicking it — the same rule the catalogue crawler follows.
+- `core/src/chains/ica.rs` sends those cookies with every search, and when the session gets stale (tokens last ~4 minutes) or the WAF answers a challenge (HTTP 202), it mints a fresh one, once, and retries. Who mints it depends on where the backend runs (a `CookieJar`):
+  - **Desktop app** (`src-tauri/src/ica.rs`): opens the shop in a hidden window and reads its cookies once a *fresh* `aws-waf-token` appears (WebKit keeps an old one on disk that the WAF has already turned down).
+  - **Phones** (`plugins/ica-session`): the same with an offscreen WebView (Android: `CookieManager`; iOS: `WKHTTPCookieStore`).
+  - **Dev server** (`server/src/ica_jar.rs`): runs `bun run warm:ica` (`scripts/ica-warm.mjs`), which opens the shop in the persistent Chrome profile `scripts/.ica-profile/` and saves the cookies to `.ica-profile/session.json`.
+- If the WAF shows its **visual image-grid CAPTCHA** (after heavy probing or with a burned IP reputation; it cools off after minutes to hours), the app shows that page to the person using it ("ICA wants to check that you're a person"); the dev server opens a visible Chrome (`HEADED=1`). Nothing solves the puzzle programmatically, by design. Until someone does, ICA shows "busy, try again" instead of pretending to have prices.
 - Search requests ride on the same cookie jar with a matching browser User-Agent (@matval's ICA spider pattern: mint the token with a small Playwright run, read the JSON APIs server-side in between; its 2025 logs show 33k requests with zero challenges).
 - Prices anchor to one store (Maxi ICA Stormarknad Gunnesbo, Lund) and are shown for the whole chain, like Lidl's list. Deals (`promoPrice` below the regular price) surface as the current price with the regular one as the old price.
 - `bun run record:ica` opens the shop for a human to browse by hand and logs every API call the site makes (URLs, parameters, response snippets) to `.ica-profile/journey.jsonl` — the tool that produced the endpoint recon above.
@@ -80,8 +96,8 @@ Willys, Hemköp, City Gross and Coop deals such as "5 för 55 kr" are parsed int
 
 ### Adding a chain
 
-1. Create `src/lib/server/chains/<chain>.ts` implementing `ChainAdapter` (`listStores`, `search`, `pricing`).
-2. Register it in `src/lib/server/chains/index.ts`, and add it to `CHAINS` in `src/lib/types.ts` with `online: true` and a logo in `static/logos/`.
+1. Create `core/src/chains/<chain>.rs` implementing `ChainAdapter` (`list_stores`, `search`, `pricing`), with its mapping tests.
+2. Register it in `adapters()` in `core/src/chains/mod.rs` and `ChainId` in `core/src/types.rs`, and add it to `CHAINS` in `src/lib/types.ts` with `online: true` and a logo in `static/logos/`.
 
 ## Logos
 
@@ -92,38 +108,44 @@ The chain logos in `static/logos/` come from the chains' own websites, except IC
 The data comes from the chains' own websites, not from official APIs, so check each site's terms of use before you run this publicly.
 
 - Every request sends an identifying `User-Agent`.
-- Requests are spaced per host (`src/lib/server/http.ts`). Willys and Hemköp get **10 s** between requests, which honours the `Crawl-delay: 10` in their robots.txt. If a chain's queue gets too long, the user sees "busy, try again" for that chain instead of hammering the site. The 15-minute cache means popular searches cost nothing extra.
+- Requests are spaced per host (`core/src/http.rs`), on every device: each app spaces its own requests. Willys and Hemköp get **10 s** between requests, which honours the `Crawl-delay: 10` in their robots.txt. If a chain's queue gets too long, the user sees "busy, try again" for that chain instead of hammering the site. The 15-minute cache means popular searches cost nothing extra.
 - Willys' and Hemköp's robots.txt also state `Visit-time: 0400-0845` UTC, a preferred crawl window. Live, user-triggered searches outside that window go against that preference. For a public deployment, consider prefetching common products inside that window, or asking Axfood for access.
 - Nominatim's usage policy allows at most 1 request per second, and results are cached for 7 days.
 
 ## Apps
 
-| Platform | What it is | Where | Server |
-| --- | --- | --- | --- |
-| macOS, Windows, Linux | Electrobun desktop app | `desktop/`, `electrobun.config.ts` | Runs its own |
-| Android, iPhone | Capacitor app around the server's pages | `mobile/` ([README](mobile/README.md)) | Hosted ([below](#hosting-the-server-for-the-phone-and-watch-apps)) |
-| Galaxy Watch 5 / Wear OS 3+ | Native Kotlin + Compose for Wear OS | `wear/` ([README](wear/README.md)) | Hosted |
-| Any browser | The site is installable ("Add to Home Screen") | `static/manifest.webmanifest` | Hosted |
+| Platform | Build | Notes |
+| --- | --- | --- |
+| macOS, Windows, Linux | `bun run app:build` (on that OS) | Self-updates from GitHub releases |
+| Android | `bun run android:build` | `src-tauri/gen/android` is committed |
+| iPhone | `bun run ios` on a Mac with Xcode | Needs your Apple developer team |
+| Galaxy Watch 5 / Wear OS 3+ | `cd wear && ./gradlew assembleDebug` | Asks the Android phone app ([wear/README.md](wear/README.md)) |
 
-The flat app icon for Windows, Linux, Android, Wear OS and the web is `desktop/icons/matpris.svg` (plus `matpris-foreground.svg` for Android's adaptive icon and `matpris-round.svg` for round screens), drawn from the layers of the Mac's `Matpris.icon`.
+The flat app icon for every platform except the Mac's Icon Composer document is `icons/matpris.svg` (`matpris-foreground.svg` for Android's adaptive icon, `matpris-round.svg` for round screens); `src-tauri/icons/` holds the rendered sizes.
 
-## Desktop app (macOS, Windows, Linux)
-
-The same app as a small native desktop app, built with [Electrobun](https://framework.blackboard.sh/electrobun/) 2:
+### Desktop (macOS, Windows, Linux)
 
 ```bash
-bun run desktop        # build, then open a dev window (console output in the terminal)
-bun run desktop:build  # release app for this OS, e.g. desktop/build/stable-macos-arm64/Matpris.app (~32 MB)
+bun run app         # dev window, page with hot reload
+bun run app:build   # release bundle for this OS, in target/release/bundle/
 ```
 
-Electrobun builds only for the OS it runs on, so each platform has its own runner in the Release workflow. The window is the system's own webview: WebKit on macOS, WebView2 on Windows (geolocation granted to the app's localhost page in `electrobun.config.ts`), WebKitGTK 4.1 on Linux (install `libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 librsvg2-2` on Ubuntu/Debian).
+The window is the system's own webview: WebKit on macOS, WebView2 on Windows, WebKitGTK 4.1 on Linux (Ubuntu/Debian: `libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 librsvg2-2`; building needs the `-dev` packages and `patchelf`). Tauri builds only for the OS it runs on, so the Release workflow has a runner per OS.
 
-`vite build` produces the SvelteKit server (`adapter-node`, in `build/`). Electrobun copies it into the app, and `desktop/main.ts`, running in the app's Bun process, starts it on a free `127.0.0.1` port and opens a window on it. Everything else works as on the web: searches, caches and request spacing all live in that server. The window uses macOS's own WebKit, not a bundled Chrome. Device location asks for permission the first time.
+### Phones
 
-- **Map token:** the app has no `.env`, so `electrobun.config.ts` builds `PUBLIC_MAPKIT_TOKEN` in from `.env` at build time. Rebuild after renewing the token. It's a public token, but don't hand the app around.
-- **ICA** shows "busy" in the app: its session files and warm script live in `scripts/` on this Mac, outside the app bundle.
-- **Icon:** `desktop/icons/Matpris.icon`, an Icon Composer document (open it in Icon Composer to adjust the glass, shadows or colours). The other candidates and a comparison sheet are in `desktop/icons/drafts/`.
-- The first build downloads Electrobun's runtime into `~/.hutch`. The app isn't code-signed, so macOS may ask before opening it the first time.
+```bash
+export ANDROID_HOME=… NDK_HOME=$ANDROID_HOME/ndk/<version>
+bun run android:build -- --apk --target aarch64   # signed with keystore.properties in src-tauri/gen/android, or debug
+bun run android                                     # dev on a connected phone
+bun run ios                                         # macOS + Xcode: bunx tauri ios init once, then this
+```
+
+The phone runs the same Rust backend as the desktop: no server. Location goes through the system prompt (`ACCESS_FINE_LOCATION` in the Android manifest, `NSLocationWhenInUseUsageDescription` in `src-tauri/Info.ios.plist`). The page leaves room for the status bar, notch and home indicator (`env(safe-area-inset-*)`, and padding in Android's `MainActivity`).
+
+### Galaxy Watch
+
+The watch app sends its search to the phone over the Wear OS Data Layer; `WearSearchService` in the Android app runs it in the Rust backend (`src-tauri/src/watch.rs`, over JNI, even when the app isn't open) and streams the events back. Phone and watch must have the same application id (`se.matpris.matpris`) and be signed with the same key. Details in [wear/README.md](wear/README.md).
 
 ### Releases and updates
 
@@ -134,26 +156,15 @@ bun run bump patch     # or minor, major, or an exact 0.2.0
 git commit -am "Version 0.0.2" && git push
 ```
 
-or run **Actions › Bump version**. The **Release** workflow (`desktop-release.yml`) then builds on `macos-26`, `windows-latest` and `ubuntu-24.04` runners plus one Android job, and publishes the GitHub release `v<version>` with:
+or run **Actions › Bump version**. The **Release** workflow (`desktop-release.yml`) then builds on macOS, Windows and Linux runners plus one Android job (phone + watch), checks that the iPhone app compiles (without signing), and publishes the GitHub release `v<version>` with the installers (`.dmg`, `-setup.exe`/`.msi`, `.AppImage`/`.deb`, the two APKs), the signed update bundles and `latest.json`. Pushes whose version is already released skip the builds.
 
-- `Matpris-<version>-macos-arm64.zip` (unzip, move to Applications), `win-x64-Matpris-Setup.zip` (unzip, run the setup), `linux-x64-Matpris-Setup.tar.gz` (extract, run `./installer`), and for each the `stable-<os>-<arch>-update.json` and `.tar.zst` installed copies update from;
-- `Matpris-<version>-android.apk` and `Matpris-<version>-wear-os.apk`, which ask the server in the repo variable `MATPRIS_SERVER_URL` and are signed with the secret `ANDROID_DEBUG_KEYSTORE` (see `mobile/README.md`).
+Set these up once in the repo's settings (each missing one is a warning, not a failed release):
 
-Pushes whose version is already released skip the builds, so everyday commits cost no runner minutes. The workflow needs the repository secret `PUBLIC_MAPKIT_TOKEN` (`gh secret set PUBLIC_MAPKIT_TOKEN`), or the released map shows "The map could not be loaded".
+| Name | Kind | For |
+| --- | --- | --- |
+| `PUBLIC_MAPKIT_TOKEN` | secret | The map |
+| `TAURI_SIGNING_PRIVATE_KEY`, `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | secrets | Signing desktop updates: `bunx tauri signer generate -w ~/.tauri/matpris.key` |
+| `TAURI_UPDATER_PUBKEY` | variable | The public half of that key, built into the app; without it the app never updates itself |
+| `ANDROID_KEYSTORE` (base64), `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | secrets | One key for the phone and watch APKs, so they update in place and can talk to each other |
 
-Installed copies update like RustRadar (`desktop/update.ts`, Electrobun's updater): on launch a newer release downloads and installs behind a small progress window, then the app restarts as the new version; while it's open it looks every hour, downloads quietly and offers **Restart** (Later installs it at the next launch). Offline, a slow check (8 s) or any failure just opens the installed version. The repo is private, so release files are fetched through the GitHub API with the computer's `gh` login (`gh auth login`; looked for in Homebrew, `/usr/bin` and GitHub CLI's Windows install folders); the token is kept in memory only, and a computer without gh never updates. Dev builds (`bun run desktop`) never update.
-
-## Deploying
-
-### Hosting the server for the phone and watch apps
-
-The phone and watch apps don't search the chains themselves; they ask a Matpris server, which has to be on the internet over HTTPS (browsers only offer location to secure pages). The `Dockerfile` builds one, with Google Chrome for ICA's headless session:
-
-```bash
-docker build -t matpris .
-docker run -d -p 3000:3000 -e PUBLIC_MAPKIT_TOKEN=… --restart unless-stopped matpris
-```
-
-Put it behind HTTPS (any host with Docker: a small VPS, Fly.io, Render, or a home server behind Caddy or Cloudflare Tunnel), then set the repo variable `MATPRIS_SERVER_URL` to its address (`gh variable set MATPRIS_SERVER_URL`) and release. Read "Being a good citizen" above first: a public server can be asked by anyone, and the chains' limits (Axfood's 10 s crawl delay) are per server, not per user. ICA's WAF may challenge a data-centre IP more than a home one; then ICA shows "busy" and the other chains still answer.
-
-`vite build` produces a standalone Node server (`@sveltejs/adapter-node`, `node build`). The caches live in memory, so one long-running server gets much more out of them than short-lived serverless functions would.
+Installed desktop copies update like the Electrobun app did (`src-tauri/src/update.rs`): on launch a newer release downloads and installs behind a small progress window, then the app restarts as the new version; while it's open it looks every hour, downloads quietly and offers **Restart**. Offline, a slow check (8 s) or any failure just opens the installed version. The repo is private, so the app reads `latest.json` and the update through the GitHub API with the computer's `gh` login (`gh auth login`); the token is kept in memory only, and a computer without gh never updates. Copies of the old Electrobun app don't update to the Tauri one: install it once by hand.

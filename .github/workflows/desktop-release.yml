@@ -257,14 +257,8 @@ jobs:
           fi
       - name: Phone (Tauri)
         run: |
-          # The generated Android project is committed; make it if it isn't (yet), and give
-          # it the release signing config if it lacks one (src-tauri/android-signing.patch).
-          [ -d src-tauri/gen/android ] || bunx tauri android init --ci
-          gradle=src-tauri/gen/android/app/build.gradle.kts
-          if ! grep -q releaseStoreFile "$gradle"; then
-            git apply src-tauri/android-signing.patch \
-              || echo "::notice::android-signing.patch doesn't apply to $gradle: the APK is signed after the build instead."
-          fi
+          # The generated Android project (src-tauri/gen/android) is committed, with the
+          # release signing config in app/build.gradle.kts. Every Galaxy phone is arm64.
           bunx tauri android build --apk --target aarch64 --ci
       - name: Watch (Wear OS)
         working-directory: wear
