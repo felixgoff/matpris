@@ -1,10 +1,10 @@
-// Builds src/lib/server/data/lidl-stores.json from Lidl's public store sitemap.
+// Builds core/data/lidl-stores.json from Lidl's public store sitemap.
 // Each store page embeds schema.org JSON-LD with address + coordinates.
 // Runs politely: one request at a time, ~1 req/s. Re-run occasionally (stores rarely change).
 import { writeFile, mkdir } from 'node:fs/promises';
 
 const UA = 'matpris/0.1 (price comparison; store list builder)';
-const OUT = new URL('../src/lib/server/data/lidl-stores.json', import.meta.url);
+const OUT = new URL('../core/data/lidl-stores.json', import.meta.url);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function get(url) {

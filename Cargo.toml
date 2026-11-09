@@ -1,0 +1,22 @@
+# Matpris's Rust backend: the chain searches, ranking and store lookup (core/), run by
+# the Tauri app (src-tauri/) on desktop and phones, and by a small HTTP server (server/)
+# for development in a browser.
+[workspace]
+resolver = "2"
+members = ["core"]
+
+[workspace.package]
+edition = "2021"
+license = "UNLICENSED"
+
+[workspace.dependencies]
+matpris-core = { path = "core" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "gzip", "brotli"] }
+futures = "0.3"
+async-trait = "0.1"
+regex = "1"
+url = "2"
+thiserror = "2"

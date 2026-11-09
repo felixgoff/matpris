@@ -1,4 +1,4 @@
-// Builds src/lib/server/data/ica-stores.json from ICA's store selector.
+// Builds core/data/ica-stores.json from ICA's store selector.
 // handla.ima.se's selector app loads all stores from
 //   GET https://handla.ica.se/api/store/v1?groupby=citygroup&customerType=B2C
 // which sits behind the same AWS WAF as the rest of ICA, so it is fetched once
@@ -7,7 +7,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
-const OUT = new URL('../src/lib/server/data/ica-stores.json', import.meta.url);
+const OUT = new URL('../core/data/ica-stores.json', import.meta.url);
 
 const browser = await chromium.launch({ headless: true });
 const ctx = await browser.newContext({

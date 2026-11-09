@@ -1,4 +1,4 @@
-// Builds src/lib/server/data/{willys,hemkop}-stores.json from Axfood's store endpoint,
+// Builds core/data/{willys,hemkop}-stores.json from Axfood's store endpoint,
 // so searches never spend a site's one-request-per-10-s turn on the store list.
 // One request per site. Re-run occasionally (stores rarely change): bun run stores:axfood
 import { writeFile } from 'node:fs/promises';
@@ -19,7 +19,7 @@ for (const [chain, base] of Object.entries(SITES)) {
 			lng: s.geoPoint.longitude,
 			address: s.address?.formattedAddress ?? ''
 		}));
-	const out = new URL(`../src/lib/server/data/${chain}-stores.json`, import.meta.url);
+	const out = new URL(`../core/data/${chain}-stores.json`, import.meta.url);
 	await writeFile(out, JSON.stringify(stores, null, '\t') + '\n');
 	console.log(`${chain}: ${stores.length} stores`);
 }

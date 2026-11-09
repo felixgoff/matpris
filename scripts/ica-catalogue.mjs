@@ -1,4 +1,4 @@
-// Builds src/lib/server/data/ica-catalogue.json: the full priced assortment of one
+// Builds core/data/ica-catalogue.json: the full priced assortment of one
 // ICA store (default: Maxi ICA Stormarknad Gunnesbo, Lund), crawled like a shopper:
 // category pages are opened in a real, visible Chrome window (Playwright) and products
 // are harvested from the JSON the site's own web app fetches (webproductpagews batch
@@ -27,7 +27,7 @@ import { chromium } from 'playwright';
 
 const accountId = process.argv[2] ?? '1088004'; // Maxi ICA Stormarknad Gunnesbo, Lund
 const BASE = 'https://handlaprivatkund.ica.se';
-const OUT = new URL('../src/lib/server/data/ica-catalogue.json', import.meta.url);
+const OUT = new URL('../core/data/ica-catalogue.json', import.meta.url);
 const TMP = new URL('./.ica-profile/catalogue.tmp.json', import.meta.url);
 const HEADLESS = process.env.HEADLESS === '1';
 const MAX_PAGES = Number(process.env.MAX_PAGES ?? 0); // 0 = unlimited
