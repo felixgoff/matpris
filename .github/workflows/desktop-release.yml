@@ -1,9 +1,20 @@
 name: Release
 
-# Builds the macOS, Windows, Linux, Android and Wear OS apps and publishes it as the GitHub release v<package.json version>,
-# which installed copies update to (desktop/update.ts). A push to main only builds when
-# its version hasn't been released yet, so everyday commits cost no runner minutes: to
-# ship, raise the version (`bun run bump patch` and push, or the "Bump version" workflow).
+# Builds the Tauri app for macOS, Windows, Linux and Android, plus the Wear OS watch app,
+# and publishes them as the GitHub release v<package.json version>; installed desktop
+# copies update to it (src-tauri/src/update.rs reads the release's latest.json).
+#
+# The repo is private, so runner minutes are billed and macOS minutes count 10x. A push to
+# main therefore only builds when its version hasn't been released yet, and everyday
+# commits cost nothing: to ship, raise the version (`bun run bump patch` and push, or the
+# "Bump version" workflow, which starts this one by its file name).
+#
+# Secrets (all optional; each missing one is a warning, never a failed build):
+#   PUBLIC_MAPKIT_TOKEN                      the map (desktop and phone)
+#   TAURI_SIGNING_PRIVATE_KEY[_PASSWORD]     signs the desktop update bundles
+#   ANDROID_KEYSTORE (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS,
+#   ANDROID_KEY_PASSWORD                     signs the phone and watch APKs alike
+# Variables: TAURI_UPDATER_PUBKEY, the public half of the updater key, built into the app.
 on:
   push:
     branches: [main]
@@ -33,43 +44,52 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           if gh release view "v$version" >/dev/null 2>&1; then
             echo "new=false" >> "$GITHUB_OUTPUT"
-            echo "v$version is already released. Raise the version to publish a new one." >> "$GITHUB_STEP_SUMMARY"
+            echo "v$version is already released (or left as a draft by a failed run: delete it to retry). Raise the version to publish a new one." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "new=true" >> "$GITHUB_OUTPUT"
           fi
 
-  build:
-    name: Build (${{ matrix.target }})
+  desktop:
+    name: Desktop (${{ matrix.key }})
     needs: version
     if: needs.version.outputs.new == 'true'
     strategy:
       fail-fast: true
       matrix:
         include:
-          # Apple silicon with Xcode 26+, which compiles the Icon Composer icon.
-          - { target: macos-arm64, os: macos-26 }
-          - { target: win-x64, os: windows-latest }
-          - { target: linux-x64, os: ubuntu-24.04 }
-    # Hutch builds only for the OS and CPU it runs on.
+          # Apple silicon with Xcode 26+. Intel Macs aren't built (another 10x runner).
+          - { key: darwin-aarch64, os: macos-26 }
+          - { key: windows-x86_64, os: windows-latest }
+          # The oldest supported Ubuntu: an AppImage or .deb only runs on a glibc at least
+          # as new as the one it was built against.
+          - { key: linux-x86_64, os: ubuntu-22.04 }
+    # Tauri bundles only for the OS it runs on.
     runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash
     env:
       VERSION: ${{ needs.version.outputs.version }}
+      KEY: ${{ matrix.key }}
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+      # Read at compile time (option_env!): without it the app never looks for updates.
+      TAURI_UPDATER_PUBKEY: ${{ vars.TAURI_UPDATER_PUBKEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
-      # Electrobun's Linux wrapper links GTK 3, WebKitGTK 4.1, AppIndicator and librsvg.
-      - if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 librsvg2-2
-      # Electrobun downloads its runtime into ~/.hutch on the first build.
-      - uses: actions/cache@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
         with:
-          path: ~/.hutch
-          key: hutch-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('bun.lock') }}
+          key: ${{ matrix.key }}
+      # What Tauri links on Linux: WebKitGTK 4.1, GTK 3, AppIndicator and librsvg, plus
+      # patchelf and file for the AppImage.
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev libxdo-dev patchelf file
       - run: bun install --frozen-lockfile
       - name: MapKit token
         env:
@@ -80,38 +100,92 @@ jobs:
           else
             printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
           fi
-      # Checks once, on the cheapest runner.
+      # Checks once, on the cheapest runner. The Tauri crate itself is built by the bundle step.
       - if: runner.os == 'Linux'
-        run: bun run check && bun run test
-      - run: bun run desktop:build
+        run: bun run check && cargo test --workspace --exclude matpris
+      - name: Build
+        run: |
+          config='{}'
+          if [ -n "$TAURI_UPDATER_PUBKEY" ]; then
+            # With the key built in, the app registers the updater plugin, whose config needs
+            # a pubkey (tauri.conf.json has none): without this the release fails to start.
+            # It also makes the CLI check that the signing secret is this key's other half.
+            config="$(jq -c --arg k "$TAURI_UPDATER_PUBKEY" '. * {plugins: {updater: {pubkey: $k}}}' <<< "$config")"
+          fi
+          if [ -n "$TAURI_SIGNING_PRIVATE_KEY" ]; then
+            # Signed update bundles (.sig beside each), which installed copies verify.
+            config="$(jq -c '. * {bundle: {createUpdaterArtifacts: true}}' <<< "$config")"
+            if [ -z "$TAURI_UPDATER_PUBKEY" ]; then
+              echo "::warning::TAURI_SIGNING_PRIVATE_KEY is set but the TAURI_UPDATER_PUBKEY variable isn't: this build signs updates but never looks for any."
+            fi
+          else
+            echo "::warning::No TAURI_SIGNING_PRIVATE_KEY secret: no signed update bundles, so installed copies won't update to this release."
+          fi
+          if [ "$RUNNER_OS" = macOS ]; then
+            # No Apple Developer ID yet: sign ad hoc, without which Apple silicon refuses to
+            # open the downloaded app at all ("damaged") instead of asking.
+            config="$(jq -c '. * {"bundle":{"macOS":{"signingIdentity":"-"}}}' <<< "$config")"
+          fi
+          bunx tauri build --ci --config "$config"
       - name: Collect
         run: |
+          # A cargo workspace: the bundles land in the repo's target/, not src-tauri/target/.
+          # The version is in each name because rust-cache can bring back an older bundle.
+          b=target/release/bundle
           mkdir out
-          if [ "${{ matrix.target }}" = macos-arm64 ]; then
-            # The app zipped for a first install, plus the two files installed copies update from.
-            ditto -c -k --keepParent desktop/build/stable-macos-arm64/Matpris.app "out/Matpris-$VERSION-macos-arm64.zip"
-            cp desktop/artifacts/stable-macos-arm64-update.json desktop/artifacts/stable-macos-arm64-Matpris.app.tar.zst out/
-          else
-            # The installer (win: Setup zip, linux: Setup tar.gz) and the update json + archive.
-            cp desktop/artifacts/*${{ matrix.target }}* out/
-            rm -f out/*.patch
-          fi
+          # Copies a bundle and notes for latest.json which asset each updater target gets,
+          # with its signature. The updater asks for "<os>-<arch>-<installer>" first (the
+          # bundle type is built into the binary), then "<os>-<arch>", so a .deb or .msi
+          # install gets its own kind of file when that one is signed.
+          bundle() { # <file in bundle/> <asset name> [latest.json key...]
+            local file="$1" name="$2"
+            shift 2
+            cp "$file" "out/$name"
+            [ -f "$file.sig" ] || return 0
+            for platform in "$@"; do
+              jq -n --arg platform "$platform" --arg file "$name" --rawfile signature "$file.sig" \
+                '{platform: $platform, file: $file, signature: ($signature | rtrimstr("\n"))}' > "out/updater-$platform.json"
+            done
+          }
+          case "$KEY" in
+            darwin-aarch64)
+              # First install: the .dmg, or the app zipped (ditto keeps its symlinks and signature).
+              ditto -c -k --keepParent "$b/macos/Matpris.app" "out/Matpris-$VERSION-macos-arm64.zip"
+              bundle "$b/dmg/Matpris_${VERSION}_aarch64.dmg" "Matpris-$VERSION-macos-arm64.dmg"
+              bundle "$b/macos/Matpris.app.tar.gz" "Matpris-$VERSION-macos-arm64.app.tar.gz" \
+                darwin-aarch64 darwin-aarch64-app
+              ;;
+            windows-x86_64)
+              # The NSIS setup is both the first install and the update bundle.
+              bundle "$b/nsis/Matpris_${VERSION}_x64-setup.exe" "Matpris-$VERSION-windows-x64-setup.exe" \
+                windows-x86_64 windows-x86_64-nsis
+              bundle "$b/msi/Matpris_${VERSION}_x64_en-US.msi" "Matpris-$VERSION-windows-x64.msi" \
+                windows-x86_64-msi
+              ;;
+            linux-x86_64)
+              # Tauri's updater replaces the AppImage, so it's both install and update.
+              bundle "$b/appimage/Matpris_${VERSION}_amd64.AppImage" "Matpris-$VERSION-linux-x86_64.AppImage" \
+                linux-x86_64 linux-x86_64-appimage
+              bundle "$b/deb/Matpris_${VERSION}_amd64.deb" "Matpris-$VERSION-linux-amd64.deb" \
+                linux-x86_64-deb
+              ;;
+          esac
           ls -l out
       - uses: actions/upload-artifact@v4
         with:
-          name: desktop-${{ matrix.target }}
+          name: desktop-${{ matrix.key }}
           path: out/*
           if-no-files-found: error
 
   android:
-    name: Build (Android phone + Galaxy Watch)
+    name: Android phone + Wear OS watch
     needs: version
     if: needs.version.outputs.new == 'true'
     runs-on: ubuntu-24.04
     env:
       VERSION: ${{ needs.version.outputs.version }}
-      # The hosted Matpris server the phone and watch apps ask (repo variable).
-      MATPRIS_SERVER_URL: ${{ vars.MATPRIS_SERVER_URL }}
+      NDK_VERSION: 27.3.13750724
+      BUILD_TOOLS: 35.0.0
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -122,64 +196,201 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+      # Only 64-bit ARM: what every phone sold in years runs, and one Rust build instead of four.
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: android
+      - name: Android SDK and NDK
+        run: |
+          # The runner image ships the SDK (ANDROID_HOME) but not necessarily this NDK.
+          # Missing SDK platforms (the Tauri project's compileSdk) are fetched by Gradle.
+          sdkmanager="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          # `yes` dies of SIGPIPE when sdkmanager is done, which pipefail would call a failure.
+          (yes || true) | "$sdkmanager" --licenses > /dev/null
+          "$sdkmanager" --install "ndk;$NDK_VERSION" "build-tools;$BUILD_TOOLS" "platforms;android-36" > /dev/null
+          echo "NDK_HOME=$ANDROID_HOME/ndk/$NDK_VERSION" >> "$GITHUB_ENV"
+      - run: bun install --frozen-lockfile
+      - name: MapKit token
+        env:
+          TOKEN: ${{ secrets.PUBLIC_MAPKIT_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::No PUBLIC_MAPKIT_TOKEN secret: this release's map shows \"The map could not be loaded\"."
+          else
+            printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
+          fi
       - name: Signing key
         env:
-          KEYSTORE: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          # One key for every release, so an installed app updates in place.
-          if [ -z "$KEYSTORE" ]; then
-            echo "::warning::No ANDROID_DEBUG_KEYSTORE secret: these APKs are signed with a throwaway key and won't install over an earlier release."
+          # One key for the phone and the watch app: the Wear Data Layer only connects apps
+          # with the same id and signature, and an installed app only updates in place from
+          # an APK signed like it. Both Gradle builds read these (see their build.gradle.kts).
+          if [ -n "$KEYSTORE" ]; then
+            ks="$RUNNER_TEMP/matpris-release.jks"
+            printf '%s' "$KEYSTORE" | base64 -d > "$ks"
+            {
+              echo "ANDROID_KEYSTORE_FILE=$ks"
+              echo "ANDROID_KEYSTORE_PASSWORD=$STORE_PASSWORD"
+              echo "ANDROID_KEY_ALIAS=$KEY_ALIAS"
+              echo "ANDROID_KEY_PASSWORD=${KEY_PASSWORD:-$STORE_PASSWORD}"
+            } >> "$GITHUB_ENV"
           else
-            mkdir -p ~/.android && echo "$KEYSTORE" | base64 -d > ~/.android/debug.keystore
+            echo "::warning::No ANDROID_KEYSTORE secret: the phone and watch APKs are signed with this run's throwaway debug key. They pair with each other, but won't install over an earlier release."
+            # Made now so the phone and the watch builds share it.
+            mkdir -p ~/.android
+            [ -f ~/.android/debug.keystore ] || keytool -genkeypair -keystore ~/.android/debug.keystore \
+              -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 \
+              -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+            {
+              echo "ANDROID_KEYSTORE_FILE=$HOME/.android/debug.keystore"
+              echo "ANDROID_KEYSTORE_PASSWORD=android"
+              echo "ANDROID_KEY_ALIAS=androiddebugkey"
+              echo "ANDROID_KEY_PASSWORD=android"
+            } >> "$GITHUB_ENV"
           fi
-          if [ -z "$MATPRIS_SERVER_URL" ]; then
-            echo "::warning::No MATPRIS_SERVER_URL variable: the phone and watch apps say they have no server."
-          fi
-      - name: Phone (Capacitor)
-        working-directory: mobile
+      - name: Phone (Tauri)
         run: |
-          bun install --frozen-lockfile
-          bunx cap sync android
-          (cd android && ./gradlew assembleDebug --no-daemon)
+          # The generated Android project is committed; make it if it isn't (yet), and give
+          # it the release signing config if it lacks one (src-tauri/android-signing.patch).
+          [ -d src-tauri/gen/android ] || bunx tauri android init --ci
+          gradle=src-tauri/gen/android/app/build.gradle.kts
+          if ! grep -q releaseStoreFile "$gradle"; then
+            git apply src-tauri/android-signing.patch \
+              || echo "::notice::android-signing.patch doesn't apply to $gradle: the APK is signed after the build instead."
+          fi
+          bunx tauri android build --apk --target aarch64 --ci
       - name: Watch (Wear OS)
         working-directory: wear
-        run: ./gradlew testDebugUnitTest assembleDebug --no-daemon
+        run: ./gradlew testDebugUnitTest assembleRelease --no-daemon
       - name: Collect
         run: |
+          signer="$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner"
           mkdir out
-          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk "out/Matpris-$VERSION-android.apk"
-          cp wear/app/build/outputs/apk/debug/app-debug.apk "out/Matpris-$VERSION-wear-os.apk"
+          phone="$(find src-tauri/gen/android/app/build/outputs/apk -name '*release*.apk' -print -quit)"
+          if "$signer" verify "$phone" > /dev/null 2>&1; then
+            cp "$phone" "out/Matpris-$VERSION-android.apk"
+          else
+            # Gradle left it unsigned (no signing config): align and sign it with the same key.
+            "$ANDROID_HOME/build-tools/$BUILD_TOOLS/zipalign" -f -p 4 "$phone" "$RUNNER_TEMP/aligned.apk"
+            "$signer" sign --ks "$ANDROID_KEYSTORE_FILE" --ks-pass env:ANDROID_KEYSTORE_PASSWORD \
+              --ks-key-alias "$ANDROID_KEY_ALIAS" --key-pass env:ANDROID_KEY_PASSWORD \
+              --out "out/Matpris-$VERSION-android.apk" "$RUNNER_TEMP/aligned.apk"
+          fi
+          cp wear/app/build/outputs/apk/release/app-release.apk "out/Matpris-$VERSION-wear-os.apk"
+          # Refuse a release whose watch app couldn't talk to its phone app.
+          certs() { "$signer" verify --print-certs "$1" | grep 'SHA-256 digest'; }
+          phone_cert="$(certs "out/Matpris-$VERSION-android.apk" || true)"
+          watch_cert="$(certs "out/Matpris-$VERSION-wear-os.apk" || true)"
+          # Empty means apksigner read no signature, which mustn't pass as a match.
+          if [ -z "$phone_cert" ] || [ "$phone_cert" != "$watch_cert" ]; then
+            echo "::error::The phone and watch APKs aren't signed with the same key."
+            exit 1
+          fi
+          ls -l out
       - uses: actions/upload-artifact@v4
         with:
           name: android
           path: out/*
           if-no-files-found: error
 
-  release:
+  # A compile check only: there's no Apple signing set up, so nothing is published for
+  # iPhone, and a failure here doesn't hold the release back. Costs macOS minutes (10x).
+  ios:
+    name: iOS compile check
+    needs: version
+    if: needs.version.outputs.new == 'true'
+    runs-on: macos-26
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios, aarch64-apple-ios-sim
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ios
+      - run: bun install --frozen-lockfile
+      # The app embeds the built page, so the Rust crate needs it to compile.
+      - run: bun run build
+      - name: Rust for iPhone
+        run: cargo build -p matpris --lib --target aarch64-apple-ios
+      - name: Xcode project for the simulator
+        run: |
+          command -v xcodegen > /dev/null || brew install xcodegen
+          [ -d src-tauri/gen/apple ] || bunx tauri ios init --ci
+          # The simulator build needs no signing identity.
+          bunx tauri ios build --debug --target aarch64-sim --ci
+
+  publish:
     name: Publish
-    needs: [version, build, android]
+    needs: [version, desktop, android]
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.version.outputs.version }}
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: out
           merge-multiple: true
+      - name: Release notes
+        run: |
+          cat > notes.md <<EOF
+          Installed desktop copies update to this version the next time they open, or sooner when the app offers a restart (needs a \`gh auth login\` on that computer, since the repo is private).
+
+          ## First install
+
+          - **macOS** (Apple silicon, macOS 14+): open \`Matpris-$VERSION-macos-arm64.dmg\` and drag Matpris to Applications (or unzip the .zip). The app isn't notarized: the first time, right-click it and choose Open, or run \`xattr -dr com.apple.quarantine /Applications/Matpris.app\`.
+          - **Windows**: run \`Matpris-$VERSION-windows-x64-setup.exe\` (SmartScreen: More info, then Run anyway). The .msi is there for managed machines; prefer the setup, which is what installed copies update with.
+          - **Linux** (x86_64, glibc 2.35+, WebKitGTK 4.1): \`chmod +x Matpris-$VERSION-linux-x86_64.AppImage\` and run it; it updates itself. Or \`sudo apt install ./Matpris-$VERSION-linux-amd64.deb\` (updates by installing the next .deb).
+          - **Android phone** (64-bit ARM, Android 8+): open \`Matpris-$VERSION-android.apk\` on the phone and allow installing from that app. Install new versions the same way, over the old one.
+          - **Galaxy Watch / Wear OS 3+**: the watch asks the phone app, so install that first. Then install \`Matpris-$VERSION-wear-os.apk\` with adb over Wi-Fi: on the watch turn on Developer options, ADB debugging and Wireless debugging, then \`adb pair <ip>:<port>\`, \`adb connect <ip>:<port>\` and \`adb install -r Matpris-$VERSION-wear-os.apk\` (wear/README.md has the steps).
+          - **iPhone**: not published (no Apple signing yet). Build it from the repo in Xcode with your own team: \`bunx tauri ios init\`, then \`bunx tauri ios dev --open\`.
+          EOF
       - name: Publish v${{ env.VERSION }}
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           ls -l out
-          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "Matpris $VERSION" \
-            --notes "Installed copies update to this version the next time they open, or sooner when the app offers a restart.
-
-          First install:
-          - **macOS**: unzip Matpris-$VERSION-macos-arm64.zip and move Matpris.app to Applications.
-          - **Windows**: unzip win-x64-Matpris-Setup.zip and run Matpris Setup.
-          - **Linux**: extract linux-x64-Matpris-Setup.tar.gz and run ./installer (needs GTK 3 and WebKitGTK 4.1).
-          - **Android phone**: install Matpris-$VERSION-android.apk.
-          - **Galaxy Watch 5 / Wear OS**: install Matpris-$VERSION-wear-os.apk with adb over Wi-Fi (wear/README.md).
-          - **iPhone**: built from mobile/ios in Xcode (mobile/README.md)." \
-            out/*
+          # A draft until everything is up, so installed copies never see a release without
+          # its latest.json, or a latest.json pointing at a missing file.
+          files=()
+          for f in out/*; do
+            case "$f" in out/updater-*.json) ;; *) files+=("$f") ;; esac
+          done
+          gh release create "v$VERSION" --repo "$REPO" --target "$GITHUB_SHA" --draft \
+            --title "Matpris $VERSION" --notes-file notes.md "${files[@]}"
+      - name: Updater manifest (latest.json)
+        run: |
+          shopt -s nullglob
+          manifests=(out/updater-*.json)
+          if [ ${#manifests[@]} -eq 0 ]; then
+            echo "::notice::No signed update bundles in this release, so no latest.json: installed copies stay on their version."
+            exit 0
+          fi
+          # The app reads release files through the GitHub API with a token and
+          # "accept: application/octet-stream" (the repo is private), so each platform's url
+          # is its API asset URL, not the browser download link.
+          gh api "repos/$REPO/releases" --paginate --jq ".[] | select(.tag_name == \"v$VERSION\")" > release.json
+          jq -s --slurpfile release release.json --arg version "$VERSION" \
+            --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg notes "Matpris $VERSION" '
+            ($release[0].assets | map({(.name): .url}) | add) as $urls
+            | {version: $version, notes: $notes, pub_date: $date,
+               platforms: (map({(.platform): {signature, url: $urls[.file]}}) | add)}
+            | if any(.platforms[]; .url == null) then error("an update bundle is missing from the release") else . end
+            ' "${manifests[@]}" > latest.json
+          cat latest.json
+          gh release upload "v$VERSION" --repo "$REPO" latest.json
+      - name: Go live
+        run: |
+          gh release edit "v$VERSION" --repo "$REPO" --draft=false --latest
           echo "### Released Matpris $VERSION" >> "$GITHUB_STEP_SUMMARY"
