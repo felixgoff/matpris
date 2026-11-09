@@ -223,7 +223,12 @@ pub mod ffi {
     ) {
         let q: String = match env.get_string(&q) {
             Ok(s) => s.into(),
-            Err(_) => String::new(),
+            // Calling back into Java with an exception pending is undefined: clear it,
+            // and the empty query answers with the usual "at least 2 letters" error.
+            Err(_) => {
+                let _ = env.exception_clear();
+                String::new()
+            }
         };
         // A panic must not unwind into the JVM (that aborts the process).
         let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
