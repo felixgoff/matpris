@@ -3851,6 +3851,7 @@ name = "tauri-plugin-ica-session"
 version = "0.0.0"
 dependencies = [
  "serde",
+ "serde_json",
  "tauri",
  "tauri-plugin",
 ]

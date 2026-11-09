@@ -140,6 +140,11 @@ private class Visit(
     /** ICA's check is for a person: show it to the one using the phone, and wait. */
     private fun askPerson() {
         val v = view ?: return
+        // A dialog on an activity that is going away throws (BadTokenException) and would
+        // take the app down with it; there is nobody to ask then anyway.
+        if (activity.isFinishing || activity.isDestroyed) {
+            return finish(null, "ICA wants a person to answer its check first")
+        }
         content().removeView(v)
         v.alpha = 1f
         v.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_AUTO

@@ -6,51 +6,67 @@
 //! is shown to the person in a dialog (Android) or sheet (iOS) until they have answered
 //! it or the time is up; nothing here answers the check itself.
 //!
-//! Only phones have a native half; on desktop the crate is empty.
+//! Only phones have a native half; on desktop the crate holds only the request's types.
+
+use std::time::Duration;
+
+use serde::{Deserialize, Serialize};
 
 #[cfg(mobile)]
 pub use mobile::*;
 
+/// One cookie of the shop, as the webview holds it.
+#[derive(Debug, Clone, Deserialize)]
+pub struct Cookie {
+    pub name: String,
+    pub value: String,
+}
+
+/// What to open, which cookie to wait for and for how long.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MintRequest<'a> {
+    /// The shop page; the cookies returned are the ones the webview would send to it.
+    pub url: &'a str,
+    /// The cookie that means the visit passed (`aws-waf-token`). Any copy left from an
+    /// earlier visit is forgotten first, so a stale token never comes back as new.
+    pub cookie: &'a str,
+    /// How long a clean visit may take before the person is asked. Sent as `quietMs`,
+    /// the name the native halves read (iOS fails the whole call on a missing field).
+    #[serde(rename = "quietMs", serialize_with = "millis")]
+    pub quiet: Duration,
+    /// How long the person gets once the webview is shown to them (`personMs`).
+    #[serde(rename = "personMs", serialize_with = "millis")]
+    pub person: Duration,
+    /// The dialog's title when the person is asked.
+    pub title: &'a str,
+}
+
+fn millis<S: serde::Serializer>(d: &Duration, s: S) -> Result<S::Ok, S::Error> {
+    s.serialize_u64(d.as_millis() as u64)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// The native halves read these names (MintArgs in IcaSessionPlugin.kt / .swift).
+    #[test]
+    fn the_request_uses_the_names_the_native_halves_read() {
+        let r = MintRequest { url: "u", cookie: "c", quiet: Duration::from_secs(20), person: Duration::from_secs(180), title: "t" };
+        let json = serde_json::to_value(&r).unwrap();
+        assert_eq!(json, serde_json::json!({"url": "u", "cookie": "c", "quietMs": 20000, "personMs": 180000, "title": "t"}));
+    }
+}
+
 #[cfg(mobile)]
 mod mobile {
-    use std::time::Duration;
-
-    use serde::{Deserialize, Serialize};
+    use super::*;
     use tauri::plugin::{Builder, PluginHandle, TauriPlugin};
     use tauri::{Manager, Runtime};
 
     #[cfg(target_os = "ios")]
     tauri::ios_plugin_binding!(init_plugin_ica_session);
-
-    /// One cookie of the shop, as the webview holds it.
-    #[derive(Debug, Clone, Deserialize)]
-    pub struct Cookie {
-        pub name: String,
-        pub value: String,
-    }
-
-    /// What to open, which cookie to wait for and for how long.
-    #[derive(Debug, Clone, Serialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct MintRequest<'a> {
-        /// The shop page; the cookies returned are the ones the webview would send to it.
-        pub url: &'a str,
-        /// The cookie that means the visit passed (`aws-waf-token`). Any copy left from an
-        /// earlier visit is forgotten first, so a stale token never comes back as new.
-        pub cookie: &'a str,
-        /// How long a clean visit may take before the person is asked.
-        #[serde(serialize_with = "millis")]
-        pub quiet: Duration,
-        /// How long the person gets once the webview is shown to them.
-        #[serde(serialize_with = "millis")]
-        pub person: Duration,
-        /// The dialog's title when the person is asked.
-        pub title: &'a str,
-    }
-
-    fn millis<S: serde::Serializer>(d: &Duration, s: S) -> Result<S::Ok, S::Error> {
-        s.serialize_u64(d.as_millis() as u64)
-    }
 
     #[derive(Deserialize)]
     struct Minted {

@@ -96,7 +96,14 @@ mod mobile {
 
     pub async fn warm(app: &AppHandle) -> Result<Vec<Cookie>, http::Error> {
         let request = MintRequest { url: SHOP, cookie: TOKEN, quiet: QUIET_WAIT, person: PERSON_WAIT, title: TITLE };
-        let cookies = app.ica_session().mint(request).await.map_err(http::Error::Throttled)?;
+        // The native side answers within quiet + person, but if its activity or view
+        // controller goes away mid-visit the answer may never come, and this warm holds the
+        // jar's lock: so Rust gives up a little after the native deadline on its own.
+        let bound = QUIET_WAIT + PERSON_WAIT + Duration::from_secs(30);
+        let cookies = tokio::time::timeout(bound, app.ica_session().mint(request))
+            .await
+            .map_err(|_| http::Error::Throttled("ICA's check didn't answer in time".into()))?
+            .map_err(http::Error::Throttled)?;
         Ok(cookies.into_iter().map(|c| Cookie { name: c.name, value: c.value }).collect())
     }
 }
