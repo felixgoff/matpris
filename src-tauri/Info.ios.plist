@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Merged into the iPhone app's Info.plist by the Tauri CLI (the way Info.plist is for
+	     the Mac). "Use my location": the map asks WKWebView, WKWebView asks iOS, and without
+	     this text iOS says no without asking the person. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Matpris finds the grocery stores around you.</string>
+</dict>
+</plist>

@@ -1980,6 +1980,7 @@ dependencies = [
  "tauri",
  "tauri-build",
  "tauri-plugin-geolocation",
+ "tauri-plugin-ica-session",
  "tauri-plugin-process",
  "tauri-plugin-updater",
  "tokio",
@@ -3843,6 +3844,15 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "thiserror 2.0.21",
+]
+
+[[package]]
+name = "tauri-plugin-ica-session"
+version = "0.0.0"
+dependencies = [
+ "serde",
+ "tauri",
+ "tauri-plugin",
 ]
 
 [[package]]

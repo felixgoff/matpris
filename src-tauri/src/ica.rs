@@ -5,8 +5,8 @@
 //! here solves or bypasses the check.
 //!
 //! Phones: Android webviews don't give their cookies to Tauri, and an app there has one
-//! window, so a native plugin will have to read them (see mobile notes in the README);
-//! until then ICA is "busy" on phones.
+//! window, so the native plugin in plugins/ica-session does the same visit in an
+//! offscreen webview of its own and shows it in a dialog when ICA asks for a person.
 
 use std::sync::Mutex;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
@@ -18,6 +18,11 @@ use tauri::AppHandle;
 
 /// The shop page of the store whose prices Matpris shows (Maxi ICA Gunnesbo, Lund).
 const SHOP: &str = "https://handlaprivatkund.ica.se/stores/1088004";
+/// The WAF's cookie: a visit that has it has passed.
+const TOKEN: &str = "aws-waf-token";
+/// The window (desktop) or dialog (phones) a person sees when ICA asks for one.
+const TITLE: &str = "ICA wants to check that you're a person";
+#[cfg(desktop)]
 const LABEL: &str = "ica-session";
 /// A clean visit gets its token in a few seconds.
 const QUIET_WAIT: Duration = Duration::from_secs(20);
@@ -48,7 +53,7 @@ mod desktop {
         }
         let url = SHOP.parse().map_err(|e| format!("{e}"))?;
         WebviewWindowBuilder::new(app, LABEL, WebviewUrl::External(url))
-            .title("ICA wants to check that you're a person")
+            .title(TITLE)
             .inner_size(480.0, 640.0)
             .visible(false)
             .build()
@@ -63,7 +68,7 @@ mod desktop {
             tokio::time::sleep(Duration::from_millis(500)).await;
             // Off the main thread: on Windows reading cookies from it deadlocks.
             let cookies = window.cookies_for_url(url.clone()).unwrap_or_default();
-            if cookies.iter().any(|c| c.name() == "aws-waf-token" && !c.value().is_empty()) {
+            if cookies.iter().any(|c| c.name() == TOKEN && !c.value().is_empty()) {
                 return Some(cookies.iter().map(|c| Cookie { name: c.name().into(), value: c.value().into() }).collect());
             }
         }
@@ -84,6 +89,18 @@ mod desktop {
     }
 }
 
+#[cfg(mobile)]
+mod mobile {
+    use super::*;
+    use tauri_plugin_ica_session::{IcaSessionExt, MintRequest};
+
+    pub async fn warm(app: &AppHandle) -> Result<Vec<Cookie>, http::Error> {
+        let request = MintRequest { url: SHOP, cookie: TOKEN, quiet: QUIET_WAIT, person: PERSON_WAIT, title: TITLE };
+        let cookies = app.ica_session().mint(request).await.map_err(http::Error::Throttled)?;
+        Ok(cookies.into_iter().map(|c| Cookie { name: c.name, value: c.value }).collect())
+    }
+}
+
 fn now_ms() -> u64 {
     SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0)
 }
@@ -97,15 +114,10 @@ impl CookieJar for WebviewJar {
     async fn warm(&self) -> http::Result<()> {
         let _one = self.warming.lock().await;
         #[cfg(desktop)]
-        {
-            let cookies = desktop::warm(&self.app).await?;
-            *self.session.lock().unwrap() = Some(IcaSession { stored_at: now_ms(), cookies });
-            Ok(())
-        }
+        let cookies = desktop::warm(&self.app).await?;
         #[cfg(mobile)]
-        {
-            let _ = (&self.app, now_ms, SHOP, LABEL, QUIET_WAIT, PERSON_WAIT);
-            Err(http::Error::Throttled("ICA isn't available on phones yet".into()))
-        }
+        let cookies = mobile::warm(&self.app).await?;
+        *self.session.lock().unwrap() = Some(IcaSession { stored_at: now_ms(), cookies });
+        Ok(())
     }
 }

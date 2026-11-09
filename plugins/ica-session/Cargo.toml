@@ -1,0 +1,18 @@
+[package]
+name = "tauri-plugin-ica-session"
+version = "0.0.0"
+description = "ICA's WAF cookie on phones, minted in an offscreen webview the way a shopper's browser gets it"
+edition.workspace = true
+publish = false
+# Tauri's plugin build requires `links` to match the crate name.
+links = "tauri-plugin-ica-session"
+
+[dependencies]
+serde.workspace = true
+tauri = { version = "2", default-features = false }
+
+[target.'cfg(target_os = "ios")'.dependencies]
+tauri = { version = "2", default-features = false, features = ["wry"] }
+
+[build-dependencies]
+tauri-plugin = { version = "2", features = ["build"] }

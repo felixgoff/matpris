@@ -3,7 +3,7 @@
 # for development in a browser.
 [workspace]
 resolver = "2"
-members = ["core", "server", "src-tauri"]
+members = ["core", "server", "src-tauri", "plugins/ica-session"]
 
 [workspace.package]
 edition = "2021"

@@ -55,8 +55,8 @@
 	/* A label hanging from its steel strip, like the results. */
 	.toast {
 		position: fixed;
-		left: 16px;
-		bottom: 16px;
+		left: calc(16px + var(--safe-l, 0px));
+		bottom: calc(16px + var(--safe-b, 0px));
 		z-index: 30;
 		display: flex;
 		align-items: center;

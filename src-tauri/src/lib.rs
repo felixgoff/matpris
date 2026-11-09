@@ -139,7 +139,7 @@ pub(crate) fn open_main_window(app: &tauri::AppHandle) -> tauri::Result<()> {
 pub fn run() {
     let builder = tauri::Builder::default();
     #[cfg(mobile)]
-    let builder = builder.plugin(tauri_plugin_geolocation::init());
+    let builder = builder.plugin(tauri_plugin_geolocation::init()).plugin(tauri_plugin_ica_session::init());
     #[cfg(desktop)]
     let builder = {
         let builder = builder.plugin(tauri_plugin_process::init()).manage(update::Updates::default());

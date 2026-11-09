@@ -730,6 +730,13 @@
 		--hang: cubic-bezier(0.16, 1, 0.3, 1);
 		color-scheme: light;
 		accent-color: var(--steel);
+		/* Phones draw the page under their status bar, notch and home indicator
+		   (viewport-fit=cover in app.html); these keep the content clear of them.
+		   Zero on desktop and in a desktop browser. */
+		--safe-t: env(safe-area-inset-top, 0px);
+		--safe-r: env(safe-area-inset-right, 0px);
+		--safe-b: env(safe-area-inset-bottom, 0px);
+		--safe-l: env(safe-area-inset-left, 0px);
 	}
 	:global(body) {
 		margin: 0;
@@ -777,7 +784,7 @@
 		display: flex;
 		align-items: center;
 		gap: 12px 24px;
-		padding: 13px 28px;
+		padding: calc(13px + var(--safe-t)) calc(28px + var(--safe-r)) 13px calc(28px + var(--safe-l));
 		border-bottom: 4px solid var(--steel-edge);
 	}
 	.rail :focus-visible,
@@ -885,7 +892,7 @@
 	.address {
 		background: #34383b;
 		color: #fff;
-		padding: 12px 28px 16px;
+		padding: 12px calc(28px + var(--safe-r)) 16px calc(28px + var(--safe-l));
 	}
 	.address label {
 		display: block;
@@ -913,6 +920,7 @@
 	.layout {
 		flex: 1;
 		min-height: 0;
+		padding: 0 var(--safe-r) var(--safe-b) var(--safe-l);
 		display: grid;
 		grid-template-columns: minmax(0, 680px) minmax(0, 1fr);
 	}
@@ -1561,7 +1569,7 @@
 	@media (max-width: 900px) {
 		.rail {
 			flex-wrap: wrap;
-			padding: 12px 16px 14px;
+			padding: calc(12px + var(--safe-t)) calc(16px + var(--safe-r)) 14px calc(16px + var(--safe-l));
 		}
 		.mark {
 			font-size: 1.5rem;
@@ -1582,7 +1590,7 @@
 			flex-basis: 100%;
 		}
 		.address {
-			padding: 12px 16px 16px;
+			padding: 12px calc(16px + var(--safe-r)) 16px calc(16px + var(--safe-l));
 		}
 		.address-row {
 			flex-wrap: wrap;
@@ -1597,7 +1605,7 @@
 			display: grid;
 			grid-template-columns: minmax(0, 1fr);
 			grid-template-areas: 'summary' 'map' 'results' 'footer';
-			padding: 16px 16px 0;
+			padding: 16px calc(16px + var(--safe-r)) var(--safe-b) calc(16px + var(--safe-l));
 		}
 		.col {
 			display: contents;
