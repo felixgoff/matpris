@@ -458,6 +458,31 @@ mod tests {
         assert_eq!(rel("banan", "Banan Mos från 8 mån"), Some(Match::Mention));
     }
 
+    // Reviewer pins: each expectation was produced by running the TypeScript under Bun.
+    #[test]
+    fn parity_with_typescript_edge_cases() {
+        // Lengths are UTF-16 units, not bytes: "ål" is too short for a compound head,
+        // and "sås" (3 units, 4 bytes) only counts as a product type as a whole word.
+        assert_eq!(match_quality("ål", &["Rökålen"]), 0);
+        assert_eq!(rel("vitlök", "Vitlök Vitlökssås"), Some(Match::Best));
+        // Case-insensitive baby-food phrase, including non-ASCII letters.
+        assert_eq!(rel("banan", "BANAN MOS FRÅN 6 MÅNADER"), Some(Match::Mention));
+        assert_eq!(rel("banan", "Banan 6-12år"), Some(Match::Mention));
+        // An empty query asks for nothing, so every brand word "covers" it.
+        assert_eq!(relevance("", "Något", Some("Fanta"), &[]), Some(Match::Best));
+        // An empty specific category is ignored, the shelf above it still counts.
+        assert_eq!(relevance("banan", "Banan", None, &cats(&["Godis", ""])), Some(Match::Mention));
+        assert_eq!(parse_size("2 x 1,5 l"), Some((3.0, Unit::L)));
+        // Only the first comma becomes a point; the count can't be a decimal.
+        assert_eq!(parse_size("1,5 x 2 l"), Some((10.0, Unit::L)));
+        assert_eq!(parse_size("500g/st"), Some((0.5, Unit::Kg)));
+        assert_eq!(unit_price_from_size(10.0, Some("3 st")), Some((3.33, Unit::St)));
+        assert_eq!(unit_price_from_size(0.125, Some("10 g")), Some((12.5, Unit::Kg)));
+        assert_eq!(parse_unit_price("ca 1 299,50 kr/KG"), Some((1299.5, Unit::Kg)));
+        assert_eq!(parse_sek("pris: 12,5,0"), Some(12.5));
+        assert_eq!(base_forms("äpplena"), ["äpple"]);
+    }
+
     // describe('relevance for a brand search')
     #[test]
     fn relevance_brand_products_are_the_product() {
