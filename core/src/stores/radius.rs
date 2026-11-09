@@ -198,4 +198,25 @@ mod tests {
         assert!(a.stores.windows(2).all(|w| w[0].distance_km <= w[1].distance_km));
         assert_eq!(a.stores[0].store.id, "3");
     }
+    #[test]
+    fn the_float_growth_step_rounds_up_like_math_ceil() {
+        // 1.5 × 1.6 = 2.4000000000000004 in f64 (and in JS), so Math.ceil(r * 10) / 10 = 2.5.
+        let a = pick_area(CENTER, &cat(ring(3, 1.0, 0), ring(12, 2.2, 3)), &DEFAULT_AREA, None);
+        assert_eq!(a.radius_km, 2.5);
+    }
+
+    #[test]
+    fn min_chains_shrinks_to_the_chains_that_exist() {
+        let willys: Vec<Store> = ring(36, 1.0, 0).into_iter().filter(|s| s.chain == ChainId::Willys).collect();
+        assert_eq!(willys.len(), 12);
+        let a = pick_area(CENTER, &willys, &DEFAULT_AREA, None);
+        assert_eq!(a.radius_km, 1.5);
+        assert_eq!(a.stores.len(), 5); // still five per chain
+    }
+
+    #[test]
+    fn a_nan_picked_size_means_auto() {
+        let a = pick_area(CENTER, &cat(ring(15, 1.0, 0), ring(30, 10.0, 15)), &DEFAULT_AREA, Some(f64::NAN));
+        assert_eq!(a.radius_km, 1.5);
+    }
 }
