@@ -356,6 +356,15 @@
 		} else copyOrSave(image, name);
 	}
 
+	/** Where Share opens the system's sheet, a second button copies the image directly:
+	 *  the copy button inside Windows' share window does nothing for an app's image. */
+	const hasShareSheet = typeof navigator !== 'undefined' && !!navigator.canShare;
+	function copyAnswer() {
+		prepareShare();
+		if (!prepared || !cheapest) return;
+		copyOrSave(prepared.image, `matpris-${searched.replace(/[^\p{L}\p{N}]+/gu, '-')}.png`);
+	}
+
 	function copyOrSave(image: Promise<Blob>, name: string) {
 		// Safari only accepts a clipboard write started inside the click, so the image goes
 		// in as a promise rather than awaited first.
@@ -567,6 +576,20 @@
 						<div class="answer-head">
 							<h2>Cheapest near you</h2>
 							<span class="share-note" role="status">{shareNote}</span>
+							{#if hasShareSheet}
+								<button class="share" onclick={copyAnswer} onpointerenter={prepareShare} onfocus={prepareShare}>
+									<svg viewBox="0 0 16 16" aria-hidden="true"
+										><path
+											d="M5.6 5.6V2.4h8v8h-3.2M2.4 5.6h8v8h-8z"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.6"
+											stroke-linejoin="round"
+										/></svg
+									>
+									Copy
+								</button>
+							{/if}
 							<button class="share" onclick={shareAnswer} onpointerenter={prepareShare} onfocus={prepareShare}>
 								<svg viewBox="0 0 16 16" aria-hidden="true"
 									><path
