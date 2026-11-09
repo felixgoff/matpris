@@ -39,3 +39,6 @@ vite.config.ts.timestamp-*
 # Rust
 /target
 /.claude/worktrees
+
+# Tauri regenerates these on every build (they differ between desktop and phone builds)
+/src-tauri/gen/schemas
