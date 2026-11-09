@@ -29,17 +29,33 @@ fn null_default<'de, D: Deserializer<'de>, T: Default + Deserialize<'de>>(d: D) 
     Ok(Option::<T>::deserialize(d)?.unwrap_or_default())
 }
 
+/// A number, or a string JS arithmetic would coerce to one (`"0.18"`); anything else
+/// (null, "", objects) reads as `None` instead of making the whole product unreadable.
+fn lenient_num<'de, D: Deserializer<'de>>(d: D) -> Result<Option<f64>, D::Error> {
+    Ok(match serde_json::Value::deserialize(d)? {
+        serde_json::Value::Number(n) => n.as_f64(),
+        serde_json::Value::String(s) => s.trim().parse::<f64>().ok().filter(|x| x.is_finite()),
+        _ => None,
+    })
+}
+
+/// `lenient_num`, with what isn't a number reading as 0, so the search drops the product
+/// (as the TS `priceValue > 0` filter does for null).
+fn lenient_num_or_zero<'de, D: Deserializer<'de>>(d: D) -> Result<f64, D::Error> {
+    Ok(lenient_num(d)?.unwrap_or(0.0))
+}
+
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AxfoodPromotionPrice {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "lenient_num")]
     pub value: Option<f64>,
 }
 
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AxfoodPromotion {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "lenient_num")]
     pub qualifying_count: Option<f64>,
     #[serde(default)]
     pub reward_label: Option<String>,
@@ -72,13 +88,13 @@ pub struct AxfoodProduct {
     #[serde(default)]
     pub display_volume: Option<String>,
     /// Missing reads as 0, which the search drops (as the TS `priceValue > 0` filter does).
-    #[serde(default)]
+    #[serde(default, deserialize_with = "lenient_num_or_zero")]
     pub price_value: f64,
     /// "kr/kg" when `price_value` is per kilo (sold by weight), else "kr/st".
     #[serde(default)]
     pub price_unit: Option<String>,
     /// Average weight of one piece in kg, for products sold by weight.
-    #[serde(default)]
+    #[serde(default, deserialize_with = "lenient_num")]
     pub average_weight: Option<f64>,
     #[serde(default)]
     pub compare_price: Option<String>,
@@ -425,6 +441,69 @@ mod tests {
         assert_eq!(hits[0].brand, None);
         assert!(hits[0].image.as_deref().unwrap().starts_with("https://assets.axfood.se/"));
         assert!(parse_results(ChainId::Willys, WILLYS, serde_json::from_str("{}").unwrap()).is_err());
+    }
+
+    #[test]
+    fn odd_number_types_do_not_drop_the_product() {
+        // JS coerces "0.18" in arithmetic and treats a null priceValue as not > 0.
+        let json = r#"{"results": [
+            {"code":"a","name":"Strängvikt","priceValue":"20","priceUnit":"kr/kg","averageWeight":"0.5",
+             "potentialPromotions":[{"qualifyingCount":"2","price":{"value":"8"}}]},
+            {"code":"b","name":"Nollpris","priceValue":null},
+            {"code":"c","name":"Konstig vikt","priceValue":10,"priceUnit":"kr/kg","averageWeight":{"x":1}}
+        ]}"#;
+        let hits = parse_results(ChainId::Willys, WILLYS, serde_json::from_str(json).unwrap()).unwrap();
+        let ids: Vec<_> = hits.iter().map(|h| h.id.as_str()).collect();
+        assert_eq!(ids, ["a", "c"]);
+        assert_eq!(hits[0].price, 20.0);
+        assert_eq!(hits[0].approx_each, Some(10.0));
+        let deal = hits[0].deal.as_ref().unwrap();
+        assert_eq!((deal.quantity, deal.each, deal.total), (2, 8.0, 16.0));
+        assert_eq!(hits[1].approx_each, None);
+        assert_eq!(hits[1].per_kg, Some(true));
+    }
+
+    #[test]
+    fn a_zero_average_weight_gives_no_estimate_and_a_zero_count_is_a_single_sale() {
+        let hit = to_hit(
+            ChainId::Willys,
+            WILLYS,
+            &AxfoodProduct {
+                price_unit: Some("kr/kg".into()),
+                average_weight: Some(0.0),
+                potential_promotions: vec![promo(0.0, "", 15.0, "", "Max 0 köp")],
+                ..base()
+            },
+        );
+        assert_eq!(hit.approx_each, None);
+        assert_eq!(hit.price, 15.0);
+        assert_eq!(hit.old_price, Some(19.4));
+        // An empty promotion comparePrice is falsy in JS, so the regular one is scaled: 12.93*15/19.4.
+        assert_eq!(hit.unit_price, Some(10.0));
+        assert_eq!(hit.deal, None);
+    }
+
+    #[test]
+    fn a_limit_label_without_a_positive_number_gives_no_limit() {
+        for label in ["", "Max 0 köp", "Begränsat"] {
+            let hit = to_hit(
+                ChainId::Willys,
+                WILLYS,
+                &AxfoodProduct { potential_promotions: vec![promo(3.0, "3 för 30", 10.0, "", label)], ..base() },
+            );
+            assert_eq!(hit.deal.unwrap().limit, None, "{label}");
+        }
+        let hit = to_hit(
+            ChainId::Willys,
+            WILLYS,
+            &AxfoodProduct {
+                potential_promotions: vec![promo(3.0, "3 för 30 PANT", 10.0, "", "Max 05 köp/hushåll")],
+                ..base()
+            },
+        );
+        let deal = hit.deal.unwrap();
+        assert_eq!(deal.limit, Some(5));
+        assert!(deal.plus_deposit);
     }
 
     #[test]
