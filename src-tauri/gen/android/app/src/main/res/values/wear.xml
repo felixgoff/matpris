@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@array/android_wear_capabilities">
+    <!-- What the Galaxy Watch app looks for to find a phone that can search for it
+         (wear/, Api.kt CAPABILITY). Kept from resource shrinking: only Play services reads it. -->
+    <string-array name="android_wear_capabilities">
+        <item>matpris_search</item>
+    </string-array>
+</resources>

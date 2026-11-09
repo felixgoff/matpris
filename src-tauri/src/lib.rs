@@ -5,6 +5,9 @@
 mod ica;
 #[cfg(desktop)]
 mod update;
+// The Galaxy Watch asks the phone app (WearSearchService.kt calls into it).
+#[cfg(any(test, target_os = "android"))]
+mod watch;
 
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
