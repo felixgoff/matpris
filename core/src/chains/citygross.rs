@@ -63,7 +63,11 @@ pub struct CgPromotion {
 #[serde(rename_all = "camelCase", default)]
 pub struct CgPrices {
     pub current_price: Option<CgPrice>,
+    /// An odd ordinary price or promotion drops only that part (the TS kept the
+    /// product and just didn't read them), never the whole product.
+    #[serde(deserialize_with = "lenient")]
     pub ordinary_price: Option<CgPrice>,
+    #[serde(deserialize_with = "lenient")]
     pub active_promotion: Option<CgPromotion>,
 }
 
@@ -102,6 +106,15 @@ pub struct CgProduct {
     pub product_store_details: Option<CgStoreDetails>,
 }
 
+fn lenient<'de, D, T>(d: D) -> Result<Option<T>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+    T: serde::de::DeserializeOwned,
+{
+    let v = serde_json::Value::deserialize(d)?;
+    Ok(serde_json::from_value(v).ok())
+}
+
 fn null_as_default<'de, D, T>(d: D) -> Result<T, D::Error>
 where
     D: serde::Deserializer<'de>,
@@ -130,7 +143,8 @@ struct CgStoreData {
     type_: Option<String>,
     #[serde(default)]
     ispublished: Option<bool>,
-    site_id: serde_json::Number,
+    /// A number in practice; kept as JSON so a string id still makes `cg-<id>`, as in the TS.
+    site_id: serde_json::Value,
     store_name: String,
     url: String,
     #[serde(default)]
@@ -233,12 +247,29 @@ pub fn to_hit(p: &CgProduct) -> Option<ProductHit> {
 }
 
 /// `Number(s)` for a coordinate: whitespace trimmed, empty is 0, junk is NaN.
+/// Rust also reads "inf"/"nan"/"infinity" (any case), which JS doesn't: only
+/// `Infinity` spelled that way is a number there.
 fn js_number(s: &str) -> f64 {
     let t = js_trim(s);
     if t.is_empty() {
-        0.0
-    } else {
-        t.parse().unwrap_or(f64::NAN)
+        return 0.0;
+    }
+    let digits = t.trim_start_matches(['+', '-']);
+    if digits.chars().any(|c| c.is_ascii_alphabetic() && c != 'e' && c != 'E') && digits != "Infinity" {
+        return f64::NAN;
+    }
+    t.parse().unwrap_or(f64::NAN)
+}
+
+/// A JSON scalar in a JS template string (`${s.siteId}`).
+fn js_string(v: &serde_json::Value) -> String {
+    match v {
+        serde_json::Value::String(s) => s.clone(),
+        serde_json::Value::Number(n) => match n.as_f64() {
+            Some(f) if f.fract() == 0.0 && f.abs() < 1e21 => format!("{f}"),
+            _ => n.to_string(),
+        },
+        other => other.to_string(),
     }
 }
 
@@ -254,7 +285,7 @@ fn to_store(s: &CgStoreData) -> Option<Store> {
     let city = s.address.as_ref().and_then(|a| a.city.as_deref()).map(js_trim);
     let address = [street, city].into_iter().flatten().filter(|p| !p.is_empty()).collect::<Vec<_>>().join(", ");
     Some(Store {
-        id: format!("cg-{}", s.site_id),
+        id: format!("cg-{}", js_string(&s.site_id)),
         chain: ChainId::Citygross,
         name: format!("City Gross {}", js_trim(&s.store_name)),
         lat,
@@ -284,16 +315,16 @@ fn parse_each<T: serde::de::DeserializeOwned>(items: Vec<serde_json::Value>) -> 
     items.into_iter().filter_map(|v| serde_json::from_value(v).ok())
 }
 
-#[derive(Deserialize, Default)]
-#[serde(rename_all = "camelCase", default)]
+/// `searchResults.products` must be there: the TS threw on a missing or null list, so a
+/// changed answer is reported as an error rather than as "no products".
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
 struct SearchResponse {
     search_results: SearchResults,
 }
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[derive(Deserialize)]
 struct SearchResults {
-    #[serde(deserialize_with = "null_as_default")]
     products: Vec<serde_json::Value>,
 }
 
@@ -511,6 +542,69 @@ mod tests {
     #[test]
     fn encodes_like_encode_uri_component() {
         assert_eq!(encode_uri_component("mjölk & ägg"), "mj%C3%B6lk%20%26%20%C3%A4gg");
+    }
+
+    #[test]
+    fn a_search_answer_without_products_is_an_error() {
+        assert!(serde_json::from_value::<SearchResponse>(json!({})).is_err());
+        assert!(serde_json::from_value::<SearchResponse>(json!({ "searchResults": { "products": null } })).is_err());
+        let ok = serde_json::from_value::<SearchResponse>(json!({ "searchResults": { "products": [] } })).unwrap();
+        assert!(ok.search_results.products.is_empty());
+    }
+
+    #[test]
+    fn an_odd_promotion_keeps_the_product() {
+        let hit = to_hit(&with(
+            base(),
+            json!({ "productStoreDetails": { "prices": {
+                "currentPrice": price(13.5, "PCE", 135.0, "KGM"),
+                "ordinaryPrice": "n/a",
+                "activePromotion": { "effectType": "ItemsTotal", "minQuantity": "two" }
+            } } }),
+        ))
+        .unwrap();
+        assert_eq!(hit.price, 13.5);
+        assert_eq!(hit.deal, None);
+        assert_eq!(hit.old_price, None);
+    }
+
+    #[test]
+    fn a_promotion_without_members_only_counts() {
+        // `!undefined` is true in the TS.
+        let hit = to_hit(&with(
+            base(),
+            json!({ "productStoreDetails": { "prices": {
+                "currentPrice": price(13.5, "PCE", 135.0, "KGM"),
+                "activePromotion": { "effectType": "ItemsTotal", "minQuantity": 2, "priceDetails": price(11.0, "PCE", 110.0, "KGM") }
+            } } }),
+        ))
+        .unwrap();
+        let deal = hit.deal.unwrap();
+        assert_eq!((deal.quantity, deal.total, deal.limit), (2, 22.0, None));
+    }
+
+    #[test]
+    fn coordinates_and_ids_read_like_js() {
+        assert!(js_number("inf").is_nan());
+        assert!(js_number("nan").is_nan());
+        assert_eq!(js_number(" 55.5 "), 55.5);
+        assert_eq!(js_number("1e1"), 10.0);
+        assert_eq!(js_number("Infinity"), f64::INFINITY);
+        assert_eq!(js_string(&json!(101)), "101");
+        assert_eq!(js_string(&json!(101.0)), "101");
+        assert_eq!(js_string(&json!("7")), "7");
+        let page = |v: serde_json::Value| serde_json::from_value::<CgStorePage>(json!({ "data": v })).unwrap().data;
+        let s = to_store(&page(json!({
+            "type": "StorePage", "ispublished": true, "siteId": "42", "storeName": "Lund", "url": "/lund",
+            "storeLocation": { "coordinates": "55.7,13.19" }, "address": { "streetAddress": "X 1" }
+        })))
+        .unwrap();
+        assert_eq!(s.id, "cg-42");
+        assert!(to_store(&page(json!({
+            "type": "StorePage", "ispublished": true, "siteId": 1, "storeName": "X", "url": "/x",
+            "storeLocation": { "coordinates": "inf,13.0" }
+        })))
+        .is_none());
     }
 
     #[test]
