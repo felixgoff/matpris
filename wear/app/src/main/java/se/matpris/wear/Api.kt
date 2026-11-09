@@ -12,6 +12,8 @@ import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.timeout
@@ -58,31 +60,50 @@ const val SEARCH_PATH = "/matpris/search"
 const val EVENT_PATH = "/matpris/event"
 
 /** No phone with Matpris is connected. */
-class NoPhoneException : Exception("Install Matpris on your phone, and keep it nearby.")
+class NoPhoneException(message: String) : Exception(message)
 
 /** The search's events as they arrive, so the first chains show while others work. */
 @OptIn(FlowPreview::class)
 fun search(context: Context, query: String, place: Place): Flow<SearchEvent> = callbackFlow {
     val id = UUID.randomUUID().toString()
+    var answered = false
     val messages = Wearable.getMessageClient(context)
     val listener = MessageClient.OnMessageReceivedListener { message ->
         if (message.path != "$EVENT_PATH/$id") return@OnMessageReceivedListener
         val event = runCatching { parseEvent(String(message.data, Charsets.UTF_8)) }.getOrNull()
             ?: return@OnMessageReceivedListener
+        answered = true
         trySend(event)
         if (event is SearchEvent.Done || event is SearchEvent.Failed) close()
     }
     messages.addListener(listener).await()
 
-    val nodes = Wearable.getCapabilityClient(context)
+    val capable = Wearable.getCapabilityClient(context)
         .getCapability(CAPABILITY, CapabilityClient.FILTER_REACHABLE).await().nodes
-    val phone = nodes.firstOrNull { it.isNearby } ?: nodes.firstOrNull()
-    if (phone == null) {
-        close(NoPhoneException())
+    // Wear OS can take a while after an install to tell the watch what the phone has:
+    // with no phone known to have Matpris, ask every connected one. A phone without it
+    // just doesn't answer.
+    val known = capable.isNotEmpty()
+    val phones = if (known) {
+        listOf(capable.firstOrNull { it.isNearby } ?: capable.first())
+    } else {
+        Wearable.getNodeClient(context).connectedNodes.await()
+    }
+    if (phones.isEmpty()) {
+        close(NoPhoneException("This watch isn't connected to a phone."))
     } else {
         val request = JSONObject()
             .put("id", id).put("q", query).put("lat", place.lat).put("lng", place.lng)
-        messages.sendMessage(phone.id, SEARCH_PATH, request.toString().toByteArray(Charsets.UTF_8)).await()
+            .toString().toByteArray(Charsets.UTF_8)
+        for (phone in phones) messages.sendMessage(phone.id, SEARCH_PATH, request).await()
+        if (!known) {
+            // The phone app answers its first event within seconds (the search area is
+            // dropped, but an error or a chain comes soon); silence means it isn't there.
+            launch {
+                delay(20.seconds)
+                if (!answered) close(NoPhoneException("Matpris on your phone didn't answer. Install it there and open it once."))
+            }
+        }
     }
     awaitClose { messages.removeListener(listener) }
 }.timeout(90.seconds)
