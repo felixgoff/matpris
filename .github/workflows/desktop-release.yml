@@ -352,14 +352,20 @@ jobs:
           path: out/*
           if-no-files-found: error
 
-  # A compile check only: there's no Apple signing set up, so nothing is published for
-  # iPhone, and a failure here doesn't hold the release back. Costs macOS minutes (10x).
+  # Costs macOS minutes (10x), like the Mac build.
   ios:
-    name: iOS compile check
+    # With the App Store Connect key (scripts/setup-release-secrets.sh): a signed App Store
+    # build, uploaded to TestFlight. Without it: a simulator build that only checks the
+    # Rust and Swift compile. Never holds up the release of the other platforms.
+    name: iPhone (TestFlight)
     needs: version
     if: needs.version.outputs.new == 'true'
     runs-on: macos-26
     continue-on-error: true
+    env:
+      ASC_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+      APPLE_API_KEY: ${{ vars.APP_STORE_CONNECT_KEY_ID }}
+      APPLE_API_ISSUER: ${{ vars.APP_STORE_CONNECT_ISSUER_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -372,16 +378,50 @@ jobs:
         with:
           key: ios
       - run: bun install --frozen-lockfile
-      # The app embeds the built page, so the Rust crate needs it to compile.
-      - run: bun run build
-      - name: Rust for iPhone
-        run: cargo build -p matpris --lib --target aarch64-apple-ios
-      - name: Xcode project for the simulator
+      - name: MapKit token
+        env:
+          MAPKIT_PRIVATE_KEY: ${{ secrets.MAPKIT_PRIVATE_KEY }}
+          MAPKIT_KEY_ID: ${{ vars.MAPKIT_KEY_ID }}
+          TOKEN: ${{ secrets.PUBLIC_MAPKIT_TOKEN }}
+        run: |
+          if [ -n "$MAPKIT_PRIVATE_KEY" ] && [ -n "$MAPKIT_KEY_ID" ]; then
+            node scripts/mapkit-token.mjs
+          elif [ -n "$TOKEN" ]; then
+            printf 'PUBLIC_MAPKIT_TOKEN=%s\n' "$TOKEN" > .env
+          fi
+      - name: Xcode project
         run: |
           command -v xcodegen > /dev/null || brew install xcodegen
           [ -d src-tauri/gen/apple ] || bunx tauri ios init --ci
-          # The simulator build needs no signing identity.
-          bunx tauri ios build --debug --target aarch64-sim --ci
+          # The privacy manifest App Store Connect requires, beside the app's Info.plist.
+          app="$(find src-tauri/gen/apple -maxdepth 1 -type d -name '*_iOS' | head -1)"
+          cp src-tauri/PrivacyInfo.xcprivacy "$app/"
+          (cd src-tauri/gen/apple && xcodegen generate)
+      - name: Simulator build (no App Store Connect key)
+        if: env.ASC_KEY == ''
+        run: bunx tauri ios build --debug --target aarch64-sim --ci
+      - name: App Store build
+        if: env.ASC_KEY != ''
+        run: |
+          # Xcode signs automatically with the API key: it makes the distribution
+          # certificate and the provisioning profile itself (the key needs the Admin role).
+          mkdir -p ~/.appstoreconnect/private_keys
+          export APPLE_API_KEY_PATH=~/.appstoreconnect/private_keys/AuthKey_$APPLE_API_KEY.p8
+          printf '%s\n' "$ASC_KEY" > "$APPLE_API_KEY_PATH"
+          # Every upload needs a build number higher than the last: this workflow's run
+          # number only goes up. The version people see stays package.json's.
+          bunx tauri ios build --export-method app-store-connect --ci \
+            --config "{\"bundle\":{\"iOS\":{\"bundleVersion\":\"$GITHUB_RUN_NUMBER\"}}}"
+      - name: Upload to TestFlight
+        if: env.ASC_KEY != ''
+        run: |
+          ipa="$(find src-tauri/gen/apple/build -name '*.ipa' | head -1)"
+          [ -n "$ipa" ] || { echo "::error::No .ipa was built."; exit 1; }
+          # altool finds the key in ~/.appstoreconnect/private_keys by its ID.
+          xcrun altool --upload-app --type ios --file "$ipa" \
+            --apiKey "$APPLE_API_KEY" --apiIssuer "$APPLE_API_ISSUER"
+          echo "### iPhone build $GITHUB_RUN_NUMBER uploaded to TestFlight" >> "$GITHUB_STEP_SUMMARY"
+          echo "App Store Connect processes it for a few minutes; then it appears in the TestFlight app." >> "$GITHUB_STEP_SUMMARY"
 
   publish:
     name: Publish
@@ -408,7 +448,7 @@ jobs:
           - **Linux** (x86_64, glibc 2.35+, WebKitGTK 4.1): \`chmod +x Matpris-$VERSION-linux-x86_64.AppImage\` and run it; it updates itself. Or \`sudo apt install ./Matpris-$VERSION-linux-amd64.deb\` (updates by installing the next .deb).
           - **Android phone** (64-bit ARM, Android 8+): open \`Matpris-$VERSION-android.apk\` on the phone and allow installing from that app. Install new versions the same way, over the old one.
           - **Galaxy Watch / Wear OS 3+**: the watch asks the phone app, so install that first. Then install \`Matpris-$VERSION-wear-os.apk\` with adb over Wi-Fi: on the watch turn on Developer options, ADB debugging and Wireless debugging, then \`adb pair <ip>:<port>\`, \`adb connect <ip>:<port>\` and \`adb install -r Matpris-$VERSION-wear-os.apk\` (wear/README.md has the steps).
-          - **iPhone**: not published (no Apple signing yet). Build it from the repo in Xcode with your own team: \`bunx tauri ios init\`, then \`bunx tauri ios dev --open\`.
+          - **iPhone**: through TestFlight (once the App Store Connect key is set up): install Apple's TestFlight app and accept the Matpris invitation; new versions arrive there.
           EOF
       - name: Publish v${{ env.VERSION }}
         run: |

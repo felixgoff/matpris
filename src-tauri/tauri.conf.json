@@ -32,7 +32,8 @@
 			"infoPlist": "Info.plist"
 		},
 		"iOS": {
-			"minimumSystemVersion": "16.0"
+			"minimumSystemVersion": "16.0",
+			"developmentTeam": "JWR5UX55S5"
 		},
 		"android": {
 			"minSdkVersion": 26

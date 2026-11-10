@@ -7,5 +7,9 @@
 	     this text iOS says no without asking the person. -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Matpris finds the grocery stores around you.</string>
+	<!-- Only standard HTTPS: answers App Store Connect's export-compliance question, so
+	     TestFlight builds don't wait for it to be answered by hand. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
