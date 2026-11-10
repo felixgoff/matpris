@@ -401,6 +401,18 @@ jobs:
           # The privacy manifest App Store Connect requires, beside the app's Info.plist.
           app="$(find src-tauri/gen/apple -maxdepth 1 -type d -name '*_iOS' | head -1)"
           cp src-tauri/PrivacyInfo.xcprivacy "$app/"
+          # The app icon is the Icon Composer document (icons/Matpris.icon), which Xcode 26
+          # compiles with its layers and glass (and flat images for older iOS): add it to
+          # the app's resources and make it the app icon instead of Tauri's PNG set.
+          rm -rf src-tauri/gen/apple/Matpris.icon
+          cp -R icons/Matpris.icon src-tauri/gen/apple/Matpris.icon
+          ruby -ryaml -e '
+            project = YAML.load_file("src-tauri/gen/apple/project.yml")
+            target = project["targets"].values.find { |t| t["platform"] == "iOS" } or abort "no iOS target in project.yml"
+            target["sources"] << { "path" => "Matpris.icon", "type" => "file", "buildPhase" => "resources" }
+            ((target["settings"] ||= {})["base"] ||= {})["ASSETCATALOG_COMPILER_APPICON_NAME"] = "Matpris"
+            File.write("src-tauri/gen/apple/project.yml", project.to_yaml)
+          '
           (cd src-tauri/gen/apple && xcodegen generate)
       - name: Simulator build (no App Store Connect key)
         if: env.ASC_KEY == ''
@@ -417,11 +429,27 @@ jobs:
           # number only goes up. The version people see stays package.json's.
           bunx tauri ios build --export-method app-store-connect --ci \
             --config "{\"bundle\":{\"iOS\":{\"bundleVersion\":\"$GITHUB_RUN_NUMBER\"}}}"
+      - name: Check the app icon
+        if: env.ASC_KEY != ''
+        run: |
+          # No TestFlight build without the Icon Composer icon: the app's Info.plist must
+          # name it as the icon and its compiled assets must hold it.
+          ipa="$(find src-tauri/gen/apple/build -name '*.ipa' | head -1)"
+          [ -n "$ipa" ] || { echo "::error::No .ipa was built."; exit 1; }
+          rm -rf "$RUNNER_TEMP/ipa" && mkdir "$RUNNER_TEMP/ipa" && unzip -q "$ipa" -d "$RUNNER_TEMP/ipa"
+          app="$(find "$RUNNER_TEMP/ipa/Payload" -maxdepth 1 -name '*.app' | head -1)"
+          name="$(plutil -extract CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconName raw "$app/Info.plist" 2>/dev/null || true)"
+          if [ "$name" != Matpris ]; then
+            echo "::error::The app's icon is '${name:-none}', not the Icon Composer icon Matpris: not uploading."
+            exit 1
+          fi
+          xcrun assetutil --info "$app/Assets.car" | grep -qi '"Name" : "Matpris' \
+            || { echo "::error::Assets.car doesn't contain the Matpris icon: not uploading."; exit 1; }
+          echo "App icon: Matpris (icons/Matpris.icon)" >> "$GITHUB_STEP_SUMMARY"
       - name: Upload to TestFlight
         if: env.ASC_KEY != ''
         run: |
           ipa="$(find src-tauri/gen/apple/build -name '*.ipa' | head -1)"
-          [ -n "$ipa" ] || { echo "::error::No .ipa was built."; exit 1; }
           # altool finds the key in ~/.appstoreconnect/private_keys by its ID.
           xcrun altool --upload-app --type ios --file "$ipa" \
             --apiKey "$APPLE_API_KEY" --apiIssuer "$APPLE_API_ISSUER"
