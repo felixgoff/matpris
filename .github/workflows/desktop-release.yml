@@ -392,6 +392,11 @@ jobs:
       - name: Xcode project
         run: |
           command -v xcodegen > /dev/null || brew install xcodegen
+          # On iPhone the app is com.felix.matpris: the bundle ID registered for it on
+          # Apple's side. Android, the watch and the desktop keep se.matpris.matpris (the
+          # watch only pairs with a phone app of its own id). Only this runner's copy changes.
+          jq '.identifier = "com.felix.matpris"' src-tauri/tauri.conf.json > "$RUNNER_TEMP/conf.json"
+          mv "$RUNNER_TEMP/conf.json" src-tauri/tauri.conf.json
           [ -d src-tauri/gen/apple ] || bunx tauri ios init --ci
           # The privacy manifest App Store Connect requires, beside the app's Info.plist.
           app="$(find src-tauri/gen/apple -maxdepth 1 -type d -name '*_iOS' | head -1)"
